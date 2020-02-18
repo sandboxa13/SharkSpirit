@@ -4,4 +4,11 @@
         <TargetFramework>netstandard2.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SharkSpirit.AudioEngine\SharkSpirit.AudioEngine.csproj" />
+      <ProjectReference Include="..\SharkSpirit.InputEngine\SharkSpirit.InputEngine.csproj" />
+      <ProjectReference Include="..\SharkSpirit.PhysicsEngine\SharkSpirit.PhysicsEngine.csproj" />
+      <ProjectReference Include="..\SharkSpirit.RenderEngine\SharkSpirit.RenderEngine.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InputEngine", "InputEngine"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharkSpirit.InputEngine", "SharkSpirit.InputEngine\SharkSpirit.InputEngine.csproj", "{381B4A1D-F040-4EC8-80CC-CF75A90586FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharkSpirit.RenderFramework.DirectX", "SharkSpirit.RenderFramework.DirectX\SharkSpirit.RenderFramework.DirectX.csproj", "{44D8898F-33E3-415B-B220-92A763B25043}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,7 @@ Global
 		{9A06D8BA-5AED-4557-AF81-A40A0584F590} = {FE6263F7-1ED0-47BB-8C9F-7E0C2FE48B35}
 		{EFE15975-4701-4F58-8E62-B8E61EFB763F} = {FE6263F7-1ED0-47BB-8C9F-7E0C2FE48B35}
 		{381B4A1D-F040-4EC8-80CC-CF75A90586FF} = {EFE15975-4701-4F58-8E62-B8E61EFB763F}
+		{44D8898F-33E3-415B-B220-92A763B25043} = {3C1D3F96-9ED6-431D-8D5E-D24AB6B278B1}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6101C40C-CFCE-4AD1-ACDE-9ABDF8890412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -68,5 +71,9 @@ Global
 		{381B4A1D-F040-4EC8-80CC-CF75A90586FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{381B4A1D-F040-4EC8-80CC-CF75A90586FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{381B4A1D-F040-4EC8-80CC-CF75A90586FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44D8898F-33E3-415B-B220-92A763B25043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44D8898F-33E3-415B-B220-92A763B25043}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44D8898F-33E3-415B-B220-92A763B25043}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44D8898F-33E3-415B-B220-92A763B25043}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
