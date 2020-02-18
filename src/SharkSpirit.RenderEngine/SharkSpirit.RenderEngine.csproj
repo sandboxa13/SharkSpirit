@@ -4,4 +4,8 @@
         <TargetFramework>netstandard2.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SharkSpirit.RenderFramework.DirectX\SharkSpirit.RenderFramework.DirectX.csproj" />
+    </ItemGroup>
+
 </Project>
