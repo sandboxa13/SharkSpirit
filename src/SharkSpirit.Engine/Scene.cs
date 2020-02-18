@@ -7,7 +7,7 @@ namespace SharkSpirit.Engine
 {
     public class Scene : ComponentBase
     {
-        public Scene(IContainer container)
+        public Scene(IContainer container) : base("Default scene")
         {
             Initialize(container);
         }
