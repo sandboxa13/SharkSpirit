@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace SharkSpirit.Engine
+namespace SharkSpirit.Core.Collections
 {
     public class FastCollection<T> : IList<T>, IReadOnlyList<T>
     {

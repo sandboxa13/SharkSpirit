@@ -1,4 +1,4 @@
-﻿namespace SharkSpirit.Engine
+﻿namespace SharkSpirit.Core.Collections
 {
     public struct ArrayHelper<T>
     {

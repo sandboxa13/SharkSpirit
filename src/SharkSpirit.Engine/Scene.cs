@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DryIoc;
 using SharkSpirit.Core;
+using SharkSpirit.RenderEngine;
 using SharkSpirit.RenderFramework.DirectX;
 
 namespace SharkSpirit.Engine
