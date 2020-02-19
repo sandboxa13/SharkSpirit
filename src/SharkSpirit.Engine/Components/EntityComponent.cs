@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SharkSpirit.Engine
+namespace SharkSpirit.Engine.Components
 {
     public abstract class EntityComponent
     {

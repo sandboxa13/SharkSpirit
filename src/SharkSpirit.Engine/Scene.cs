@@ -16,6 +16,16 @@ namespace SharkSpirit.Engine
 
         public List<Entity> Entities { get; private set; }
 
+        public void AddEntity(Entity entity)
+        {
+            Entities.Add(entity);
+        }
+
+        public void RemoveEntity(Entity entity)
+        {
+            Entities.Remove(entity);
+        }
+
         private void Initialize(IContainer container)
         {
             RenderSystem.CreateRenderSystem(container);
