@@ -1,8 +1,9 @@
 ﻿using System;
 using DryIoc;
 using SharkSpirit.Core;
+using SharkSpirit.RenderFramework.DirectX;
 
-namespace SharkSpirit.RenderFramework.DirectX
+namespace SharkSpirit.RenderEngine
 {
     public class RenderSystem : ComponentBase
     {
