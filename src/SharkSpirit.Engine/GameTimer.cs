@@ -8,6 +8,11 @@ namespace SharkSpirit.Engine
     {
         private long startRawTime;
         private long lastRawTime;
+
+        public GameTimer()
+        {
+            Reset();
+        }
         
         /// <summary>
         /// Gets the start time when this timer was created.
