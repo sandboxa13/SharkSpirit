@@ -16,6 +16,7 @@ namespace SharkSpirit.Engine
         public void Update()
         {
             _timer.Tick();
+            Scene.Draw();
         }
     }
 }
