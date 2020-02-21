@@ -9,6 +9,6 @@ namespace SharkSpirit.RenderFramework.DirectX.Pipeline
         
         protected IDevice Device { get; private set; }
         
-        protected abstract void Bind();
+        public abstract void Bind();
     }
 }

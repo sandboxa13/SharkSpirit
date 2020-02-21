@@ -8,7 +8,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Pipeline
     {
         private readonly Buffer _indexBuffer;
         private readonly int _count;
-        
+
         public IndexBufferBindable(
             IDevice device,
             ushort[] indices) : base(device)
@@ -20,9 +20,11 @@ namespace SharkSpirit.RenderFramework.DirectX.Pipeline
             _indexBuffer = Buffer.Create(device.GetDevice(), indices, desc);
         }
 
-        protected override void Bind()
+        public override void Bind()
         {
             Device.GetDeviceContext().InputAssembler.SetIndexBuffer(_indexBuffer, Format.R16_UInt, 0);
         }
+
+        public int GetCount() => _count;
     }
 }

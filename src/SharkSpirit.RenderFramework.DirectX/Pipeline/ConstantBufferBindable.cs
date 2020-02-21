@@ -13,7 +13,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Pipeline
         }
         protected  Buffer ConstantBuffer { get; private set; }
         
-        protected override void Bind()
+        public override void Bind()
         {
             
         }
