@@ -1,19 +1,12 @@
-﻿using System;
+using System;
 using DryIoc;
 using SharkSpirit.Core;
 using SharkSpirit.RenderFramework.DirectX;
 
-namespace SharkSpirit.RenderEngine
+namespace SharkSpirit.Engine.Systems
 {
-    public class RenderSystem : ComponentBase
+    public static class RenderSystemFactory
     {
-        private RenderSystem(IDevice device)
-        {
-            Device = device;
-        }
-
-        public IDevice Device { get; }
-
         public static RenderSystem CreateRenderSystem(IContainer container)
         {
             return CreateRenderSystemInternal(container);
