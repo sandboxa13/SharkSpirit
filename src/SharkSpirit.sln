@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharkSpirit.Avalonia", "Sha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharkSpirit.Wpf", "SharkSpirit.Wpf\SharkSpirit.Wpf.csproj", "{DBD7FB62-5834-40F2-B986-49F5019D9DF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharkSpirit.Graphics", "SharkSpirit.Graphics\SharkSpirit.Graphics.csproj", "{BDC0A882-A341-4EED-AEC8-693B52A7028E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{DBD7FB62-5834-40F2-B986-49F5019D9DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBD7FB62-5834-40F2-B986-49F5019D9DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBD7FB62-5834-40F2-B986-49F5019D9DF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDC0A882-A341-4EED-AEC8-693B52A7028E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDC0A882-A341-4EED-AEC8-693B52A7028E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDC0A882-A341-4EED-AEC8-693B52A7028E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDC0A882-A341-4EED-AEC8-693B52A7028E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{44D8898F-33E3-415B-B220-92A763B25043} = {3C1D3F96-9ED6-431D-8D5E-D24AB6B278B1}
 		{E3736F70-7830-4636-A440-487C265F876B} = {C6D6494B-BFC7-4B36-B6D9-DFB6A7D16B3B}
 		{DBD7FB62-5834-40F2-B986-49F5019D9DF1} = {C6D6494B-BFC7-4B36-B6D9-DFB6A7D16B3B}
+		{BDC0A882-A341-4EED-AEC8-693B52A7028E} = {FE6263F7-1ED0-47BB-8C9F-7E0C2FE48B35}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE0BD888-0ECA-4ED9-A290-B80C74629089}
