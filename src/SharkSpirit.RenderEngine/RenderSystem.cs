@@ -7,7 +7,7 @@ namespace SharkSpirit.RenderEngine
 {
     public class RenderSystem : ComponentBase
     {
-        public RenderSystem(IDevice device)
+        private RenderSystem(IDevice device)
         {
             Device = device;
         }
