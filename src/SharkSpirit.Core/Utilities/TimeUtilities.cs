@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace SharkSpirit.Core.Utilities
 {
-    public class TimeUtilities
+    public static class TimeUtilities
     {
         public static TimeSpan ConvertRawToTimestamp(long delta)
         {
