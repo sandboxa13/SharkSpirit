@@ -29,11 +29,23 @@ namespace SharkSpirit.RenderFramework.DirectX
             _bindables.Add(indexBufferBindable);
         }
         
-        public Matrix Transform { get; private set; }
+        public Matrix World { get; private set; }
+        public Matrix ViewProjection { get; private set; }
+        public Matrix View { get; private set; }
 
-        public void UpdateTransform(Matrix transform)
+        public void UpdateWorld(Matrix world)
         {
-            Transform = transform;
+            World = world;
+        }
+
+        public void UpdateViewProjection(Matrix viewProjection)
+        {
+            ViewProjection = viewProjection;
+        }
+
+        public void UpdateView(Matrix view)
+        {
+            View = view;
         }
         
         public void Draw()

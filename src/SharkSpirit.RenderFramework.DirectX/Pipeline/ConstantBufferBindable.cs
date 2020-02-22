@@ -11,7 +11,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Pipeline
 
             ConstantBuffer = new Buffer(device.GetDevice(), cbd);
         }
-        protected  Buffer ConstantBuffer { get; private set; }
+        protected  Buffer ConstantBuffer { get; set; }
         
         public override void Bind()
         {

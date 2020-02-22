@@ -24,5 +24,10 @@ namespace SharkSpirit.RenderFramework.DirectX
         {
             throw new System.NotImplementedException();
         }
+
+        public Buffer GetBuffer()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -32,22 +32,26 @@ namespace SharkSpirit.Engine.Systems
         private static RenderSystem CreateDefaultRenderSystem(IContainer container)
         {
             var device = new DefaultDevice(container);
+            
+            var scene = container.Resolve<IScene>();
 
-            return new RenderSystem(device);
+            return new RenderSystem(device, scene);
         }
 
         private static RenderSystem CreateWpfRenderSystem(IContainer container)
         {
             var device = new WpfDevice(container);
+            var scene = container.Resolve<IScene>();
 
-            return new RenderSystem(device);
+            return new RenderSystem(device, scene);
         }
 
         private static RenderSystem CreateAvaloniaRenderSystem(IContainer container)
         {
             var device = new AvaloniaDevice(container);
+            var scene = container.Resolve<IScene>();
 
-            return new RenderSystem(device);
+            return new RenderSystem(device, scene);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using DryIoc;
 using SharpDX.Direct3D11;
+using Buffer = SharpDX.Direct3D11.Buffer;
 
 namespace SharkSpirit.RenderFramework.DirectX
 {
@@ -22,6 +23,11 @@ namespace SharkSpirit.RenderFramework.DirectX
         }
 
         public uint GetTextureId()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Buffer GetBuffer()
         {
             throw new NotImplementedException();
         }

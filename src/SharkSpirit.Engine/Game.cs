@@ -9,6 +9,7 @@ namespace SharkSpirit.Engine
         public Game(IContainer container)
         {
             _timer = new GameTimer();
+            Scene = new Scene(container);
         }
         
         public Scene Scene { get; private set; }

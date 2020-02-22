@@ -5,8 +5,14 @@ namespace SharkSpirit.Engine
 {
     public class EntityRenderProcessor
     {
+        private readonly IScene _scene;
         public readonly Dictionary<Entity, RenderObject> RenderObjects = new Dictionary<Entity, RenderObject>();
 
+        public EntityRenderProcessor(IScene scene)
+        {
+            _scene = scene;
+        }
+        
         public void AddRenderObject(Entity entity, RenderObject renderObject)
         {
             RenderObjects.Add(entity, renderObject);
@@ -18,16 +24,27 @@ namespace SharkSpirit.Engine
             {
                 Update(entity, renderObject);
             }
-        }
-
-        private void Update(Entity entity, RenderObject renderObject)
-        {
-            renderObject.UpdateTransform(entity.TransformComponent.WorldMatrix);
+            
+            DrawObjects();
         }
 
         public void RemoveRenderObject(Entity entity)
         {
             RenderObjects.Remove(entity);
+        }
+
+        private void Update(Entity entity, RenderObject renderObject)
+        {
+            renderObject.UpdateWorld(entity.TransformComponent.WorldMatrix);
+            renderObject.UpdateView(_scene.CameraComponent.ViewMatrix);
+        }
+        
+        private void DrawObjects()
+        {
+            foreach (var (_, renderObject) in RenderObjects)
+            {
+                renderObject.Draw();
+            }
         }
     }
 }

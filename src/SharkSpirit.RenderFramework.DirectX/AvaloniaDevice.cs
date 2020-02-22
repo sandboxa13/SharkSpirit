@@ -17,6 +17,10 @@ namespace SharkSpirit.RenderFramework.DirectX
         public Device GetDevice() => _device;
         public DeviceContext GetDeviceContext() => _device.ImmediateContext;
         public uint GetTextureId() => _textureId;
+        public Buffer GetBuffer()
+        {
+            throw new System.NotImplementedException();
+        }
 
         private void Initialize(IContainer services)
         {
