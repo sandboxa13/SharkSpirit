@@ -1,4 +1,5 @@
 using DryIoc;
+using SharpDX;
 
 namespace SharkSpirit.Engine
 {
@@ -10,6 +11,8 @@ namespace SharkSpirit.Engine
         {
             _timer = new GameTimer();
             Scene = new Scene(container);
+            
+            Scene.AddEntity(new Entity(Vector3.Zero));
         }
         
         public Scene Scene { get; private set; }
