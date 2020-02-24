@@ -16,7 +16,7 @@ namespace SharkSpirit.Engine
 
         public CameraComponent CameraComponent { get; set; }
         public RenderSystem RenderSystem { get; private set; }
-
+        public IConfiguration Configuration { get; private set; }
         public FastCollection<Entity> Entities { get; private set; }
 
         public void Draw()
@@ -28,7 +28,7 @@ namespace SharkSpirit.Engine
         public void AddEntity(Entity entity)
         {
             Entities.Add(entity);
-            RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new RenderObject());
+            RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new Cube(RenderSystem.Device, Configuration));
         }
 
         public void RemoveEntity(Entity entity)
@@ -42,6 +42,7 @@ namespace SharkSpirit.Engine
             RenderSystemFactory.CreateRenderSystem(container);
             CameraComponent = new CameraComponent();
             container.RegisterInstance<IScene>(this);
+            Configuration = container.Resolve<IConfiguration>();
         }
     }
 
