@@ -1,5 +1,4 @@
 using System;
-using DryIoc;
 using SharkSpirit.Core;
 using SharkSpirit.RenderFramework.DirectX;
 
@@ -7,16 +6,14 @@ namespace SharkSpirit.Engine.Systems
 {
     public static class RenderSystemFactory
     {
-        public static RenderSystem CreateRenderSystem(IContainer container)
+        public static RenderSystem CreateRenderSystem(IContainer container, IConfiguration configuration)
         {
-            return CreateRenderSystemInternal(container);
+            return CreateRenderSystemInternal(container, configuration);
         }
 
-        private static RenderSystem CreateRenderSystemInternal(IContainer container)
+        private static RenderSystem CreateRenderSystemInternal(IContainer container, IConfiguration configuration)
         {
-            var config = container.Resolve<IConfiguration>();
-
-            switch (config.EngineEditorType)
+            switch (configuration.EngineEditorType)
             {
                 case EngineEditorType.Avalonia:
                     return CreateAvaloniaRenderSystem(container);
@@ -25,15 +22,16 @@ namespace SharkSpirit.Engine.Systems
                 case EngineEditorType.Default:
                     return CreateDefaultRenderSystem(container);
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(config.EngineEditorType), config.EngineEditorType, "This editor type not supported");
+                    throw new ArgumentOutOfRangeException(nameof(configuration.EngineEditorType), configuration.EngineEditorType, "This editor type not supported");
             }
         }
 
         private static RenderSystem CreateDefaultRenderSystem(IContainer container)
         {
             var device = new DefaultDevice(container);
+            device.Initialize();
             
-            var scene = container.Resolve<IScene>();
+            var scene = container.GetService<IScene>();
 
             return new RenderSystem(device, scene);
         }
@@ -41,7 +39,7 @@ namespace SharkSpirit.Engine.Systems
         private static RenderSystem CreateWpfRenderSystem(IContainer container)
         {
             var device = new WpfDevice(container);
-            var scene = container.Resolve<IScene>();
+            var scene = container.GetService<IScene>();
 
             return new RenderSystem(device, scene);
         }
@@ -49,7 +47,7 @@ namespace SharkSpirit.Engine.Systems
         private static RenderSystem CreateAvaloniaRenderSystem(IContainer container)
         {
             var device = new AvaloniaDevice(container);
-            var scene = container.Resolve<IScene>();
+            var scene = container.GetService<IScene>();
 
             return new RenderSystem(device, scene);
         }

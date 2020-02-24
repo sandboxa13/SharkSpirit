@@ -1,4 +1,5 @@
-﻿using SharpDX.Direct3D11;
+﻿using SharpDX;
+using SharpDX.Direct3D11;
 
 namespace SharkSpirit.RenderFramework.DirectX
 {
@@ -8,5 +9,9 @@ namespace SharkSpirit.RenderFramework.DirectX
         DeviceContext GetDeviceContext();
         uint GetTextureId();
         Buffer GetBuffer();
+        void Initialize();
+        void Clear();
+        Matrix GetProjection();
+        void Flush();
     }
 }

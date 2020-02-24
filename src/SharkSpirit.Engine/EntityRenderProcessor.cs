@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SharkSpirit.RenderFramework.DirectX;
+using SharpDX;
 
 namespace SharkSpirit.Engine
 {
@@ -20,9 +21,9 @@ namespace SharkSpirit.Engine
 
         public void Draw()
         {
-            foreach (var (entity, renderObject) in RenderObjects)
+            foreach (var  renderObject in RenderObjects)
             {
-                Update(entity, renderObject);
+                Update( renderObject.Key, renderObject.Value);
             }
             
             DrawObjects();
@@ -37,13 +38,14 @@ namespace SharkSpirit.Engine
         {
             renderObject.UpdateWorld(entity.TransformComponent.WorldMatrix);
             renderObject.UpdateView(_scene.CameraComponent.ViewMatrix);
+            renderObject.UpdateViewProjection(Matrix.Multiply(_scene.CameraComponent.ViewMatrix, _scene.RenderSystem.Device.GetProjection()));
         }
         
         private void DrawObjects()
         {
-            foreach (var (_, renderObject) in RenderObjects)
+            foreach (var  renderObject in RenderObjects)
             {
-                renderObject.Draw();
+                renderObject.Value.Draw();
             }
         }
     }

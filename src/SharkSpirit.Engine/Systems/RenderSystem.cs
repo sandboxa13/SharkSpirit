@@ -20,5 +20,15 @@ namespace SharkSpirit.Engine.Systems
         {
             EntityRenderProcessor.Draw();
         }
+
+        public void Clear()
+        {
+            Device.Clear();
+        }
+
+        public void Flush()
+        {
+            Device.Flush();
+        }
     }
 }
