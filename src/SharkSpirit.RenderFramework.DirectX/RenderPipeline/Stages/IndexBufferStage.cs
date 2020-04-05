@@ -22,7 +22,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
         public int GetCount() => _count;
 
-        public override void BindToPipeLine()
+        public override void BindToPipeline()
         {
             Device.GetDeviceContext().InputAssembler.SetIndexBuffer(_indexBuffer, Format.R16_UInt, 0);
         }

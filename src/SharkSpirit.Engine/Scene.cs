@@ -29,6 +29,15 @@ namespace SharkSpirit.Engine
             RenderSystem.Flush();
         }
 
+        public void Draw(GameTimer timer)
+        {
+            CameraComponent.Update();
+
+            RenderSystem.Clear(timer);
+            RenderSystem.Draw();
+            RenderSystem.Flush();
+        }
+
         public void AddEntity(Entity entity)
         {
             Entities.Add(entity);
@@ -44,12 +53,14 @@ namespace SharkSpirit.Engine
         private void Initialize(IContainer container)
         {
             Configuration = container.GetService<Configuration>();
-            
-            RenderSystem = RenderSystemFactory.CreateRenderSystem(container, Configuration);
-            CameraComponent = new CameraComponent(new Entity(Vector3.Zero));
             container.AddService<IScene>(this);
+
+            RenderSystem = RenderSystemFactory.CreateRenderSystem(container, Configuration);
+            CameraComponent = new CameraComponent(new Entity(new Vector3(-8, 8, -13)));
             Entities = new FastCollection<Entity>();
         }
+
+        
     }
 
     public interface IScene

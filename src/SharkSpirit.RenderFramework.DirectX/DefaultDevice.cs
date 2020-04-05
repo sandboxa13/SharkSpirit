@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using SharkSpirit.Core;
 using SharkSpirit.Graphics;
 using SharpDX;
@@ -19,8 +18,10 @@ namespace SharkSpirit.RenderFramework.DirectX
         private Buffer _constantBuffer;
         private RenderTargetView _renderTargetView;
         private Matrix _projection;
-        private Matrix _view;
         private IConfiguration _configuration;
+        private SwapChain _swapChain;
+        private Texture2D _depthBuffer;
+        private DepthStencilView _depthView;
 
         public DefaultDevice(IContainer container)
         {
@@ -54,46 +55,42 @@ namespace SharkSpirit.RenderFramework.DirectX
         
         public void Initialize()
         {
+            _configuration = _container.GetService<Core.Configuration>();
             var windowHandleContainer = _container.GetService<WindowHandleContainer>();
-            _configuration = _container.GetService<IConfiguration>();
-            
-            var createDeviceFlag = DeviceCreationFlags.BgraSupport;
-            var driverTypes = new[] {DriverType.Hardware, DriverType.Warp, DriverType.Reference};
-            var featureLevels = new[] {FeatureLevel.Level_11_0};
-            foreach (var dt in driverTypes)
-            {
-                try
-                {
-                    _device = new Device(dt, createDeviceFlag, featureLevels);
-                }
-                catch (Exception)
-                {
-                    continue;
-                }
 
-                break;
+            var backBufferDesc = new ModeDescription((int)_configuration.Width, (int)_configuration.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm);
+
+            var swapChainDesc = new SwapChainDescription()
+            {
+                ModeDescription = backBufferDesc,
+                SampleDescription = new SampleDescription(1, 0),
+                Usage = Usage.RenderTargetOutput,
+                BufferCount = 1,
+                OutputHandle = windowHandleContainer.WindowHandle,
+                IsWindowed = true
+            };
+
+            using (var factory = new Factory1())
+            {
+                var adapter = factory.Adapters1[0];
+                var featureLevels = new[] {
+                    FeatureLevel.Level_11_0,
+                    FeatureLevel.Level_10_1,
+                    FeatureLevel.Level_10_0,
+                    FeatureLevel.Level_9_3,
+                };
+                Device.CreateWithSwapChain(adapter, DeviceCreationFlags.Debug | DeviceCreationFlags.BgraSupport, featureLevels, swapChainDesc, out _device, out _swapChain);
+                adapter.Dispose();
             }
 
             _immediateContext = _device.ImmediateContext;
-            
-            var rtDesc = new RenderTargetViewDescription
+
+            using (var backBuffer = _swapChain.GetBackBuffer<Texture2D>(0))
             {
-                Format = Format.B8G8R8A8_UNorm,
-                Dimension = RenderTargetViewDimension.Texture2D,
-                Texture2D = {MipSlice = 0}
-            };
-            
-            var dxgiResourceTypeGuid = (typeof(SharpDX.DXGI.Resource)).GUID;
-            Marshal.QueryInterface(windowHandleContainer.WindowHandle, ref dxgiResourceTypeGuid, out var dxgiResource);
-            var dxgiObject = new SharpDX.DXGI.Resource(dxgiResource);
-            var sharedHandle = dxgiObject.SharedHandle;
-            var outputResource = _device.OpenSharedResource<Texture2D>(sharedHandle);
-            dxgiObject.Dispose();
-            
-            _renderTargetView = new RenderTargetView(_device, outputResource, rtDesc);
-            
-            SetUpViewPort();
-            
+                _renderTargetView = new RenderTargetView(_device, backBuffer);
+            }
+
+
             var cbd = new BufferDescription()
             {
                 Usage = ResourceUsage.Default,
@@ -101,30 +98,56 @@ namespace SharkSpirit.RenderFramework.DirectX
                 BindFlags = BindFlags.ConstantBuffer,
                 CpuAccessFlags = CpuAccessFlags.None
             };
+
             _constantBuffer = new Buffer(_device, cbd);
-            
-            var eye = new Vector3(0, 1, -5);
-            var at = new Vector3(0, 1, 0);
-            var up = new Vector3(0, 1, 0);
-            _view = Matrix.LookAtLH(eye, at, up);
+
+
+            _depthBuffer = new Texture2D(_device, new Texture2DDescription()
+            {
+                Format = Format.D32_Float_S8X24_UInt,
+                ArraySize = 1,
+                MipLevels = 1,
+                Width = (int)_configuration.Width,
+                Height = (int)_configuration.Height,
+                SampleDescription = new SampleDescription(1, 0),
+                Usage = ResourceUsage.Default,
+                BindFlags = BindFlags.DepthStencil,
+                CpuAccessFlags = CpuAccessFlags.None,
+                OptionFlags = ResourceOptionFlags.None
+            });
+
+            _depthView = new DepthStencilView(_device, _depthBuffer);
+
+            SetUpViewPort();
+        }
+
+        public void Flush()
+        {
+            _swapChain.Present(1, PresentFlags.None);
+        }
+
+        public void Clear(TimeSpan timerTotalTime)
+        {
+            var c = (float)(Math.Sin(timerTotalTime.TotalSeconds) / 2.0f + 0.5f);
+
+            _immediateContext.ClearRenderTargetView(_renderTargetView, new Color4(c, c, 1, 1.0f));
+        }
+
+        public void Reinitialize()
+        {
+            throw new NotImplementedException();
         }
 
         public void Clear()
         {
             _immediateContext.ClearRenderTargetView(_renderTargetView, new Color4(0.07f, 0.0f, 0.12f, 1.0f));
-            _immediateContext.OutputMerger.SetRenderTargets(null, _renderTargetView);
-        }
-
-        public void Flush()
-        {
-            _immediateContext?.Flush();
         }
 
         public void SetUpViewPort()
         {
-            var vp = new Viewport(0, 0, (int) _configuration.Width, (int) _configuration.Height, 0f, 1f);
+            var vp = new Viewport(0, 0, (int) _configuration.Width, (int) _configuration.Height);
             _immediateContext.Rasterizer.SetViewport(vp);
-            _projection = Matrix.PerspectiveFovLH(MathUtil.PiOverFour, _configuration.Width / _configuration.Height, 0.01f, 100f);
+            _projection = Matrix.PerspectiveFovLH(MathUtil.PiOverFour, _configuration.Width / _configuration.Height, 0.01f, 100.0f);
         }
     }
 }

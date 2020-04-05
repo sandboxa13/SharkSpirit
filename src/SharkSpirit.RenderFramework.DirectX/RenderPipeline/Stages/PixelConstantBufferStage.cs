@@ -5,7 +5,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
         public PixelConstantBufferStage(IDevice device) : base(device)
         {
         }
-        public override void BindToPipeLine()
+        public override void BindToPipeline()
         {
             Device.GetDeviceContext().PixelShader.SetConstantBuffer(0, ConstantBuffer);
         }

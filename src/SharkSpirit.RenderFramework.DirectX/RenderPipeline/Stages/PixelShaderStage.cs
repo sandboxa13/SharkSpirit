@@ -14,9 +14,9 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
             _pixelShader = new PixelShader(device.GetDevice(), pixelShaderByteCode);
         }
 
-        public override void BindToPipeLine()
+        public override void BindToPipeline()
         {
-            Device.GetDeviceContext().PixelShader.SetShader(_pixelShader, null, 0);
+            Device.GetDeviceContext().PixelShader.Set(_pixelShader);
         }
     }
 }

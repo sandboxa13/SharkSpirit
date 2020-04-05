@@ -15,7 +15,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
             _vertexBuffer = Buffer.Create(device.GetDevice(), vertices, vbd);
         }
 
-        public override void BindToPipeLine()
+        public override void BindToPipeline()
         {
             Device.GetDeviceContext().InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(_vertexBuffer, Utilities.SizeOf<T>(), 0));
         }

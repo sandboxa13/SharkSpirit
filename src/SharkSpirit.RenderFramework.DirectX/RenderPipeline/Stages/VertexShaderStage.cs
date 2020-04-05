@@ -14,9 +14,9 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
             _vertexShader = new VertexShader(device.GetDevice(), vertexShaderByteCode);
         }
 
-        public override void BindToPipeLine()
+        public override void BindToPipeline()
         {
-            Device.GetDeviceContext().VertexShader.SetShader(_vertexShader, null, 0);
+            Device.GetDeviceContext().VertexShader.Set(_vertexShader);
         }
     }
 }

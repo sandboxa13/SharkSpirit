@@ -14,18 +14,25 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
             _vertexConstantBuffer = new VertexConstantBufferStage<Matrix>(device);
         }
 
-        public override void BindToPipeLine()
+        public override void BindToPipeline()
         {
+            var world = Matrix.Identity;
+
+            var eye = new Vector3(0, 1, -5);
+            var at = new Vector3(0, 1, 0);
+            var up = new Vector3(0, 1, 0);
+            var view = Matrix.LookAtLH(eye, at, up);
+
             var cb = new ConstantBuffer
             {
-                World = Matrix.Transpose(_renderObject.World),
-                View = Matrix.Transpose(_renderObject.View),
+                World = Matrix.Transpose(world),
+                View = Matrix.Transpose(view),
                 Projection = Matrix.Transpose(_renderObject.ViewProjection),
             };
 
             _vertexConstantBuffer.Update(cb, Device.GetBuffer());
 
-            _vertexConstantBuffer.BindToPipeLine();
+            _vertexConstantBuffer.BindToPipeline();
         }
     }
 }

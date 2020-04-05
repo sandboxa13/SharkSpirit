@@ -40,6 +40,8 @@ namespace SharkSpirit.Engine.Systems
         private static RenderSystem CreateWpfRenderSystem(IContainer container)
         {
             var device = new WpfDevice(container);
+            device.Initialize();
+
             var scene = container.GetService<IScene>();
 
             return new RenderSystem(device, scene);

@@ -25,7 +25,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline
         {
             foreach (var stage in _stages)
             {
-                stage.BindToPipeLine();
+                stage.BindToPipeline();
             }
         }
     }

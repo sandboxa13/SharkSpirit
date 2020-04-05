@@ -1,5 +1,7 @@
-﻿using SharpDX;
+﻿using System;
+using SharpDX;
 using SharpDX.Direct3D11;
+using Buffer = SharpDX.Direct3D11.Buffer;
 
 namespace SharkSpirit.RenderFramework.DirectX
 {
@@ -13,5 +15,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         void Clear();
         Matrix GetProjection();
         void Flush();
+        void Clear(TimeSpan timerTotalTime);
+        void Reinitialize();
     }
 }

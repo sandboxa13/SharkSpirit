@@ -48,6 +48,14 @@ namespace SharkSpirit.Core
                     registeredService.Remove(type);
             }
         }
+
+        public void ClearServices()
+        {
+            lock (registeredService)
+            {
+               registeredService.Clear();
+            }
+        }
     }
 
     public interface IContainer

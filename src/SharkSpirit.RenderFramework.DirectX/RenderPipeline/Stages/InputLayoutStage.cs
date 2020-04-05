@@ -21,7 +21,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
             });
         }
 
-        public override void BindToPipeLine()
+        public override void BindToPipeline()
         {
             Device.GetDeviceContext().InputAssembler.InputLayout = _inputLayout;
         }

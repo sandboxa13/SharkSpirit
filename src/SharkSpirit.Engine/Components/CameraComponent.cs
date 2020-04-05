@@ -16,9 +16,9 @@ namespace SharkSpirit.Engine.Components
 
             var lookAt = new Vector3(0, 0, 1);
 
-            var pitch = Entity.TransformComponent.Position.X * 0.0174532925f;
-            var yaw = Entity.TransformComponent.Position.Y * 0.0174532925f; 
-            var roll = Entity.TransformComponent.Position.Z * 0.0174532925f; 
+            var pitch = 24 * 0.0174532925f;
+            var yaw = 24 * 0.0174532925f; 
+            var roll = 0 * 0.0174532925f; 
 
             var rotationMatrix = Matrix.RotationYawPitchRoll(yaw, pitch, roll);
 
@@ -29,7 +29,5 @@ namespace SharkSpirit.Engine.Components
 
             ViewMatrix = Matrix.LookAtLH(position, lookAt, up);
         }
-
-       
     }
 }

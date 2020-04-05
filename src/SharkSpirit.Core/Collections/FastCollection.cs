@@ -18,7 +18,7 @@ namespace SharkSpirit.Core.Collections
             items = ArrayHelper<T>.Empty;
         }
 
-        public FastCollection([NotNull] IEnumerable<T> collection)
+        public FastCollection( IEnumerable<T> collection)
         {
             var is2 = collection as ICollection<T>;
             if (is2 != null)
@@ -182,7 +182,7 @@ namespace SharkSpirit.Core.Collections
         /// Adds the elements of the specified source to the end of <see cref="FastCollection{T}"/>.
         /// </summary>
         /// <param name="itemsArgs">The items to add to this collection.</param>
-        public void AddRange<TE>([NotNull] TE itemsArgs) where TE : IEnumerable<T>
+        public void AddRange<TE>(TE itemsArgs) where TE : IEnumerable<T>
         {
             foreach (var item in itemsArgs)
             {

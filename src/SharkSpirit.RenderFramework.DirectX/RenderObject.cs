@@ -9,6 +9,8 @@ namespace SharkSpirit.RenderFramework.DirectX
         private readonly IRenderPipeline _renderPipeline;
         public RenderObject(IDevice device)
         {
+            Device = device;
+
             _renderPipeline = new RenderPipeline.RenderPipeline(device);
         }
         

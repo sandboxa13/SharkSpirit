@@ -13,7 +13,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
             _primitiveTopology = primitiveTopology;
         }
 
-        public override void BindToPipeLine()
+        public override void BindToPipeline()
         {
             Device.GetDeviceContext().InputAssembler.PrimitiveTopology = _primitiveTopology;
         }

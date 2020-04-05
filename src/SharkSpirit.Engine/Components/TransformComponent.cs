@@ -9,8 +9,6 @@ namespace SharkSpirit.Engine.Components
         }
         
         public Matrix WorldMatrix = Matrix.Identity;
-        
-        public Matrix LocalMatrix = Matrix.Identity;
 
         public Vector3 Position;
 

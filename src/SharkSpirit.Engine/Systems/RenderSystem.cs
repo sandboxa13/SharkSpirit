@@ -30,5 +30,15 @@ namespace SharkSpirit.Engine.Systems
         {
             Device.Flush();
         }
+
+        public void Clear(GameTimer timer)
+        {
+            Device.Clear(timer.TotalTime);
+        }
+
+        public void Reinitialize()
+        {
+            Device.Reinitialize();
+        }
     }
 }

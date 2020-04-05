@@ -9,6 +9,6 @@
 
         protected IDevice Device { get; private set; }
 
-        public abstract void BindToPipeLine();
+        public abstract void BindToPipeline();
     }
 }

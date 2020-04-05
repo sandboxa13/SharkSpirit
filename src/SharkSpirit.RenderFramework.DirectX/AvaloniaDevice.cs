@@ -1,9 +1,11 @@
-﻿using SharkSpirit.Core;
+﻿using System;
+using SharkSpirit.Core;
 using SharkSpirit.Graphics;
 using SharkSpirit.RenderFramework.DirectX.Avalonia;
 using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
+using Buffer = SharpDX.Direct3D11.Buffer;
 using Device = SharpDX.Direct3D11.Device;
 
 namespace SharkSpirit.RenderFramework.DirectX
@@ -104,6 +106,21 @@ namespace SharkSpirit.RenderFramework.DirectX
         public void Flush()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void Clear(TimeSpan timerTotalTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Reinitialize()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Matrix GetView()
+        {
+            return Matrix.Identity;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
             ConstantBuffer = new Buffer(device.GetDevice(), cbd);
         }
-        protected  Buffer ConstantBuffer { get; set; }
+        protected Buffer ConstantBuffer { get; set; }
         
         public virtual void Update(ConstantBuffer consts, Buffer constantBuffer)
         {
@@ -21,7 +21,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
             Device.GetDeviceContext().UpdateSubresource(ref consts, constantBuffer);
         }
 
-        public override void BindToPipeLine()
+        public override void BindToPipeline()
         {
         }
     }
