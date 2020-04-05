@@ -1,32 +1,30 @@
-using System.Collections.Generic;
-using SharkSpirit.RenderFramework.DirectX.Pipeline;
+using SharkSpirit.RenderFramework.DirectX.RenderPipeline;
+using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages;
 using SharpDX;
 
 namespace SharkSpirit.RenderFramework.DirectX
 {
     public class RenderObject
     {
-        private readonly List<BindableBase> _bindables;
-
-        public RenderObject()
+        private readonly IRenderPipeline _renderPipeline;
+        public RenderObject(IDevice device)
         {
-            _bindables = new List<BindableBase>();
-
+            _renderPipeline = new RenderPipeline.RenderPipeline(device);
         }
         
-        protected IndexBufferBindable IndexBufferBindable;
+        protected IndexBufferStage IndexBufferStage;
         protected IDevice Device;
 
-        protected void AddBindable(BindableBase bindable)
+        protected void AddStage(StageBase stage)
         {
-            _bindables.Add(bindable);
+            _renderPipeline.AddStage(stage);
         }
 
-        protected void AddIndexBuffer(IndexBufferBindable indexBufferBindable)
+        protected void AddIndexBufferStage(IndexBufferStage indexBufferStage)
         {
-            IndexBufferBindable = indexBufferBindable;
+            IndexBufferStage = indexBufferStage;
 
-            _bindables.Add(indexBufferBindable);
+            _renderPipeline.AddStage(indexBufferStage);
         }
         
         public Matrix World { get; private set; }
@@ -50,12 +48,9 @@ namespace SharkSpirit.RenderFramework.DirectX
         
         public void Draw()
         {
-            foreach (var bindable in _bindables)
-            {
-                bindable.Bind();
-            }
+            _renderPipeline.Bind();
 
-            Device.GetDeviceContext().DrawIndexed(IndexBufferBindable.GetCount(), 0, 0);
+            Device.GetDeviceContext().DrawIndexed(IndexBufferStage.GetCount(), 0, 0);
         }
     }
 }

@@ -1,15 +1,15 @@
-using SharkSpirit.RenderFramework.DirectX.Pipeline.Factories;
+using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Factories;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 
-namespace SharkSpirit.RenderFramework.DirectX.Pipeline
+namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
-    public class IndexBufferBindable : BindableBase
+    public class IndexBufferStage : StageBase 
     {
         private readonly Buffer _indexBuffer;
         private readonly int _count;
 
-        public IndexBufferBindable(
+        public IndexBufferStage(
             IDevice device,
             ushort[] indices) : base(device)
         {
@@ -20,11 +20,11 @@ namespace SharkSpirit.RenderFramework.DirectX.Pipeline
             _indexBuffer = Buffer.Create(device.GetDevice(), indices, desc);
         }
 
-        public override void Bind()
+        public int GetCount() => _count;
+
+        public override void BindToPipeLine()
         {
             Device.GetDeviceContext().InputAssembler.SetIndexBuffer(_indexBuffer, Format.R16_UInt, 0);
         }
-
-        public int GetCount() => _count;
     }
 }

@@ -3,6 +3,8 @@ using SharkSpirit.Core.Collections;
 using SharkSpirit.Engine.Components;
 using SharkSpirit.Engine.Systems;
 using SharkSpirit.RenderFramework.DirectX;
+using SharpDX;
+using Configuration = SharkSpirit.Core.Configuration;
 
 namespace SharkSpirit.Engine
 {
@@ -41,10 +43,10 @@ namespace SharkSpirit.Engine
 
         private void Initialize(IContainer container)
         {
-            Configuration = container.GetService<IConfiguration>();
+            Configuration = container.GetService<Configuration>();
             
             RenderSystem = RenderSystemFactory.CreateRenderSystem(container, Configuration);
-            CameraComponent = new CameraComponent();
+            CameraComponent = new CameraComponent(new Entity(Vector3.Zero));
             container.AddService<IScene>(this);
             Entities = new FastCollection<Entity>();
         }

@@ -2,7 +2,7 @@ using SharkSpirit.Graphics;
 using SharpDX;
 using SharpDX.Direct3D11;
 
-namespace SharkSpirit.RenderFramework.DirectX.Pipeline.Factories
+namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Factories
 {
     public static class ConstantBufferDescriptionFactory
     {

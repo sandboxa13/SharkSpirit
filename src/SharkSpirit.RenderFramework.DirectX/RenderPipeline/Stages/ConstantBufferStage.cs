@@ -1,12 +1,12 @@
 using SharkSpirit.Graphics;
-using SharkSpirit.RenderFramework.DirectX.Pipeline.Factories;
+using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Factories;
 using SharpDX.Direct3D11;
 
-namespace SharkSpirit.RenderFramework.DirectX.Pipeline
+namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
-    public class ConstantBufferBindable<T> : BindableBase where T : struct 
+    public class ConstantBufferStage<T> : StageBase where T : struct 
     {
-        public ConstantBufferBindable(IDevice device) : base(device)
+        public ConstantBufferStage(IDevice device) : base(device)
         {
             var cbd = ConstantBufferDescriptionFactory.CreateConstantBufferDescription();
 
@@ -20,10 +20,9 @@ namespace SharkSpirit.RenderFramework.DirectX.Pipeline
 
             Device.GetDeviceContext().UpdateSubresource(ref consts, constantBuffer);
         }
-        
-        public override void Bind()
+
+        public override void BindToPipeLine()
         {
-            
         }
     }
 }

@@ -2,13 +2,13 @@ using SharpDX.D3DCompiler;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 
-namespace SharkSpirit.RenderFramework.DirectX.Pipeline
+namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
-    public class InputLayoutBindable : BindableBase
+    public class InputLayoutStage : StageBase
     {
         private readonly InputLayout _inputLayout;
 
-        public InputLayoutBindable(IDevice device, string path) : base(device)
+        public InputLayoutStage(IDevice device, string path) : base(device)
         {
             var vertexShaderByteCode = ShaderBytecode.CompileFromFile(path, "VS", "vs_4_0", ShaderFlags.Debug);
 
@@ -21,7 +21,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Pipeline
             });
         }
 
-        public override void Bind()
+        public override void BindToPipeLine()
         {
             Device.GetDeviceContext().InputAssembler.InputLayout = _inputLayout;
         }

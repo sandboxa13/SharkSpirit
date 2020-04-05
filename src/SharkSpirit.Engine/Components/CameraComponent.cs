@@ -4,6 +4,10 @@ namespace SharkSpirit.Engine.Components
 {
     public class CameraComponent : EntityComponent
     {
+        public CameraComponent(Entity entity) : base(entity)
+        {
+        }
+        
         public Matrix ViewMatrix;
         
         public void Update()
@@ -25,5 +29,7 @@ namespace SharkSpirit.Engine.Components
 
             ViewMatrix = Matrix.LookAtLH(position, lookAt, up);
         }
+
+       
     }
 }

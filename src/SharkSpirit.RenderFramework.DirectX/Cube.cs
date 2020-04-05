@@ -1,7 +1,7 @@
 using System.IO;
 using SharkSpirit.Core;
 using SharkSpirit.Graphics;
-using SharkSpirit.RenderFramework.DirectX.Pipeline;
+using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages;
 using SharpDX;
 using SharpDX.Direct3D;
 
@@ -9,7 +9,7 @@ namespace SharkSpirit.RenderFramework.DirectX
 {
     public class Cube : RenderObject
     {
-        public Cube(IDevice device, IConfiguration configuration)
+        public Cube(IDevice device, IConfiguration configuration) : base(device)
         {
             var vertices = new[]
             {
@@ -23,11 +23,11 @@ namespace SharkSpirit.RenderFramework.DirectX
                 new SimpleVertex(new Vector3(-1.0f, -1.0f, 1.0f), new Vector4(0.0f, 0.0f, 0.0f, 0.5f)),
             };
 
-            AddBindable(new VertexShaderBindable(device, Path.Combine(configuration.PathToShaders, "vertexShader.hlsl")));
+            AddStage(new VertexShaderStage(device, Path.Combine(configuration.PathToShaders, "vertexShader.hlsl")));
 
-            AddBindable(new PixelShaderBindable(device, Path.Combine(configuration.PathToShaders, "pixelShader.hlsl")));
+            AddStage(new PixelShaderStage(device, Path.Combine(configuration.PathToShaders, "pixelShader.hlsl")));
 
-            AddBindable(new VertexBufferBindable<SimpleVertex>(device, vertices));
+            AddStage(new VertexBufferStage<SimpleVertex>(device, vertices));
 
             var indices = new ushort[]
             {
@@ -51,13 +51,13 @@ namespace SharkSpirit.RenderFramework.DirectX
             };
 
 
-            AddIndexBuffer(new IndexBufferBindable(device, indices));
+            AddIndexBufferStage(new IndexBufferStage(device, indices));
 
-            AddBindable(new InputLayoutBindable(device, Path.Combine(configuration.PathToShaders, "vertexShader.hlsl")));
+            AddStage(new InputLayoutStage(device, Path.Combine(configuration.PathToShaders, "vertexShader.hlsl")));
 
-            AddBindable(new TopologyBindable(device, PrimitiveTopology.TriangleList));
+            AddStage(new TopologyStage(device, PrimitiveTopology.TriangleList));
 
-            AddBindable(new TransformConstantBufferBindable(device, this));
+            AddStage(new TransformConstantBufferStage(device, this));
         }
     }
 }

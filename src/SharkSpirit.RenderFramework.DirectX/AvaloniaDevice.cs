@@ -1,50 +1,105 @@
 ﻿using SharkSpirit.Core;
+using SharkSpirit.Graphics;
+using SharkSpirit.RenderFramework.DirectX.Avalonia;
 using SharpDX;
 using SharpDX.Direct3D11;
+using SharpDX.DXGI;
+using Device = SharpDX.Direct3D11.Device;
 
 namespace SharkSpirit.RenderFramework.DirectX
 {
     public class AvaloniaDevice : ComponentBase, IDevice
     {
-        private readonly IContainer _container;
         private Device _device;
+        private DeviceContext _immediateContext;
+        private Texture2D _texture;
         private RenderTargetView _renderTargetView;
-        private uint _textureId;
-        public AvaloniaDevice(IContainer container)
+        private readonly AvaloniaInterop _avaloniaInterop;
+        private readonly IContainer _container;
+        private IConfiguration _configuration;
+        private Matrix _projection;
+        private Buffer _constantBuffer;
+        private Matrix _world;
+        private Matrix _view;
+
+        public AvaloniaDevice(
+            IContainer container,
+            AvaloniaInteropHelper avaloniaInteropHelper)
         {
             _container = container;
+            _avaloniaInterop = new AvaloniaInterop(container, avaloniaInteropHelper.GlFeature, avaloniaInteropHelper.DirectXVersion);
         }
 
         public Device GetDevice() => _device;
         public DeviceContext GetDeviceContext() => _device.ImmediateContext;
-        public uint GetTextureId() => _textureId;
-        public Buffer GetBuffer()
-        {
-            throw new System.NotImplementedException();
-        }
+        public uint GetTextureId() => _avaloniaInterop.GetTextureId();
+        public Buffer GetBuffer() => _constantBuffer;
 
         public void Initialize()
         {
-            var angleDirectXInterop = _container.GetService<IAngleDirectXInterop>();
+            _configuration = _container.GetService<IConfiguration>();
 
-            var interopTexture = angleDirectXInterop.InitializeDevice();
-            _device = angleDirectXInterop.GetDevice();
-            _textureId = angleDirectXInterop.GetTextureId();
+            _avaloniaInterop.Initialize();
 
-            angleDirectXInterop.InitializeSurface();
+            _device = new Device(_avaloniaInterop.GetDevicePtr());
+            _immediateContext = _device.ImmediateContext;
 
-            _renderTargetView = new RenderTargetView(_device, interopTexture);
+            _texture = new Texture2D(_device, new Texture2DDescription
+            {
+                Width = (int) _configuration.Width,
+                Height = (int) _configuration.Height,
+                ArraySize = 1,
+                BindFlags = BindFlags.RenderTarget | BindFlags.ShaderResource,
+                Usage = ResourceUsage.Default,
+                CpuAccessFlags = CpuAccessFlags.None,
+                Format = Format.B8G8R8A8_UNorm,
+                MipLevels = 1,
+                OptionFlags = ResourceOptionFlags.Shared,
+                SampleDescription = new SampleDescription(1, 0)
+            });
+
+            _renderTargetView = new RenderTargetView(_device, _texture);
+
+            _avaloniaInterop.InitializeSurface(_texture.NativePointer);
+
+            SetUpViewport();
+
+            _immediateContext.OutputMerger.SetRenderTargets(null, _renderTargetView);
+
+            var cbd = new BufferDescription()
+            {
+                Usage = ResourceUsage.Default,
+                SizeInBytes = Utilities.SizeOf<ConstantBuffer>(),
+                BindFlags = BindFlags.ConstantBuffer,
+                CpuAccessFlags = CpuAccessFlags.None
+            };
+            _constantBuffer = new Buffer(_device, cbd);
+
+            _world = Matrix.Identity;
+
+            var eye = new Vector3(0, 1, -5);
+            var at = new Vector3(0, 1, 0);
+            var up = new Vector3(0, 1, 0);
+            _view = Matrix.LookAtLH(eye, at, up);
+        }
+
+        private void SetUpViewport()
+        {
+            var vp = new Viewport(0, 0, (int) _configuration.Width,
+                (int) _configuration.Height, 0f, 1f);
+            _immediateContext.Rasterizer.SetViewport(vp);
+            _projection = Matrix.PerspectiveFovLH(MathUtil.PiOverFour,
+                (float) _configuration.Width /
+                (float) _configuration.Height, 0.01f, 100f);
         }
 
         public void Clear()
         {
-            throw new System.NotImplementedException();
+            _immediateContext
+                .ClearRenderTargetView(_renderTargetView, new Color4(0.07f, 0.0f, 0.12f, 1.0f));
         }
 
-        public Matrix GetProjection()
-        {
-            throw new System.NotImplementedException();
-        }
+        public Matrix GetProjection() => _projection;
 
         public void Flush()
         {

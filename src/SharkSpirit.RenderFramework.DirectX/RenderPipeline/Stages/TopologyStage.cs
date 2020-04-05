@@ -1,19 +1,19 @@
 using SharpDX.Direct3D;
 
-namespace SharkSpirit.RenderFramework.DirectX.Pipeline
+namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
-    public class TopologyBindable : BindableBase
+    public class TopologyStage : StageBase
     {
         private readonly PrimitiveTopology _primitiveTopology;
 
-        public TopologyBindable(
+        public TopologyStage(
             IDevice device, 
             PrimitiveTopology primitiveTopology) : base(device)
         {
             _primitiveTopology = primitiveTopology;
         }
 
-        public override void Bind()
+        public override void BindToPipeLine()
         {
             Device.GetDeviceContext().InputAssembler.PrimitiveTopology = _primitiveTopology;
         }

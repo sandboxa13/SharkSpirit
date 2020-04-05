@@ -4,6 +4,10 @@ namespace SharkSpirit.Engine.Components
 {
     public class TransformComponent : EntityComponent
     {
+        public TransformComponent(Entity entity) : base(entity)
+        {
+        }
+        
         public Matrix WorldMatrix = Matrix.Identity;
         
         public Matrix LocalMatrix = Matrix.Identity;

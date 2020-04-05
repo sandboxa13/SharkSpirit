@@ -15,7 +15,7 @@ namespace SharkSpirit.Engine
             Components = new FastCollection<EntityComponent>();
 
             Id = Guid.NewGuid();
-            TransformComponent = new TransformComponent { Position = position };
+            TransformComponent = new TransformComponent (this){ Position = position };
             Components.Add(TransformComponent);
         }
     

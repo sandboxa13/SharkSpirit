@@ -1,20 +1,20 @@
 using SharkSpirit.Graphics;
 using SharpDX;
 
-namespace SharkSpirit.RenderFramework.DirectX.Pipeline
+namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
-    public class TransformConstantBufferBindable : BindableBase
+    public class TransformConstantBufferStage : StageBase
     {
         private readonly RenderObject _renderObject;
-        private readonly VertexConstantBufferBindable<Matrix> _vertexConstantBuffer;
+        private readonly VertexConstantBufferStage<Matrix> _vertexConstantBuffer;
         
-        public TransformConstantBufferBindable(IDevice device, RenderObject renderObject) : base(device)
+        public TransformConstantBufferStage(IDevice device, RenderObject renderObject) : base(device)
         {
             _renderObject = renderObject;
-            _vertexConstantBuffer = new VertexConstantBufferBindable<Matrix>(device);
+            _vertexConstantBuffer = new VertexConstantBufferStage<Matrix>(device);
         }
 
-        public override void Bind()
+        public override void BindToPipeLine()
         {
             var cb = new ConstantBuffer
             {
@@ -25,7 +25,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Pipeline
 
             _vertexConstantBuffer.Update(cb, Device.GetBuffer());
 
-            _vertexConstantBuffer.Bind();
+            _vertexConstantBuffer.BindToPipeLine();
         }
     }
 }
