@@ -50,15 +50,9 @@ namespace SharkSpirit.Wpf
             container.AddService(windowHandleContainer);
 
             _game = new Game(container);
-            _game.Scene.AddEntity(new Entity(new Vector3(0, 0, 0)));
-            _game.Scene.AddEntity(new Entity(new Vector3(3, 0, 0)));
-            _game.Scene.AddEntity(new Entity(new Vector3(6, 0, 0)));
-            _game.Scene.AddEntity(new Entity(new Vector3(9, 0, 0)));
 
+            _game.Scene.AddEntity(new Entity(new Vector3(0, 0, 0)));
             _game.Scene.AddEntity(new Entity(new Vector3(0, 0, 5)));
-            _game.Scene.AddEntity(new Entity(new Vector3(3, 0, 5)));
-            _game.Scene.AddEntity(new Entity(new Vector3(6, 0, 5)));
-            _game.Scene.AddEntity(new Entity(new Vector3(9, 0, 5)));
 
             InteropImage.WindowOwner = windowHandle;
             InteropImage.OnRender = OnRender;
