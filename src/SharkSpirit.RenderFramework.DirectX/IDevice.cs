@@ -17,5 +17,6 @@ namespace SharkSpirit.RenderFramework.DirectX
         void Flush();
         void Clear(TimeSpan timerTotalTime);
         void Reinitialize();
+        void DrawSceneInfo(string output);
     }
 }

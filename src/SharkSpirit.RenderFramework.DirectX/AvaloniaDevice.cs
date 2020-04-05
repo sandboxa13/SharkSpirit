@@ -118,6 +118,11 @@ namespace SharkSpirit.RenderFramework.DirectX
             throw new NotImplementedException();
         }
 
+        public void DrawSceneInfo(string output)
+        {
+            throw new NotImplementedException();
+        }
+
         public Matrix GetView()
         {
             return Matrix.Identity;

@@ -22,6 +22,7 @@ namespace SharkSpirit.Engine
         public RenderSystem RenderSystem { get; set; }
         public ScriptSystem ScriptSystem { get; set; }
         public InputSystem InputSystem { get; set; }
+        public FpsSystem FpsSystem { get; set; }
         public IConfiguration Configuration { get; private set; }
         public FastCollection<Entity> Entities { get; private set; }
 
@@ -46,8 +47,23 @@ namespace SharkSpirit.Engine
 
             CameraComponent.Update();
 
+           
+
             RenderSystem.Clear(timer);
             RenderSystem.Draw();
+
+            FpsSystem.Tick();
+
+            var output = string.Join(Environment.NewLine, 
+                "SCENE INFO ", 
+                "",
+                $"FPS : {FpsSystem.GetFps()}", 
+                $"FRAME TIME : {FpsSystem.GetMspf()} (ms)", 
+                $"MOUSE X : {InputSystem.InputManager.MouseX()}", 
+                $"MOUSE Y : {InputSystem.InputManager.MouseY()}",
+                $"SCENE OBJECTS COUNT : {Entities.Count} ");
+
+            RenderSystem.DrawSceneInfo(output);
             RenderSystem.Flush();
         }
 
@@ -92,6 +108,9 @@ namespace SharkSpirit.Engine
             cameraMoveScript.Initialize(container);
 
             ScriptSystem.AddScript(cameraMoveScript);
+
+            FpsSystem = new FpsSystem(120, container);
+            container.AddService(container);
         }
     }
 

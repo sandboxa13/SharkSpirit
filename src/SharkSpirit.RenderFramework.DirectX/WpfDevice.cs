@@ -102,6 +102,16 @@ namespace SharkSpirit.RenderFramework.DirectX
             _constantBuffer = new Buffer(_device, cbd);
         }
 
+        public void DrawSceneInfo(string output)
+        {
+            var brush = new SharpDX.Direct2D1.SolidColorBrush(_renderTarget2D, new SharpDX.Color4(1f, 1f, 1f, 1f));
+
+
+            _renderTarget2D.BeginDraw();
+            _renderTarget2D.DrawTextLayout(new SharpDX.Vector2(50, 50), new TextLayout(new Factory(), output, DebugTextFormat, 230, 230), brush);
+            _renderTarget2D.EndDraw();
+        }
+
         public void Clear(TimeSpan timerTotalTime)
         {
             //var c = (float)(Math.Sin(timerTotalTime.TotalSeconds) / 2.0f + 0.5f);
@@ -110,11 +120,6 @@ namespace SharkSpirit.RenderFramework.DirectX
             //_immediateContext.ClearRenderTargetView(_renderTargetView, new Color4(c1, c, 1, 1.0f));
 
             _immediateContext.ClearRenderTargetView(_renderTargetView, new Color4(0.07f, 0.0f, 0.12f, 1.0f));
-
-            var brush = new SharpDX.Direct2D1.SolidColorBrush(_renderTarget2D, new SharpDX.Color4(1f, 1f, 1f, 1f));
-            _renderTarget2D.BeginDraw();
-            _renderTarget2D.DrawTextLayout(new SharpDX.Vector2(50, 50),new TextLayout(new Factory(), "dfgdfsg", DebugTextFormat, 30, 30) , brush);
-            _renderTarget2D.EndDraw();
         }
 
         public void Reinitialize()
@@ -149,7 +154,7 @@ namespace SharkSpirit.RenderFramework.DirectX
             }
             using (var fontFactory = new SharpDX.DirectWrite.Factory())
             {
-                DebugTextFormat = new TextFormat(fontFactory, "Arial", 12f);
+                DebugTextFormat = new TextFormat(fontFactory, "Arial", 15f);
             }
 
             var outputResourceDesc = outputResource.Description;

@@ -138,6 +138,11 @@ namespace SharkSpirit.RenderFramework.DirectX
             throw new NotImplementedException();
         }
 
+        public void DrawSceneInfo(string output)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Clear()
         {
             _immediateContext.ClearRenderTargetView(_renderTargetView, new Color4(0.07f, 0.0f, 0.12f, 1.0f));

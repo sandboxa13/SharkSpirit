@@ -21,6 +21,11 @@ namespace SharkSpirit.Engine.Systems
             EntityRenderProcessor.Draw();
         }
 
+        public void DrawSceneInfo(string output)
+        {
+            Device.DrawSceneInfo(output);
+        }
+
         public void Clear()
         {
             Device.Clear();
