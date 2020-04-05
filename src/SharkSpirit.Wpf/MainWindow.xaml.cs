@@ -51,8 +51,14 @@ namespace SharkSpirit.Wpf
 
             _game = new Game(container);
 
-            _game.Scene.AddEntity(new Entity(new Vector3(0, 0, 0)));
-            _game.Scene.AddEntity(new Entity(new Vector3(0, 0, 5)));
+            var tmp = 0;
+
+            for (var i = 0; i < 40; i++)
+            {
+                _game.Scene.AddEntity(new Entity(new Vector3(tmp, 0, 0)));
+
+                tmp += 5;
+            }
 
             InteropImage.WindowOwner = windowHandle;
             InteropImage.OnRender = OnRender;
