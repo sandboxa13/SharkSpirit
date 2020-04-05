@@ -1,4 +1,5 @@
 ﻿using System;
+using SharpDX.DirectInput;
 
 namespace SharkSpirit.Engine.Systems.Scripts
 {
@@ -28,6 +29,15 @@ namespace SharkSpirit.Engine.Systems.Scripts
 
                 Camera.Entity.TransformComponent.Position.Z += dx - dy;
                 Camera.Entity.TransformComponent.Position.Z = Clamp(Camera.Entity.TransformComponent.Position.Z, 5.0f, 150.0f);
+            }
+
+            if (Input.InputManager.IsPressed(Key.W))
+            {
+                Camera.Entity.TransformComponent.Position.Z -= 0.25f;
+            }
+            if (Input.InputManager.IsPressed(Key.S))
+            {
+                Camera.Entity.TransformComponent.Position.Z += 0.25f;
             }
 
             _lastMousePosX = Input.InputManager.MouseX();
