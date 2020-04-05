@@ -59,8 +59,6 @@ namespace SharkSpirit.Engine
             CameraComponent = new CameraComponent(new Entity(new Vector3(-8, 8, -13)));
             Entities = new FastCollection<Entity>();
         }
-
-        
     }
 
     public interface IScene

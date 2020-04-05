@@ -6,6 +6,8 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using SharkSpirit.Core;
 using SharkSpirit.Engine;
+using SharpDX;
+using Configuration = SharkSpirit.Core.Configuration;
 
 namespace SharkSpirit.Wpf
 {
@@ -48,7 +50,7 @@ namespace SharkSpirit.Wpf
             container.AddService(windowHandleContainer);
 
             _game = new Game(container);
-
+            _game.Scene.AddEntity(new Entity(Vector3.Zero));
             InteropImage.WindowOwner = windowHandle;
             InteropImage.OnRender = OnRender;
 

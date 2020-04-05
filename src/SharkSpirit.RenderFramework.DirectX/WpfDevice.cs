@@ -21,8 +21,6 @@ namespace SharkSpirit.RenderFramework.DirectX
         private RenderTargetView _renderTargetView;
         private Matrix _projection;
         private IConfiguration _configuration;
-        private Texture2D _depthBuffer;
-        private DepthStencilView _depthView;
         public WpfDevice(IContainer container)
         {
             _container = container;
@@ -94,17 +92,16 @@ namespace SharkSpirit.RenderFramework.DirectX
                 CpuAccessFlags = CpuAccessFlags.None
             };
             _constantBuffer = new Buffer(_device, cbd);
-
-            var eye = new Vector3(0, 1, -5);
-            var at = new Vector3(0, 1, 0);
-            var up = new Vector3(0, 1, 0);
         }
 
         public void Clear(TimeSpan timerTotalTime)
         {
-            var c = (float)(Math.Sin(timerTotalTime.TotalSeconds) / 2.0f + 0.5f);
+            //var c = (float)(Math.Sin(timerTotalTime.TotalSeconds) / 2.0f + 0.5f);
+            //var c1 = (float)(Math.Sin(timerTotalTime.TotalSeconds) / 2.0f + 1.5f);
 
-            _immediateContext.ClearRenderTargetView(_renderTargetView, new Color4(c, c, 1, 1.0f));
+            //_immediateContext.ClearRenderTargetView(_renderTargetView, new Color4(c1, c, 1, 1.0f));
+
+            _immediateContext.ClearRenderTargetView(_renderTargetView, new Color4(0.07f, 0.0f, 0.12f, 1.0f));
         }
 
         public void Reinitialize()
@@ -124,7 +121,7 @@ namespace SharkSpirit.RenderFramework.DirectX
                 Texture2D = { MipSlice = 0 }
             };
 
-            _renderTargetView = new SharpDX.Direct3D11.RenderTargetView(_device, outputResource, rtDesc);
+            _renderTargetView = new RenderTargetView(_device, outputResource, rtDesc);
 
             var outputResourceDesc = outputResource.Description;
             if (outputResourceDesc.Width != _configuration.Width || outputResourceDesc.Height != _configuration.Height)
