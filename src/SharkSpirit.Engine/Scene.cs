@@ -109,7 +109,7 @@ namespace SharkSpirit.Engine
 
             ScriptSystem.AddScript(cameraMoveScript);
 
-            FpsSystem = new FpsSystem(120, container);
+            FpsSystem = new FpsSystem(1000, container);
             container.AddService(container);
         }
     }
