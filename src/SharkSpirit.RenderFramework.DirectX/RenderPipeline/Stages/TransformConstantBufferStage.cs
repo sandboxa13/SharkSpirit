@@ -16,17 +16,12 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
         public override void BindToPipeline()
         {
-            var world = Matrix.Identity;
-
-            var eye = new Vector3(0, 1, -5);
-            var at = new Vector3(0, 1, 0);
-            var up = new Vector3(0, 1, 0);
-            var view = Matrix.LookAtLH(eye, at, up);
+            var world = _renderObject.World;
 
             var cb = new ConstantBuffer
             {
                 World = Matrix.Transpose(world),
-                View = Matrix.Transpose(view),
+                View = Matrix.Transpose(Matrix.Identity),
                 Projection = Matrix.Transpose(_renderObject.ViewProjection),
             };
 

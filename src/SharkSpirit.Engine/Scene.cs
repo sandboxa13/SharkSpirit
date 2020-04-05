@@ -41,31 +41,31 @@ namespace SharkSpirit.Engine
 
         public void Draw(GameTimer timer)
         {
+            // update user input
             InputSystem.UpdateInput();
 
+            // execute scripts
             ScriptSystem.ExecuteScripts();
 
+            // update camera
             CameraComponent.Update();
 
-           
-
+            // clear context
             RenderSystem.Clear(timer);
+
+            // draw
             RenderSystem.Draw();
 
+            // tick fps 
             FpsSystem.Tick();
 
-            var output = string.Join(Environment.NewLine, 
-                "SCENE INFO ", 
-                "",
-                $"FPS : {FpsSystem.GetFps()}", 
-                $"FRAME TIME : {FpsSystem.GetMspf()} (ms)", 
-                $"MOUSE X : {InputSystem.InputManager.MouseX()}", 
-                $"MOUSE Y : {InputSystem.InputManager.MouseY()}",
-                $"SCENE OBJECTS COUNT : {Entities.Count} ");
+            BuildAndDrawSceneInfo();
 
-            RenderSystem.DrawSceneInfo(output);
+            
             RenderSystem.Flush();
         }
+
+        
 
         public void AddEntity(Entity entity)
         {
@@ -109,8 +109,22 @@ namespace SharkSpirit.Engine
 
             ScriptSystem.AddScript(cameraMoveScript);
 
-            FpsSystem = new FpsSystem(1000, container);
-            container.AddService(container);
+            FpsSystem = new FpsSystem(60, container);
+            container.AddService(FpsSystem);
+        }
+
+        private void BuildAndDrawSceneInfo()
+        {
+            var output = string.Join(Environment.NewLine,
+                "SCENE INFO ",
+                "",
+                $"FPS : {FpsSystem.GetFps()}",
+                $"FRAME TIME : {FpsSystem.GetMspf()} (ms)",
+                $"MOUSE X : {InputSystem.InputManager.MouseX()}",
+                $"MOUSE Y : {InputSystem.InputManager.MouseY()}",
+                $"SCENE OBJECTS COUNT : {Entities.Count} ");
+
+            RenderSystem.DrawSceneInfo(output);
         }
     }
 
