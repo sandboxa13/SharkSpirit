@@ -12,8 +12,8 @@ namespace SharkSpirit.Engine.Systems.Scripts
         {
             if (Input.InputManager.LMouseDown())
             {
-                var dx = XMConvertToRadians(0.55f * Input.InputManager.MouseX() - _lastMousePosX);
-                var dy = XMConvertToRadians(0.55f * Input.InputManager.MouseY() - _lastMousePosY);
+                var dx = ConvertToRadians(0.55f * Input.InputManager.MouseX() - _lastMousePosX);
+                var dy = ConvertToRadians(0.55f * Input.InputManager.MouseY() - _lastMousePosY);
 
                 Camera.Entity.TransformComponent.Position.X += dx;
                 Camera.Entity.TransformComponent.Position.Y += dy;
@@ -24,8 +24,8 @@ namespace SharkSpirit.Engine.Systems.Scripts
             }
             else if(Input.InputManager.RMouseDown())
             {
-                var dx = XMConvertToRadians(0.05f * Input.InputManager.MouseX() - _lastMousePosX);
-                var dy = XMConvertToRadians(0.05f * Input.InputManager.MouseY() - _lastMousePosY);
+                var dx = ConvertToRadians(0.05f * Input.InputManager.MouseX() - _lastMousePosX);
+                var dy = ConvertToRadians(0.05f * Input.InputManager.MouseY() - _lastMousePosY);
 
                 Camera.Entity.TransformComponent.Position.Z += dx - dy;
                 Camera.Entity.TransformComponent.Position.Z = Clamp(Camera.Entity.TransformComponent.Position.Z, 5.0f, 150.0f);
@@ -49,6 +49,6 @@ namespace SharkSpirit.Engine.Systems.Scripts
             return x < low ? low : (x > high ? high : x);
         }
 
-        float XMConvertToRadians(float fDegrees) { return (float) (fDegrees * (Math.PI / 180.0f)); }
+        private float ConvertToRadians(float fDegrees) { return (float) (fDegrees * (Math.PI / 180.0f)); }
     }
 }
