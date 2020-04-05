@@ -1,3 +1,4 @@
+using System;
 using SharpDX;
 
 namespace SharkSpirit.Engine.Components
@@ -12,20 +13,20 @@ namespace SharkSpirit.Engine.Components
         
         public void Update()
         {
-            var position = new Vector3(Entity.TransformComponent.Position.X, Entity.TransformComponent.Position.Y, Entity.TransformComponent.Position.Z);
+            var position = new Vector3(Entity.TransformComponent.Position.X, Entity.TransformComponent.Position.Y,
+                Entity.TransformComponent.Position.Z)
+            {
+                X = (float) (Entity.TransformComponent.Position.Z * Math.Sin(Entity.TransformComponent.Position.Y) *
+                             Math.Cos(Entity.TransformComponent.Position.X)),
+                Z = (float) (Entity.TransformComponent.Position.Z * Math.Sin(Entity.TransformComponent.Position.Y) *
+                             Math.Sin(Entity.TransformComponent.Position.X)),
+                Y = (float) (Entity.TransformComponent.Position.Z * Math.Cos(Entity.TransformComponent.Position.Y))
+            };
 
-            var lookAt = new Vector3(0, 0, 1);
 
-            var pitch = 24 * 0.0174532925f;
-            var yaw = 24 * 0.0174532925f; 
-            var roll = 0 * 0.0174532925f; 
+            var lookAt = Vector3.Zero;
 
-            var rotationMatrix = Matrix.RotationYawPitchRoll(yaw, pitch, roll);
-
-            lookAt = Vector3.TransformCoordinate(lookAt, rotationMatrix);
-            var up = Vector3.TransformCoordinate(Vector3.UnitY, rotationMatrix);
-
-            lookAt = position + lookAt;
+            var up = new Vector3(0, 1, 0);
 
             ViewMatrix = Matrix.LookAtLH(position, lookAt, up);
         }

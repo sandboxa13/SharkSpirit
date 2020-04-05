@@ -9,6 +9,10 @@ namespace SharkSpirit.InputEngine
     {
         void Update();
         bool IsPressed(Key key);
+        bool RMouseDown();
+        bool LMouseDown();
+        float MouseX();
+        float MouseY();
         ScrollDirection ScrollDirection();
     }
 
@@ -35,6 +39,11 @@ namespace SharkSpirit.InputEngine
         {
             return KeyBoardDevice.IsPressed(key);
         }
+
+        public bool RMouseDown() => MouseDevice.RMouseDown();
+        public bool LMouseDown() => MouseDevice.LMouseDown();
+        public float MouseX() => MouseDevice.MouseX();
+        public float MouseY() => MouseDevice.MouseY();
 
         public ScrollDirection ScrollDirection()
         {

@@ -1,4 +1,5 @@
-﻿using SharkSpirit.Core;
+﻿using System;
+using SharkSpirit.Core;
 using SharkSpirit.Core.Collections;
 using SharkSpirit.Engine.Components;
 using SharkSpirit.Engine.Systems;
@@ -70,7 +71,11 @@ namespace SharkSpirit.Engine
             RenderSystem = RenderSystemFactory.CreateRenderSystem(container, Configuration);
             container.AddService(RenderSystem);
 
-            CameraComponent = new CameraComponent(new Entity(new Vector3(-8, 8, -13)));
+            var x = (float) (1.5f * Math.PI);
+            var y = (float) (0.2f * Math.PI);
+            var z = 15.0f;
+
+            CameraComponent = new CameraComponent(new Entity(new Vector3(x, y, z)));
             var cameraMoveScript = new CameraMoveScript();
             cameraMoveScript.AttachEntity(CameraComponent.Entity);
 

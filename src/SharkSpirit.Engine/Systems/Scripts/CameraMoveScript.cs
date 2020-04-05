@@ -1,44 +1,44 @@
-﻿using SharkSpirit.Core;
-using SharpDX.DirectInput;
+﻿using System;
 
 namespace SharkSpirit.Engine.Systems.Scripts
 {
     public class CameraMoveScript : ScriptsBase
     {
+        private float _lastMousePosX;
+        private float _lastMousePosY;
+
         public override void Execute()
         {
-            if (Input.InputManager.ScrollDirection() == ScrollDirection.Forward)
+            if (Input.InputManager.LMouseDown())
             {
-                Camera.Entity.TransformComponent.Position.Z = (Camera.Entity.TransformComponent.Position.Z + 1.5f);
+                var dx = XMConvertToRadians(0.55f * Input.InputManager.MouseX() - _lastMousePosX);
+                var dy = XMConvertToRadians(0.55f * Input.InputManager.MouseY() - _lastMousePosY);
+
+                Camera.Entity.TransformComponent.Position.X += dx;
+                Camera.Entity.TransformComponent.Position.Y += dy;
+
+
+                Camera.Entity.TransformComponent.Position.Y =
+                    Clamp(Camera.Entity.TransformComponent.Position.Y, 0.1f, (float) (Math.PI - 0.1f));
             }
-            else if (Input.InputManager.ScrollDirection() == ScrollDirection.Back)
+            else if(Input.InputManager.RMouseDown())
             {
-                Camera.Entity.TransformComponent.Position.Z = (Camera.Entity.TransformComponent.Position.Z - 1.5f);
+                var dx = XMConvertToRadians(0.05f * Input.InputManager.MouseX() - _lastMousePosX);
+                var dy = XMConvertToRadians(0.05f * Input.InputManager.MouseY() - _lastMousePosY);
+
+                Camera.Entity.TransformComponent.Position.Z += dx - dy;
+                Camera.Entity.TransformComponent.Position.Z = Clamp(Camera.Entity.TransformComponent.Position.Z, 5.0f, 150.0f);
             }
-            else if (Input.InputManager.IsPressed(Key.W))
-            {
-                Camera.Entity.TransformComponent.Position.Y = (Camera.Entity.TransformComponent.Position.Y - 0.5f);
-            }
-            else if (Input.InputManager.IsPressed(Key.S))
-            {
-                Camera.Entity.TransformComponent.Position.Y = (Camera.Entity.TransformComponent.Position.Y + 0.5f);
-            }
-            else if (Input.InputManager.IsPressed(Key.A))
-            {
-                Camera.Entity.TransformComponent.Position.X = (Camera.Entity.TransformComponent.Position.X - 0.5f);
-            }
-            else if (Input.InputManager.IsPressed(Key.D))
-            {
-                Camera.Entity.TransformComponent.Position.X = (Camera.Entity.TransformComponent.Position.X + 0.5f);
-            }
-            else if (Input.InputManager.IsPressed(Key.Q))
-            {
-                Camera.Entity.TransformComponent.Rotation.Y = (Camera.Entity.TransformComponent.Rotation.X + 0.5f);
-            }
-            else if (Input.InputManager.IsPressed(Key.E))
-            {
-                Camera.Entity.TransformComponent.Rotation.Y = (Camera.Entity.TransformComponent.Rotation.Y - 0.5f);
-            }
+
+            _lastMousePosX = Input.InputManager.MouseX();
+            _lastMousePosY = Input.InputManager.MouseY();
         }
+
+        private float Clamp(float x, float low, float high)
+        {
+            return x < low ? low : (x > high ? high : x);
+        }
+
+        float XMConvertToRadians(float fDegrees) { return (float) (fDegrees * (Math.PI / 180.0f)); }
     }
 }
