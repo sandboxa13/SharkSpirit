@@ -25,7 +25,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         private Device _device;
         private Buffer _constantBuffer;
         private RenderTargetView _renderTargetView;
-        private RenderTarget _renderTarget2D;
+        public RenderTarget _renderTarget2D { get; private set; }
         private Matrix _projection;
         private IConfiguration _configuration;
         private DepthStencilView _depthView;
@@ -33,7 +33,11 @@ namespace SharkSpirit.RenderFramework.DirectX
         private SolidColorBrush _brush;
         private Texture2D _zBufferTexture;
 
-        public WpfDevice(IContainer container) => _container = container;
+        public WpfDevice(IContainer container)
+        {
+            _container = container;
+        }
+
         public Device GetDevice() => _device;
         public DeviceContext GetDeviceContext() => _immediateContext;
         public uint GetTextureId() => 0;
@@ -44,7 +48,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         public void DrawSceneInfo(string output)
         {
             _renderTarget2D.BeginDraw();
-            _renderTarget2D.DrawTextLayout(new SharpDX.Vector2(50, 50), new TextLayout(new Factory(), output, _debugTextFormat, 230, 230), _brush);
+            _renderTarget2D.DrawTextLayout(new SharpDX.Vector2(50, 50), new TextLayout(new Factory(), output, _debugTextFormat, 330, 230), _brush);
             _renderTarget2D.EndDraw();
         }
 
@@ -99,6 +103,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         public void Reinitialize()
         {
             var windowHandle = _container.GetService<WindowHandleContainer>();
+            _configuration = _container.GetService<Configuration>();
 
             var dxgiResourceTypeGuid = (typeof(SharpDX.DXGI.Resource)).GUID;
             Marshal.QueryInterface(windowHandle.WindowHandle, ref dxgiResourceTypeGuid, out var dxgiResource);
@@ -115,6 +120,47 @@ namespace SharkSpirit.RenderFramework.DirectX
 
             _renderTargetView = new RenderTargetView(_device, outputResource, rtDesc);
 
+            InitRenderTarget2D();
+            using (var fontFactory = new Factory())
+            {
+                _debugTextFormat = new TextFormat(fontFactory, "Arial", 15f);
+            }
+
+            var zBufferTextureDescription = new Texture2DDescription
+            {
+                Format = Format.D32_Float,
+                ArraySize = 1,
+                MipLevels = 1,
+                Width = (int)outputResource.Description.Width,
+                Height = (int)outputResource.Description.Height,
+                SampleDescription = new SampleDescription(1, 0),
+                Usage = ResourceUsage.Default,
+                BindFlags = BindFlags.DepthStencil,
+                CpuAccessFlags = CpuAccessFlags.None,
+                OptionFlags = ResourceOptionFlags.None
+            };
+
+            _zBufferTexture = new Texture2D(_device, zBufferTextureDescription);
+            _depthView = new DepthStencilView(_device, _zBufferTexture);
+
+            _immediateContext.OutputMerger.SetRenderTargets(_depthView, _renderTargetView);
+
+            var outputResourceDesc = outputResource.Description;
+
+            //if (outputResourceDesc.Width != _configuration.Width || outputResourceDesc.Height != _configuration.Height)
+            //{
+                SetUpViewPort();
+            //}
+
+            outputResource.Dispose();
+
+            _brush = new SolidColorBrush(_renderTarget2D, new Color4(1f, 1f, 1f, 1f));
+
+            _immediateContext.Flush();
+        }
+
+        private void InitRenderTarget2D()
+        {
             var t = _renderTargetView.Resource.QueryInterface<Texture2D>();
             using (var surface = t.QueryInterface<Surface>())
             {
@@ -129,50 +175,14 @@ namespace SharkSpirit.RenderFramework.DirectX
                 };
                 _renderTarget2D = new RenderTarget(new SharpDX.Direct2D1.Factory(), surface, properties);
             }
-            using (var fontFactory = new Factory())
-            {
-                _debugTextFormat = new TextFormat(fontFactory, "Arial", 15f);
-            }
-
-            var zBufferTextureDescription = new Texture2DDescription
-            {
-                Format = Format.D32_Float,
-                ArraySize = 1,
-                MipLevels = 1,
-                Width = (int)_configuration.Width,
-                Height = (int)_configuration.Height,
-                SampleDescription = new SampleDescription(1, 0),
-                Usage = ResourceUsage.Default,
-                BindFlags = BindFlags.DepthStencil,
-                CpuAccessFlags = CpuAccessFlags.None,
-                OptionFlags = ResourceOptionFlags.None
-            };
-
-            _zBufferTexture = new Texture2D(_device, zBufferTextureDescription);
-            _depthView = new DepthStencilView(_device, _zBufferTexture);
-
-            _immediateContext.OutputMerger.SetRenderTargets(_depthView, _renderTargetView);
-
-            var outputResourceDesc = outputResource.Description;
-            if (outputResourceDesc.Width != _configuration.Width || outputResourceDesc.Height != _configuration.Height)
-            {
-                SetUpViewPort();
-            }
-
-
-            outputResource.Dispose();
-
-            _brush = new SolidColorBrush(_renderTarget2D, new Color4(1f, 1f, 1f, 1f));
         }
-
-
 
 
         private void SetUpViewPort()
         {
             var vp = new Viewport(0, 0, (int)_configuration.Width, (int)_configuration.Height);
             _immediateContext.Rasterizer.SetViewport(vp);
-            _projection = Matrix.PerspectiveFovLH(MathUtil.PiOverFour, _configuration.Width / _configuration.Height, 0.01f, 100.0f);
+            _projection = Matrix.PerspectiveFovLH(MathUtil.PiOverFour, _configuration.Width / _configuration.Height, 0.01f, 1000.0f);
         }
 
         #endregion

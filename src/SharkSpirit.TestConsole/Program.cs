@@ -53,8 +53,8 @@ namespace SharkSpirit.TestConsole
             var windowHandle = new WindowHandleContainer(_renderForm.Handle);
             container.AddService(windowHandle);
 
-            _game = new Game(container);
-            _game.Scene.AddEntity(new Entity(new Vector3(0, 0, 0)));
+            //_game = new Game(container);
+            //_game.Scene.AddEntity(new Entity(new Vector3(0, 0, 0)));
         }
 
         public void Run()

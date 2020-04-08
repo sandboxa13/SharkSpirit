@@ -13,8 +13,11 @@ namespace SharkSpirit.Engine
 {
     public class Scene : ComponentBase, IScene
     {
+        private readonly IContainer _container;
+
         public Scene(IContainer container) : base("Default scene")
         {
+            _container = container;
             Initialize(container);
         }
 
@@ -116,8 +119,8 @@ namespace SharkSpirit.Engine
         private void BuildAndDrawSceneInfo()
         {
             var output = string.Join(Environment.NewLine,
-                "SCENE INFO ",
-                "",
+                "RENDER ENGINE INFO ",
+                $"ACTUAL SCENE SIZE: {Configuration.Width} X {Configuration.Height}",
                 $"FPS : {FpsSystem.GetFps()}",
                 $"FRAME TIME : {FpsSystem.GetMspf()} (ms)",
                 $"MOUSE X : {InputSystem.InputManager.MouseX()}",
@@ -125,6 +128,12 @@ namespace SharkSpirit.Engine
                 $"SCENE OBJECTS COUNT : {Entities.Count} ");
 
             RenderSystem.DrawSceneInfo(output);
+        }
+
+        public void Reinitialize()
+        {
+            Configuration = _container.GetService<Configuration>();
+            RenderSystem.Reinitialize();
         }
     }
 

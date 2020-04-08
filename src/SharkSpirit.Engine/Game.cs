@@ -29,7 +29,12 @@ namespace SharkSpirit.Engine
             _container.RemoveService<WindowHandleContainer>();
             _container.AddService(new WindowHandleContainer(resourcePointer));
 
-            Scene.RenderSystem.Reinitialize();
+            Scene.Reinitialize();
+        }
+
+        public IContainer GetContainer()
+        {
+            return _container;
         }
     }
 }
