@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using SharkSpirit.Core;
 using SharkSpirit.Engine;
+using SharkSpirit.Modules.Core.Extensions;
 using SharpDX;
+using Application = System.Windows.Application;
 using Container = SharkSpirit.Core.Container;
 
 namespace SharkSpirit.Modules.Scene.Views
@@ -40,9 +43,11 @@ namespace SharkSpirit.Modules.Scene.Views
                 Height = (float)Application.Current.MainWindow.Height,
                 Width = (float)Application.Current.MainWindow.Width,
                 EngineEditorType = EngineEditorType.Wpf,
-                PathToShaders = "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders"
+                PathToShaders = "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders",
+                MonitorHeight = (float)Screen.PrimaryScreen.Bounds.Height,
+                MonitorWidth = (float)Screen.PrimaryScreen.Bounds.Width
             };
-
+            
             container.AddService(graphicsConfiguration);
 
             var windowHandleContainer = new WindowHandleContainer(windowHandle);
@@ -57,7 +62,7 @@ namespace SharkSpirit.Modules.Scene.Views
 
             for (var i = 0; i < 40; i++)
             {
-                _game.Scene.AddEntity(new Entity(new Vector3(tmp, 0, 0)));
+                _game.Scene.AddEntity(new Entity(new Vector3(tmp, 0, 0), container));
 
                 tmp += 5;
             }
@@ -97,7 +102,9 @@ namespace SharkSpirit.Modules.Scene.Views
                 Height = (float)surfHeight,
                 Width = (float)surfWidth,
                 EngineEditorType = EngineEditorType.Wpf,
-                PathToShaders = "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders"
+                PathToShaders = "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders",
+                MonitorHeight = (float)Screen.PrimaryScreen.Bounds.Height,
+                MonitorWidth = (float)Screen.PrimaryScreen.Bounds.Width
             };
 
             _game.GetContainer().RemoveService<SharkSpirit.Core.Configuration>();

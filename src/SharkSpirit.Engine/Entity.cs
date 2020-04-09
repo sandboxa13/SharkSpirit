@@ -10,7 +10,7 @@ namespace SharkSpirit.Engine
     {
         internal TransformComponent TransformComponent;
 
-        public Entity(Vector3 position)
+        public Entity(Vector3 position, IContainer container) : base(container, "")
         {
             Components = new FastCollection<EntityComponent>();
 
@@ -18,7 +18,16 @@ namespace SharkSpirit.Engine
             TransformComponent = new TransformComponent (this){ Position = position };
             Components.Add(TransformComponent);
         }
-    
+
+        public Entity(Vector3 position, IContainer container, string name) : base(container, name)
+        {
+            Components = new FastCollection<EntityComponent>();
+
+            Id = Guid.NewGuid();
+            TransformComponent = new TransformComponent(this) { Position = position };
+            Components.Add(TransformComponent);
+        }
+
         public FastCollection<EntityComponent> Components { get; }
         public Guid Id { get; set; }
 

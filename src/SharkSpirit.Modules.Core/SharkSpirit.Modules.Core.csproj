@@ -57,6 +57,7 @@
     <Compile Include="AvalonDock\ILayoutAnchorableHelper.cs" />
     <Compile Include="AvalonDock\LayoutAnchorableHelper.cs" />
     <Compile Include="CoreModule.cs" />
+    <Compile Include="Extensions\ScreenExtensions.cs" />
     <Compile Include="Prism\DockingManagerRegionAdapter.cs" />
     <Compile Include="Prism\RegionNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
