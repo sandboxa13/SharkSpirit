@@ -21,16 +21,14 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
-        <xcad:DockingManager
-            Grid.Row="0"
-            Grid.Column="0"
-            regions:RegionManager.RegionName="{x:Static region:RegionNames.SceneRegion}" />
-
         <xcad:DockingManager
             x:Name="DockingManager"
             Grid.Row="0"
             Grid.Column="1"
             regions:RegionManager.RegionName="{x:Static region:RegionNames.SceneInspectorRegion}" />
+        <xcad:DockingManager
+            Grid.Row="0"
+            Grid.Column="0"
+            regions:RegionManager.RegionName="{x:Static region:RegionNames.SceneRegion}" />
     </Grid>
 </Window>

@@ -142,5 +142,7 @@ namespace SharkSpirit.Engine
     {
         CameraComponent CameraComponent { get; set; }
         RenderSystem RenderSystem { get; set; }
+
+        FastCollection<Entity> Entities { get; }
     }
 }

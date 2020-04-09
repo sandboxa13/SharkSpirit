@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Windows.Forms;
+using DryIoc;
 using Prism.Regions;
 using SharkSpirit.Core;
 using SharkSpirit.Engine;
 using SharkSpirit.Modules.Core.ViewModels;
 using SharpDX;
-using Application = System.Windows.Application;
-using Container = SharkSpirit.Core.Container;
 using IContainer = DryIoc.IContainer;
 
 namespace SharkSpirit.Modules.Scene.ViewModels
@@ -23,24 +21,12 @@ namespace SharkSpirit.Modules.Scene.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            var container = new Container();
-
-            var graphicsConfiguration = new SharkSpirit.Core.Configuration
-            {
-                Height = (float)Application.Current.MainWindow.Height,
-                Width = (float)Application.Current.MainWindow.Width,
-                EngineEditorType = EngineEditorType.Wpf,
-                PathToShaders = "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders",
-                MonitorHeight = Screen.PrimaryScreen.Bounds.Height,
-                MonitorWidth = Screen.PrimaryScreen.Bounds.Width
-            };
-
-            container.AddService(graphicsConfiguration);
+            var container = _container.Resolve<SharkSpirit.Core.IContainer>();
 
             if (_game != null)
                 return;
 
-            _game = new Game(container);
+            _game = _container.Resolve<Game>();
 
             var tmp = 0;
 
