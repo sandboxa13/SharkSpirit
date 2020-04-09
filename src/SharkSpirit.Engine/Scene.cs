@@ -13,9 +13,12 @@ namespace SharkSpirit.Engine
 {
     public class Scene : ComponentBase, IScene
     {
-        public Scene(IContainer container) : base("Default scene")
+        private readonly IContainer _container;
+
+        public Scene(IContainer container) : base(container, "Default scene")
         {
-            Initialize(container);
+            _container = container;
+            Initialize();
         }
 
         public CameraComponent CameraComponent { get; set; }
@@ -79,52 +82,59 @@ namespace SharkSpirit.Engine
             RenderSystem.EntityRenderProcessor.RemoveRenderObject(entity);
         }
 
-        private void Initialize(IContainer container)
+        private void Initialize()
         {
-            Configuration = container.GetService<Configuration>();
-            container.AddService<IScene>(this);
+            Configuration = Container.GetService<Configuration>();
+            Container.AddService<IScene>(this);
 
-            RenderSystem = RenderSystemFactory.CreateRenderSystem(container, Configuration);
-            container.AddService(RenderSystem);
+            RenderSystem = RenderSystemFactory.CreateRenderSystem(Container, Configuration);
+            Container.AddService(RenderSystem);
 
             var x = (float) (1.5f * Math.PI);
             var y = (float) (0.2f * Math.PI);
             var z = 15.0f;
 
-            CameraComponent = new CameraComponent(new Entity(new Vector3(x, y, z)));
+            CameraComponent = new CameraComponent(new Entity(new Vector3(x, y, z), Container));
             var cameraMoveScript = new CameraMoveScript();
             cameraMoveScript.AttachEntity(CameraComponent.Entity);
 
-            container.AddService(CameraComponent);
+            Container.AddService(CameraComponent);
 
             Entities = new FastCollection<Entity>();
 
             ScriptSystem = new ScriptSystem();
-            container.AddService(ScriptSystem);
+            Container.AddService(ScriptSystem);
 
-            InputSystem = new InputSystem(container);
-            container.AddService(InputSystem);
+            InputSystem = new InputSystem(Container);
+            Container.AddService(InputSystem);
 
-            cameraMoveScript.Initialize(container);
+            cameraMoveScript.Initialize(Container);
 
             ScriptSystem.AddScript(cameraMoveScript);
 
-            FpsSystem = new FpsSystem(60, container);
-            container.AddService(FpsSystem);
+            FpsSystem = new FpsSystem(60, Container);
+            Container.AddService(FpsSystem);
         }
 
         private void BuildAndDrawSceneInfo()
         {
             var output = string.Join(Environment.NewLine,
-                "SCENE INFO ",
-                "",
-                $"FPS : {FpsSystem.GetFps()}",
-                $"FRAME TIME : {FpsSystem.GetMspf()} (ms)",
-                $"MOUSE X : {InputSystem.InputManager.MouseX()}",
-                $"MOUSE Y : {InputSystem.InputManager.MouseY()}",
+                "RENDER ENGINE INFO \n",
+                $"ACTUAL SCENE SIZE: {Configuration.Width} X {Configuration.Height}\n",
+                $"ACTUAL MONITOR SIZE: {Configuration.MonitorWidth} X {Configuration.MonitorHeight}\n",
+                $"FPS : {FpsSystem.GetFps()}\n",
+                $"FRAME TIME : {FpsSystem.GetMspf()} (ms)\n",
+                $"MOUSE X : {InputSystem.InputManager.MouseX()}\n",
+                $"MOUSE Y : {InputSystem.InputManager.MouseY()}\n",
                 $"SCENE OBJECTS COUNT : {Entities.Count} ");
 
             RenderSystem.DrawSceneInfo(output);
+        }
+
+        public void Reinitialize()
+        {
+            Configuration = _container.GetService<Configuration>();
+            RenderSystem.Reinitialize();
         }
     }
 

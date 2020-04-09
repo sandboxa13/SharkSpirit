@@ -26,7 +26,7 @@ namespace SharkSpirit.RenderFramework.DirectX
 
         public AvaloniaDevice(
             IContainer container,
-            AvaloniaInteropHelper avaloniaInteropHelper)
+            AvaloniaInteropHelper avaloniaInteropHelper) : base(container, "")
         {
             _container = container;
             _avaloniaInterop = new AvaloniaInterop(container, avaloniaInteropHelper.GlFeature, avaloniaInteropHelper.DirectXVersion);

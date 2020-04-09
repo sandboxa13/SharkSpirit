@@ -34,7 +34,7 @@ namespace SharkSpirit.Engine.Systems
             
             var scene = container.GetService<IScene>();
 
-            return new RenderSystem(device, scene);
+            return new RenderSystem(device, scene, container);
         }
 
         private static RenderSystem CreateWpfRenderSystem(IContainer container)
@@ -44,7 +44,7 @@ namespace SharkSpirit.Engine.Systems
 
             var scene = container.GetService<IScene>();
 
-            return new RenderSystem(device, scene);
+            return new RenderSystem(device, scene, container);
         }
 
         private static RenderSystem CreateAvaloniaRenderSystem(IContainer container)
@@ -56,7 +56,7 @@ namespace SharkSpirit.Engine.Systems
             
             var scene = container.GetService<IScene>();
 
-            return new RenderSystem(device, scene);
+            return new RenderSystem(device, scene, container);
         }
     }
 }

@@ -6,6 +6,8 @@
         public string PathToShaders { get; set; }
         public float Width { get; set; }
         public float Height { get; set; }
+        public float MonitorWidth { get; set; }
+        public float MonitorHeight { get; set; }
     }
 
     public interface IConfiguration
@@ -14,5 +16,7 @@
         string PathToShaders { get; set; }
         float Width { get; set; }
         float Height { get; set; }
+        float MonitorWidth { get; set; }
+        float MonitorHeight { get; set; }
     }
 }
