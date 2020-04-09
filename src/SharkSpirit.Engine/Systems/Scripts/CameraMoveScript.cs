@@ -12,8 +12,8 @@ namespace SharkSpirit.Engine.Systems.Scripts
         {
             if (Input.InputManager.LMouseDown())
             {
-                var dx = ConvertToRadians(0.55f * Input.InputManager.MouseX() - _lastMousePosX);
-                var dy = ConvertToRadians(0.55f * Input.InputManager.MouseY() - _lastMousePosY);
+                var dx = ConvertToRadians(0.005f * Input.InputManager.MouseX() - _lastMousePosX);
+                var dy = ConvertToRadians(0.005f * Input.InputManager.MouseY() - _lastMousePosY);
 
                 Camera.Entity.TransformComponent.Position.X += dx;
                 Camera.Entity.TransformComponent.Position.Y += dy;
