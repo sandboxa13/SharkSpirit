@@ -94,9 +94,10 @@ namespace SharkSpirit.Engine
             var y = (float) (0.2f * Math.PI);
             var z = 15.0f;
 
-            CameraComponent = new CameraComponent(new Entity(new Vector3(x, y, z), Container));
+            CameraComponent = new CameraComponent(new Entity(new Vector3(x, y, z), Container, "Camera"));
             var cameraMoveScript = new CameraMoveScript();
             cameraMoveScript.AttachEntity(CameraComponent.Entity);
+
 
             Container.AddService(CameraComponent);
 

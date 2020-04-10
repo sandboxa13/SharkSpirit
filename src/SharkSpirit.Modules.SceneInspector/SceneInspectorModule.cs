@@ -17,7 +17,7 @@ namespace SharkSpirit.Modules.SceneInspector
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            _container.RegisterTypeForNavigation<SceneInspectorView>("SceneInspector");
+            _container.RegisterTypeForNavigation<Views.SceneInspectorView>("SceneInspector");
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
