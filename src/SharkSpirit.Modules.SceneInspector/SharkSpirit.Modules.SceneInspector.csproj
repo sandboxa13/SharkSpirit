@@ -61,8 +61,13 @@
     <Compile Include="ViewModels\SceneGraphViewModel.cs" />
     <Compile Include="ViewModels\SceneInspectorViewModel.cs" />
     <Compile Include="ViewModels\SceneItemInspectorViewModel.cs" />
+    <Compile Include="ViewModels\SelectedSceneItemViewModel.cs" />
+    <Compile Include="ViewModels\TransformComponentViewModel.cs" />
     <Compile Include="Views\SceneInspectorView.xaml.cs">
       <DependentUpon>SceneInspectorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SceneItemInspectorView.xaml.cs">
+      <DependentUpon>SceneItemInspectorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TransformComponentView.xaml.cs">
       <DependentUpon>TransformComponentView.xaml</DependentUpon>
@@ -106,6 +111,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SceneInspectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SceneItemInspectorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

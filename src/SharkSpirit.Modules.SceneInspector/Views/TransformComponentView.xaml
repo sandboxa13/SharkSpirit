@@ -51,6 +51,7 @@
             </StackPanel>
         </Grid>
 
+        <!--  Rotation  -->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -86,6 +87,5 @@
                     Value="{Binding RotationZ, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
-
     </Grid>
 </UserControl>

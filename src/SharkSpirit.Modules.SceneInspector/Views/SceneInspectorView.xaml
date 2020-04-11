@@ -22,7 +22,10 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" MaxHeight="300" />
             </Grid.RowDefinitions>
-            <TextBlock Margin="0,10,10,10" Text="Scene items : " />
+            <TextBlock
+                Margin="0,10,10,10"
+                FontWeight="Bold"
+                Text="Scene items : " />
 
             <TreeView
                 Grid.Row="1"
@@ -42,29 +45,9 @@
         </Grid>
 
 
-        <Grid Grid.Row="1" Margin="0,10">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-
-            <StackPanel VerticalAlignment="Top">
-                <TextBlock Margin="0,10" Text="Selected item information : " />
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Margin="0,10" Text="Name : " />
-                    <TextBlock Margin="0,10" Text="{Binding SceneItemInspectorViewModel.SelectedSceneItemViewModel.Name}" />
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Margin="0,10" Text="ID : " />
-                    <TextBlock Margin="0,10" Text="{Binding SceneItemInspectorViewModel.SelectedSceneItemViewModel.Id}" />
-                </StackPanel>
-
-                <StackPanel Orientation="Vertical">
-                    <views:TransformComponentView DataContext="{Binding SceneItemInspectorViewModel.SelectedSceneItemViewModel.TransformComponentViewModel}" />
-                </StackPanel>
-            </StackPanel>
-        </Grid>
+        <views:SceneItemInspectorView
+            Grid.Row="1"
+            Margin="0,10"
+            DataContext="{Binding SceneItemInspectorViewModel}" />
     </Grid>
 </UserControl>
