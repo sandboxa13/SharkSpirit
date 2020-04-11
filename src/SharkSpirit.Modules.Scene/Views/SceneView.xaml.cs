@@ -1,12 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using SharkSpirit.Core;
 using SharkSpirit.Engine;
 using SharkSpirit.Modules.Core.Extensions;
+using SharkSpirit.Modules.Scene.ViewModels;
 using SharpDX;
 using Application = System.Windows.Application;
 using Container = SharkSpirit.Core.Container;
@@ -19,7 +22,7 @@ namespace SharkSpirit.Modules.Scene.Views
     public partial class SceneView 
     {
         private bool _lastVisible;
-        private Game _game;
+        private int _loadCount;
         public SceneView()
         {
             InitializeComponent();
@@ -34,37 +37,16 @@ namespace SharkSpirit.Modules.Scene.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var windowHandle = (new WindowInteropHelper(Application.Current.MainWindow ?? throw new InvalidOperationException())).Handle;
+            _loadCount++;
 
-            var container = new Container();
-
-            var graphicsConfiguration = new SharkSpirit.Core.Configuration
-            {
-                Height = (float)Application.Current.MainWindow.Height,
-                Width = (float)Application.Current.MainWindow.Width,
-                EngineEditorType = EngineEditorType.Wpf,
-                PathToShaders = "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders",
-                MonitorHeight = (float)Screen.PrimaryScreen.Bounds.Height,
-                MonitorWidth = (float)Screen.PrimaryScreen.Bounds.Width
-            };
-            
-            container.AddService(graphicsConfiguration);
-
-            var windowHandleContainer = new WindowHandleContainer(windowHandle);
-            container.AddService(windowHandleContainer);
-
-            if(_game != null)
+            if(_loadCount > 1)
                 return;
 
-            _game = new Game(container);
+            var windowHandle = (new WindowInteropHelper(Application.Current.MainWindow ?? throw new InvalidOperationException())).Handle;
 
-            var tmp = 0;
-
-            for (var i = 0; i < 40; i++)
+            if (DataContext is SceneViewModel dataContext)
             {
-                _game.Scene.AddEntity(new Entity(new Vector3(tmp, 0, 0), container));
-
-                tmp += 5;
+                dataContext.SetWindowHandle(windowHandle);
             }
 
             InteropImage.WindowOwner = windowHandle;
@@ -75,12 +57,10 @@ namespace SharkSpirit.Modules.Scene.Views
 
         private void OnRender(IntPtr resourcePointer, bool isNewSurface)
         {
-            if (isNewSurface)
+            if (DataContext is SceneViewModel dataContext)
             {
-                _game.Reinitialize(resourcePointer);
+                dataContext.OnRender(resourcePointer, isNewSurface);
             }
-
-            _game.Update();
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -97,18 +77,24 @@ namespace SharkSpirit.Modules.Scene.Views
             var surfWidth = (int)(ActualWidth < 0 ? 0 : Math.Ceiling(ActualWidth * dpiScale));
             var surfHeight = (int)(ActualHeight < 0 ? 0 : Math.Ceiling(ActualHeight * dpiScale));
 
-            var graphicsConfiguration = new SharkSpirit.Core.Configuration
+            if (DataContext is SceneViewModel dataContext)
             {
-                Height = (float)surfHeight,
-                Width = (float)surfWidth,
-                EngineEditorType = EngineEditorType.Wpf,
-                PathToShaders = "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders",
-                MonitorHeight = (float)Screen.PrimaryScreen.Bounds.Height,
-                MonitorWidth = (float)Screen.PrimaryScreen.Bounds.Width
-            };
+                var bounds = BoundsRelativeTo(this);
 
-            _game.GetContainer().RemoveService<SharkSpirit.Core.Configuration>();
-            _game.GetContainer().AddService(graphicsConfiguration);
+                var graphicsConfiguration = new SharkSpirit.Core.Configuration
+                {
+                    Height = (float)surfHeight,
+                    Width = (float)surfWidth,
+                    EngineEditorType = EngineEditorType.Wpf,
+                    PathToShaders = "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders",
+                    MonitorHeight = (float)Screen.PrimaryScreen.Bounds.Height,
+                    MonitorWidth = (float)Screen.PrimaryScreen.Bounds.Width,
+                    ControlBounds = new System.Drawing.Rectangle((int) bounds.X, (int) bounds.Y, (int) bounds.Width, (int) bounds.Height)
+                };
+
+                dataContext.GetContainer().RemoveService<SharkSpirit.Core.Configuration>();
+                dataContext.GetContainer().AddService(graphicsConfiguration);
+            }
 
             // notify the D3D11Image and the DxRendering component of the pixel size desired for the DirectX rendering.
             InteropImage.SetPixelSize(surfWidth, surfHeight);
@@ -127,6 +113,12 @@ namespace SharkSpirit.Modules.Scene.Views
             }
         }
 
+        public static Rect BoundsRelativeTo(FrameworkElement element)
+        {
+            return
+                element.TransformToVisual(Application.Current.MainWindow)
+                    .TransformBounds(LayoutInformation.GetLayoutSlot(element));
+        }
         private void OnClosing(object sender, CancelEventArgs e)
         {
             CompositionTarget.Rendering -= OnCompositionTargetRendering;

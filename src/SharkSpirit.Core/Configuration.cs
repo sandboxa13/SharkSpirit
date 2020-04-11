@@ -1,4 +1,6 @@
-﻿namespace SharkSpirit.Core
+﻿using System.Drawing;
+
+namespace SharkSpirit.Core
 {
     public class Configuration : IConfiguration
     {
@@ -8,6 +10,7 @@
         public float Height { get; set; }
         public float MonitorWidth { get; set; }
         public float MonitorHeight { get; set; }
+        public Rectangle ControlBounds { get; set; }
     }
 
     public interface IConfiguration

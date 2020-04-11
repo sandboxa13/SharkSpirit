@@ -13,6 +13,8 @@ namespace SharkSpirit.InputEngine
         bool LMouseDown();
         float MouseX();
         float MouseY();
+        float RawMouseX();
+        float RawMouseY();
         ScrollDirection ScrollDirection();
     }
 
@@ -44,6 +46,8 @@ namespace SharkSpirit.InputEngine
         public bool LMouseDown() => MouseDevice.LMouseDown();
         public float MouseX() => MouseDevice.MouseX();
         public float MouseY() => MouseDevice.MouseY();
+        public float RawMouseX() => MouseDevice.RawMouseX();
+        public float RawMouseY() => MouseDevice.RawMouseY();
 
         public ScrollDirection ScrollDirection()
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using SharkSpirit.Core;
 using SharpDX.DirectInput;
 
 namespace SharkSpirit.Engine.Systems.Scripts
@@ -10,22 +11,34 @@ namespace SharkSpirit.Engine.Systems.Scripts
 
         public override void Execute()
         {
+            var configuration = Entity.Container.GetService<Configuration>();
+            var mouseX = Input.InputManager.MouseX();
+            var mouseY = Input.InputManager.MouseY();
+
+
+            if (mouseX < configuration.ControlBounds.X || 
+                mouseX > configuration.ControlBounds.Width || 
+                mouseY < configuration.ControlBounds.Y ||
+                mouseY > configuration.ControlBounds.Height)
+                return;
+
+
             if (Input.InputManager.LMouseDown())
             {
-                var dx = ConvertToRadians(0.55f * Input.InputManager.MouseX() - _lastMousePosX);
-                var dy = ConvertToRadians(0.55f * Input.InputManager.MouseY() - _lastMousePosY);
+                var dx = ConvertToRadians(0.005f * Input.InputManager.RawMouseX() - _lastMousePosX);
+                var dy = ConvertToRadians(0.005f * Input.InputManager.RawMouseY() - _lastMousePosY);
 
                 Camera.Entity.TransformComponent.Position.X += dx;
                 Camera.Entity.TransformComponent.Position.Y += dy;
 
 
                 Camera.Entity.TransformComponent.Position.Y =
-                    Clamp(Camera.Entity.TransformComponent.Position.Y, 0.1f, (float) (Math.PI - 0.1f));
+                    Clamp(Camera.Entity.TransformComponent.Position.Y, 0.1f, (float)(Math.PI - 0.1f));
             }
-            else if(Input.InputManager.RMouseDown())
+            else if (Input.InputManager.RMouseDown())
             {
-                var dx = ConvertToRadians(0.05f * Input.InputManager.MouseX() - _lastMousePosX);
-                var dy = ConvertToRadians(0.05f * Input.InputManager.MouseY() - _lastMousePosY);
+                var dx = ConvertToRadians(0.05f * Input.InputManager.RawMouseX() - _lastMousePosX);
+                var dy = ConvertToRadians(0.05f * Input.InputManager.RawMouseY() - _lastMousePosY);
 
                 Camera.Entity.TransformComponent.Position.Z += dx - dy;
                 Camera.Entity.TransformComponent.Position.Z = Clamp(Camera.Entity.TransformComponent.Position.Z, 5.0f, 150.0f);
@@ -40,8 +53,8 @@ namespace SharkSpirit.Engine.Systems.Scripts
                 Camera.Entity.TransformComponent.Position.Z += 0.25f;
             }
 
-            _lastMousePosX = Input.InputManager.MouseX();
-            _lastMousePosY = Input.InputManager.MouseY();
+            _lastMousePosX = Input.InputManager.RawMouseX();
+            _lastMousePosY = Input.InputManager.RawMouseY();
         }
 
         private float Clamp(float x, float low, float high)
@@ -49,6 +62,6 @@ namespace SharkSpirit.Engine.Systems.Scripts
             return x < low ? low : (x > high ? high : x);
         }
 
-        private float ConvertToRadians(float fDegrees) { return (float) (fDegrees * (Math.PI / 180.0f)); }
+        private float ConvertToRadians(float fDegrees) { return (float)(fDegrees * (Math.PI / 180.0f)); }
     }
 }

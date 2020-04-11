@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
@@ -50,14 +51,34 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\TreeViewHelper.cs" />
+    <Compile Include="Logic\SceneGraphManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SceneInspectorModule.cs" />
+    <Compile Include="ViewModels\SceneGraphEntityViewModel.cs" />
+    <Compile Include="ViewModels\SceneGraphViewModel.cs" />
     <Compile Include="ViewModels\SceneInspectorViewModel.cs" />
+    <Compile Include="ViewModels\SceneItemInspectorViewModel.cs" />
+    <Compile Include="ViewModels\SelectedSceneItemViewModel.cs" />
+    <Compile Include="ViewModels\TransformComponentViewModel.cs" />
     <Compile Include="Views\SceneInspectorView.xaml.cs">
       <DependentUpon>SceneInspectorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SceneItemInspectorView.xaml.cs">
+      <DependentUpon>SceneItemInspectorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TransformComponentView.xaml.cs">
+      <DependentUpon>TransformComponentView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="FodyWeavers.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Prism.DryIoc">
       <Version>7.2.0.1422</Version>
@@ -65,21 +86,46 @@
     <PackageReference Include="Prism.Wpf">
       <Version>7.2.0.1422</Version>
     </PackageReference>
+    <PackageReference Include="ReactiveUI">
+      <Version>11.3.1</Version>
+    </PackageReference>
     <PackageReference Include="ReactiveUI.Fody">
       <Version>11.3.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharkSpirit.Core\SharkSpirit.Core.csproj">
+      <Project>{6101C40C-CFCE-4AD1-ACDE-9ABDF8890412}</Project>
+      <Name>SharkSpirit.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharkSpirit.Engine\SharkSpirit.Engine.csproj">
+      <Project>{9a06d8ba-5aed-4557-af81-a40a0584f590}</Project>
+      <Name>SharkSpirit.Engine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharkSpirit.Modules.Core\SharkSpirit.Modules.Core.csproj">
       <Project>{de5bafc5-9c64-49f8-ae25-e9fdaaecd4d5}</Project>
       <Name>SharkSpirit.Modules.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SceneInspectorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SceneItemInspectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TransformComponentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

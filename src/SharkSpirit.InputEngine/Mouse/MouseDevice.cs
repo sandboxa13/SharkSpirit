@@ -19,8 +19,10 @@ namespace SharkSpirit.InputEngine.Mouse
         public void Update() => _mouse.GetCurrentState(ref _mouseState);
         public bool LMouseDown() => _mouseState.Buttons[0];
         public bool RMouseDown() => _mouseState.Buttons[1];
-        public float MouseX() => _mouseState.X;
-        public float MouseY() => _mouseState.Y;
+        public float MouseX() => System.Windows.Forms.Cursor.Position.X;
+        public float MouseY() => System.Windows.Forms.Cursor.Position.Y;
+        public float RawMouseX() => _mouseState.X;
+        public float RawMouseY() => _mouseState.Y;
 
         public ScrollDirection ScrollDirection()
         {
@@ -56,6 +58,9 @@ namespace SharkSpirit.InputEngine.Mouse
 
         float MouseX();
         float MouseY();
+
+        float RawMouseX();
+        float RawMouseY();
 
         ScrollDirection ScrollDirection();
     }
