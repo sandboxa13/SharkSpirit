@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net461</TargetFramework>
         <Platforms>AnyCPU;x64</Platforms>
     </PropertyGroup>
 
@@ -11,6 +11,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SharkSpirit.Core\SharkSpirit.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="PresentationCore" />
+      <Reference Include="PresentationFramework" />
+      <Reference Include="System.Windows.Forms" />
     </ItemGroup>
 
 </Project>

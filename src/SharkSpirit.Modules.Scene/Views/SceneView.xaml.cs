@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -77,6 +79,8 @@ namespace SharkSpirit.Modules.Scene.Views
 
             if (DataContext is SceneViewModel dataContext)
             {
+                var bounds = BoundsRelativeTo(this);
+
                 var graphicsConfiguration = new SharkSpirit.Core.Configuration
                 {
                     Height = (float)surfHeight,
@@ -84,7 +88,8 @@ namespace SharkSpirit.Modules.Scene.Views
                     EngineEditorType = EngineEditorType.Wpf,
                     PathToShaders = "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders",
                     MonitorHeight = (float)Screen.PrimaryScreen.Bounds.Height,
-                    MonitorWidth = (float)Screen.PrimaryScreen.Bounds.Width
+                    MonitorWidth = (float)Screen.PrimaryScreen.Bounds.Width,
+                    ControlBounds = new System.Drawing.Rectangle((int) bounds.X, (int) bounds.Y, (int) bounds.Width, (int) bounds.Height)
                 };
 
                 dataContext.GetContainer().RemoveService<SharkSpirit.Core.Configuration>();
@@ -108,6 +113,12 @@ namespace SharkSpirit.Modules.Scene.Views
             }
         }
 
+        public static Rect BoundsRelativeTo(FrameworkElement element)
+        {
+            return
+                element.TransformToVisual(Application.Current.MainWindow)
+                    .TransformBounds(LayoutInformation.GetLayoutSlot(element));
+        }
         private void OnClosing(object sender, CancelEventArgs e)
         {
             CompositionTarget.Rendering -= OnCompositionTargetRendering;

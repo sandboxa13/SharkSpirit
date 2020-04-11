@@ -13,6 +13,8 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
             _entity = entity;
             Name = entity.Name;
             Id = entity.Id;
+
+            var e = System.Windows.Forms.Cursor.Position.X;
         }
 
         public Guid Id { get; private set; }
