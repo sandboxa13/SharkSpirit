@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using SharkSpirit.Core;
 using SharkSpirit.Graphics;
 using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages;
 using SharpDX;
+using SharpDX.D3DCompiler;
 using SharpDX.Direct3D;
+using SharpDX.Direct3D11;
+using SharpDX.DXGI;
+using PixelShaderStage = SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages.PixelShaderStage;
+using VertexShaderStage = SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages.VertexShaderStage;
 
 namespace SharkSpirit.RenderFramework.DirectX
 {
@@ -64,14 +68,24 @@ namespace SharkSpirit.RenderFramework.DirectX
             };
 
             AddStage(new VertexBufferStage<SimpleVertex>(device, vertices.ToArray()));
-            AddStage(new TextureStage(device));
+            AddStage(new TextureStage(device, "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders\\1_store.png"));
             AddStage(new SamplerStage(device));
             AddStage(new VertexShaderStage(device, Path.Combine(configuration.PathToShaders, "vertexShader.hlsl")));
             AddStage(new PixelShaderStage(device, Path.Combine(configuration.PathToShaders, "pixelShader.hlsl")));
 
             AddIndexBufferStage(new IndexBufferStage(device, indices));
 
-            AddStage(new InputLayoutStage(device, Path.Combine(configuration.PathToShaders, "vertexShader.hlsl")));
+            var vertexShaderByteCode = ShaderBytecode.CompileFromFile(Path.Combine(configuration.PathToShaders, "vertexShader.hlsl"), "VS", "vs_4_0", ShaderFlags.Debug);
+
+            var signature = ShaderSignature.GetInputSignature(vertexShaderByteCode);
+
+            var inputLayout = new InputLayout(device.GetDevice(), signature, new[]
+            {
+                new InputElement("POSITION", 0, Format.R32G32B32_Float, 0, 0),
+                new InputElement("TEXCOORD", 0, Format.R32G32_Float, 16, 0),
+            });
+            AddStage(new InputLayoutStage(device, inputLayout));
+
             AddStage(new TopologyStage(device, PrimitiveTopology.TriangleList));
             AddStage(new TransformConstantBufferStage(device, this));
         }

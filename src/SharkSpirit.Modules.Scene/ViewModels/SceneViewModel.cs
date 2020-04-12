@@ -28,7 +28,7 @@ namespace SharkSpirit.Modules.Scene.ViewModels
 
             _game = _container.Resolve<Game>();
 
-            _game.Scene.AddEntity(new Entity(new Vector3(0, 0, 0), container, $"Cube № {1}"));
+            _game.Scene.AddEntity(new Entity(new Vector3(0, 0, 0), container, $"Cube № 1"));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
