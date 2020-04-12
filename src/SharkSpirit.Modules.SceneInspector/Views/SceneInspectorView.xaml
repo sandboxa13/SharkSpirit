@@ -20,16 +20,16 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" MaxHeight="300" />
             </Grid.RowDefinitions>
             <TextBlock
                 Margin="0,10,10,10"
                 FontWeight="Bold"
                 Text="Scene items : " />
-
             <TreeView
                 Grid.Row="1"
-                Height="300"
+                Height="250"
                 VerticalAlignment="Top"
                 helpers:TreeViewHelper.SelectedItem="{Binding Path=SceneGraphViewModel.SelectedItem, Mode=TwoWay}"
                 BorderBrush="Black"
@@ -37,10 +37,10 @@
                 ItemsSource="{Binding SceneGraphViewModel.SceneGraphEntityViewModels}">
                 <TreeView.ItemTemplate>
                     <DataTemplate DataType="{x:Type viewModels:SceneGraphEntityViewModel}">
-                        <Grid>
+                        <Grid Width="150">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{Binding Name}" />
 
@@ -72,7 +72,13 @@
                     </DataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
-            <Button Command="{Binding SceneGraphViewModel.AddEntityCommand}" Content="Add entity" />
+            <Button
+                Grid.Row="2"
+                Width="80"
+                Height="30"
+                HorizontalAlignment="Right"
+                Command="{Binding SceneGraphViewModel.AddEntityCommand}"
+                Content="Add entity" />
         </Grid>
 
 
