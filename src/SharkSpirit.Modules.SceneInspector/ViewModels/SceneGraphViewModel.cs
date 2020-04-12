@@ -20,6 +20,8 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
             SelectedItem = new SceneGraphEntityViewModel(Entity.Empty(), sceneGraphManager);
             SceneGraphEntityViewModels = new ObservableCollection<SceneGraphEntityViewModel>();
 
+            AddEntityCommand = ReactiveCommand.Create(sceneGraphManager.AddEntity);
+
             CreateSceneViewModels(sceneGraphManager);
 
             this.WhenAnyValue(model => model.SelectedItem)
@@ -32,7 +34,8 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
                     sceneGraphManager.ChangeSelectedItem(item.GetEntity());
                 });
 
-            sceneGraphManager.EntityRemovedObservable.Skip(1)
+            sceneGraphManager.EntityRemovedObservable
+                .Skip(1)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(entity =>
             {
@@ -45,11 +48,19 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
 
                 SceneGraphEntityViewModels.Remove(vm);
             });
+
+            sceneGraphManager.EntityAddedObservable
+                .Skip(1)
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(entity =>
+                {
+                    SceneGraphEntityViewModels.Add(new SceneGraphEntityViewModel(entity, sceneGraphManager));
+                });
         }
 
         [Reactive] public ObservableCollection<SceneGraphEntityViewModel> SceneGraphEntityViewModels { get; set; }
         [Reactive] public SceneGraphEntityViewModel SelectedItem { get; set; }
-
+        [Reactive] public ReactiveCommand<Unit, Unit> AddEntityCommand { get; set; }
         private void CreateSceneViewModels(SceneGraphManager sceneGraphManager)
         {
             SceneGraphEntityViewModels.AddRange(

@@ -144,5 +144,6 @@ namespace SharkSpirit.Engine
         RenderSystem RenderSystem { get; set; }
         FastCollection<Entity> Entities { get; }
         void RemoveEntity(Entity entity);
+        void AddEntity(Entity entity);
     }
 }
