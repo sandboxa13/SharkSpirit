@@ -29,6 +29,7 @@
 
             <TreeView
                 Grid.Row="1"
+                Height="300"
                 VerticalAlignment="Top"
                 helpers:TreeViewHelper.SelectedItem="{Binding Path=SceneGraphViewModel.SelectedItem, Mode=TwoWay}"
                 BorderBrush="Black"
