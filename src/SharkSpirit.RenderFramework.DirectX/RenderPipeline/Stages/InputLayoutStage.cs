@@ -17,7 +17,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
             _inputLayout = new InputLayout(device.GetDevice(), signature, new[]
             {
                 new InputElement("POSITION", 0, Format.R32G32B32_Float, 0, 0),
-                new InputElement("TEXCOORD", 0, Format.R32G32_Float, 12, 0),
+                new InputElement("TEXCOORD", 0, Format.R32G32_Float, 16, 0),
             });
         }
 

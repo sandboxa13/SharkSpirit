@@ -8,7 +8,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
         public TextureStage(IDevice device) : base(device)
         {
-            var texture = TextureLoader.CreateTexture2DFromBitmap(device.GetDevice(), TextureLoader.LoadBitmap(new SharpDX.WIC.ImagingFactory2(), "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders\\cube.png"));
+            var texture = TextureLoader.CreateTexture2DFromBitmap(device.GetDevice(), TextureLoader.LoadBitmap(new SharpDX.WIC.ImagingFactory2(), "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders\\1_store.png"));
 
             _shaderResourceView = new ShaderResourceView(device.GetDevice(), texture);
         }
