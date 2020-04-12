@@ -28,6 +28,7 @@ namespace SharkSpirit.Engine
         public FpsSystem FpsSystem { get; set; }
         public IConfiguration Configuration { get; private set; }
         public FastCollection<Entity> Entities { get; private set; }
+        
 
         public void Draw()
         {
@@ -68,8 +69,6 @@ namespace SharkSpirit.Engine
             RenderSystem.Flush();
         }
 
-        
-
         public void AddEntity(Entity entity)
         {
             Entities.Add(entity);
@@ -81,7 +80,7 @@ namespace SharkSpirit.Engine
             Entities.Remove(entity);
             RenderSystem.EntityRenderProcessor.RemoveRenderObject(entity);
         }
-
+       
         private void Initialize()
         {
             Configuration = Container.GetService<Configuration>();
@@ -143,7 +142,7 @@ namespace SharkSpirit.Engine
     {
         CameraComponent CameraComponent { get; set; }
         RenderSystem RenderSystem { get; set; }
-
         FastCollection<Entity> Entities { get; }
+        void RemoveEntity(Entity entity);
     }
 }

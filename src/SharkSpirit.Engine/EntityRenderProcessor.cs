@@ -36,6 +36,7 @@ namespace SharkSpirit.Engine
 
         private void Update(Entity entity, RenderObject renderObject)
         {
+            renderObject.ChangeIsVisible(entity.IsVisible);
             renderObject.UpdateWorld(entity.TransformComponent.WorldMatrix);
             renderObject.UpdateView(_scene.CameraComponent.ViewMatrix);
             renderObject.UpdateViewProjection(Matrix.Multiply(_scene.CameraComponent.ViewMatrix, _scene.RenderSystem.Device.GetProjection()));

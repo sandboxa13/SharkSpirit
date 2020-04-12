@@ -63,6 +63,9 @@
     <Reference Include="ReactiveUI.Fody.Helpers, Version=11.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ReactiveUI.Fody.11.3.1\lib\net461\ReactiveUI.Fody.Helpers.dll</HintPath>
     </Reference>
+    <Reference Include="ReactiveUI.WPF, Version=11.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReactiveUI.WPF.11.3.1\lib\net461\ReactiveUI.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpDX.4.2.0\lib\net45\SharpDX.dll</HintPath>
     </Reference>

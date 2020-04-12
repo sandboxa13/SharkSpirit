@@ -126,7 +126,16 @@ namespace SharkSpirit.Modules.Scene.Views
 
         private void OnCompositionTargetRendering(object sender, EventArgs e)
         {
-            InteropImage.RequestRender();
+            try
+            {
+                InteropImage.RequestRender();
+
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
         }
     }
 }

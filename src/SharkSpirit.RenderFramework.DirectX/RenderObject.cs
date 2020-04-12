@@ -16,6 +16,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         
         protected IndexBufferStage IndexBufferStage;
         protected IDevice Device;
+        protected bool IsVisible;
 
         protected void AddStage(StageBase stage)
         {
@@ -33,23 +34,16 @@ namespace SharkSpirit.RenderFramework.DirectX
         public Matrix ViewProjection { get; private set; }
         public Matrix View { get; private set; }
 
-        public void UpdateWorld(Matrix world)
-        {
-            World = world;
-        }
+        public void ChangeIsVisible(bool isVisible) => IsVisible = isVisible;
+        public void UpdateWorld(Matrix world) => World = world;
+        public void UpdateViewProjection(Matrix viewProjection) => ViewProjection = viewProjection;
+        public void UpdateView(Matrix view) => View = view;
 
-        public void UpdateViewProjection(Matrix viewProjection)
-        {
-            ViewProjection = viewProjection;
-        }
-
-        public void UpdateView(Matrix view)
-        {
-            View = view;
-        }
-        
         public void Draw()
         {
+            if(!IsVisible)
+                return;
+
             _renderPipeline.Bind();
 
             Device.GetDeviceContext().DrawIndexed(IndexBufferStage.GetCount(), 0, 0);

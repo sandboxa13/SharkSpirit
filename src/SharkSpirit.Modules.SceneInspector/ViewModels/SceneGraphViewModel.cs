@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
+using System.Windows;
+using System.Windows.Threading;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SharkSpirit.Engine;
@@ -12,9 +15,9 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
 {
     public class SceneGraphViewModel : ViewModelBase
     {
-        public SceneGraphViewModel(Logic.SceneGraphManager sceneGraphManager)
+        public SceneGraphViewModel(SceneGraphManager sceneGraphManager)
         {
-            SelectedItem = new SceneGraphEntityViewModel(Entity.Empty());
+            SelectedItem = new SceneGraphEntityViewModel(Entity.Empty(), sceneGraphManager);
             SceneGraphEntityViewModels = new ObservableCollection<SceneGraphEntityViewModel>();
 
             CreateSceneViewModels(sceneGraphManager);
@@ -23,8 +26,25 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
                 .Skip(1)
                 .Subscribe(item =>
                 {
+                    if (item == null)
+                        return;
+
                     sceneGraphManager.ChangeSelectedItem(item.GetEntity());
                 });
+
+            sceneGraphManager.EntityRemovedObservable.Skip(1)
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(entity =>
+            {
+                SelectedItem = null;
+
+                var vm = SceneGraphEntityViewModels.FirstOrDefault(model => model.Id == entity.Id);
+
+                if(vm == null)
+                    return;
+
+                SceneGraphEntityViewModels.Remove(vm);
+            });
         }
 
         [Reactive] public ObservableCollection<SceneGraphEntityViewModel> SceneGraphEntityViewModels { get; set; }
@@ -35,7 +55,7 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
             SceneGraphEntityViewModels.AddRange(
                 sceneGraphManager
                     .GetSceneEntities()
-                    .Select(entity => new SceneGraphEntityViewModel(entity)));
+                    .Select(entity => new SceneGraphEntityViewModel(entity, sceneGraphManager)));
         }
     }
 }

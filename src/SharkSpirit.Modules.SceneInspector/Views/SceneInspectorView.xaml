@@ -27,7 +27,7 @@
                 FontWeight="Bold"
                 Text="Scene items : " />
 
-            <TreeView
+            <ListBox
                 Grid.Row="1"
                 Height="300"
                 VerticalAlignment="Top"
@@ -35,14 +35,43 @@
                 BorderBrush="Black"
                 BorderThickness="1"
                 ItemsSource="{Binding SceneGraphViewModel.SceneGraphEntityViewModels}">
-                <TreeView.ItemTemplate>
+                <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type viewModels:SceneGraphEntityViewModel}">
                         <Grid>
-                            <TextBlock Text="{Binding Name}" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Name}" />
+
+                            <CheckBox
+                                Grid.Column="1"
+                                Width="24"
+                                Height="24"
+                                Margin="10,0"
+                                IsChecked="{Binding IsVisible}">
+                                <CheckBox.Style>
+                                    <Style TargetType="{x:Type CheckBox}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="ToolTip" Value="Hide" />
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="False">
+                                                <Setter Property="ToolTip" Value="Show" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </CheckBox.Style>
+                            </CheckBox>
+                            <Grid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Command="{Binding RemoveEntityCommand}" Header="Remove" />
+                                </ContextMenu>
+                            </Grid.ContextMenu>
                         </Grid>
                     </DataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
 
 

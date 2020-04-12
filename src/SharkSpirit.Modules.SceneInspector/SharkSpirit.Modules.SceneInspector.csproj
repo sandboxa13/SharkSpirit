@@ -92,6 +92,9 @@
     <PackageReference Include="ReactiveUI.Fody">
       <Version>11.3.1</Version>
     </PackageReference>
+    <PackageReference Include="ReactiveUI.WPF">
+      <Version>11.3.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharkSpirit.Core\SharkSpirit.Core.csproj">
