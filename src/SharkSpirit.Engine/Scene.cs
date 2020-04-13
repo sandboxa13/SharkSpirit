@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using SharkSpirit.Core;
 using SharkSpirit.Core.Collections;
 using SharkSpirit.Engine.Components;
@@ -14,10 +15,12 @@ namespace SharkSpirit.Engine
     public class Scene : ComponentBase, IScene
     {
         private readonly IContainer _container;
-
+        private readonly StringBuilder _stringBuilder;
         public Scene(IContainer container) : base(container, "Default scene")
         {
             _container = container;
+            _stringBuilder = new StringBuilder();
+
             Initialize();
         }
 
@@ -118,17 +121,19 @@ namespace SharkSpirit.Engine
 
         private void BuildAndDrawSceneInfo()
         {
-            var output = string.Join(Environment.NewLine,
-                "RENDER ENGINE INFO \n",
-                $"ACTUAL SCENE SIZE: {Configuration.Width} X {Configuration.Height}\n",
-                $"ACTUAL MONITOR SIZE: {Configuration.MonitorWidth} X {Configuration.MonitorHeight}\n",
-                $"FPS : {FpsSystem.GetFps()}\n",
-                $"FRAME TIME : {FpsSystem.GetMspf()} (ms)\n",
-                $"MOUSE X : {InputSystem.InputManager.MouseX()}\n",
-                $"MOUSE Y : {InputSystem.InputManager.MouseY()}\n",
-                $"SCENE OBJECTS COUNT : {Entities.Count} ");
+            _stringBuilder.Append(Environment.NewLine);
+            _stringBuilder.Append("RENDER ENGINE INFO \n");
+            _stringBuilder.Append($"ACTUAL SCENE SIZE: {Configuration.Width} X {Configuration.Height}\n");
+            _stringBuilder.Append($"ACTUAL MONITOR SIZE: {Configuration.MonitorWidth} X {Configuration.MonitorHeight}\n");
+            _stringBuilder.Append($"FPS : {FpsSystem.GetFps()}\n");
+            _stringBuilder.Append($"FRAME TIME : {FpsSystem.GetMspf()} (ms)\n");
+            _stringBuilder.Append($"MOUSE X : {InputSystem.InputManager.MouseX()}\n");
+            _stringBuilder.Append($"MOUSE Y : {InputSystem.InputManager.MouseY()}\n");
+            _stringBuilder.Append($"SCENE OBJECTS COUNT : {Entities.Count} ");
 
-            RenderSystem.DrawSceneInfo(output);
+            RenderSystem.DrawSceneInfo(_stringBuilder.ToString());
+
+            _stringBuilder.Clear();
         }
 
         public void Reinitialize()
