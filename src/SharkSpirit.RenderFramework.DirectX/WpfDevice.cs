@@ -32,10 +32,11 @@ namespace SharkSpirit.RenderFramework.DirectX
         private TextFormat _debugTextFormat;
         private SolidColorBrush _brush;
         private Texture2D _zBufferTexture;
-
+        private Vector2 _origin;
         public WpfDevice(IContainer container)
         {
             _container = container;
+            _origin = new Vector2(50, 50);
         }
 
         public Device GetDevice() => _device;
@@ -47,9 +48,13 @@ namespace SharkSpirit.RenderFramework.DirectX
 
         public void DrawSceneInfo(string output)
         {
+            var textLayout = new TextLayout(new Factory(), output, _debugTextFormat, 330, 230);
+
             _renderTarget2D.BeginDraw();
-            _renderTarget2D.DrawTextLayout(new SharpDX.Vector2(50, 50), new TextLayout(new Factory(), output, _debugTextFormat, 330, 230), _brush);
+            _renderTarget2D.DrawTextLayout(_origin, textLayout, _brush);
             _renderTarget2D.EndDraw();
+
+            textLayout.Dispose();
         }
 
         public void Clear(TimeSpan timerTotalTime)
