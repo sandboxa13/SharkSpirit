@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using SharkSpirit.Core;
 using SharkSpirit.Graphics;
@@ -11,13 +11,34 @@ using SharpDX.DXGI;
 using PixelShaderStage = SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages.PixelShaderStage;
 using VertexShaderStage = SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages.VertexShaderStage;
 
-namespace SharkSpirit.RenderFramework.DirectX
+namespace SharkSpirit.RenderFramework.DirectX.Primitives
 {
-    public class Cube : RenderObject
+    public class TexturedCubePrimitiveBuilder : AbstractPrimitiveBuilder
     {
-        public Cube(IDevice device, IConfiguration configuration) : base(device)
+        public TexturedCubePrimitiveBuilder(IDevice device, IConfiguration configuration) : base(device, configuration)
         {
-            float side = 1.0f / 2.0f;
+        }
+
+        public Cube Build(Cube cube)
+        {
+            AddVertexBufferStage(cube);
+            AddTextureStage(cube);
+            AddSamplerStage(cube);
+            AddVertexShaderStage(cube);
+            AddPixelShaderStage(cube);
+            AddIndexBufferStage(cube);
+            AddInputLayoutStage(cube);
+            AddTopologyStage(cube);
+            AddTransformConstantBufferStage(cube);
+
+            return cube;
+        }
+
+        #region Stages
+
+        protected override void AddVertexBufferStage(RenderObject renderObject)
+        {
+            var side = 1.0f / 2.0f;
 
             var vertices = new List<SimpleVertex>
             {
@@ -57,6 +78,26 @@ namespace SharkSpirit.RenderFramework.DirectX
                 new SimpleVertex(new Vector4( side,side,side, 1.0f),   new Vector2(1.0f,1.0f)),
             };
 
+            renderObject.AddStage(new VertexBufferStage<SimpleVertex>(Device, vertices.ToArray()));
+        }
+        protected override void AddTextureStage(RenderObject renderObject)
+        {
+            renderObject.AddStage(new TextureStage(Device, "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders\\1_store.png"));
+        }
+        protected override void AddSamplerStage(RenderObject renderObject)
+        {
+            renderObject.AddStage(new SamplerStage(Device));
+        }
+        protected override void AddVertexShaderStage(RenderObject renderObject)
+        {
+            renderObject.AddStage(new VertexShaderStage(Device, Path.Combine(Configuration.PathToShaders, "vertexShader.hlsl")));
+        }
+        protected override void AddPixelShaderStage(RenderObject renderObject)
+        {
+            renderObject.AddStage(new PixelShaderStage(Device, Path.Combine(Configuration.PathToShaders, "pixelShader.hlsl")));
+        }
+        protected override void AddIndexBufferStage(RenderObject renderObject)
+        {
             var indices = new ushort[]
             {
                 0,2, 1,    2,3,1,
@@ -67,27 +108,31 @@ namespace SharkSpirit.RenderFramework.DirectX
                 20,23,21, 20,22,23
             };
 
-            AddStage(new VertexBufferStage<SimpleVertex>(device, vertices.ToArray()));
-            AddStage(new TextureStage(device, "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders\\1_store.png"));
-            AddStage(new SamplerStage(device));
-            AddStage(new VertexShaderStage(device, Path.Combine(configuration.PathToShaders, "vertexShader.hlsl")));
-            AddStage(new PixelShaderStage(device, Path.Combine(configuration.PathToShaders, "pixelShader.hlsl")));
-
-            AddIndexBufferStage(new IndexBufferStage(device, indices));
-
-            var vertexShaderByteCode = ShaderBytecode.CompileFromFile(Path.Combine(configuration.PathToShaders, "vertexShader.hlsl"), "VS", "vs_4_0", ShaderFlags.Debug);
+            renderObject.AddIndexBufferStage(new IndexBufferStage(Device, indices));
+        }
+        protected override void AddInputLayoutStage(RenderObject renderObject)
+        {
+            var vertexShaderByteCode = ShaderBytecode.CompileFromFile(Path.Combine(Configuration.PathToShaders, "vertexShader.hlsl"), "VS", "vs_4_0", ShaderFlags.Debug);
 
             var signature = ShaderSignature.GetInputSignature(vertexShaderByteCode);
 
-            var inputLayout = new InputLayout(device.GetDevice(), signature, new[]
+            var inputLayout = new InputLayout(Device.GetDevice(), signature, new[]
             {
                 new InputElement("POSITION", 0, Format.R32G32B32_Float, 0, 0),
                 new InputElement("TEXCOORD", 0, Format.R32G32_Float, 16, 0),
             });
-            AddStage(new InputLayoutStage(device, inputLayout));
 
-            AddStage(new TopologyStage(device, PrimitiveTopology.TriangleList));
-            AddStage(new TransformConstantBufferStage(device, this));
+            renderObject.AddStage(new InputLayoutStage(Device, inputLayout));
         }
+        protected override void AddTopologyStage(RenderObject renderObject)
+        {
+            renderObject.AddStage(new TopologyStage(Device, PrimitiveTopology.TriangleList));
+        }
+        protected override void AddTransformConstantBufferStage(RenderObject renderObject)
+        {
+            renderObject.AddStage(new TransformConstantBufferStage(Device, renderObject));
+        }
+
+        #endregion
     }
 }

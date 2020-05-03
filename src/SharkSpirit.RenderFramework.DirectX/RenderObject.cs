@@ -7,9 +7,10 @@ namespace SharkSpirit.RenderFramework.DirectX
     public class RenderObject
     {
         private readonly IRenderPipeline _renderPipeline;
-        public RenderObject(IDevice device)
+        public RenderObject(IDevice device, MeshType meshType)
         {
             Device = device;
+            MeshType = meshType;
 
             _renderPipeline = new RenderPipeline.RenderPipeline(device);
         }
@@ -17,13 +18,14 @@ namespace SharkSpirit.RenderFramework.DirectX
         protected IndexBufferStage IndexBufferStage;
         protected IDevice Device;
         protected bool IsVisible;
+        protected MeshType MeshType;
 
-        protected void AddStage(StageBase stage)
+        public void AddStage(StageBase stage)
         {
             _renderPipeline.AddStage(stage);
         }
 
-        protected void AddIndexBufferStage(IndexBufferStage indexBufferStage)
+        public void AddIndexBufferStage(IndexBufferStage indexBufferStage)
         {
             IndexBufferStage = indexBufferStage;
 

@@ -2,11 +2,11 @@
 using System.Linq;
 using SharkSpirit.Graphics;
 
-namespace SharkSpirit.RenderFramework.DirectX
+namespace SharkSpirit.RenderFramework.DirectX.Primitives
 {
     public class Grid : RenderObject
     {
-        public Grid(IDevice device, float width, float depth, int m, int n) : base(device)
+        public Grid(IDevice device, float width, float depth, int m, int n) : base(device, MeshType.Grid)
         {
           
         }

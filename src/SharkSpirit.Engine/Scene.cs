@@ -6,6 +6,7 @@ using SharkSpirit.Engine.Systems;
 using SharkSpirit.Engine.Systems.Input;
 using SharkSpirit.Engine.Systems.Scripts;
 using SharkSpirit.RenderFramework.DirectX;
+using SharkSpirit.RenderFramework.DirectX.Primitives;
 using SharpDX;
 using Configuration = SharkSpirit.Core.Configuration;
 
@@ -72,7 +73,13 @@ namespace SharkSpirit.Engine
         public void AddEntity(Entity entity)
         {
             Entities.Add(entity);
-            RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new Cube(RenderSystem.Device, Configuration));
+            RenderSystem.EntityRenderProcessor.AddRenderObject(entity, PrimitivesFactory.CreateTexturedCube(RenderSystem.Device, Configuration));
+        }
+
+        public void AddEntity(Entity entity, PrimitiveDrawableTypes primitiveDrawableType)
+        {
+            Entities.Add(entity);
+            RenderSystem.EntityRenderProcessor.AddRenderObject(entity, PrimitivesFactory.Create(RenderSystem.Device, Configuration, primitiveDrawableType));
         }
 
         public void RemoveEntity(Entity entity)
