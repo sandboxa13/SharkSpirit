@@ -1,4 +1,4 @@
-﻿namespace SharkSpirit.RenderFramework.DirectX.Primitives
+﻿namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
 {
     public class Sphere : RenderObject
     {

@@ -15,7 +15,9 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives
 {
     public class TexturedCubePrimitiveBuilder : AbstractPrimitiveBuilder
     {
-        public TexturedCubePrimitiveBuilder(IDevice device, IConfiguration configuration) : base(device, configuration)
+        public TexturedCubePrimitiveBuilder(
+            IDevice device, 
+            IConfiguration configuration) : base(device, configuration)
         {
         }
 

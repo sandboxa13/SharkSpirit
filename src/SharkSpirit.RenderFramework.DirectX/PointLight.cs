@@ -1,4 +1,4 @@
-﻿using SharkSpirit.RenderFramework.DirectX.Primitives;
+﻿using SharkSpirit.RenderFramework.DirectX.Primitives.Sphere;
 
 namespace SharkSpirit.RenderFramework.DirectX
 {
