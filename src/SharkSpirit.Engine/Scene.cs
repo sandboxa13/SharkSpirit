@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using SharkSpirit.Core;
 using SharkSpirit.Core.Collections;
@@ -24,7 +26,8 @@ namespace SharkSpirit.Engine
             Initialize();
         }
 
-        public CameraComponent CameraComponent { get; set; }
+        public FastCollection<CameraComponent> Cameras { get; set; }
+        public CameraComponent SelectedCamera { get; set; }
         public RenderSystem RenderSystem { get; set; }
         public ScriptSystem ScriptSystem { get; set; }
         public InputSystem InputSystem { get; set; }
@@ -32,19 +35,6 @@ namespace SharkSpirit.Engine
         public IConfiguration Configuration { get; private set; }
         public FastCollection<Entity> Entities { get; private set; }
         
-
-        public void Draw()
-        {
-            InputSystem.UpdateInput();
-
-            ScriptSystem.ExecuteScripts();
-
-            CameraComponent.Update();
-
-            RenderSystem.Clear();
-            RenderSystem.Draw();
-            RenderSystem.Flush();
-        }
 
         public void Draw(GameTimer timer)
         {
@@ -55,7 +45,7 @@ namespace SharkSpirit.Engine
             ScriptSystem.ExecuteScripts();
 
             // update camera
-            CameraComponent.Update();
+            SelectedCamera.Update();
 
             // clear context
             RenderSystem.Clear(timer);
@@ -71,6 +61,50 @@ namespace SharkSpirit.Engine
             
             RenderSystem.Flush();
         }
+
+        public void SelectCamera(Entity entity)
+        {
+            var newSelectedCamera = Cameras.FirstOrDefault(component => component.Entity.Id == entity.Id);
+
+            if(newSelectedCamera == null)
+                return;
+            
+            SelectedCamera.UnSelect();
+
+            newSelectedCamera.Select();
+
+            SelectedCamera = newSelectedCamera;
+        }
+
+        public void AddCamera()
+        {
+            var x = (float)(1.5f * Math.PI);
+            var y = (float)(0.2f * Math.PI);
+            var z = 15.0f;
+
+            var camera = new CameraComponent(new Entity(new Vector3(x, y, z), Container, $"Camera {Cameras.Count + 1}"));
+            var cameraMoveScript = new CameraMoveScript();
+            cameraMoveScript.AttachEntity(camera.Entity);
+
+            cameraMoveScript.Initialize(Container, camera);
+
+            ScriptSystem.AddScript(cameraMoveScript);
+
+            Cameras.Add(camera);
+
+            SelectCamera(camera.Entity);
+        }
+
+        public void RemoveCamera(Entity entity)
+        {
+            var cameraToRemove = Cameras.FirstOrDefault(component => component.Id == entity.Id);
+
+            if(cameraToRemove == null)
+                return;
+
+            Cameras.Remove(cameraToRemove);
+        }
+
 
         public void AddEntity(Entity entity)
         {
@@ -92,16 +126,21 @@ namespace SharkSpirit.Engine
             RenderSystem = RenderSystemFactory.CreateRenderSystem(Container, Configuration);
             Container.AddService(RenderSystem);
 
+            Cameras = new FastCollection<CameraComponent>();
+
             var x = (float) (1.5f * Math.PI);
             var y = (float) (0.2f * Math.PI);
             var z = 15.0f;
 
-            CameraComponent = new CameraComponent(new Entity(new Vector3(x, y, z), Container, "Camera"));
+            SelectedCamera = new CameraComponent(new Entity(new Vector3(x, y, z), Container, "Camera 1"));
+            SelectedCamera.Select();
+
             var cameraMoveScript = new CameraMoveScript();
-            cameraMoveScript.AttachEntity(CameraComponent.Entity);
+            cameraMoveScript.AttachEntity(SelectedCamera.Entity);
+            
+            Cameras.Add(SelectedCamera);
 
-
-            Container.AddService(CameraComponent);
+            Container.AddService(Cameras);
 
             Entities = new FastCollection<Entity>();
 
@@ -111,7 +150,7 @@ namespace SharkSpirit.Engine
             InputSystem = new InputSystem(Container);
             Container.AddService(InputSystem);
 
-            cameraMoveScript.Initialize(Container);
+            cameraMoveScript.Initialize(Container, SelectedCamera);
 
             ScriptSystem.AddScript(cameraMoveScript);
 
@@ -145,10 +184,13 @@ namespace SharkSpirit.Engine
 
     public interface IScene
     {
-        CameraComponent CameraComponent { get; set; }
+        FastCollection<CameraComponent> Cameras{ get; set; }
+        CameraComponent SelectedCamera{ get; set; }
         RenderSystem RenderSystem { get; set; }
         FastCollection<Entity> Entities { get; }
         void RemoveEntity(Entity entity);
         void AddEntity(Entity entity);
+        void SelectCamera(Entity entity);
+        void AddCamera();
     }
 }
