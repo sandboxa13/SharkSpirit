@@ -60,7 +60,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         public void Clear(TimeSpan timerTotalTime)
         {
             _immediateContext.ClearDepthStencilView(_depthView, DepthStencilClearFlags.Depth, 1f, 0);
-            _immediateContext.ClearRenderTargetView(_renderTargetView, new Color4(0.07f, 0.0f, 0.12f, 1.0f));
+            _immediateContext.ClearRenderTargetView(_renderTargetView, new Color4(0.17f, 0.0f, 0.12f, 1.0f));
         }
 
         public void Clear()

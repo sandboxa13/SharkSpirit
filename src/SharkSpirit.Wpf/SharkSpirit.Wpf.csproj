@@ -60,6 +60,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AssimpNet, Version=5.0.0.0, Culture=neutral, PublicKeyToken=0d51b391f59f42a6">
+      <HintPath>..\packages\AssimpNet.5.0.0-beta1\lib\net40\AssimpNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
@@ -227,5 +231,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Fody.6.1.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.1.1\build\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\ReactiveUI.Fody.11.3.1\build\ReactiveUI.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ReactiveUI.Fody.11.3.1\build\ReactiveUI.Fody.props'))" />
+    <Error Condition="!Exists('..\packages\AssimpNet.5.0.0-beta1\build\AssimpNet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AssimpNet.5.0.0-beta1\build\AssimpNet.targets'))" />
   </Target>
+  <Import Project="..\packages\AssimpNet.5.0.0-beta1\build\AssimpNet.targets" Condition="Exists('..\packages\AssimpNet.5.0.0-beta1\build\AssimpNet.targets')" />
 </Project>

@@ -14,6 +14,7 @@ namespace SharkSpirit.Graphics
             TextureUV = textureUv;
         }
     }
+    
 
     [StructLayout(LayoutKind.Sequential)]
     public struct TriangleIndex
