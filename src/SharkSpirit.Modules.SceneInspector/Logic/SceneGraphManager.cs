@@ -5,6 +5,7 @@ using System.Reactive.Subjects;
 using System.Windows;
 using SharkSpirit.Core;
 using SharkSpirit.Engine;
+using SharkSpirit.Engine.Components;
 using SharpDX;
 
 namespace SharkSpirit.Modules.SceneInspector.Logic
@@ -29,6 +30,7 @@ namespace SharkSpirit.Modules.SceneInspector.Logic
         public IObservable<Entity> EntityRemovedObservable => _entityRemovedSubject;
         public IObservable<Entity> EntityAddedObservable => _entityAddedSubject;
         public IEnumerable<Entity> GetSceneEntities() => _engineContainer.GetService<IScene>().Entities;
+        public IEnumerable<CameraComponent> GetSceneCameras() => _engineContainer.GetService<IScene>().Cameras;
 
         public void ChangeSelectedItem(Entity entity)
         {
@@ -52,6 +54,16 @@ namespace SharkSpirit.Modules.SceneInspector.Logic
             _engineContainer.GetService<IScene>().AddEntity(entity);
 
             _entityAddedSubject.OnNext(entity);
+        }
+
+        public void SelectCamera(Entity entity)
+        {
+            _engineContainer.GetService<IScene>().SelectCamera(entity);
+        }
+
+        public void AddCamera()
+        {
+            _engineContainer.GetService<IScene>().AddCamera();
         }
     }
 }

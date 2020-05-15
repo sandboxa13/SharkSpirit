@@ -30,7 +30,11 @@ namespace SharkSpirit.Engine
 
         public Entity() : base(new Container(), "")
         {
+            Components = new FastCollection<EntityComponent>();
+            Id = Guid.NewGuid();
             TransformComponent = new TransformComponent(this) { Position = Vector3.Zero };
+
+            Components.Add(TransformComponent);
         }
 
         public FastCollection<EntityComponent> Components { get; }

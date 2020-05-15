@@ -3,8 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Windows;
-using System.Windows.Threading;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SharkSpirit.Engine;
@@ -19,10 +17,26 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
         {
             SelectedItem = new SceneGraphEntityViewModel(Entity.Empty(), sceneGraphManager);
             SceneGraphEntityViewModels = new ObservableCollection<SceneGraphEntityViewModel>();
+            SceneCameras = new ObservableCollection<SceneGraphCameraViewModel>();
+
+
 
             AddEntityCommand = ReactiveCommand.Create(sceneGraphManager.AddEntity);
 
             CreateSceneViewModels(sceneGraphManager);
+
+            SelectedCamera = SceneCameras.FirstOrDefault();
+
+            this.WhenAnyValue(model => model.SelectedCamera)
+                .Skip(1)
+                .Subscribe(camera =>
+            {
+                if (camera == null)
+                    return;
+
+                sceneGraphManager.SelectCamera(camera.GetEntity());
+            });
+
 
             this.WhenAnyValue(model => model.SelectedItem)
                 .Skip(1)
@@ -58,15 +72,27 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
                 });
         }
 
+        [Reactive] public ObservableCollection<SceneGraphCameraViewModel> SceneCameras { get; set; }
         [Reactive] public ObservableCollection<SceneGraphEntityViewModel> SceneGraphEntityViewModels { get; set; }
         [Reactive] public SceneGraphEntityViewModel SelectedItem { get; set; }
+        [Reactive] public SceneGraphCameraViewModel SelectedCamera { get; set; }
         [Reactive] public ReactiveCommand<Unit, Unit> AddEntityCommand { get; set; }
+
         private void CreateSceneViewModels(SceneGraphManager sceneGraphManager)
         {
+            sceneGraphManager.AddCamera();
+
+
             SceneGraphEntityViewModels.AddRange(
                 sceneGraphManager
                     .GetSceneEntities()
                     .Select(entity => new SceneGraphEntityViewModel(entity, sceneGraphManager)));
+
+            SceneCameras.AddRange(
+                sceneGraphManager
+                    .GetSceneCameras()
+                    .Select(component => new SceneGraphCameraViewModel(component.Entity, sceneGraphManager)));
+
         }
     }
 }

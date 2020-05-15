@@ -11,6 +11,7 @@ namespace SharkSpirit.Engine.Components
         
         public Matrix ViewMatrix;
         
+        public bool IsSelected { get; private set; }
         public void Update()
         {
             var position = new Vector3(Entity.TransformComponent.Position.X, Entity.TransformComponent.Position.Y,
@@ -30,5 +31,8 @@ namespace SharkSpirit.Engine.Components
 
             ViewMatrix = Matrix.LookAtLH(position, lookAt, up);
         }
+
+        public void Select() => IsSelected = true;
+        public void UnSelect() => IsSelected = false;
     }
 }
