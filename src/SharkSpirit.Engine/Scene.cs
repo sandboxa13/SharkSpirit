@@ -36,19 +36,6 @@ namespace SharkSpirit.Engine
         public FastCollection<Entity> Entities { get; private set; }
         
 
-        public void Draw()
-        {
-            InputSystem.UpdateInput();
-
-            ScriptSystem.ExecuteScripts();
-
-            SelectedCamera.Update();
-
-            RenderSystem.Clear();
-            RenderSystem.Draw();
-            RenderSystem.Flush();
-        }
-
         public void Draw(GameTimer timer)
         {
             // update user input

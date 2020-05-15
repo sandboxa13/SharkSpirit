@@ -43,6 +43,9 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
     {
         public SceneGraphCameraViewModel(Entity entity, SceneGraphManager sceneGraphManager) : base(entity, sceneGraphManager)
         {
+            SelectCameraCommand = ReactiveCommand.Create(() => sceneGraphManager.SelectCamera(entity));
         }
+
+        [Reactive] public ReactiveCommand<Unit, Unit> SelectCameraCommand { get; set; }
     }
 }

@@ -59,6 +59,8 @@ namespace SharkSpirit.Modules.SceneInspector.Logic
         public void SelectCamera(Entity entity)
         {
             _engineContainer.GetService<IScene>().SelectCamera(entity);
+
+            _entityChangedSubject.OnNext(entity);
         }
 
         public void AddCamera()

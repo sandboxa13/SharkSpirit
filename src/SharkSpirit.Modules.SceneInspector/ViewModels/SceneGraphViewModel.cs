@@ -17,25 +17,10 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
         {
             SelectedItem = new SceneGraphEntityViewModel(Entity.Empty(), sceneGraphManager);
             SceneGraphEntityViewModels = new ObservableCollection<SceneGraphEntityViewModel>();
-            SceneCameras = new ObservableCollection<SceneGraphCameraViewModel>();
-
-
 
             AddEntityCommand = ReactiveCommand.Create(sceneGraphManager.AddEntity);
 
             CreateSceneViewModels(sceneGraphManager);
-
-            SelectedCamera = SceneCameras.FirstOrDefault();
-
-            this.WhenAnyValue(model => model.SelectedCamera)
-                .Skip(1)
-                .Subscribe(camera =>
-            {
-                if (camera == null)
-                    return;
-
-                sceneGraphManager.SelectCamera(camera.GetEntity());
-            });
 
 
             this.WhenAnyValue(model => model.SelectedItem)
@@ -72,10 +57,8 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
                 });
         }
 
-        [Reactive] public ObservableCollection<SceneGraphCameraViewModel> SceneCameras { get; set; }
         [Reactive] public ObservableCollection<SceneGraphEntityViewModel> SceneGraphEntityViewModels { get; set; }
         [Reactive] public SceneGraphEntityViewModel SelectedItem { get; set; }
-        [Reactive] public SceneGraphCameraViewModel SelectedCamera { get; set; }
         [Reactive] public ReactiveCommand<Unit, Unit> AddEntityCommand { get; set; }
 
         private void CreateSceneViewModels(SceneGraphManager sceneGraphManager)
@@ -88,7 +71,7 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
                     .GetSceneEntities()
                     .Select(entity => new SceneGraphEntityViewModel(entity, sceneGraphManager)));
 
-            SceneCameras.AddRange(
+            SceneGraphEntityViewModels.AddRange(
                 sceneGraphManager
                     .GetSceneCameras()
                     .Select(component => new SceneGraphCameraViewModel(component.Entity, sceneGraphManager)));
