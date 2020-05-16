@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 using Assimp;
 using Assimp.Configs;
 using SharkSpirit.Core;
-using SharkSpirit.Graphics;
 using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages;
 using SharpDX;
 using SharpDX.D3DCompiler;
