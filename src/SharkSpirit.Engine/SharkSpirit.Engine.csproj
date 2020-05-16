@@ -12,4 +12,8 @@
       <ProjectReference Include="..\SharkSpirit.RenderEngine\SharkSpirit.RenderEngine.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.7.0" />
+    </ItemGroup>
+
 </Project>

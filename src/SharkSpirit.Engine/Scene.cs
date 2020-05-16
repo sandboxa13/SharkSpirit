@@ -11,6 +11,7 @@ using SharkSpirit.Engine.Systems.Scripts;
 using SharkSpirit.RenderFramework.DirectX;
 using SharpDX;
 using Configuration = SharkSpirit.Core.Configuration;
+using System.Diagnostics;
 
 namespace SharkSpirit.Engine
 {
@@ -18,6 +19,8 @@ namespace SharkSpirit.Engine
     {
         private readonly IContainer _container;
         private readonly StringBuilder _stringBuilder;
+
+
         public Scene(IContainer container) : base(container, "Default scene")
         {
             _container = container;
@@ -32,9 +35,10 @@ namespace SharkSpirit.Engine
         public ScriptSystem ScriptSystem { get; set; }
         public InputSystem InputSystem { get; set; }
         public FpsSystem FpsSystem { get; set; }
+        public DiagnosticsSystem DiagnosticsSystem { get; set; }
         public IConfiguration Configuration { get; private set; }
         public FastCollection<Entity> Entities { get; private set; }
-        
+
 
         public void Draw(GameTimer timer)
         {
@@ -56,9 +60,9 @@ namespace SharkSpirit.Engine
             // tick fps 
             FpsSystem.Tick();
 
-            BuildAndDrawSceneInfo();
+            BuildAndDrawSceneInfo(timer);
 
-            
+
             RenderSystem.Flush();
         }
 
@@ -66,9 +70,9 @@ namespace SharkSpirit.Engine
         {
             var newSelectedCamera = Cameras.FirstOrDefault(component => component.Entity.Id == entity.Id);
 
-            if(newSelectedCamera == null)
+            if (newSelectedCamera == null)
                 return;
-            
+
             SelectedCamera.UnSelect();
 
             newSelectedCamera.Select();
@@ -78,11 +82,12 @@ namespace SharkSpirit.Engine
 
         public void AddCamera()
         {
-            var x = (float)(1.5f * Math.PI);
-            var y = (float)(0.2f * Math.PI);
+            var x = (float) (1.5f * Math.PI);
+            var y = (float) (0.2f * Math.PI);
             var z = 15.0f;
 
-            var camera = new CameraComponent(new Entity(new Vector3(x, y, z), Container, $"Camera {Cameras.Count + 1}"));
+            var camera =
+                new CameraComponent(new Entity(new Vector3(x, y, z), Container, $"Camera {Cameras.Count + 1}"));
             var cameraMoveScript = new CameraMoveScript();
             cameraMoveScript.AttachEntity(camera.Entity);
 
@@ -99,7 +104,7 @@ namespace SharkSpirit.Engine
         {
             var cameraToRemove = Cameras.FirstOrDefault(component => component.Id == entity.Id);
 
-            if(cameraToRemove == null)
+            if (cameraToRemove == null)
                 return;
 
             Cameras.Remove(cameraToRemove);
@@ -117,7 +122,7 @@ namespace SharkSpirit.Engine
             Entities.Remove(entity);
             RenderSystem.EntityRenderProcessor.RemoveRenderObject(entity);
         }
-       
+
         private void Initialize()
         {
             Configuration = Container.GetService<Configuration>();
@@ -137,7 +142,7 @@ namespace SharkSpirit.Engine
 
             var cameraMoveScript = new CameraMoveScript();
             cameraMoveScript.AttachEntity(SelectedCamera.Entity);
-            
+
             Cameras.Add(SelectedCamera);
 
             Container.AddService(Cameras);
@@ -156,10 +161,14 @@ namespace SharkSpirit.Engine
 
             FpsSystem = new FpsSystem(60, Container);
             Container.AddService(FpsSystem);
+
+            DiagnosticsSystem = new DiagnosticsSystem();
+            Container.AddService(DiagnosticsSystem);
         }
 
-        private void BuildAndDrawSceneInfo()
+        private void BuildAndDrawSceneInfo(GameTimer timer)
         {
+            var inf = DiagnosticsSystem.CollectInformation();
             _stringBuilder.Append(Environment.NewLine);
             _stringBuilder.Append("RENDER ENGINE INFO \n");
             _stringBuilder.Append($"ACTUAL SCENE SIZE: {Configuration.Width} X {Configuration.Height}\n");
@@ -168,7 +177,9 @@ namespace SharkSpirit.Engine
             _stringBuilder.Append($"FRAME TIME : {FpsSystem.GetMspf()} (ms)\n");
             _stringBuilder.Append($"MOUSE X : {InputSystem.InputManager.MouseX()}\n");
             _stringBuilder.Append($"MOUSE Y : {InputSystem.InputManager.MouseY()}\n");
-            _stringBuilder.Append($"SCENE OBJECTS COUNT : {Entities.Count} ");
+            _stringBuilder.Append($"SCENE OBJECTS COUNT : {Entities.Count} \n");
+            _stringBuilder.Append($"CPU USAGE = {inf.CpuUsage} %\n");
+            _stringBuilder.Append($"MEMORY USAGE = {inf.MemoryUsage} MB \n");
 
             RenderSystem.DrawSceneInfo(_stringBuilder.ToString());
 
@@ -184,8 +195,8 @@ namespace SharkSpirit.Engine
 
     public interface IScene
     {
-        FastCollection<CameraComponent> Cameras{ get; set; }
-        CameraComponent SelectedCamera{ get; set; }
+        FastCollection<CameraComponent> Cameras { get; set; }
+        CameraComponent SelectedCamera { get; set; }
         RenderSystem RenderSystem { get; set; }
         FastCollection<Entity> Entities { get; }
         void RemoveEntity(Entity entity);
