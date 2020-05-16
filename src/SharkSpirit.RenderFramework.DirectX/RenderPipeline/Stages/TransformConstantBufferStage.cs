@@ -16,13 +16,12 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
         public override void BindToPipeline()
         {
-            var world = _renderObject.World;
-
+            var modelView = _renderObject.World * _renderObject.View;
+            
             var cb = new ConstantBuffer
             {
-                World = Matrix.Transpose(world),
-                View = Matrix.Transpose(Matrix.Identity),
-                Projection = Matrix.Transpose(_renderObject.ViewProjection),
+                model = Matrix.Transpose(modelView),
+                modelViewProj = Matrix.Transpose(modelView * _renderObject.ViewProjection)
             };
 
             _vertexConstantBuffer.Update(cb, Device.GetBuffer());

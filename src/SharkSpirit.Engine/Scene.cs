@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SharkSpirit.Core;
@@ -9,6 +8,7 @@ using SharkSpirit.Engine.Systems;
 using SharkSpirit.Engine.Systems.Input;
 using SharkSpirit.Engine.Systems.Scripts;
 using SharkSpirit.RenderFramework.DirectX;
+using SharkSpirit.RenderFramework.DirectX.ModelLoading;
 using SharpDX;
 using Configuration = SharkSpirit.Core.Configuration;
 using System.Diagnostics;
@@ -110,11 +110,10 @@ namespace SharkSpirit.Engine
             Cameras.Remove(cameraToRemove);
         }
 
-
         public void AddEntity(Entity entity)
         {
             Entities.Add(entity);
-            RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new Cube(RenderSystem.Device, Configuration));
+            RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new Model(RenderSystem.Device, Configuration));
         }
 
         public void RemoveEntity(Entity entity)
