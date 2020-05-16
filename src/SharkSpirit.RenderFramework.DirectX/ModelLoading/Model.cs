@@ -54,8 +54,9 @@ namespace SharkSpirit.RenderFramework.DirectX.ModelLoading
                 {
                     var face = modelMesh.Faces[i];
 
-                    foreach (var faceIndex in face.Indices)
+                    for (var index = 0; index < face.Indices.Count; index++)
                     {
+                        var faceIndex = face.Indices[index];
                         indices.Add((ushort) faceIndex);
                     }
                 }
