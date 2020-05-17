@@ -5,13 +5,16 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
     public class PixelConstantBufferStage<T> : ConstantBufferStage<T> where T : unmanaged
     {
-        public PixelConstantBufferStage(IDevice device) : base(device)
+        private readonly RenderObject _renderObject;
+
+        public PixelConstantBufferStage(IDevice device, RenderObject renderObject) : base(device)
         {
+            _renderObject = renderObject;
         }
 
         public override void BindToPipeline()
         {
-            var color = new SpherePrimitiveBuilder.ConstantColor(new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+            var color = new SpherePrimitiveBuilder.ConstantColor(_renderObject.Color);
 
             Update(color);
 

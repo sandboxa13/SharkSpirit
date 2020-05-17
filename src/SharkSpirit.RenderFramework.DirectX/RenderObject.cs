@@ -35,12 +35,13 @@ namespace SharkSpirit.RenderFramework.DirectX
         public Matrix World { get; private set; }
         public Matrix ViewProjection { get; private set; }
         public Matrix View { get; private set; }
+        public Vector4 Color { get; private set; }
 
         public void ChangeIsVisible(bool isVisible) => IsVisible = isVisible;
         public void UpdateWorld(Matrix world) => World = world;
         public void UpdateViewProjection(Matrix viewProjection) => ViewProjection = viewProjection;
         public void UpdateView(Matrix view) => View = view;
-
+        public void UpdateColor(Vector4 color) => Color = color;
         public void Draw()
         {
             if(!IsVisible)
