@@ -24,8 +24,6 @@ namespace SharkSpirit.RenderFramework.DirectX
         private readonly IContainer _container;
         private DeviceContext _immediateContext;
         private Device _device;
-        private Buffer _constantBuffer;
-        private Buffer _pixelcbd;
         private RenderTargetView _renderTargetView;
         public RenderTarget _renderTarget2D { get; private set; }
         private Matrix _projection;
@@ -44,8 +42,6 @@ namespace SharkSpirit.RenderFramework.DirectX
         public Device GetDevice() => _device;
         public DeviceContext GetDeviceContext() => _immediateContext;
         public uint GetTextureId() => 0;
-        public Buffer GetBuffer() => _constantBuffer;
-        public Buffer GetPixelBuffer() => _pixelcbd;
         public Matrix GetProjection() => _projection;
         public void Flush() => _immediateContext.Flush();
 
@@ -98,23 +94,23 @@ namespace SharkSpirit.RenderFramework.DirectX
 
             _immediateContext = _device.ImmediateContext;
 
-            var cbd = new BufferDescription()
-            {
-                Usage = ResourceUsage.Default,
-                SizeInBytes = Utilities.SizeOf<ConstantBuffer>(),
-                BindFlags = BindFlags.ConstantBuffer,
-                CpuAccessFlags = CpuAccessFlags.None
-            };
-            _constantBuffer = new Buffer(_device, cbd);
+            //var cbd = new BufferDescription()
+            //{
+            //    Usage = ResourceUsage.Default,
+            //    SizeInBytes = Utilities.SizeOf<ConstantBuffer>(),
+            //    BindFlags = BindFlags.ConstantBuffer,
+            //    CpuAccessFlags = CpuAccessFlags.None
+            //};
+            //_constantBuffer = new Buffer(_device, cbd);
 
-            var pcbd = new BufferDescription()
-            {
-                Usage = ResourceUsage.Default,
-                SizeInBytes = Utilities.SizeOf<SpherePrimitiveBuilder.ConstantColor>(),
-                BindFlags = BindFlags.ConstantBuffer,
-                CpuAccessFlags = CpuAccessFlags.None
-            };
-            _pixelcbd = new Buffer(_device, pcbd);
+            //var pcbd = new BufferDescription()
+            //{
+            //    Usage = ResourceUsage.Default,
+            //    SizeInBytes = Utilities.SizeOf<SpherePrimitiveBuilder.ConstantColor>(),
+            //    BindFlags = BindFlags.ConstantBuffer,
+            //    CpuAccessFlags = CpuAccessFlags.None
+            //};
+            //_pixelcbd = new Buffer(_device, pcbd);
         }
 
         public void Reinitialize()

@@ -24,7 +24,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
                 modelViewProj = Matrix.Transpose(modelView * _renderObject.ViewProjection)
             };
 
-            _vertexConstantBuffer.Update(cb, Device.GetBuffer());
+            _vertexConstantBuffer.Update(cb);
 
             _vertexConstantBuffer.BindToPipeline();
         }

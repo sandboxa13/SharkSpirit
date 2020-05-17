@@ -14,11 +14,9 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
         }
         public Buffer ConstantBuffer { get; set; }
         
-        public virtual void Update<T>(T consts, Buffer constantBuffer) where T :  struct 
+        public virtual void Update<T>(T consts) where T :  struct 
         {
-            ConstantBuffer = constantBuffer;
-
-            Device.GetDeviceContext().UpdateSubresource(ref consts, constantBuffer);
+            Device.GetDeviceContext().UpdateSubresource(ref consts, ConstantBuffer);
         }
 
         public override void BindToPipeline()
