@@ -36,6 +36,10 @@ namespace SharkSpirit.RenderFramework.DirectX
         public DeviceContext GetDeviceContext() => _device.ImmediateContext;
         public uint GetTextureId() => _avaloniaInterop.GetTextureId();
         public Buffer GetBuffer() => _constantBuffer;
+        public Buffer GetPixelBuffer()
+        {
+            throw new NotImplementedException();
+        }
 
         public void Initialize()
         {

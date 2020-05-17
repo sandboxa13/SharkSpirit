@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using SharkSpirit.Core;
 using SharkSpirit.Graphics;
+using SharkSpirit.RenderFramework.DirectX.Primitives.Sphere;
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.Direct3D;
@@ -24,6 +25,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         private DeviceContext _immediateContext;
         private Device _device;
         private Buffer _constantBuffer;
+        private Buffer _pixelcbd;
         private RenderTargetView _renderTargetView;
         public RenderTarget _renderTarget2D { get; private set; }
         private Matrix _projection;
@@ -43,6 +45,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         public DeviceContext GetDeviceContext() => _immediateContext;
         public uint GetTextureId() => 0;
         public Buffer GetBuffer() => _constantBuffer;
+        public Buffer GetPixelBuffer() => _pixelcbd;
         public Matrix GetProjection() => _projection;
         public void Flush() => _immediateContext.Flush();
 
@@ -103,6 +106,15 @@ namespace SharkSpirit.RenderFramework.DirectX
                 CpuAccessFlags = CpuAccessFlags.None
             };
             _constantBuffer = new Buffer(_device, cbd);
+
+            var pcbd = new BufferDescription()
+            {
+                Usage = ResourceUsage.Default,
+                SizeInBytes = Utilities.SizeOf<SpherePrimitiveBuilder.ConstantColor>(),
+                BindFlags = BindFlags.ConstantBuffer,
+                CpuAccessFlags = CpuAccessFlags.None
+            };
+            _pixelcbd = new Buffer(_device, pcbd);
         }
 
         public void Reinitialize()

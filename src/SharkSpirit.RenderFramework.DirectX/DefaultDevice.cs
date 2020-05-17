@@ -48,6 +48,11 @@ namespace SharkSpirit.RenderFramework.DirectX
             return _constantBuffer;
         }
 
+        public Buffer GetPixelBuffer()
+        {
+            throw new NotImplementedException();
+        }
+
         public Matrix GetProjection()
         {
             return _projection;

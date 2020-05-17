@@ -11,9 +11,9 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
         public override void BindToPipeline()
         {
-            var color = new SpherePrimitiveBuilder.ConstantColor(new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+            var color = new SpherePrimitiveBuilder.ConstantColor(new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
-            Update(color, ConstantBuffer);
+            Update(color, Device.GetPixelBuffer());
 
             Device.GetDeviceContext().PixelShader.SetConstantBuffer(0, ConstantBuffer);
         }

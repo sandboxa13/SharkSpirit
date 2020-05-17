@@ -11,6 +11,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         DeviceContext GetDeviceContext();
         uint GetTextureId();
         Buffer GetBuffer();
+        Buffer GetPixelBuffer();
         void Initialize();
         void Clear();
         Matrix GetProjection();
