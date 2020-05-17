@@ -15,7 +15,12 @@ namespace SharkSpirit.Engine.Systems.Scripts
         public void Initialize(IContainer container)
         {
             Input = container.GetService<InputSystem>();
-            Camera = container.GetService<CameraComponent>();
+        }
+
+        public void Initialize(IContainer container, CameraComponent cameraComponent)
+        {
+            Input = container.GetService<InputSystem>();
+            Camera = cameraComponent;
         }
 
         public void AttachEntity(Entity entity)

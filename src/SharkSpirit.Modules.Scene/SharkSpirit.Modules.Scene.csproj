@@ -46,6 +46,7 @@
     <Reference Include="Microsoft.Wpf.Interop.DirectX, Version=0.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
       <HintPath>..\packages\Microsoft.Wpf.Interop.DirectX-x64.0.9.0-beta-22856\lib\net45\Microsoft.Wpf.Interop.DirectX.dll</HintPath>
     </Reference>
+    <Reference Include="mscorlib" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Prism, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">

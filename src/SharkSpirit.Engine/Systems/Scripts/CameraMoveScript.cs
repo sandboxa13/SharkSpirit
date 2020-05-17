@@ -11,6 +11,9 @@ namespace SharkSpirit.Engine.Systems.Scripts
 
         public override void Execute()
         {
+            if(!Camera.IsSelected)
+                return;
+
             var configuration = Entity.Container.GetService<Configuration>();
             var mouseX = Input.InputManager.MouseX();
             var mouseY = Input.InputManager.MouseY();

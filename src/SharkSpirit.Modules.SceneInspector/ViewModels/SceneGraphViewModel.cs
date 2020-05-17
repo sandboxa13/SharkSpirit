@@ -3,8 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Windows;
-using System.Windows.Threading;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SharkSpirit.Engine;
@@ -23,6 +21,7 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
             AddEntityCommand = ReactiveCommand.Create(sceneGraphManager.AddEntity);
 
             CreateSceneViewModels(sceneGraphManager);
+
 
             this.WhenAnyValue(model => model.SelectedItem)
                 .Skip(1)
@@ -61,12 +60,22 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
         [Reactive] public ObservableCollection<SceneGraphEntityViewModel> SceneGraphEntityViewModels { get; set; }
         [Reactive] public SceneGraphEntityViewModel SelectedItem { get; set; }
         [Reactive] public ReactiveCommand<Unit, Unit> AddEntityCommand { get; set; }
+
         private void CreateSceneViewModels(SceneGraphManager sceneGraphManager)
         {
+            sceneGraphManager.AddCamera();
+
+
             SceneGraphEntityViewModels.AddRange(
                 sceneGraphManager
                     .GetSceneEntities()
                     .Select(entity => new SceneGraphEntityViewModel(entity, sceneGraphManager)));
+
+            SceneGraphEntityViewModels.AddRange(
+                sceneGraphManager
+                    .GetSceneCameras()
+                    .Select(component => new SceneGraphCameraViewModel(component.Entity, sceneGraphManager)));
+
         }
     }
 }
