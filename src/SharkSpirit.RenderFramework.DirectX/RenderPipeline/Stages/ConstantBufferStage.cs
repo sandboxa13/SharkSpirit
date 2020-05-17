@@ -14,7 +14,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
         }
         protected Buffer ConstantBuffer { get; set; }
         
-        public virtual void Update(ConstantBuffer consts, Buffer constantBuffer)
+        public virtual void Update<T>(T consts, Buffer constantBuffer) where T :  struct 
         {
             ConstantBuffer = constantBuffer;
 

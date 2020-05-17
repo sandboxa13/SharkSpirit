@@ -8,6 +8,7 @@ using SharpDX.D3DCompiler;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
+using ConstantBuffer = SharkSpirit.Graphics.ConstantBuffer;
 using PixelShaderStage = SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages.PixelShaderStage;
 using VertexShaderStage = SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages.VertexShaderStage;
 
@@ -87,7 +88,7 @@ namespace SharkSpirit.RenderFramework.DirectX
             AddStage(new InputLayoutStage(device, inputLayout));
 
             AddStage(new TopologyStage(device, PrimitiveTopology.TriangleList));
-            AddStage(new TransformConstantBufferStage(device, this));
+            AddStage(new TransformConstantBufferStage<ConstantBuffer>(device, this));
         }
     }
 }

@@ -3,15 +3,15 @@ using SharpDX;
 
 namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
-    public class TransformConstantBufferStage : StageBase
+    public class TransformConstantBufferStage<T> : StageBase where T : unmanaged
     {
         private readonly RenderObject _renderObject;
-        private readonly VertexConstantBufferStage<Matrix> _vertexConstantBuffer;
+        private readonly VertexConstantBufferStage<T> _vertexConstantBuffer;
         
         public TransformConstantBufferStage(IDevice device, RenderObject renderObject) : base(device)
         {
             _renderObject = renderObject;
-            _vertexConstantBuffer = new VertexConstantBufferStage<Matrix>(device);
+            _vertexConstantBuffer = new VertexConstantBufferStage<T>(device);
         }
 
         public override void BindToPipeline()
