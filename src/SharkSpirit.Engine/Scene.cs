@@ -114,8 +114,8 @@ namespace SharkSpirit.Engine
         public void AddEntity(Entity entity)
         {
             Entities.Add(entity);
-            // RenderSystem.EntityRenderProcessor.AddRenderObject(entity, PrimitivesFactory.CreateTexturedCube(RenderSystem.Device, Configuration));
-            RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new Model(RenderSystem.Device, Configuration));
+            RenderSystem.EntityRenderProcessor.AddRenderObject(entity, PrimitivesFactory.CreateTexturedCube(RenderSystem.Device, Configuration));
+            //RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new Model(RenderSystem.Device, Configuration));
         }
 
         public void AddEntity(Entity entity, PrimitiveDrawableTypes primitiveDrawableType)

@@ -4,7 +4,7 @@ using SharpDX.Direct3D11;
 
 namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
-    public class VertexBufferStage<T> : ConstantBufferStage<T> where T : unmanaged
+    public class VertexBufferStage<T> : StageBase where T : unmanaged
     {
         private readonly Buffer _vertexBuffer;
 

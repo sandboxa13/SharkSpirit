@@ -1,6 +1,6 @@
 namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
-    public class VertexConstantBufferStage<T> : ConstantBufferStage<T> where T : struct
+    public class VertexConstantBufferStage<T> : ConstantBufferStage<T> where T : unmanaged
     {
         public VertexConstantBufferStage(IDevice device) : base(device)
         {
