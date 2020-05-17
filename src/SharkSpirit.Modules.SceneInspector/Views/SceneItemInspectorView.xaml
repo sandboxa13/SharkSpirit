@@ -33,7 +33,7 @@
 
             <local:TransformComponentView DataContext="{Binding SelectedSceneItemViewModel.TransformComponentViewModel}" />
 
-            <xctk:ColorPicker SelectedColor="{Binding SelectedSceneItemViewModel.SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <xctk:ColorPicker Margin="0,10,0,0" SelectedColor="{Binding SelectedSceneItemViewModel.SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
     </Grid>
 </UserControl>
