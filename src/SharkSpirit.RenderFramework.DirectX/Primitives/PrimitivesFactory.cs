@@ -1,5 +1,6 @@
 ﻿using System;
 using SharkSpirit.Core;
+using SharkSpirit.RenderFramework.DirectX.Primitives.Sphere;
 
 namespace SharkSpirit.RenderFramework.DirectX.Primitives
 {
@@ -14,6 +15,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives
                 case PrimitiveDrawableTypes.TexturedCube:
                     return CreateTexturedCube(device, configuration);
                 case PrimitiveDrawableTypes.Sphere:
+                    return CreateSolidSphere(device, configuration);
                     break;
                 case PrimitiveDrawableTypes.Grid:
                     break;
@@ -36,6 +38,13 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives
             var cubeBuilder = new TexturedCubePrimitiveBuilder(device, configuration);
 
             return cubeBuilder.Build(new Cube(device));
+        }
+
+        public static RenderObject CreateSolidSphere(IDevice device, IConfiguration configuration)
+        {
+            var sphereBuilder = new SpherePrimitiveBuilder(device, configuration);
+
+            return sphereBuilder.Build(new Sphere.Sphere(device));
         }
     }
 }

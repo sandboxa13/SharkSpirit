@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using Assimp;
 using Assimp.Configs;
 using SharkSpirit.Core;

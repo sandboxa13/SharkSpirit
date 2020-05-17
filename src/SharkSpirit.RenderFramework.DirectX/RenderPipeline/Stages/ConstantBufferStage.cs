@@ -12,7 +12,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
             ConstantBuffer = new Buffer(device.GetDevice(), cbd);
         }
-        protected Buffer ConstantBuffer { get; set; }
+        public Buffer ConstantBuffer { get; set; }
         
         public virtual void Update<T>(T consts, Buffer constantBuffer) where T :  struct 
         {
