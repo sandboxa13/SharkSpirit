@@ -18,7 +18,6 @@ namespace SharkSpirit.RenderFramework.DirectX.ModelLoading
     // A container for the meshes loaded from the file
     public class Model : RenderObject
     {
-        [StructLayout(LayoutKind.Sequential)]
         public struct Vertex
         {
             public Vector3 Position;

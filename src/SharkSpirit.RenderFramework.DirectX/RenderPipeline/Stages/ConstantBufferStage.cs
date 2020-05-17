@@ -4,11 +4,11 @@ using SharpDX.Direct3D11;
 
 namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
-    public class ConstantBufferStage<T> : StageBase where T : struct 
+    public class ConstantBufferStage<T> : StageBase where T : unmanaged 
     {
         public ConstantBufferStage(IDevice device) : base(device)
         {
-            var cbd = ConstantBufferDescriptionFactory.CreateConstantBufferDescription();
+            var cbd = ConstantBufferDescriptionFactory.CreateConstantBufferDescription<T>();
 
             ConstantBuffer = new Buffer(device.GetDevice(), cbd);
         }
