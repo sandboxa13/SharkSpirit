@@ -1,4 +1,3 @@
-using SharkSpirit.Graphics;
 using SharpDX;
 using SharpDX.Direct3D11;
 
@@ -6,14 +5,14 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Factories
 {
     public static class ConstantBufferDescriptionFactory
     {
-        public static BufferDescription CreateConstantBufferDescription()
+        public static unsafe BufferDescription CreateConstantBufferDescription<T>() where T : unmanaged
         {
             var cbd = new BufferDescription
             {
-                Usage = ResourceUsage.Default,
-                SizeInBytes = Utilities.SizeOf<ConstantBuffer>(),
+                Usage = ResourceUsage.Dynamic,
+                SizeInBytes = Utilities.SizeOf<T>(),
                 BindFlags = BindFlags.ConstantBuffer,
-                CpuAccessFlags = CpuAccessFlags.None,
+                CpuAccessFlags = CpuAccessFlags.Write,
             };
 
             return cbd;

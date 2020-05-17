@@ -1,6 +1,6 @@
 namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
-    public class PixelConstantBufferStage<T> : ConstantBufferStage<T> where T : struct
+    public class PixelConstantBufferStage<T> : ConstantBufferStage<T> where T : unmanaged
     {
         public PixelConstantBufferStage(IDevice device) : base(device)
         {
