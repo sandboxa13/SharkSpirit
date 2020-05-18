@@ -1,9 +1,9 @@
 ﻿//static const float3 lightPos = { 0.0, 0.0, 0.0 };
-static const float3 ambient = { 0.05, 0.05, 0.05 };
-static const float3 diffuseColor = { 1.0, 1.0, 1.0 };
-static const float diffuseIntensity = 1;
-static const float attConst = 1.0;
-static const float attLin = 0.345;
+//static const float3 ambient = { 0.0, 0.0, 0.0 };
+//static const float3 diffuseColor = { 1.0, 1.0, 1.0 };
+//static const float diffuseIntensity = 1;
+//static const float attConst = 1.0;
+//static const float attLin = 0.345;
 static const float attQuad = 0.3075;
 
 
@@ -14,11 +14,11 @@ static const float specularPower = 30.0;
 cbuffer LightCBuf
 {
     float3 lightPos;
-    //float3 ambient;
-    //float3 diffuseColor;
-    //float diffuseIntensity;
-    //float attConst;
-    //float attLin;
+    float diffuseIntensity;
+    float3 ambient;
+    float attConst;
+    float3 diffuseColor;
+    float attLin;
     //float attQuad;
 };
 

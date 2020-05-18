@@ -18,11 +18,11 @@ namespace SharkSpirit.RenderFramework.DirectX
             _lightCBuf = new LightCBuf
             {
                 LightPos = new Vector3(0,0 ,0),
-                //Ambient = new Vector3(0.05f, 0.05f, 0.05f),
-                //DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f),
-                //DiffuseIntensity = 1.0f,
-                //AttConst = 1.0f,
-                //AttLin = 0.045f,
+                Ambient = new Vector3(0.05f, 0.05f, 0.05f),
+                DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f),
+                DiffuseIntensity = 1.0f,
+                AttConst = 1.0f,
+                AttLin = 0.045f,
                 //AttQuad = 0.0075f
             };
 
@@ -47,28 +47,16 @@ namespace SharkSpirit.RenderFramework.DirectX
         public RenderObject PointLightModel { get; set; }
     }
 
-    [StructLayout(LayoutKind.Explicit)]
     public struct LightCBuf
     {
-        [FieldOffset(4)]
         public Vector3 LightPos;
+        public float DiffuseIntensity;
 
-        //[FieldOffset(4)]
-        //public Vector3 Ambient;
+        public Vector3 Ambient;
+        public float AttConst;
 
-        //[FieldOffset(4)]
-        //public Vector3 DiffuseColor;
-
-        //[FieldOffset(0)]
-        //public float DiffuseIntensity;
-
-        //[FieldOffset(0)]
-        //public float AttConst;
-
-        //[FieldOffset(0)]
-        //public float AttLin;
-
-        //[FieldOffset(0)]
+        public Vector3 DiffuseColor;
+        public float AttLin;
         //public float AttQuad;
     }
 

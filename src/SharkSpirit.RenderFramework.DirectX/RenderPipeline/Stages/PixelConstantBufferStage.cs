@@ -19,15 +19,16 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
             //tmp += 0.1f;
 
+            var lightPos = Vector3.Transform(_renderObject.Position, _renderObject.View);
 
             var cb = new LightCBuf
             {
-                LightPos = _renderObject.Position,
-                //Ambient = new Vector3(0.05f, 0.05f, 0.05f),
-                //DiffuseColor = new Vector3(0.0f, 0.0f, 0.0f),
-                //DiffuseIntensity = 1.0f,
-                //AttConst = 1.0f,
-                //AttLin = 1f,
+                LightPos = (Vector3) lightPos,
+                Ambient = new Vector3(0.05f, 0.05f, 0.05f),
+                DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f),
+                DiffuseIntensity = 1.0f,
+                AttConst = 1.0f,
+                AttLin = 1f,
                 //AttQuad = 1f
             };
 
