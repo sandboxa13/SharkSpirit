@@ -1,4 +1,3 @@
-using SharkSpirit.Graphics;
 using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Factories;
 using SharpDX.Direct3D11;
 
@@ -14,9 +13,13 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
         }
         public Buffer ConstantBuffer { get; set; }
         
-        public virtual void Update<T>(T consts) where T :  struct 
+        public virtual void Update<T>(T consts) where T :  struct
         {
-            Device.GetDeviceContext().UpdateSubresource(ref consts, ConstantBuffer);
+            Device.GetDeviceContext().MapSubresource(ConstantBuffer, MapMode.WriteDiscard, MapFlags.None, out var mappedResource);
+
+            mappedResource.Write(consts);
+
+            Device.GetDeviceContext().UnmapSubresource(ConstantBuffer, 0);
         }
 
         public override void BindToPipeline()

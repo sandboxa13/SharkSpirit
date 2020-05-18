@@ -9,10 +9,10 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Factories
         {
             var cbd = new BufferDescription
             {
-                Usage = ResourceUsage.Default,
+                Usage = ResourceUsage.Dynamic,
                 SizeInBytes = Utilities.SizeOf<T>(),
                 BindFlags = BindFlags.ConstantBuffer,
-                CpuAccessFlags = CpuAccessFlags.None,
+                CpuAccessFlags = CpuAccessFlags.Write,
             };
 
             return cbd;

@@ -1,7 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using SharpDX;
-
-namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
+﻿namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
 {
     public class Sphere : RenderObject
     {
