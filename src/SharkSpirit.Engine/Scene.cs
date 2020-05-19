@@ -84,8 +84,8 @@ namespace SharkSpirit.Engine
 
         public void AddCamera()
         {
-            var x = (float) (1.5f * Math.PI);
-            var y = (float) (0.2f * Math.PI);
+            var x = (float)(1.5f * Math.PI);
+            var y = (float)(0.2f * Math.PI);
             var z = 15.0f;
 
             var camera =
@@ -117,12 +117,9 @@ namespace SharkSpirit.Engine
             Entities.Add(entity);
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new PointLight(RenderSystem.Device, Configuration));
 
-            for (int i = 0; i < 5; i++)
-            {
-                var suzene = new Entity(new Vector3(-2 + i, 0, 0), _container);
-                Entities.Add(suzene);
-                RenderSystem.EntityRenderProcessor.AddRenderObject(suzene, new Model(RenderSystem.Device, Configuration));
-            }
+            var suzene = new Entity(new Vector3(2 , 0, 0), _container);
+            Entities.Add(suzene);
+            RenderSystem.EntityRenderProcessor.AddRenderObject(suzene, new Model(RenderSystem.Device, Configuration));
         }
 
         public void AddEntity(Entity entity, PrimitiveDrawableTypes primitiveDrawableType)
@@ -147,8 +144,8 @@ namespace SharkSpirit.Engine
 
             Cameras = new FastCollection<CameraComponent>();
 
-            var x = (float) (1.5f * Math.PI);
-            var y = (float) (0.2f * Math.PI);
+            var x = (float)(1.5f * Math.PI);
+            var y = (float)(0.2f * Math.PI);
             var z = 15.0f;
 
             SelectedCamera = new CameraComponent(new Entity(new Vector3(x, y, z), Container, "Camera 1"));

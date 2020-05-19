@@ -13,12 +13,6 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
         public override void BindToPipeline()
         {
-            //var color = new SpherePrimitiveBuilder.ConstantColor(_renderObject.Color);
-
-            //Update(color);
-
-            //tmp += 0.1f;
-
             var lightPos = Vector3.Transform(_renderObject.Position, _renderObject.View);
 
             var cb = new LightCBuf
