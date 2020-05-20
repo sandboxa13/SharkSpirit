@@ -1,6 +1,5 @@
-﻿using System.IO;
-using System.Runtime.InteropServices;
-using SharkSpirit.Core;
+﻿using SharkSpirit.Core;
+using SharkSpirit.Graphics;
 using SharkSpirit.RenderFramework.DirectX.Primitives;
 using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages;
 using SharpDX;
@@ -9,7 +8,7 @@ namespace SharkSpirit.RenderFramework.DirectX
 {
     public class PointLight : RenderObject
     {
-        private readonly LightCBuf _lightCBuf;
+        private LightCBuf _lightCBuf;
         private readonly PixelConstantBufferStage<LightCBuf> _pixelConstantBufferStage;
         public PointLight(IDevice device, IConfiguration configuration) : base(device, MeshType.None)
         {
@@ -38,26 +37,25 @@ namespace SharkSpirit.RenderFramework.DirectX
 
         public override void Draw()
         {
-            //_pixelConstantBufferStage.Update(_lightCBuf);
-            _pixelConstantBufferStage.BindToPipeline();
+            var lightPos = Vector3.Transform(PointLightModel.Position, PointLightModel.View);
+
+            _lightCBuf = new LightCBuf
+            {
+                LightPos = (Vector3)lightPos,
+                Ambient = new Vector3(0.05f, 0.05f, 0.05f),
+                DiffuseColor = new Vector3(1.0f, 0.0f, 0.0f),
+                DiffuseIntensity = 1.0f,
+                AttConst = 1.0f,
+                AttLin = 1f,
+                //AttQuad = 1f
+            };
+
+            _pixelConstantBufferStage.BindCustom(_lightCBuf);
 
             PointLightModel.Draw();
         }
 
         public RenderObject PointLightModel { get; set; }
-    }
-
-    public struct LightCBuf
-    {
-        public Vector3 LightPos;
-        public float DiffuseIntensity;
-
-        public Vector3 Ambient;
-        public float AttConst;
-
-        public Vector3 DiffuseColor;
-        public float AttLin;
-        //public float AttQuad;
     }
 
     public struct ObjectCBuf
