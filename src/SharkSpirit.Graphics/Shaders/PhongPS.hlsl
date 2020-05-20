@@ -7,7 +7,7 @@
 static const float attQuad = 0.3075;
 
 
-static const float3 materialColor = { 0.0, 0.0, 1.0 };
+static const float3 materialColor = { 1.0, 1.0, 1.0 };
 static const float specularIntensity = 0.6;
 static const float specularPower = 30.0;
 

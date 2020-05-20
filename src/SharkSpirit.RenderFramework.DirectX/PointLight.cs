@@ -19,7 +19,7 @@ namespace SharkSpirit.RenderFramework.DirectX
             {
                 LightPos = new Vector3(0,0 ,0),
                 Ambient = new Vector3(0.05f, 0.05f, 0.05f),
-                DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f),
+                DiffuseColor = new Vector3(1.0f, 0.0f, 0.0f),
                 DiffuseIntensity = 1.0f,
                 AttConst = 1.0f,
                 AttLin = 0.045f,
