@@ -6,11 +6,13 @@ namespace SharkSpirit.Engine
 {
     public class GameTimer
     {
-        private long startRawTime;
-        private long lastRawTime;
+        private readonly long _startRawTime;
+        private long _lastRawTime;
 
         public GameTimer()
         {
+            _startRawTime = 0;
+            _lastRawTime = 0;
             Reset();
         }
         
@@ -51,16 +53,16 @@ namespace SharkSpirit.Engine
         public void Tick()
         {
             var rawTime = Stopwatch.GetTimestamp();
-            TotalTime = StartTime + new TimeSpan((long)Math.Round((double) TimeUtilities.ConvertRawToTimestamp(rawTime - startRawTime).Ticks));
+            TotalTime = StartTime + new TimeSpan((long)Math.Round((double) TimeUtilities.ConvertRawToTimestamp(rawTime - _startRawTime).Ticks));
 
-            ElapsedTime = TimeUtilities.ConvertRawToTimestamp(rawTime - lastRawTime);
+            ElapsedTime = TimeUtilities.ConvertRawToTimestamp(rawTime - _lastRawTime);
 
             if (ElapsedTime < TimeSpan.Zero)
             {
                 ElapsedTime = TimeSpan.Zero;
             }
 
-            lastRawTime = rawTime;
+            _lastRawTime = rawTime;
         }
     }
 }
