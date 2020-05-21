@@ -22,10 +22,10 @@ namespace SharkSpirit.RenderFramework.DirectX
                 DiffuseIntensity = 1.0f,
                 AttConst = 1.0f,
                 AttLin = 0.045f,
-                //AttQuad = 0.0075f
+                AttQuad = 0.0075f
             };
 
-            _pixelConstantBufferStage = new PixelConstantBufferStage<LightCBuf>(device, PointLightModel);
+            _pixelConstantBufferStage = new PixelConstantBufferStage<LightCBuf>(device, this);
         }
 
         public override void ChangeIsVisible(bool isVisible) => PointLightModel.IsVisible = isVisible;
@@ -43,11 +43,11 @@ namespace SharkSpirit.RenderFramework.DirectX
             {
                 LightPos = (Vector3)lightPos,
                 Ambient = new Vector3(0.05f, 0.05f, 0.05f),
-                DiffuseColor = new Vector3(1.0f, 0.0f, 0.0f),
+                DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f),
                 DiffuseIntensity = 1.0f,
                 AttConst = 1.0f,
-                AttLin = 1f,
-                //AttQuad = 1f
+                AttLin = 0.045f,
+                AttQuad = 0.0075f
             };
 
             _pixelConstantBufferStage.BindCustom(_lightCBuf);
@@ -56,13 +56,6 @@ namespace SharkSpirit.RenderFramework.DirectX
         }
 
         public RenderObject PointLightModel { get; set; }
-    }
-
-    public struct ObjectCBuf
-    {
-        public Vector3 MaterialColor;
-        public float SpecularIntensity;
-        public float SpecularPower;
     }
 }
 

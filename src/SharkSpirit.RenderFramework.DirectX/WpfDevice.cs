@@ -76,7 +76,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         {
             _configuration = _container.GetService<Configuration>();
 
-            var createDeviceFlag = DeviceCreationFlags.BgraSupport;
+            var createDeviceFlag = DeviceCreationFlags.Debug | DeviceCreationFlags.BgraSupport;
             var driverTypes = new[] { DriverType.Hardware, DriverType.Warp, DriverType.Reference };
             var featureLevels = new[] { FeatureLevel.Level_11_0, FeatureLevel.Level_10_1, FeatureLevel.Level_10_0 };
             foreach (var dt in driverTypes)

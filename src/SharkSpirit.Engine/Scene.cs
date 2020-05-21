@@ -117,7 +117,7 @@ namespace SharkSpirit.Engine
             Entities.Add(entity);
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new PointLight(RenderSystem.Device, Configuration));
 
-            var suzene = new Entity(new Vector3(2 , 0, 0), _container);
+            var suzene = new Entity(new Vector3(2, 0, 0), _container);
             Entities.Add(suzene);
             RenderSystem.EntityRenderProcessor.AddRenderObject(suzene, new Model(RenderSystem.Device, Configuration));
         }

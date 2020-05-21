@@ -93,7 +93,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
 
         private void AddPixelConstantBufferStage(RenderObject renderObject)
         {
-            renderObject.AddStage(new PixelConstantBufferStage<ConstantColor>(Device, renderObject));
+            renderObject.AddStage(new PixelConstantBufferStage<ConstantColor>(Device, renderObject, 1));
         }
 
         private void AddIndexBufferStage(RenderObject renderObject, List<ushort> indices)

@@ -12,6 +12,8 @@ namespace SharkSpirit.Graphics
 
         public Vector3 DiffuseColor;
         public float AttLin;
-        //public float AttQuad;
+
+        public float AttQuad;
+        public Vector3 padding;
     }
 }

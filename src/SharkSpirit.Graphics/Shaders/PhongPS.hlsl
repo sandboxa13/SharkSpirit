@@ -4,14 +4,16 @@
 //static const float diffuseIntensity = 1;
 //static const float attConst = 1.0;
 //static const float attLin = 0.345;
-static const float attQuad = 0.3075;
+//static const float attQuad = 0.3075;
 
 
-static const float3 materialColor = { 1.0, 1.0, 1.0 };
-static const float specularIntensity = 0.6;
-static const float specularPower = 30.0;
+//static const float3 materialColor = { 1.0, 1.0, 1.0 };
+//static const float specularIntensity = 0.6;
+//static const float specularPower = 30.0;
 
-cbuffer LightCBuf
+
+
+cbuffer LightCBuf : register(b0)
 {
     float3 lightPos;
     float diffuseIntensity;
@@ -19,10 +21,15 @@ cbuffer LightCBuf
     float attConst;
     float3 diffuseColor;
     float attLin;
-    //float attQuad;
+    float attQuad;
 };
 
-
+cbuffer ObjectCBuf : register(b1)
+{
+    float3 materialColor;
+    float specularIntensity;
+    float specularPower;
+};
 
 
 float4 PS(float3 worldPos : Position, float3 n : Normal) : SV_Target
