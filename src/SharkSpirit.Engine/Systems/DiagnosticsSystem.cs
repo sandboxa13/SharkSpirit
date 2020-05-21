@@ -6,7 +6,6 @@ namespace SharkSpirit.Engine.Systems
     public class DiagnosticsSystem : SystemBase
     {
         private readonly PerformanceCounter _processPerformanceCounter;
-        private int _seconds;
         private float _prevM;
         private float _prevP;
         public DiagnosticsSystem()
