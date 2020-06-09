@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using SharkSpirit.Core;
 using SharkSpirit.Engine;
-using SharpDX;
 using SharpDX.Windows;
 using Configuration = SharkSpirit.Core.Configuration;
 
@@ -11,7 +10,7 @@ namespace SharkSpirit.TestConsole
     class Program
     {
 
-        static void Main(string[] args)
+        static void Main()
         {
             var testApp = new TestApp();
 
@@ -53,8 +52,7 @@ namespace SharkSpirit.TestConsole
             var windowHandle = new WindowHandleContainer(_renderForm.Handle);
             container.AddService(windowHandle);
 
-            //_game = new Game(container);
-            //_game.Scene.AddEntity(new Entity(new Vector3(0, 0, 0)));
+            _game = new Game(container);
         }
 
         public void Run()

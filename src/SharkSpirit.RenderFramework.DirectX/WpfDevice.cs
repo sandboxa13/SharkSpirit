@@ -25,7 +25,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         private DeviceContext _immediateContext;
         private Device _device;
         private RenderTargetView _renderTargetView;
-        public RenderTarget _renderTarget2D { get; private set; }
+        public RenderTarget RenderTarget2D { get; private set; }
         private Matrix _projection;
         private IConfiguration _configuration;
         private DepthStencilView _depthView;
@@ -49,9 +49,9 @@ namespace SharkSpirit.RenderFramework.DirectX
         {
             var textLayout = new TextLayout(new Factory(), output, _debugTextFormat, 330, 230);
 
-            _renderTarget2D.BeginDraw();
-            _renderTarget2D.DrawTextLayout(_origin, textLayout, _brush);
-            _renderTarget2D.EndDraw();
+            RenderTarget2D.BeginDraw();
+            RenderTarget2D.DrawTextLayout(_origin, textLayout, _brush);
+            RenderTarget2D.EndDraw();
 
             textLayout.Dispose();
         }
@@ -85,7 +85,7 @@ namespace SharkSpirit.RenderFramework.DirectX
                 {
                     _device = new Device(dt, createDeviceFlag, featureLevels);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     continue;
                 }
@@ -144,8 +144,8 @@ namespace SharkSpirit.RenderFramework.DirectX
                 Format = Format.D32_Float,
                 ArraySize = 1,
                 MipLevels = 1,
-                Width = (int)outputResource.Description.Width,
-                Height = (int)outputResource.Description.Height,
+                Width = outputResource.Description.Width,
+                Height = outputResource.Description.Height,
                 SampleDescription = new SampleDescription(1, 0),
                 Usage = ResourceUsage.Default,
                 BindFlags = BindFlags.DepthStencil,
@@ -158,16 +158,11 @@ namespace SharkSpirit.RenderFramework.DirectX
 
             _immediateContext.OutputMerger.SetRenderTargets(_depthView, _renderTargetView);
 
-            var outputResourceDesc = outputResource.Description;
-
-            //if (outputResourceDesc.Width != _configuration.Width || outputResourceDesc.Height != _configuration.Height)
-            //{
-                SetUpViewPort();
-            //}
+            SetUpViewPort();
 
             outputResource.Dispose();
 
-            _brush = new SolidColorBrush(_renderTarget2D, new Color4(1f, 1f, 1f, 1f));
+            _brush = new SolidColorBrush(RenderTarget2D, new Color4(1f, 1f, 1f, 1f));
 
             _immediateContext.Flush();
         }
@@ -186,7 +181,7 @@ namespace SharkSpirit.RenderFramework.DirectX
                     Type = RenderTargetType.Default,
                     Usage = RenderTargetUsage.None
                 };
-                _renderTarget2D = new RenderTarget(new SharpDX.Direct2D1.Factory(), surface, properties);
+                RenderTarget2D = new RenderTarget(new SharpDX.Direct2D1.Factory(), surface, properties);
             }
         }
 
