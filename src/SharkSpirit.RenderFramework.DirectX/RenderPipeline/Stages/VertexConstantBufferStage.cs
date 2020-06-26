@@ -2,7 +2,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
     public class VertexConstantBufferStage<T> : ConstantBufferStage<T> where T : unmanaged
     {
-        public VertexConstantBufferStage(IDevice device) : base(device)
+        public VertexConstantBufferStage(IDevice device, int slot) : base(device, slot)
         {
         }
         public override void BindToPipeline()

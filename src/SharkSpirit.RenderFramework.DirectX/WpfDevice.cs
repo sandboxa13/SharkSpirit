@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using SharkSpirit.Core;
 using SharkSpirit.Graphics;
+using SharkSpirit.RenderFramework.DirectX.Primitives.Sphere;
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.Direct3D;
@@ -23,7 +24,6 @@ namespace SharkSpirit.RenderFramework.DirectX
         private readonly IContainer _container;
         private DeviceContext _immediateContext;
         private Device _device;
-        private Buffer _constantBuffer;
         private RenderTargetView _renderTargetView;
         public RenderTarget RenderTarget2D { get; private set; }
         private Matrix _projection;
@@ -42,7 +42,6 @@ namespace SharkSpirit.RenderFramework.DirectX
         public Device GetDevice() => _device;
         public DeviceContext GetDeviceContext() => _immediateContext;
         public uint GetTextureId() => 0;
-        public Buffer GetBuffer() => _constantBuffer;
         public Matrix GetProjection() => _projection;
         public void Flush() => _immediateContext.Flush();
 
@@ -77,7 +76,7 @@ namespace SharkSpirit.RenderFramework.DirectX
         {
             _configuration = _container.GetService<Configuration>();
 
-            var createDeviceFlag = DeviceCreationFlags.BgraSupport;
+            var createDeviceFlag = DeviceCreationFlags.Debug | DeviceCreationFlags.BgraSupport;
             var driverTypes = new[] { DriverType.Hardware, DriverType.Warp, DriverType.Reference };
             var featureLevels = new[] { FeatureLevel.Level_11_0, FeatureLevel.Level_10_1, FeatureLevel.Level_10_0 };
             foreach (var dt in driverTypes)
@@ -95,14 +94,23 @@ namespace SharkSpirit.RenderFramework.DirectX
 
             _immediateContext = _device.ImmediateContext;
 
-            var cbd = new BufferDescription()
-            {
-                Usage = ResourceUsage.Default,
-                SizeInBytes = Utilities.SizeOf<ConstantBuffer>(),
-                BindFlags = BindFlags.ConstantBuffer,
-                CpuAccessFlags = CpuAccessFlags.None
-            };
-            _constantBuffer = new Buffer(_device, cbd);
+            //var cbd = new BufferDescription()
+            //{
+            //    Usage = ResourceUsage.Default,
+            //    SizeInBytes = Utilities.SizeOf<ConstantBuffer>(),
+            //    BindFlags = BindFlags.ConstantBuffer,
+            //    CpuAccessFlags = CpuAccessFlags.None
+            //};
+            //_constantBuffer = new Buffer(_device, cbd);
+
+            //var pcbd = new BufferDescription()
+            //{
+            //    Usage = ResourceUsage.Default,
+            //    SizeInBytes = Utilities.SizeOf<SpherePrimitiveBuilder.ConstantColor>(),
+            //    BindFlags = BindFlags.ConstantBuffer,
+            //    CpuAccessFlags = CpuAccessFlags.None
+            //};
+            //_pixelcbd = new Buffer(_device, pcbd);
         }
 
         public void Reinitialize()

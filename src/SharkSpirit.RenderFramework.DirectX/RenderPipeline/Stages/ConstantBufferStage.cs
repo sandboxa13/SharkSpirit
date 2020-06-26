@@ -1,4 +1,3 @@
-using SharkSpirit.Graphics;
 using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Factories;
 using SharpDX.Direct3D11;
 
@@ -6,21 +5,23 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
     public class ConstantBufferStage<T> : StageBase where T : unmanaged 
     {
-        public ConstantBufferStage(IDevice device) : base(device)
+        public ConstantBufferStage(IDevice device, int slot) : base(device)
         {
+            Slot = slot;
             var cbd = ConstantBufferDescriptionFactory.CreateConstantBufferDescription<T>();
 
             ConstantBuffer = new Buffer(device.GetDevice(), cbd);
         }
-        protected Buffer ConstantBuffer { get; set; }
+        public Buffer ConstantBuffer { get; set; }
+        public int Slot { get; }
 
-#pragma warning disable CS0693 // Type parameter has the same name as the type parameter from outer type
-        public virtual void Update<T>(T consts, Buffer constantBuffer) where T :  struct
-#pragma warning restore CS0693 // Type parameter has the same name as the type parameter from outer type
+        public virtual void Update<T>(T consts) where T :  struct
         {
-            ConstantBuffer = constantBuffer;
+            Device.GetDeviceContext().MapSubresource(ConstantBuffer, MapMode.WriteDiscard, MapFlags.None, out var mappedResource);
 
-            Device.GetDeviceContext().UpdateSubresource(ref consts, constantBuffer);
+            mappedResource.Write(consts);
+
+            Device.GetDeviceContext().UnmapSubresource(ConstantBuffer, 0);
         }
 
         public override void BindToPipeline()

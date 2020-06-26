@@ -9,6 +9,7 @@ namespace SharkSpirit.Engine
     public class Entity : ComponentBase
     {
         public TransformComponent TransformComponent;
+        public MaterialComponent MaterialComponent;
 
         public Entity(Vector3 position, IContainer container) : base(container, "")
         {
@@ -16,7 +17,9 @@ namespace SharkSpirit.Engine
 
             Id = Guid.NewGuid();
             TransformComponent = new TransformComponent (this){ Position = position };
+            MaterialComponent = new MaterialComponent(this);
             Components.Add(TransformComponent);
+            Components.Add(MaterialComponent);
         }
 
         public Entity(Vector3 position, IContainer container, string name) : base(container, name)
@@ -25,7 +28,9 @@ namespace SharkSpirit.Engine
 
             Id = Guid.NewGuid();
             TransformComponent = new TransformComponent(this) { Position = position };
+            MaterialComponent = new MaterialComponent(this);
             Components.Add(TransformComponent);
+            Components.Add(MaterialComponent);
         }
 
         public Entity() : base(new Container(), "")
@@ -33,8 +38,9 @@ namespace SharkSpirit.Engine
             Components = new FastCollection<EntityComponent>();
             Id = Guid.NewGuid();
             TransformComponent = new TransformComponent(this) { Position = Vector3.Zero };
-
+            MaterialComponent = new MaterialComponent(this);
             Components.Add(TransformComponent);
+            Components.Add(MaterialComponent);
         }
 
         public FastCollection<EntityComponent> Components { get; }

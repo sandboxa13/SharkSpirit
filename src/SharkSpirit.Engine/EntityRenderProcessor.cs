@@ -40,6 +40,8 @@ namespace SharkSpirit.Engine
             renderObject.UpdateWorld(entity.TransformComponent.WorldMatrix);
             renderObject.UpdateView(_scene.SelectedCamera.ViewMatrix);
             renderObject.UpdateViewProjection(_scene.RenderSystem.Device.GetProjection());
+            renderObject.UpdateColor(entity.MaterialComponent.Color);
+            renderObject.UpdatePosition(entity.TransformComponent.Position);
         }
         
         private void DrawObjects()

@@ -5,7 +5,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Factories
 {
     public static class ConstantBufferDescriptionFactory
     {
-        public static unsafe BufferDescription CreateConstantBufferDescription<T>() where T : unmanaged
+        public static BufferDescription CreateConstantBufferDescription<T>() where T : unmanaged
         {
             var cbd = new BufferDescription
             {

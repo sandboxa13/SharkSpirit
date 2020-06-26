@@ -8,10 +8,10 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
         private readonly RenderObject _renderObject;
         private readonly VertexConstantBufferStage<T> _vertexConstantBuffer;
         
-        public TransformConstantBufferStage(IDevice device, RenderObject renderObject) : base(device)
+        public TransformConstantBufferStage(IDevice device, RenderObject renderObject, int slot = 0) : base(device)
         {
             _renderObject = renderObject;
-            _vertexConstantBuffer = new VertexConstantBufferStage<T>(device);
+            _vertexConstantBuffer = new VertexConstantBufferStage<T>(device, slot);
         }
 
         public override void BindToPipeline()
@@ -24,7 +24,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
                 modelViewProj = Matrix.Transpose(modelView * _renderObject.ViewProjection)
             };
 
-            _vertexConstantBuffer.Update(cb, Device.GetBuffer());
+            _vertexConstantBuffer.Update(cb);
 
             _vertexConstantBuffer.BindToPipeline();
         }
