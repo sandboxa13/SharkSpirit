@@ -110,10 +110,10 @@ namespace SharkSpirit.Modules.Scene.Views
             }
         }
 
-        public static Rect BoundsRelativeTo(FrameworkElement element)
+        public Rect BoundsRelativeTo(FrameworkElement element)
         {
             return
-                element.TransformToVisual(Application.Current.MainWindow)
+                element.TransformToVisual(this)
                     .TransformBounds(LayoutInformation.GetLayoutSlot(element));
         }
         private void OnClosing(object sender, CancelEventArgs e)
