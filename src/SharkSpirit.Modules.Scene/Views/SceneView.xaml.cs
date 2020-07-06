@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using SharkSpirit.Core;
+using SharkSpirit.Modules.Core.AvalonDock;
 using SharkSpirit.Modules.Scene.ViewModels;
 using Application = System.Windows.Application;
 
@@ -14,6 +15,7 @@ namespace SharkSpirit.Modules.Scene.Views
     /// <summary>
     /// Interaction logic for SceneView.xaml
     /// </summary>
+    [AvalonDockAnchorable(Strategy = AnchorableStrategy.Left, IsHidden = false, Title = "Scene", Size = 1300)]
     public partial class SceneView 
     {
         private bool _lastVisible;
