@@ -106,7 +106,8 @@
                 Height="30"
                 HorizontalAlignment="Right"
                 Command="{Binding SceneGraphViewModel.AddEntityCommand}"
-                Content="Add entity" />
+                Content="Add entity"
+                Style="{StaticResource Button.Styles.Default}" />
         </Grid>
 
 
