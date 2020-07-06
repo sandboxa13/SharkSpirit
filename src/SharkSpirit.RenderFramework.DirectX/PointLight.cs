@@ -37,6 +37,8 @@ namespace SharkSpirit.RenderFramework.DirectX
 
         public override void Draw()
         {
+            PointLightModel.Draw();
+
             var lightPos = Vector3.Transform(PointLightModel.Position, PointLightModel.View);
 
             _lightCBuf = new LightCBuf
@@ -52,7 +54,6 @@ namespace SharkSpirit.RenderFramework.DirectX
 
             _pixelConstantBufferStage.BindCustom(_lightCBuf);
 
-            PointLightModel.Draw();
         }
 
         public RenderObject PointLightModel { get; set; }

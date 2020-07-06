@@ -82,7 +82,7 @@ namespace SharkSpirit.RenderFramework.DirectX.ModelLoading
 
             var ocb = new ObjectCBuf
             {
-                MaterialColor = new Vector3(1, 1, 1),
+                MaterialColor = new Vector3(1, 0, 0),
                 SpecularPower = 30.0f,
                 SpecularIntensity = 0.6f
             };

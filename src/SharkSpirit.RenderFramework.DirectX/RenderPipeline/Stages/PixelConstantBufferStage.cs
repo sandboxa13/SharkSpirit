@@ -1,6 +1,4 @@
-using System.Diagnostics;
 using SharkSpirit.Graphics;
-using SharkSpirit.RenderFramework.DirectX.ModelLoading;
 using SharkSpirit.RenderFramework.DirectX.Primitives.Sphere;
 
 namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
@@ -15,7 +13,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
             _renderObject = renderObject;
         }
 
-        public PixelConstantBufferStage(IDevice device, Model renderObject, ObjectCBuf pcb, int slot = 0) : base(device, slot)
+        public PixelConstantBufferStage(IDevice device, RenderObject renderObject, ObjectCBuf pcb, int slot = 0) : base(device, slot)
         {
             _renderObject = renderObject;
             _pcb = pcb;
@@ -30,13 +28,13 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
         public override void BindToPipeline()
         {
-            var cc = new SpherePrimitiveBuilder.ConstantColor
-            {
-                Color = _renderObject.Color
-            };
-
-            Update(cc);
-
+            // var cc = new SpherePrimitiveBuilder.ConstantColor
+            // {
+            //     Color = _renderObject.Color
+            // };
+            //
+            // Update(cc);
+            
             if (_pcb.MaterialColor.X != 0)
             {
                 Update(_pcb);

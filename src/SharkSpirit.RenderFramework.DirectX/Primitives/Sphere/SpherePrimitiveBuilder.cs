@@ -93,7 +93,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
 
         private void AddPixelConstantBufferStage(RenderObject renderObject)
         {
-            renderObject.AddStage(new PixelConstantBufferStage<ConstantColor>(Device, renderObject, 1));
+            renderObject.AddStage(new PixelConstantBufferStage<ConstantColor>(Device, renderObject, 0));
         }
 
         private void AddIndexBufferStage(RenderObject renderObject, List<ushort> indices)
@@ -140,6 +140,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
             var inputLayout = new InputLayout(Device.GetDevice(), signature, new[]
             {
                 new InputElement("Position", 0, Format.R32G32B32_Float, 0, 0),
+                new InputElement("Normal", 0, Format.R32G32B32_Float, 12, 0),
             });
 
             renderObject.AddStage(new InputLayoutStage(Device, inputLayout));
