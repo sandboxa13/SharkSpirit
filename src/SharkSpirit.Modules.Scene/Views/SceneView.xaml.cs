@@ -1,18 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using SharkSpirit.Core;
-using SharkSpirit.Engine;
-using SharkSpirit.Modules.Core.Extensions;
 using SharkSpirit.Modules.Scene.ViewModels;
-using SharpDX;
 using Application = System.Windows.Application;
-using Container = SharkSpirit.Core.Container;
 
 namespace SharkSpirit.Modules.Scene.Views
 {

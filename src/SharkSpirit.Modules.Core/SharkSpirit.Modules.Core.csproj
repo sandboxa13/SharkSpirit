@@ -82,6 +82,7 @@
     <Compile Include="Prism\DockingManagerRegionAdapter.cs" />
     <Compile Include="Prism\RegionNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Themes\DarkTheme\AvalonDockDarkTheme.cs" />
     <Compile Include="ViewModels\DockWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
@@ -109,6 +110,54 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
+    <Resource Include="Resources\Images\DockAnchorableBottom.png" />
+    <Resource Include="Resources\Images\DockAnchorableLeft.png" />
+    <Resource Include="Resources\Images\DockAnchorableRight.png" />
+    <Resource Include="Resources\Images\DockAnchorableTop.png" />
+    <Resource Include="Resources\Images\DockDocumentAsAnchorableBottom.png" />
+    <Resource Include="Resources\Images\DockDocumentAsAnchorableLeft.png" />
+    <Resource Include="Resources\Images\DockDocumentAsAnchorableRight.png" />
+    <Resource Include="Resources\Images\DockDocumentAsAnchorableTop.png" />
+    <Resource Include="Resources\Images\DockDocumentBottom.png" />
+    <Resource Include="Resources\Images\DockDocumentInside.png" />
+    <Resource Include="Resources\Images\DockDocumentLeft.png" />
+    <Resource Include="Resources\Images\DockDocumentRight.png" />
+    <Resource Include="Resources\Images\DockDocumentTop.png" />
+    <Resource Include="Resources\Images\DockPaneEmpty.png" />
+    <Resource Include="Resources\Images\DockPaneLargeEmpty.png" />
+    <Resource Include="Resources\Images\HTabGroup.png" />
+    <Resource Include="Resources\Images\Locked.png" />
+    <Resource Include="Resources\Images\PinAutoHide.png" />
+    <Resource Include="Resources\Images\PinAutoHide_Black.png" />
+    <Resource Include="Resources\Images\PinAutoHide_Dark.png" />
+    <Resource Include="Resources\Images\PinAutoHide_White.png" />
+    <Resource Include="Resources\Images\PinClose.png" />
+    <Resource Include="Resources\Images\PinClose_Black.png" />
+    <Resource Include="Resources\Images\PinClose_Dark.png" />
+    <Resource Include="Resources\Images\PinClose_White.png" />
+    <Resource Include="Resources\Images\PinDocMenu.png" />
+    <Resource Include="Resources\Images\PinDocMenu_Black.png" />
+    <Resource Include="Resources\Images\PinMaximize.png" />
+    <Resource Include="Resources\Images\PinMaximize_Black.png" />
+    <Resource Include="Resources\Images\PinMaximize_Dark.png" />
+    <Resource Include="Resources\Images\PinMenu.png" />
+    <Resource Include="Resources\Images\PinMenu_Black.png" />
+    <Resource Include="Resources\Images\PinMenu_Dark.png" />
+    <Resource Include="Resources\Images\PinMenu_White.png" />
+    <Resource Include="Resources\Images\PinRestore.png" />
+    <Resource Include="Resources\Images\PinRestore_Black.png" />
+    <Resource Include="Resources\Images\PinRestore_Dark.png" />
+    <Resource Include="Resources\Images\VTabGroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Resources\Styles\AvalonDockTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\DarkTheme\AvalonDockDarkTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
