@@ -30,17 +30,6 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
             }
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct ConstantColor
-        {
-            public Vector4 Color;
-
-            public ConstantColor(Vector4 color)
-            {
-                Color = color;
-            }
-        }
-
         public SpherePrimitiveBuilder(IDevice device, IConfiguration configuration) : base(device, configuration)
         {
         }
@@ -93,7 +82,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
 
         private void AddPixelConstantBufferStage(RenderObject renderObject)
         {
-            renderObject.AddStage(new PixelConstantBufferStage<ConstantColor>(Device, renderObject, 1));
+            renderObject.AddStage(new PixelConstantColorBufferStage<ConstantColor>(Device, renderObject));
         }
 
         private void AddIndexBufferStage(RenderObject renderObject, List<ushort> indices)
@@ -140,6 +129,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
             var inputLayout = new InputLayout(Device.GetDevice(), signature, new[]
             {
                 new InputElement("Position", 0, Format.R32G32B32_Float, 0, 0),
+                new InputElement("Normal", 0, Format.R32G32B32_Float, 12, 0),
             });
 
             renderObject.AddStage(new InputLayoutStage(Device, inputLayout));

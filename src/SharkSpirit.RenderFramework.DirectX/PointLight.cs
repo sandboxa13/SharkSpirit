@@ -18,14 +18,14 @@ namespace SharkSpirit.RenderFramework.DirectX
             {
                 LightPos = new Vector3(0,0 ,0),
                 Ambient = new Vector3(0.05f, 0.05f, 0.05f),
-                DiffuseColor = new Vector3(1.0f, 0.0f, 0.0f),
+                DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f),
                 DiffuseIntensity = 1.0f,
                 AttConst = 1.0f,
                 AttLin = 0.045f,
                 AttQuad = 0.0075f
             };
 
-            _pixelConstantBufferStage = new PixelConstantBufferStage<LightCBuf>(device, this);
+            _pixelConstantBufferStage = new PixelConstantBufferStage<LightCBuf>(device);
         }
 
         public override void ChangeIsVisible(bool isVisible) => PointLightModel.IsVisible = isVisible;
@@ -37,22 +37,13 @@ namespace SharkSpirit.RenderFramework.DirectX
 
         public override void Draw()
         {
+            PointLightModel.Draw();
+
             var lightPos = Vector3.Transform(PointLightModel.Position, PointLightModel.View);
 
-            _lightCBuf = new LightCBuf
-            {
-                LightPos = (Vector3)lightPos,
-                Ambient = new Vector3(0.05f, 0.05f, 0.05f),
-                DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f),
-                DiffuseIntensity = 1.0f,
-                AttConst = 1.0f,
-                AttLin = 0.045f,
-                AttQuad = 0.0075f
-            };
+            _lightCBuf.LightPos = (Vector3) lightPos;
 
             _pixelConstantBufferStage.BindCustom(_lightCBuf);
-
-            PointLightModel.Draw();
         }
 
         public RenderObject PointLightModel { get; set; }
