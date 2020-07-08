@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using DryIoc;
 using SharkSpirit.Core;
 using SharkSpirit.Engine;
@@ -12,9 +11,6 @@ namespace SharkSpirit.Wpf
     {
         public void RegisterTypes(IContainer container)
         {
-            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-
-          
             container.Register<ILayoutAnchorableHelper, LayoutAnchorableHelper>();
             container.Register<MainWindow>();
             container.Register<Core.IContainer, Core.Container>(new SingletonReuse());
