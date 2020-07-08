@@ -30,17 +30,6 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
             }
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct ConstantColor
-        {
-            public Vector4 Color;
-
-            public ConstantColor(Vector4 color)
-            {
-                Color = color;
-            }
-        }
-
         public SpherePrimitiveBuilder(IDevice device, IConfiguration configuration) : base(device, configuration)
         {
         }

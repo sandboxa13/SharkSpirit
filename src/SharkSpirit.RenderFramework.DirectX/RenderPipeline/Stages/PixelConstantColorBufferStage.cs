@@ -13,7 +13,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
         public override void BindToPipeline()
         {
-            var cc = new SpherePrimitiveBuilder.ConstantColor
+            var cc = new ConstantColor
             {
                 Color = _renderObject.Color
             };
