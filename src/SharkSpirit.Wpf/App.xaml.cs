@@ -64,8 +64,9 @@ namespace SharkSpirit.Wpf
         {
             var regionManager = Container.Resolve<IRegionManager>();
 
-            regionManager.RequestNavigate(RegionNames.SceneRegion, "Scene");
-            regionManager.RequestNavigate(RegionNames.SceneInspectorRegion, "SceneInspector");
+            regionManager.RequestNavigate(RegionNames.ContentRegion, "Scene");
+            regionManager.RequestNavigate(RegionNames.ContentRegion, "SceneInspector");
+            regionManager.RequestNavigate(RegionNames.ContentRegion, "SceneGraph");
         }
     }
 }

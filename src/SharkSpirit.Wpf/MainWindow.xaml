@@ -25,15 +25,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <xcad:DockingManager
-            x:Name="DockingManager"
-            Grid.Row="0"
-            Grid.Column="1"
-            regions:RegionManager.RegionName="{x:Static region:RegionNames.SceneInspectorRegion}"
-            Theme="{Binding AvalonDockCurrentTheme}" />
-        <xcad:DockingManager
             Grid.Row="0"
             Grid.Column="0"
-            regions:RegionManager.RegionName="{x:Static region:RegionNames.SceneRegion}"
+            regions:RegionManager.RegionName="{x:Static region:RegionNames.ContentRegion}"
             Theme="{Binding AvalonDockCurrentTheme}" />
     </Grid>
 </Window>

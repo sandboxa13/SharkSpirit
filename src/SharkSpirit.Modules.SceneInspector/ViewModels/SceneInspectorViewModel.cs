@@ -35,7 +35,6 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            throw new System.NotImplementedException();
         }
     }
 }

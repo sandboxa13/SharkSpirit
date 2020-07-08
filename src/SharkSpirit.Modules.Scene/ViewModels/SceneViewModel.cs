@@ -38,7 +38,6 @@ namespace SharkSpirit.Modules.Scene.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            throw new System.NotImplementedException();
         }
 
         public void SetWindowHandle(IntPtr windowHandle)

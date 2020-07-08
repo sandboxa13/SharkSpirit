@@ -129,6 +129,10 @@
       <Project>{de5bafc5-9c64-49f8-ae25-e9fdaaecd4d5}</Project>
       <Name>SharkSpirit.Modules.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharkSpirit.Modules.SceneGraph\SharkSpirit.Modules.SceneGraph.csproj">
+      <Project>{9b321005-8dc1-4dc8-bbcb-f9e42290131c}</Project>
+      <Name>SharkSpirit.Modules.SceneGraph</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharkSpirit.Modules.SceneInspector\SharkSpirit.Modules.SceneInspector.csproj">
       <Project>{105c21d9-ef28-43df-b289-15f513ffa1f2}</Project>
       <Name>SharkSpirit.Modules.SceneInspector</Name>
