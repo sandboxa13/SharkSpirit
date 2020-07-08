@@ -4,11 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:directX="clr-namespace:Microsoft.Wpf.Interop.DirectX;assembly=Microsoft.Wpf.Interop.DirectX"
+    xmlns:main="clr-namespace:SharkSpirit.Wpf.ViewModels.WorkSpaces.Main"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:region="clr-namespace:SharkSpirit.Modules.Core.Prism;assembly=SharkSpirit.Modules.Core"
     xmlns:regions="http://prismlibrary.com/"
     xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
     Title="MainWindow"
+    d:DataContext="{d:DesignInstance main:MainWindowViewModel}"
+    regions:ViewModelLocator.AutoWireViewModel="True"
     WindowStartupLocation="CenterScreen"
     WindowState="Maximized"
     mc:Ignorable="d">
@@ -25,10 +28,12 @@
             x:Name="DockingManager"
             Grid.Row="0"
             Grid.Column="1"
-            regions:RegionManager.RegionName="{x:Static region:RegionNames.SceneInspectorRegion}" />
+            regions:RegionManager.RegionName="{x:Static region:RegionNames.SceneInspectorRegion}"
+            Theme="{Binding AvalonDockCurrentTheme}" />
         <xcad:DockingManager
             Grid.Row="0"
             Grid.Column="0"
-            regions:RegionManager.RegionName="{x:Static region:RegionNames.SceneRegion}" />
+            regions:RegionManager.RegionName="{x:Static region:RegionNames.SceneRegion}"
+            Theme="{Binding AvalonDockCurrentTheme}" />
     </Grid>
 </Window>

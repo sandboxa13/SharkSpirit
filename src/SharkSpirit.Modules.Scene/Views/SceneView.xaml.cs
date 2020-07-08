@@ -1,24 +1,21 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using SharkSpirit.Core;
-using SharkSpirit.Engine;
-using SharkSpirit.Modules.Core.Extensions;
+using SharkSpirit.Modules.Core.AvalonDock;
 using SharkSpirit.Modules.Scene.ViewModels;
-using SharpDX;
 using Application = System.Windows.Application;
-using Container = SharkSpirit.Core.Container;
 
 namespace SharkSpirit.Modules.Scene.Views
 {
     /// <summary>
     /// Interaction logic for SceneView.xaml
     /// </summary>
+    [AvalonDockAnchorable(Strategy = AnchorableStrategy.Left, IsHidden = false, Title = "Scene", Size = 1300)]
     public partial class SceneView 
     {
         private bool _lastVisible;
@@ -113,10 +110,10 @@ namespace SharkSpirit.Modules.Scene.Views
             }
         }
 
-        public static Rect BoundsRelativeTo(FrameworkElement element)
+        public Rect BoundsRelativeTo(FrameworkElement element)
         {
             return
-                element.TransformToVisual(Application.Current.MainWindow)
+                element.TransformToVisual(this)
                     .TransformBounds(LayoutInformation.GetLayoutSlot(element));
         }
         private void OnClosing(object sender, CancelEventArgs e)

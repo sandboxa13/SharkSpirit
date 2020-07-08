@@ -5,6 +5,7 @@ using Prism.Modularity;
 using Prism.Regions;
 using SharkSpirit.Modules.Core.AvalonDock;
 using SharkSpirit.Modules.Core.Prism;
+using SharkSpirit.Wpf.ViewModels.WorkSpaces.Main;
 using Xceed.Wpf.AvalonDock;
 
 namespace SharkSpirit.Wpf
@@ -16,6 +17,8 @@ namespace SharkSpirit.Wpf
     {
         public override void Initialize()
         {
+            Dispatcher.Thread.CurrentUICulture = new System.Globalization.CultureInfo("ru");
+
             base.Initialize();
 
             RunApp();
@@ -45,7 +48,11 @@ namespace SharkSpirit.Wpf
 
         protected override Window CreateShell()
         {
-            return Container.Resolve<MainWindow>();
+            var window = Container.Resolve<MainWindow>();
+
+            window.DataContext = new MainWindowViewModel();
+
+            return window;
         }
 
         protected override IModuleCatalog CreateModuleCatalog()
