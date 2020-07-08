@@ -1,6 +1,8 @@
-﻿namespace SharkSpirit.Modules.Core.Resources.Controls
+﻿using System;
+
+namespace SharkSpirit.Modules.Core.Resources.Controls
 {
-    public class DoubleUpDown : NumericUpDownBase<double>
+    public class DoubleUpDown : NumericUpDownBaseGeneric<double>
     {
         static DoubleUpDown()
         {
@@ -9,12 +11,12 @@
 
         protected override double IncrementValue(double value, double increment)
         {
-            return value + increment;
+            return Math.Round(value, 3) + increment;
         }
 
         protected override double DecrementValue(double value, double increment)
         {
-            return value - increment;
+            return Math.Round(value, 3) - increment;
         }
 
         protected override bool IsLowerThan(double value1, double value2)
