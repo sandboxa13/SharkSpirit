@@ -7,4 +7,13 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="TextAlignment" Value="Center" />
     </Style>
+
+    <Style
+        x:Key="TextBlock.Styles.Bold"
+        BasedOn="{StaticResource TextBlock.Styles.Default}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
 </ResourceDictionary>
