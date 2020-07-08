@@ -19,21 +19,34 @@
             <TextBlock
                 Margin="0,10"
                 FontWeight="Bold"
+                Style="{StaticResource TextBlock.Styles.Default}"
                 Text="Selected item information : " />
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Margin="0,10" Text="Name : " />
-                <TextBlock Margin="0,10" Text="{Binding SelectedSceneItemViewModel.Name}" />
+                <TextBlock
+                    Margin="0,10"
+                    Style="{StaticResource TextBlock.Styles.Default}"
+                    Text="Name : " />
+                <TextBlock
+                    Margin="0,10"
+                    Style="{StaticResource TextBlock.Styles.Default}"
+                    Text="{Binding SelectedSceneItemViewModel.Name}" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Margin="0,10" Text="ID : " />
-                <TextBlock Margin="0,10" Text="{Binding SelectedSceneItemViewModel.Id}" />
+                <TextBlock
+                    Margin="0,10"
+                    Style="{StaticResource TextBlock.Styles.Default}"
+                    Text="ID : " />
+                <TextBlock
+                    Margin="0,10"
+                    Style="{StaticResource TextBlock.Styles.Default}"
+                    Text="{Binding SelectedSceneItemViewModel.Id}" />
             </StackPanel>
 
             <local:TransformComponentView DataContext="{Binding SelectedSceneItemViewModel.TransformComponentViewModel}" />
 
-            <xctk:ColorPicker Margin="0,10,0,0" SelectedColor="{Binding SelectedSceneItemViewModel.SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <xctk:ColorPicker Background="#222222" Margin="0,10,0,0" SelectedColor="{Binding SelectedSceneItemViewModel.SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
     </Grid>
 </UserControl>

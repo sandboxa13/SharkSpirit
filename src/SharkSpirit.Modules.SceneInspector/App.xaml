@@ -1,4 +1,13 @@
 ﻿<Application
     x:Class="SharkSpirit.Modules.SceneInspector.SceneInspector"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" />
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/SharkSpirit.Modules.Core;component/Resources/Styles/Buttons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/SharkSpirit.Modules.Core;component/Resources/Styles/TextBlocks.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

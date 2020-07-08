@@ -16,22 +16,21 @@
 
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type viewModels:SceneGraphEntityViewModel}">
-            <Grid Width="200">
+            <Grid Width="250" HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Column="0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
+                    Style="{StaticResource TextBlock.Styles.Default}"
                     Text="{Binding Name}" />
 
                 <CheckBox
                     Grid.Column="1"
-                    Width="24"
                     Height="24"
                     Margin="0,10,0,0"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     IsChecked="{Binding IsVisible}">
                     <CheckBox.Style>
@@ -56,15 +55,17 @@
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type viewModels:SceneGraphCameraViewModel}">
-            <Grid Width="200" Height="30">
+            <Grid
+                Width="250"
+                Height="30"
+                HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Column="0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
+                    Style="{StaticResource TextBlock.Styles.Default}"
                     Text="{Binding Name}" />
 
                 <Grid.ContextMenu>
@@ -92,11 +93,13 @@
                 Grid.Row="0"
                 Margin="0,10,10,10"
                 FontWeight="Bold"
+                Style="{StaticResource TextBlock.Styles.Default}"
                 Text="Scene items : " />
             <TreeView
                 Grid.Row="1"
                 Height="250"
                 helpers:TreeViewHelper.SelectedItem="{Binding Path=SceneGraphViewModel.SelectedItem, Mode=TwoWay}"
+                Background="#222222"
                 BorderBrush="Black"
                 BorderThickness="1"
                 ItemsSource="{Binding SceneGraphViewModel.SceneGraphEntityViewModels}" />
@@ -106,7 +109,8 @@
                 Height="30"
                 HorizontalAlignment="Right"
                 Command="{Binding SceneGraphViewModel.AddEntityCommand}"
-                Content="Add entity" />
+                Content="Add entity"
+                Style="{StaticResource Button.Styles.Default}" />
         </Grid>
 
 
