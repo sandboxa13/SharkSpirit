@@ -4,7 +4,6 @@ using Assimp;
 using Assimp.Configs;
 using SharkSpirit.Core;
 using SharkSpirit.Graphics;
-using SharkSpirit.RenderFramework.DirectX.Primitives.Sphere;
 using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages;
 using SharpDX;
 using SharpDX.D3DCompiler;
@@ -87,7 +86,7 @@ namespace SharkSpirit.RenderFramework.DirectX.ModelLoading
                 SpecularIntensity = 0.6f
             };
 
-            AddStage(new PixelConstantBufferStage<ObjectCBuf>(device, this, ocb, 1));
+            AddStage(new PixelConstantBufferStage<ObjectCBuf>(device, ocb, 1));
 
             AddStage(new TopologyStage(device, PrimitiveTopology.TriangleList));
             AddStage(new TransformConstantBufferStage<ConstantBuffer>(device, this));

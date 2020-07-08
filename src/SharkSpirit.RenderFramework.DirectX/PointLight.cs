@@ -25,7 +25,7 @@ namespace SharkSpirit.RenderFramework.DirectX
                 AttQuad = 0.0075f
             };
 
-            _pixelConstantBufferStage = new PixelConstantBufferStage<LightCBuf>(device, this);
+            _pixelConstantBufferStage = new PixelConstantBufferStage<LightCBuf>(device);
         }
 
         public override void ChangeIsVisible(bool isVisible) => PointLightModel.IsVisible = isVisible;
