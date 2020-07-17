@@ -2,7 +2,6 @@
 {
     public static class RegionNames
     {
-        public static string SceneRegion = "SceneRegion";
-        public static string SceneInspectorRegion = "SceneInspectorRegion";
+        public static string ContentRegion = "ContentRegion";
     }
 }
