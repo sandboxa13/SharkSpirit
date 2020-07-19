@@ -8,12 +8,10 @@ using SharkSpirit.Engine.Systems;
 using SharkSpirit.Engine.Systems.Input;
 using SharkSpirit.Engine.Systems.Scripts;
 using SharkSpirit.RenderFramework.DirectX;
-using SharkSpirit.RenderFramework.DirectX.ModelLoading;
 using SharkSpirit.RenderFramework.DirectX.Primitives;
+using SharkSpirit.RenderFramework.DirectX.SceneGraph;
 using SharpDX;
 using Configuration = SharkSpirit.Core.Configuration;
-using System.Diagnostics;
-using SharkSpirit.RenderFramework.DirectX.Primitives.Sphere;
 
 namespace SharkSpirit.Engine
 {
@@ -21,6 +19,7 @@ namespace SharkSpirit.Engine
     {
         private readonly IContainer _container;
         private readonly StringBuilder _stringBuilder;
+        private Model _model;
 
 
         public Scene(IContainer container) : base(container, "Default scene")
@@ -56,8 +55,11 @@ namespace SharkSpirit.Engine
             // clear context
             RenderSystem.Clear(timer);
 
+            //_model.Draw();
+
             // draw
             RenderSystem.Draw();
+            
 
             // tick fps 
             FpsSystem.Tick();
@@ -114,12 +116,14 @@ namespace SharkSpirit.Engine
 
         public void AddEntity(Entity entity)
         {
+            var suzene = new Entity(new Vector3(2, 0, 0), _container);
+            //_model = new Model(RenderSystem.Device, Configuration, "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\sponza\\suzanne.obj");
+
             Entities.Add(entity);
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new PointLight(RenderSystem.Device, Configuration));
 
-            var suzene = new Entity(new Vector3(2, 0, 0), _container);
             Entities.Add(suzene);
-            RenderSystem.EntityRenderProcessor.AddRenderObject(suzene, new Model(RenderSystem.Device, Configuration));
+            RenderSystem.EntityRenderProcessor.AddRenderObject(suzene, new Model(RenderSystem.Device, Configuration, "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\sponza\\suzanne.obj"));
         }
 
         public void AddEntity(Entity entity, PrimitiveDrawableTypes primitiveDrawableType)

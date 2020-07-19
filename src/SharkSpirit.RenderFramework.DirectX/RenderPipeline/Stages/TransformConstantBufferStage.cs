@@ -18,7 +18,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
         {
             var modelView = _renderObject.World * _renderObject.View;
             
-            var cb = new ConstantBuffer
+            var cb = new TransformBuffer
             {
                 model = Matrix.Transpose(modelView),
                 modelViewProj = Matrix.Transpose(modelView * _renderObject.ViewProjection)

@@ -97,8 +97,8 @@ namespace SharkSpirit.RenderFramework.DirectX
             //var cbd = new BufferDescription()
             //{
             //    Usage = ResourceUsage.Default,
-            //    SizeInBytes = Utilities.SizeOf<ConstantBuffer>(),
-            //    BindFlags = BindFlags.ConstantBuffer,
+            //    SizeInBytes = Utilities.SizeOf<TransformBuffer>(),
+            //    BindFlags = BindFlags.TransformBuffer,
             //    CpuAccessFlags = CpuAccessFlags.None
             //};
             //_constantBuffer = new Buffer(_device, cbd);
@@ -107,7 +107,7 @@ namespace SharkSpirit.RenderFramework.DirectX
             //{
             //    Usage = ResourceUsage.Default,
             //    SizeInBytes = Utilities.SizeOf<SpherePrimitiveBuilder.ConstantColor>(),
-            //    BindFlags = BindFlags.ConstantBuffer,
+            //    BindFlags = BindFlags.TransformBuffer,
             //    CpuAccessFlags = CpuAccessFlags.None
             //};
             //_pixelcbd = new Buffer(_device, pcbd);

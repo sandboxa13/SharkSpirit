@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 using Assimp;
 using Assimp.Configs;
 using SharkSpirit.Core;
+using SharkSpirit.Graphics;
 using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages;
 using SharpDX;
 using SharpDX.D3DCompiler;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
-using ConstantBuffer = SharkSpirit.Graphics.ConstantBuffer;
 using PixelShaderStage = SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages.PixelShaderStage;
 using VertexShaderStage = SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages.VertexShaderStage;
 
@@ -87,7 +87,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
 
         private void AddIndexBufferStage(RenderObject renderObject, List<ushort> indices)
         {
-            renderObject.AddIndexBufferStage(new IndexBufferStage(Device, indices.ToArray()));
+            renderObject.AddStage(new IndexBufferStage(Device, indices.ToArray()));
         }
 
         protected override void AddVertexBufferStage(RenderObject renderObject)
@@ -142,7 +142,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
 
         protected override void AddTransformConstantBufferStage(RenderObject renderObject)
         {
-            renderObject.AddStage(new TransformConstantBufferStage<ConstantBuffer>(Device, renderObject));
+            renderObject.AddStage(new TransformConstantBufferStage<TransformBuffer>(Device, renderObject));
 
         }
     }
