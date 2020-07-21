@@ -123,7 +123,17 @@ namespace SharkSpirit.Engine
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new PointLight(RenderSystem.Device, Configuration));
 
             Entities.Add(suzene);
-            RenderSystem.EntityRenderProcessor.AddRenderObject(suzene, new Model(RenderSystem.Device, Configuration, "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\sponza\\suzanne.obj"));
+
+            var model = new Model(RenderSystem.Device, Configuration,
+                "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Models\\sponza.3DS");
+
+            foreach (var mesh in model.Meshes)
+            {
+                var meshEntity = new Entity();
+                RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
+            }
+                
+            RenderSystem.EntityRenderProcessor.AddRenderObject(suzene, model);
         }
 
         public void AddEntity(Entity entity, PrimitiveDrawableTypes primitiveDrawableType)

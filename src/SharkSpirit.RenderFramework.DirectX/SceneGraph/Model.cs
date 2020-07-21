@@ -18,18 +18,19 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
     public class Model : RenderObject
     {
         private Node _rootNode;
-        private readonly List<Mesh> _meshes;
 
         public Model(IDevice device, IConfiguration configuration, string modelName) : base(device, MeshType.None)
         {
-            _meshes = new List<Mesh>();
+            Meshes = new List<Mesh>();
 
             Initialize(modelName, device, configuration);
         }
+        
+        public readonly List<Mesh> Meshes;
 
         public override void Draw()
         {
-            foreach (var mesh in _meshes)
+            foreach (var mesh in Meshes)
             {
                 mesh.Draw();
             }
@@ -46,7 +47,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
             foreach (var sceneMesh in scene.Meshes)
             {
-                _meshes.Add(ParseMesh(sceneMesh, device, configuration));
+                Meshes.Add(ParseMesh(sceneMesh, device, configuration));
             }
 
             _rootNode = ParseNode(scene.RootNode);
@@ -60,7 +61,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             {
                 var meshIndex = node.MeshIndices[i];
 
-                var mesh = _meshes[meshIndex];
+                var mesh = Meshes[meshIndex];
 
                 currentMeshes.Add(mesh);
             }

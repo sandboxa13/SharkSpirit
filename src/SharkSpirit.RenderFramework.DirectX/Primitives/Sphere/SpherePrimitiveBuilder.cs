@@ -38,7 +38,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives.Sphere
         {
             var importer = new AssimpContext();
             importer.SetConfig(new NormalSmoothingAngleConfig(66.0f));
-            var model = importer.ImportFile("C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\sponza\\Lampochka_Kolyana (2).obj", PostProcessPreset.TargetRealTimeMaximumQuality);
+            var model = importer.ImportFile("C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Models\\Lampochka_Kolyana (2).obj", PostProcessPreset.TargetRealTimeMaximumQuality);
 
             var vertices = new List<Vertex>();
             var indices = new List<ushort>();
