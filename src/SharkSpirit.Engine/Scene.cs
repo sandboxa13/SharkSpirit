@@ -117,23 +117,27 @@ namespace SharkSpirit.Engine
 
         public void AddEntity(Entity entity)
         {
-            var suzene = new Entity(new Vector3(2, 0, 0), _container);
-            //_model = new Model(RenderSystem.Device, Configuration, "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\sponza\\suzanne.obj");
 
+            entity.TransformComponent.Position.Y = 1;
             Entities.Add(entity);
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new PointLight(RenderSystem.Device, Configuration));
 
-            Entities.Add(suzene);
 
-            var model = new Model(RenderSystem.Device, Configuration, Path.Combine(Configuration.PathToModels, "sponza.3DS"));
+            var sponza = new Model(RenderSystem.Device, Configuration, Path.Combine(Configuration.PathToModels, "sponza.3DS"));
 
-            foreach (var mesh in model.Meshes)
+            foreach (var mesh in sponza.Meshes)
             {
                 var meshEntity = new Entity();
                 RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
             }
-                
-            RenderSystem.EntityRenderProcessor.AddRenderObject(suzene, model);
+            
+            var nano = new Model(RenderSystem.Device, Configuration, Path.Combine(Configuration.PathToModels, "nanosuit.obj"));
+            
+            foreach (var mesh in nano.Meshes)
+            {
+                var meshEntity = new Entity();
+                RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
+            }
         }
 
         public void AddEntity(Entity entity, PrimitiveDrawableTypes primitiveDrawableType)
