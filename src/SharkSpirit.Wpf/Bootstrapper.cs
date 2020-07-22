@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using System.Windows.Forms;
 using DryIoc;
 using SharkSpirit.Core;
@@ -27,8 +26,8 @@ namespace SharkSpirit.Wpf
                 Height = 1280,
                 Width = 720,
                 EngineEditorType = EngineEditorType.Wpf,
-                PathToShaders = ((pathToSrc + @"SharkSpirit.Graphics\Shaders")),
-                PathToModels = ((pathToSrc + @"SharkSpirit.Graphics\Models")),
+                PathToShaders = pathToSrc + @"SharkSpirit.Graphics\Shaders",
+                PathToModels = pathToSrc + @"SharkSpirit.Graphics\Models",
                 MonitorHeight = Screen.PrimaryScreen.Bounds.Height,
                 MonitorWidth = Screen.PrimaryScreen.Bounds.Width
             };
