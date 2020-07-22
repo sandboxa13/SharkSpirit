@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using SharkSpirit.Core;
@@ -124,8 +125,7 @@ namespace SharkSpirit.Engine
 
             Entities.Add(suzene);
 
-            var model = new Model(RenderSystem.Device, Configuration,
-                "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Models\\sponza.3DS");
+            var model = new Model(RenderSystem.Device, Configuration, Path.Combine(Configuration.PathToModels, "sponza.3DS"));
 
             foreach (var mesh in model.Meshes)
             {

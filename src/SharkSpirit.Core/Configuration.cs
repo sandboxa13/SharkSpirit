@@ -6,6 +6,7 @@ namespace SharkSpirit.Core
     {
         public EngineEditorType EngineEditorType { get; set; }
         public string PathToShaders { get; set; }
+        public string PathToModels { get; set; }
         public float Width { get; set; }
         public float Height { get; set; }
         public float MonitorWidth { get; set; }
@@ -17,6 +18,7 @@ namespace SharkSpirit.Core
     {
         EngineEditorType EngineEditorType { get; set; }
         string PathToShaders { get; set; }
+        string PathToModels { get; set; }
         float Width { get; set; }
         float Height { get; set; }
         float MonitorWidth { get; set; }

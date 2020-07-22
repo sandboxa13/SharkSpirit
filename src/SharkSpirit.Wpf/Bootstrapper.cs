@@ -1,4 +1,7 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Windows.Forms;
 using DryIoc;
 using SharkSpirit.Core;
 using SharkSpirit.Engine;
@@ -15,12 +18,17 @@ namespace SharkSpirit.Wpf
             container.Register<MainWindow>();
             container.Register<Core.IContainer, Core.Container>(new SingletonReuse());
 
+
+            var pathToSrc = Path.GetFullPath( Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\"));
+            
+            
             var graphicsConfiguration = new Configuration
             {
                 Height = 1280,
                 Width = 720,
                 EngineEditorType = EngineEditorType.Wpf,
-                PathToShaders = "C:\\Repositories\\BitBucket\\sharkspirit\\src\\SharkSpirit.Graphics\\Shaders",
+                PathToShaders = ((pathToSrc + @"SharkSpirit.Graphics\Shaders")),
+                PathToModels = ((pathToSrc + @"SharkSpirit.Graphics\Models")),
                 MonitorHeight = Screen.PrimaryScreen.Bounds.Height,
                 MonitorWidth = Screen.PrimaryScreen.Bounds.Width
             };
