@@ -18,6 +18,8 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
             _count = indices.Count();
 
+            IsIndexBuffer = true;
+
             _indexBuffer = Buffer.Create(device.GetDevice(), indices, desc );
         }
 

@@ -22,14 +22,12 @@ namespace SharkSpirit.RenderFramework.DirectX
 
         public void AddStage(StageBase stage)
         {
+            if (stage.IsIndexBuffer)
+            {
+                IndexBufferStage = (IndexBufferStage) stage;
+            }
+            
             _renderPipeline.AddStage(stage);
-        }
-
-        public void AddIndexBufferStage(IndexBufferStage indexBufferStage)
-        {
-            IndexBufferStage = indexBufferStage;
-
-            _renderPipeline.AddStage(indexBufferStage);
         }
 
         public Matrix World { get; protected internal set; }

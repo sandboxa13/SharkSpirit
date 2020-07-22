@@ -75,7 +75,7 @@ namespace SharkSpirit.RenderFramework.DirectX
             var cbd = new BufferDescription()
             {
                 Usage = ResourceUsage.Default,
-                SizeInBytes = Utilities.SizeOf<ConstantBuffer>(),
+                SizeInBytes = Utilities.SizeOf<TransformBuffer>(),
                 BindFlags = BindFlags.ConstantBuffer,
                 CpuAccessFlags = CpuAccessFlags.None
             };

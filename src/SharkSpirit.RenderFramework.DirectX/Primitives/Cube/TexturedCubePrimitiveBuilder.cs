@@ -8,7 +8,6 @@ using SharpDX.D3DCompiler;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
-using ConstantBuffer = SharkSpirit.Graphics.ConstantBuffer;
 using PixelShaderStage = SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages.PixelShaderStage;
 using VertexShaderStage = SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages.VertexShaderStage;
 
@@ -111,7 +110,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives
                 20,23,21, 20,22,23
             };
 
-            renderObject.AddIndexBufferStage(new IndexBufferStage(Device, indices));
+            renderObject.AddStage(new IndexBufferStage(Device, indices));
         }
         protected override void AddInputLayoutStage(RenderObject renderObject)
         {
@@ -133,7 +132,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives
         }
         protected override void AddTransformConstantBufferStage(RenderObject renderObject)
         {
-            renderObject.AddStage(new TransformConstantBufferStage<ConstantBuffer>(Device, renderObject));
+            renderObject.AddStage(new TransformConstantBufferStage<TransformBuffer>(Device, renderObject));
         }
 
         #endregion

@@ -8,6 +8,8 @@
         }
 
         protected IDevice Device { get; private set; }
+        
+        public bool IsIndexBuffer { get; protected set; }
 
         public abstract void BindToPipeline();
     }
