@@ -128,6 +128,7 @@ namespace SharkSpirit.Engine
             foreach (var mesh in sponza.Meshes)
             {
                 var meshEntity = new Entity();
+                Entities.Add(meshEntity);
                 RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
             }
             
