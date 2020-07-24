@@ -42,6 +42,16 @@ namespace SharkSpirit.Engine
             Components.Add(TransformComponent);
             Components.Add(MaterialComponent);
         }
+        
+        public Entity(string name) : base(new Container(), name)
+        {
+            Components = new FastCollection<EntityComponent>();
+            Id = Guid.NewGuid();
+            TransformComponent = new TransformComponent(this) { Position = Vector3.Zero };
+            MaterialComponent = new MaterialComponent(this);
+            Components.Add(TransformComponent);
+            Components.Add(MaterialComponent);
+        }
 
         public FastCollection<EntityComponent> Components { get; }
         public Guid Id { get; set; }

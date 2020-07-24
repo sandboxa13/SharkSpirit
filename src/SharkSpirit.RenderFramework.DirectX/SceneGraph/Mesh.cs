@@ -6,12 +6,16 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 {
     public class Mesh : RenderObject
     {
-        public Mesh(IDevice device, IEnumerable<StageBase> stages) : base(device, MeshType.None)
+        public Mesh(IDevice device, IEnumerable<StageBase> stages, string name) : base(device, MeshType.None)
         {
             Initialize(stages);
 
+            Name = name;
+            
             AddStage(new TransformConstantBufferStage<TransformBuffer>(device, this));
         }
+        
+        public string Name { get; set; }
 
         // public override void Draw()
         // {
