@@ -78,13 +78,13 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
         private Mesh ParseMesh(Assimp.Mesh modelMesh, IDevice device, IConfiguration configuration)
         {
-            var vertices = new List<ModelLoading.Model.Vertex>();
+            var vertices = new List<Vertex>();
             var indices = new List<ushort>();
 
             for (var i = 0; i < modelMesh.VertexCount; i++)
             {
                 //todo multiply by size
-                vertices.Add(new ModelLoading.Model.Vertex(
+                vertices.Add(new Vertex(
                     new Vector3(modelMesh.Vertices[i].X * 1.0f / 40.0f, modelMesh.Vertices[i].Y* 1.0f / 40.0f, modelMesh.Vertices[i].Z* 1.0f / 40.0f),
                     new Vector3(modelMesh.Normals[i].X, modelMesh.Normals[i].Y, modelMesh.Normals[i].Z)));
             }
@@ -102,7 +102,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
             var stages = new List<StageBase>();
 
-            stages.Add(new VertexBufferStage<ModelLoading.Model.Vertex>(device, vertices.ToArray()));
+            stages.Add(new VertexBufferStage<Vertex>(device, vertices.ToArray()));
             stages.Add(new IndexBufferStage(device, indices.ToArray()));
             
             stages.Add(new VertexShaderStage(device, Path.Combine(configuration.PathToShaders, "PhongVS.hlsl")));
