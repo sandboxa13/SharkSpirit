@@ -40,7 +40,7 @@ namespace SharkSpirit.Engine
         public DiagnosticsSystem DiagnosticsSystem { get; set; }
         public IConfiguration Configuration { get; private set; }
         public FastCollection<Entity> Entities { get; private set; }
-
+        public int VertexCount { get; set; }
 
         public void Draw(GameTimer timer)
         {
@@ -118,7 +118,8 @@ namespace SharkSpirit.Engine
         public void AddEntity(Entity entity)
         {
 
-            entity.TransformComponent.Position.Y = 1;
+            entity.TransformComponent.Position.Y = 10;
+            entity.TransformComponent.Position.X = -5;
             Entities.Add(entity);
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new PointLight(RenderSystem.Device, Configuration));
 
@@ -127,6 +128,7 @@ namespace SharkSpirit.Engine
             
             foreach (var mesh in sponza.Meshes)
             {
+                VertexCount += mesh.VertexCount;
                 var meshEntity = new Entity(mesh.Name);
                 Entities.Add(meshEntity);
                 RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
@@ -136,7 +138,9 @@ namespace SharkSpirit.Engine
             
             foreach (var mesh in nano.Meshes)
             {
-                var meshEntity = new Entity();
+                VertexCount += mesh.VertexCount;
+                var meshEntity = new Entity(mesh.Name);
+                meshEntity.TransformComponent.Rotation.Y = 30;
                 Entities.Add(meshEntity);
                 RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
             }
@@ -210,6 +214,7 @@ namespace SharkSpirit.Engine
             _stringBuilder.Append($"MOUSE X : {InputSystem.InputManager.MouseX()}\n");
             _stringBuilder.Append($"MOUSE Y : {InputSystem.InputManager.MouseY()}\n");
             _stringBuilder.Append($"SCENE OBJECTS COUNT : {Entities.Count} \n");
+            _stringBuilder.Append($"SCENE VERTEX COUNT : {VertexCount} \n");
             //_stringBuilder.Append($"CPU USAGE = {inf.CpuUsage} %\n");
             //_stringBuilder.Append($"MEMORY USAGE = {inf.MemoryUsage} MB \n");
 

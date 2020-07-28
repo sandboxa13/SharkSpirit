@@ -132,7 +132,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
             stages.Add(new TopologyStage(device, PrimitiveTopology.TriangleList));
             
-            return new Mesh(device, stages, modelMesh.Name);
+            return new Mesh(device, stages, modelMesh.Name, vertices.Count);
         }
     }
 }
