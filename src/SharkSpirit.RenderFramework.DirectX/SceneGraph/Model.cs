@@ -17,10 +17,12 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 {
     public class Model : RenderObject
     {
+        private readonly float _scale;
         private Node _rootNode;
 
-        public Model(IDevice device, IConfiguration configuration, string modelName) : base(device, MeshType.None)
+        public Model(IDevice device, IConfiguration configuration, string modelName, float scale = 1f) : base(device, MeshType.None)
         {
+            _scale = scale;
             Meshes = new List<Mesh>();
 
             Initialize(modelName, device, configuration);
@@ -85,7 +87,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             {
                 //todo multiply by size
                 vertices.Add(new Vertex(
-                    new Vector3(modelMesh.Vertices[i].X * 1.0f / 40.0f, modelMesh.Vertices[i].Y* 1.0f / 40.0f, modelMesh.Vertices[i].Z* 1.0f / 40.0f),
+                    new Vector3(modelMesh.Vertices[i].X * _scale, modelMesh.Vertices[i].Y* _scale, modelMesh.Vertices[i].Z* _scale),
                     new Vector3(modelMesh.Normals[i].X, modelMesh.Normals[i].Y, modelMesh.Normals[i].Z)));
             }
 

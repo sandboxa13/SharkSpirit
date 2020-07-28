@@ -123,7 +123,7 @@ namespace SharkSpirit.Engine
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new PointLight(RenderSystem.Device, Configuration));
 
 
-            var sponza = new Model(RenderSystem.Device, Configuration, Path.Combine(Configuration.PathToModels, "Sponza\\sponza.obj"));
+            var sponza = new Model(RenderSystem.Device, Configuration, Path.Combine(Configuration.PathToModels, "Sponza\\sponza.obj"), 1.0f / 40.0f);
             
             foreach (var mesh in sponza.Meshes)
             {
@@ -132,14 +132,14 @@ namespace SharkSpirit.Engine
                 RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
             }
             
-            // var nano = new Model(RenderSystem.Device, Configuration, Path.Combine(Configuration.PathToModels, "nanosuit.obj"));
-            //
-            // foreach (var mesh in nano.Meshes)
-            // {
-            //     var meshEntity = new Entity();
-            //     Entities.Add(meshEntity);
-            //     RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
-            // }
+            var nano = new Model(RenderSystem.Device, Configuration, Path.Combine(Configuration.PathToModels, "nanosuit.obj"));
+            
+            foreach (var mesh in nano.Meshes)
+            {
+                var meshEntity = new Entity();
+                Entities.Add(meshEntity);
+                RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
+            }
         }
 
         public void AddEntity(Entity entity, PrimitiveDrawableTypes primitiveDrawableType)
