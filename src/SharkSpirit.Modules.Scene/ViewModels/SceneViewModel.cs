@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using DryIoc;
 using Prism.Regions;
 using SharkSpirit.Core;
@@ -28,7 +29,7 @@ namespace SharkSpirit.Modules.Scene.ViewModels
 
             _game = _container.Resolve<Game>();
 
-            _game.Scene.AddEntity(new Entity(new Vector3(0, 0, 0), container, $"Cube № 1"));
+            _game.Scene.AddEntity(new Entity(new Vector3(0, 0, 0), container, $"Point Light"));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
