@@ -18,7 +18,6 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
     public class Model : RenderObject
     {
         private readonly float _scale;
-        private Node _rootNode;
 
         public Model(IDevice device, IConfiguration configuration, string modelName, float scale = 1f) : base(device, MeshType.None)
         {
@@ -29,6 +28,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
         }
         
         public readonly List<Mesh> Meshes;
+        public Node RootNode;
 
         public override void Draw()
         {
@@ -37,7 +37,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
                 mesh.Draw();
             }
 
-            _rootNode.Draw();
+            RootNode.Draw();
         }
 
         private void Initialize(string modelName, IDevice device, IConfiguration configuration)
@@ -52,7 +52,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
                 Meshes.Add(ParseMesh(sceneMesh, device, configuration));
             }
 
-            _rootNode = ParseNode(scene.RootNode);
+            RootNode = ParseNode(scene.RootNode);
         }
 
         private Node ParseNode(Assimp.Node node)

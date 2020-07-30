@@ -4,27 +4,26 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 {
     public class Node
     {
-        private readonly List<Node> _childs;
-        private readonly List<Mesh> _meshes;
-
         public Node(IEnumerable<Mesh> meshes, string nodeName)
         {
-            _childs = new List<Node>();
-            _meshes = new List<Mesh>(meshes);
+            Childs = new List<Node>();
+            Meshes = new List<Mesh>(meshes);
 
             Name = nodeName;
         }
 
         public string Name { get; set; }
-
+        public readonly List<Node> Childs;
+        public readonly List<Mesh> Meshes;
+        
         public void Draw()
         {
-            foreach (var mesh in _meshes)
+            foreach (var mesh in Meshes)
             {
                 mesh.Draw();
             }
 
-            foreach (var child in _childs)
+            foreach (var child in Childs)
             {
                 child.Draw();
             }
@@ -32,7 +31,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
         public void AddChild(Node child)
         {
-            _childs.Add(child);
+            Childs.Add(child);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace SharkSpirit.Engine
 
             // draw
             RenderSystem.Draw();
-            
+
             // tick fps 
             FpsSystem.Tick();
 
@@ -82,8 +82,8 @@ namespace SharkSpirit.Engine
 
         public void AddCamera()
         {
-            var x = (float)(1.5f * Math.PI);
-            var y = (float)(0.2f * Math.PI);
+            var x = (float) (1.5f * Math.PI);
+            var y = (float) (0.2f * Math.PI);
             var z = 15.0f;
 
             var camera =
@@ -106,29 +106,38 @@ namespace SharkSpirit.Engine
             entity.TransformComponent.Position.Y = 10;
             entity.TransformComponent.Position.X = -5;
             Entities.Add(entity);
-            RenderSystem.EntityRenderProcessor.AddRenderObject(entity, new PointLight(RenderSystem.Device, Configuration));
+            RenderSystem.EntityRenderProcessor.AddRenderObject(entity,
+                new PointLight(RenderSystem.Device, Configuration));
 
+            var sponza = new Model(RenderSystem.Device, Configuration,
+                Path.Combine(Configuration.PathToModels, "Sponza\\sponza.obj"), 1.0f / 40.0f);
+            
+            var nano = new Model(RenderSystem.Device, Configuration,
+                Path.Combine(Configuration.PathToModels, "nanosuit.obj"));
+            
+            Entities.Add(BuildTree(sponza.RootNode, new Entity(sponza.RootNode.Name)));
+            Entities.Add(BuildTree(nano.RootNode, new Entity(nano.RootNode.Name)));
+        }
 
-            var sponza = new Model(RenderSystem.Device, Configuration, Path.Combine(Configuration.PathToModels, "Sponza\\sponza.obj"), 1.0f / 40.0f);
-            
-            foreach (var mesh in sponza.Meshes)
+        private Entity BuildTree(Node node, Entity parent)
+        {
+            foreach (var nodeChild in node.Childs)
             {
-                VertexCount += mesh.VertexCount;
-                var meshEntity = new Entity(mesh.Name);
-                Entities.Add(meshEntity);
-                RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
+                var newParent = new Entity(nodeChild.Name); 
+                
+                BuildTree(nodeChild, newParent);
+
+                foreach (var nodeMesh in nodeChild.Meshes)
+                {
+                    VertexCount += nodeMesh.VertexCount;
+                    var meshEntity = new Entity(nodeMesh.Name);
+                    parent.Childs.Add(meshEntity);
+                    
+                    RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, nodeMesh);
+                }
             }
-            
-            var nano = new Model(RenderSystem.Device, Configuration, Path.Combine(Configuration.PathToModels, "nanosuit.obj"));
-            
-            foreach (var mesh in nano.Meshes)
-            {
-                VertexCount += mesh.VertexCount;
-                var meshEntity = new Entity(mesh.Name);
-                meshEntity.TransformComponent.Rotation.Y = 30;
-                Entities.Add(meshEntity);
-                RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
-            }
+
+            return parent;
         }
 
         public void RemoveEntity(Entity entity)
@@ -147,8 +156,8 @@ namespace SharkSpirit.Engine
 
             Cameras = new FastCollection<CameraComponent>();
 
-            var x = (float)(1.5f * Math.PI);
-            var y = (float)(0.2f * Math.PI);
+            var x = (float) (1.5f * Math.PI);
+            var y = (float) (0.2f * Math.PI);
             var z = 15.0f;
 
             SelectedCamera = new CameraComponent(new Entity(new Vector3(x, y, z), Container, "Camera 1"));
@@ -178,7 +187,6 @@ namespace SharkSpirit.Engine
 
             DiagnosticsSystem = new DiagnosticsSystem();
             Container.AddService(DiagnosticsSystem);
-
         }
 
         private void BuildAndDrawSceneInfo(GameTimer timer)
@@ -187,7 +195,8 @@ namespace SharkSpirit.Engine
             _stringBuilder.Append(Environment.NewLine);
             _stringBuilder.Append("RENDER ENGINE INFO \n");
             _stringBuilder.Append($"ACTUAL SCENE SIZE: {Configuration.Width} X {Configuration.Height}\n");
-            _stringBuilder.Append($"ACTUAL MONITOR SIZE: {Configuration.MonitorWidth} X {Configuration.MonitorHeight}\n");
+            _stringBuilder.Append(
+                $"ACTUAL MONITOR SIZE: {Configuration.MonitorWidth} X {Configuration.MonitorHeight}\n");
             _stringBuilder.Append($"FPS : {FpsSystem.GetFps()}\n");
             _stringBuilder.Append($"FRAME TIME : {FpsSystem.GetMspf()} (ms)\n");
             _stringBuilder.Append($"MOUSE X : {InputSystem.InputManager.MouseX()}\n");

@@ -15,67 +15,67 @@
 
 
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type viewModels:SceneGraphEntityViewModel}">
-            <Grid Width="250" HorizontalAlignment="Left">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Column="0"
-                    Style="{StaticResource TextBlock.Styles.Default}"
-                    Text="{Binding Name}" />
+        <!-- <DataTemplate DataType="{x:Type viewModels:SceneGraphEntityViewModel}"> -->
+        <!--     <Grid Width="250" HorizontalAlignment="Left"> -->
+        <!--         <Grid.ColumnDefinitions> -->
+        <!--             <ColumnDefinition Width="*" /> -->
+        <!--             <ColumnDefinition Width="*" /> -->
+        <!--         </Grid.ColumnDefinitions> -->
+        <!--         <TextBlock -->
+        <!--             Grid.Column="0" -->
+        <!--             Style="{StaticResource TextBlock.Styles.Default}" -->
+        <!--             Text="{Binding Name}" /> -->
+        <!-- -->
+        <!--         <CheckBox -->
+        <!--             Grid.Column="1" -->
+        <!--             Height="24" -->
+        <!--             Margin="0,10,0,0" -->
+        <!--             HorizontalAlignment="Right" -->
+        <!--             VerticalAlignment="Center" -->
+        <!--             IsChecked="{Binding IsVisible}"> -->
+        <!--             <CheckBox.Style> -->
+        <!--                 <Style TargetType="{x:Type CheckBox}"> -->
+        <!--                     <Style.Triggers> -->
+        <!--                         <Trigger Property="IsChecked" Value="True"> -->
+        <!--                             <Setter Property="ToolTip" Value="Hide" /> -->
+        <!--                         </Trigger> -->
+        <!--                         <Trigger Property="IsChecked" Value="False"> -->
+        <!--                             <Setter Property="ToolTip" Value="Show" /> -->
+        <!--                         </Trigger> -->
+        <!--                     </Style.Triggers> -->
+        <!--                 </Style> -->
+        <!--             </CheckBox.Style> -->
+        <!--         </CheckBox> -->
+        <!--         <Grid.ContextMenu> -->
+        <!--             <ContextMenu> -->
+        <!--                 <MenuItem Command="{Binding RemoveEntityCommand}" Header="Remove" /> -->
+        <!--             </ContextMenu> -->
+        <!--         </Grid.ContextMenu> -->
+        <!--     </Grid> -->
+        <!-- </DataTemplate> -->
 
-                <CheckBox
-                    Grid.Column="1"
-                    Height="24"
-                    Margin="0,10,0,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    IsChecked="{Binding IsVisible}">
-                    <CheckBox.Style>
-                        <Style TargetType="{x:Type CheckBox}">
-                            <Style.Triggers>
-                                <Trigger Property="IsChecked" Value="True">
-                                    <Setter Property="ToolTip" Value="Hide" />
-                                </Trigger>
-                                <Trigger Property="IsChecked" Value="False">
-                                    <Setter Property="ToolTip" Value="Show" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </CheckBox.Style>
-                </CheckBox>
-                <Grid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Command="{Binding RemoveEntityCommand}" Header="Remove" />
-                    </ContextMenu>
-                </Grid.ContextMenu>
-            </Grid>
-        </DataTemplate>
-
-        <DataTemplate DataType="{x:Type viewModels:SceneGraphCameraViewModel}">
-            <Grid
-                Width="250"
-                Height="30"
-                HorizontalAlignment="Left">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Column="0"
-                    Style="{StaticResource TextBlock.Styles.Default}"
-                    Text="{Binding Name}" />
-
-                <Grid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Command="{Binding RemoveEntityCommand}" Header="Remove" />
-                        <MenuItem Command="{Binding SelectCameraCommand}" Header="Select" />
-                    </ContextMenu>
-                </Grid.ContextMenu>
-            </Grid>
-        </DataTemplate>
+        <!-- <DataTemplate DataType="{x:Type viewModels:SceneGraphCameraViewModel}"> -->
+        <!--     <Grid -->
+        <!--         Width="250" -->
+        <!--         Height="30" -->
+        <!--         HorizontalAlignment="Left"> -->
+        <!--         <Grid.ColumnDefinitions> -->
+        <!--             <ColumnDefinition Width="*" /> -->
+        <!--             <ColumnDefinition Width="*" /> -->
+        <!--         </Grid.ColumnDefinitions> -->
+        <!--         <TextBlock -->
+        <!--             Grid.Column="0" -->
+        <!--             Style="{StaticResource TextBlock.Styles.Default}" -->
+        <!--             Text="{Binding Name}" /> -->
+        <!-- -->
+        <!--         <Grid.ContextMenu> -->
+        <!--             <ContextMenu> -->
+        <!--                 <MenuItem Command="{Binding RemoveEntityCommand}" Header="Remove" /> -->
+        <!--                 <MenuItem Command="{Binding SelectCameraCommand}" Header="Select" /> -->
+        <!--             </ContextMenu> -->
+        <!--         </Grid.ContextMenu> -->
+        <!--     </Grid> -->
+        <!-- </DataTemplate> -->
     </UserControl.Resources>
 
     <Grid>
@@ -102,7 +102,48 @@
                 Background="#222222"
                 BorderBrush="Black"
                 BorderThickness="1"
-                ItemsSource="{Binding SceneGraphViewModel.SceneGraphEntityViewModels}" />
+                ItemsSource="{Binding SceneGraphViewModel.SceneGraphEntityViewModels}" >
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type viewModels:SceneGraphEntityViewModel }" ItemsSource = "{Binding Childs}">
+                        <Grid Width="250" HorizontalAlignment="Left"> 
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Style="{StaticResource TextBlock.Styles.Default}"
+                                        Text="{Binding Name}" />
+                            
+                                    <CheckBox
+                                        Grid.Column="1"
+                                        Height="24"
+                                        Margin="0,10,0,0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        IsChecked="{Binding IsVisible}">
+                                        <CheckBox.Style>
+                                            <Style TargetType="{x:Type CheckBox}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter Property="ToolTip" Value="Hide" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsChecked" Value="False">
+                                                        <Setter Property="ToolTip" Value="Show" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </CheckBox.Style>
+                                    </CheckBox>
+                                    <Grid.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Command="{Binding RemoveEntityCommand}" Header="Remove" />
+                                        </ContextMenu>
+                                    </Grid.ContextMenu>
+                                </Grid>
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
+            </TreeView>
             <Button
                 Grid.Row="2"
                 Width="80"

@@ -13,15 +13,17 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
 {
     public class SceneGraphViewModel : ViewModelBase
     {
+        private readonly SceneGraphManager _sceneGraphManager;
+
         public SceneGraphViewModel(SceneGraphManager sceneGraphManager)
         {
+            _sceneGraphManager = sceneGraphManager;
             SelectedItem = new SceneGraphEntityViewModel(Entity.Empty(), sceneGraphManager);
             SceneGraphEntityViewModels = new ObservableCollection<SceneGraphEntityViewModel>();
 
             AddEntityCommand = ReactiveCommand.Create(sceneGraphManager.AddEntity);
 
             CreateSceneViewModels(sceneGraphManager);
-
 
             this.WhenAnyValue(model => model.SelectedItem)
                 .Skip(1)
@@ -65,17 +67,29 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
         {
             sceneGraphManager.AddCamera();
 
-
-            SceneGraphEntityViewModels.AddRange(
-                sceneGraphManager
-                    .GetSceneEntities()
-                    .Select(entity => new SceneGraphEntityViewModel(entity, sceneGraphManager)));
+            foreach (var entity in sceneGraphManager.GetSceneEntities())
+            {
+                SceneGraphEntityViewModels.Add(BuildTree(entity, new SceneGraphCameraViewModel(entity, _sceneGraphManager)));
+            }
 
             SceneGraphEntityViewModels.AddRange(
                 sceneGraphManager
                     .GetSceneCameras()
                     .Select(component => new SceneGraphCameraViewModel(component.Entity, sceneGraphManager)));
 
+        }
+
+        private SceneGraphEntityViewModel BuildTree(Entity entity, SceneGraphEntityViewModel parentVm)
+        {
+            foreach (var entityChild in entity.Childs)
+            {
+                var sceneGraphEntityViewModel = new SceneGraphEntityViewModel(entityChild, _sceneGraphManager);
+
+                parentVm.Childs.Add(new SceneGraphCameraViewModel(entityChild, _sceneGraphManager));
+                BuildTree(entityChild, sceneGraphEntityViewModel);
+            }
+            
+            return parentVm;
         }
     }
 }

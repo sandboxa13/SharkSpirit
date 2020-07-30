@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Reactive;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -18,8 +19,8 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
             Name = entity.Name;
             Id = entity.Id;
             IsVisible = entity.IsVisible;
-
-
+            Childs = new ObservableCollection<SceneGraphEntityViewModel>();
+            
             RemoveEntityCommand = ReactiveCommand.Create(() =>
             {
                 sceneGraphManager.RemoveEntity(entity);
@@ -31,6 +32,7 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
 
         [Reactive] public ReactiveCommand<Unit, Unit> RemoveEntityCommand { get; set; }
 
+        [Reactive] public ObservableCollection<SceneGraphEntityViewModel> Childs { get; set; }
         public Guid Id { get; private set; }
 
         [Reactive] public bool IsVisible { get; set; }
