@@ -23,27 +23,24 @@ namespace SharkSpirit.Engine.Systems
 
         public SystemInformation CollectInformation(GameTimer timer)
         {
-            if (timer.TotalTime.Seconds - _lastCheck.Seconds > 0.5f)
-            {
-                _lastCheck = timer.TotalTime;
-
-                _prevP = _processPerformanceCounter.NextValue();
-
-                double memory;
-                using (var proc = Process.GetCurrentProcess())
-                {
-                    memory = proc.PrivateMemorySize64 / (1024 * 1024);
-                }
-
-                _prevM = (float) memory;
-
+            // check if last "information collecting" was less than 1 second ago
+            if (!(timer.TotalTime.TotalSeconds - _lastCheck.TotalSeconds > 1f))
                 return new SystemInformation((float) Math.Round(_prevP / 10, 2), _prevM);
-            }
-            else
-            {
-                return new SystemInformation((float) Math.Round(_prevP / 10, 2), _prevM);
+            
+            // set last check to total
+            _lastCheck = timer.TotalTime;
 
+            
+            // collect CPU usage info
+            _prevP = _processPerformanceCounter.NextValue();
+
+            // collect RAM usage info
+            using (var proc = Process.GetCurrentProcess())
+            {
+                _prevM = proc.PrivateMemorySize64 / (1024 * 1024);
             }
+            
+            return new SystemInformation((float) Math.Round(_prevP / 10, 2), _prevM);
         }
     }
 
