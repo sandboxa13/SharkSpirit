@@ -6,28 +6,44 @@ namespace SharkSpirit.Engine.Systems
     public class DiagnosticsSystem : SystemBase
     {
         private readonly PerformanceCounter _processPerformanceCounter;
+        private readonly PerformanceCounter _ramCounter;
+
         private float _prevM;
         private float _prevP;
+
+        private TimeSpan _lastCheck;
+
         public DiagnosticsSystem()
         {
             _processPerformanceCounter =
                 new PerformanceCounter("Process", "% Processor Time", Process.GetCurrentProcess().ProcessName);
 
+            _ramCounter = new PerformanceCounter("Memory", "Available MBytes", true);
         }
 
-        public SystemInformation CollectInformation()
+        public SystemInformation CollectInformation(GameTimer timer)
         {
-            if (DateTime.Now.Second % 5 != 0)
+            if (timer.TotalTime.Seconds - _lastCheck.Seconds > 0.5f)
             {
+                _lastCheck = timer.TotalTime;
+
+                _prevP = _processPerformanceCounter.NextValue();
+
+                double memory;
+                using (var proc = Process.GetCurrentProcess())
+                {
+                    memory = proc.PrivateMemorySize64 / (1024 * 1024);
+                }
+
+                _prevM = (float) memory;
+
                 return new SystemInformation((float) Math.Round(_prevP / 10, 2), _prevM);
             }
-            
-            var p = _processPerformanceCounter.NextValue();
+            else
+            {
+                return new SystemInformation((float) Math.Round(_prevP / 10, 2), _prevM);
 
-            _prevP = p;
-            _prevM = GC.GetTotalMemory(true) / 100000;
-            
-            return new SystemInformation((float) Math.Round(_prevP / 10, 2), _prevM);
+            }
         }
     }
 

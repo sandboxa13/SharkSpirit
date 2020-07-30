@@ -85,7 +85,6 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
             for (var i = 0; i < modelMesh.VertexCount; i++)
             {
-                //todo multiply by size
                 vertices.Add(new Vertex(
                     new Vector3(modelMesh.Vertices[i].X * _scale, modelMesh.Vertices[i].Y* _scale, modelMesh.Vertices[i].Z* _scale),
                     new Vector3(modelMesh.Normals[i].X, modelMesh.Normals[i].Y, modelMesh.Normals[i].Z)));

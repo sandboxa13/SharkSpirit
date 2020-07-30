@@ -9,7 +9,6 @@ using SharkSpirit.Engine.Systems;
 using SharkSpirit.Engine.Systems.Input;
 using SharkSpirit.Engine.Systems.Scripts;
 using SharkSpirit.RenderFramework.DirectX;
-using SharkSpirit.RenderFramework.DirectX.Primitives;
 using SharkSpirit.RenderFramework.DirectX.SceneGraph;
 using SharpDX;
 using Configuration = SharkSpirit.Core.Configuration;
@@ -61,12 +60,10 @@ namespace SharkSpirit.Engine
             // draw
             RenderSystem.Draw();
             
-
             // tick fps 
             FpsSystem.Tick();
 
             BuildAndDrawSceneInfo(timer);
-
 
             RenderSystem.Flush();
         }
@@ -105,19 +102,9 @@ namespace SharkSpirit.Engine
             SelectCamera(camera.Entity);
         }
 
-        public void RemoveCamera(Entity entity)
-        {
-            var cameraToRemove = Cameras.FirstOrDefault(component => component.Id == entity.Id);
-
-            if (cameraToRemove == null)
-                return;
-
-            Cameras.Remove(cameraToRemove);
-        }
 
         public void AddEntity(Entity entity)
         {
-
             entity.TransformComponent.Position.Y = 10;
             entity.TransformComponent.Position.X = -5;
             Entities.Add(entity);
@@ -144,12 +131,6 @@ namespace SharkSpirit.Engine
                 Entities.Add(meshEntity);
                 RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, mesh);
             }
-        }
-
-        public void AddEntity(Entity entity, PrimitiveDrawableTypes primitiveDrawableType)
-        {
-            Entities.Add(entity);
-            RenderSystem.EntityRenderProcessor.AddRenderObject(entity, PrimitivesFactory.Create(RenderSystem.Device, Configuration, primitiveDrawableType));
         }
 
         public void RemoveEntity(Entity entity)
@@ -197,14 +178,14 @@ namespace SharkSpirit.Engine
             FpsSystem = new FpsSystem(60, Container);
             Container.AddService(FpsSystem);
 
-            //DiagnosticsSystem = new DiagnosticsSystem();
-            //Container.AddService(DiagnosticsSystem);
+            DiagnosticsSystem = new DiagnosticsSystem();
+            Container.AddService(DiagnosticsSystem);
 
         }
 
         private void BuildAndDrawSceneInfo(GameTimer timer)
         {
-            //var inf = DiagnosticsSystem.CollectInformation();
+            var inf = DiagnosticsSystem.CollectInformation(timer);
             _stringBuilder.Append(Environment.NewLine);
             _stringBuilder.Append("RENDER ENGINE INFO \n");
             _stringBuilder.Append($"ACTUAL SCENE SIZE: {Configuration.Width} X {Configuration.Height}\n");
@@ -215,8 +196,8 @@ namespace SharkSpirit.Engine
             _stringBuilder.Append($"MOUSE Y : {InputSystem.InputManager.MouseY()}\n");
             _stringBuilder.Append($"SCENE OBJECTS COUNT : {Entities.Count} \n");
             _stringBuilder.Append($"SCENE VERTEX COUNT : {VertexCount} \n");
-            //_stringBuilder.Append($"CPU USAGE = {inf.CpuUsage} %\n");
-            //_stringBuilder.Append($"MEMORY USAGE = {inf.MemoryUsage} MB \n");
+            _stringBuilder.Append($"CPU USAGE = {inf.CpuUsage} %\n");
+            _stringBuilder.Append($"MEMORY USAGE = {inf.MemoryUsage} MB \n");
 
             RenderSystem.DrawSceneInfo(_stringBuilder.ToString());
 
