@@ -6,7 +6,6 @@ namespace SharkSpirit.Engine.Systems
     public class DiagnosticsSystem : SystemBase
     {
         private readonly PerformanceCounter _processPerformanceCounter;
-        private readonly PerformanceCounter _ramCounter;
 
         private float _prevM;
         private float _prevP;
@@ -17,8 +16,6 @@ namespace SharkSpirit.Engine.Systems
         {
             _processPerformanceCounter =
                 new PerformanceCounter("Process", "% Processor Time", Process.GetCurrentProcess().ProcessName);
-
-            _ramCounter = new PerformanceCounter("Memory", "Available MBytes", true);
         }
 
         public SystemInformation CollectInformation(GameTimer timer)

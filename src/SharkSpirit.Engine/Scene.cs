@@ -19,8 +19,6 @@ namespace SharkSpirit.Engine
     {
         private readonly IContainer _container;
         private readonly StringBuilder _stringBuilder;
-        private Model _model;
-
 
         public Scene(IContainer container) : base(container, "Default scene")
         {
