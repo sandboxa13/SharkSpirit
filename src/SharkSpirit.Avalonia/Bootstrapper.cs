@@ -11,6 +11,8 @@ namespace SharkSpirit.Avalonia
     {
         public void Run()
         {
+        
+        
             // var container = new Container();
             //
             // var graphicsConfiguration = new Configuration
