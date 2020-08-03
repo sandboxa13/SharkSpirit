@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using SharkSpirit.Core.Utilities;
 
 namespace SharkSpirit.Engine
 {

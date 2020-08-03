@@ -9,7 +9,7 @@
     xmlns:region="clr-namespace:SharkSpirit.Modules.Core.Prism;assembly=SharkSpirit.Modules.Core"
     xmlns:regions="http://prismlibrary.com/"
     xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-    Title="MainWindow"
+    Title="Shark Spirit"
     d:DataContext="{d:DesignInstance main:MainWindowViewModel}"
     regions:ViewModelLocator.AutoWireViewModel="True"
     WindowStartupLocation="CenterScreen"
