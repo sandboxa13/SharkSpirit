@@ -145,14 +145,14 @@
                     </HierarchicalDataTemplate>
                 </TreeView.Resources>
             </TreeView>
-            <Button
-                Grid.Row="2"
-                Width="80"
-                Height="30"
-                HorizontalAlignment="Right"
-                Command="{Binding SceneGraphViewModel.AddEntityCommand}"
-                Content="Add entity"
-                Style="{StaticResource Button.Styles.Default}" />
+            <!-- <Button -->
+            <!--     Grid.Row="2" -->
+            <!--     Width="80" -->
+            <!--     Height="30" -->
+            <!--     HorizontalAlignment="Right" -->
+            <!--     Command="{Binding SceneGraphViewModel.AddEntityCommand}" -->
+            <!--     Content="Add entity" -->
+            <!--     Style="{StaticResource Button.Styles.Default}" /> -->
         </Grid>
 
 
