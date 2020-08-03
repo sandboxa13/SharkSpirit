@@ -27,7 +27,14 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
             });
 
             this.WhenAnyValue(model => model.IsVisible)
-                .Subscribe(entity.ChangeIsVisible);
+                .Subscribe(b =>
+                {
+                    entity.ChangeIsVisible(b);
+                    foreach (var sceneGraphEntityViewModel in Childs)
+                    {
+                        sceneGraphEntityViewModel.IsVisible = b;
+                    }
+                });
         }
 
         [Reactive] public ReactiveCommand<Unit, Unit> RemoveEntityCommand { get; set; }

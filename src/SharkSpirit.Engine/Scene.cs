@@ -109,13 +109,13 @@ namespace SharkSpirit.Engine
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity,
                 new PointLight(RenderSystem.Device, Configuration));
 
-            // var sponza = new Model(RenderSystem.Device, Configuration,
-            //     Path.Combine(Configuration.PathToModels, "Sponza\\sponza.obj"), 1.0f / 40.0f);
+            var sponza = new Model(RenderSystem.Device, Configuration,
+            Path.Combine(Configuration.PathToModels, "Sponza\\sponza.obj"), 1.0f / 40.0f);
             
             var nano = new Model(RenderSystem.Device, Configuration,
                 Path.Combine(Configuration.PathToModels, "nanosuit.obj"));
             
-            // Entities.Add(BuildTree(sponza.RootNode, new Entity(sponza.RootNode.Name)));
+            Entities.Add(BuildTree(sponza.RootNode, new Entity(sponza.RootNode.Name)));
             Entities.Add(BuildTree(nano.RootNode, new Entity(nano.RootNode.Name)));
         }
 
