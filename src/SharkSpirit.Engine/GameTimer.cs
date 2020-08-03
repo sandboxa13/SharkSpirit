@@ -6,63 +6,138 @@ namespace SharkSpirit.Engine
 {
     public class GameTimer
     {
-        private readonly long _startRawTime;
-        private long _lastRawTime;
+        #region Fields
 
+        private long startRawTime;
+        private long lastRawTime;
+        private int pauseCount;
+        private long pauseStartTime;
+        private long timePaused;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimerTick"/> class.
+        /// </summary>
         public GameTimer()
         {
-            _startRawTime = 0;
-            _lastRawTime = 0;
             Reset();
         }
-        
-        /// <summary>
-        /// Gets the start time when this timer was created.
-        /// </summary>
-        public TimeSpan StartTime { get; private set; }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
-        /// Gets the total time elasped since the last reset or when this timer was created.
+        /// Gets the total time elapsed since the last reset or when this timer was created.
         /// </summary>
         public TimeSpan TotalTime { get; private set; }
-        
+
+        /// <summary>
+        /// Gets the elapsed adjusted time since the previous call to <see cref="Tick"/> taking into account <see cref="Pause"/> time.
+        /// </summary>
+        public TimeSpan ElapsedAdjustedTime { get; private set; }
+
         /// <summary>
         /// Gets the elapsed time since the previous call to <see cref="Tick"/>.
         /// </summary>
         public TimeSpan ElapsedTime { get; private set; }
-        
-        
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is paused.
+        /// </summary>
+        /// <value><c>true</c> if this instance is paused; otherwise, <c>false</c>.</value>
+        public bool IsPaused
+        {
+            get
+            {
+                return pauseCount > 0;
+            }
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
+
         /// <summary>
         /// Resets this instance. <see cref="TotalTime"/> is set to zero.
         /// </summary>
         public void Reset()
         {
-            Reset(TimeSpan.Zero);
+            TotalTime = TimeSpan.Zero;
+            startRawTime = Stopwatch.GetTimestamp();
+            lastRawTime = startRawTime;
         }
 
         /// <summary>
-        /// Resets this instance. <see cref="TotalTime" /> is set to startTime.
+        /// Resumes this instance, only if a call to <see cref="Pause"/> has been already issued.
         /// </summary>
-        /// <param name="startTime">The start time.</param>
-        public void Reset(TimeSpan startTime)
+        public void Resume()
         {
-            StartTime = startTime;
-            TotalTime = startTime;
+            pauseCount--;
+            if (pauseCount <= 0)
+            {
+                timePaused += Stopwatch.GetTimestamp() - pauseStartTime;
+                pauseStartTime = 0L;
+            }
         }
-        
+
+        /// <summary>
+        /// Update the <see cref="TotalTime"/> and <see cref="ElapsedTime"/>,
+        /// </summary>
+        /// <remarks>
+        /// This method must be called on a regular basis at every *tick*.
+        /// </remarks>
         public void Tick()
         {
-            var rawTime = Stopwatch.GetTimestamp();
-            TotalTime = StartTime + new TimeSpan((long)Math.Round((double) TimeUtilities.ConvertRawToTimestamp(rawTime - _startRawTime).Ticks));
-
-            ElapsedTime = TimeUtilities.ConvertRawToTimestamp(rawTime - _lastRawTime);
-
-            if (ElapsedTime < TimeSpan.Zero)
+            // Don't tick when this instance is paused.
+            if (IsPaused)
             {
-                ElapsedTime = TimeSpan.Zero;
+                return;
             }
 
-            _lastRawTime = rawTime;
+            var rawTime = Stopwatch.GetTimestamp();
+            TotalTime = ConvertRawToTimestamp(rawTime - startRawTime);
+            ElapsedTime = ConvertRawToTimestamp(rawTime - lastRawTime);
+            ElapsedAdjustedTime = ConvertRawToTimestamp(rawTime - (lastRawTime + timePaused));
+
+            if (ElapsedAdjustedTime < TimeSpan.Zero)
+            {
+                ElapsedAdjustedTime = TimeSpan.Zero;
+            }
+
+            timePaused = 0;
+            lastRawTime = rawTime;
         }
+
+        /// <summary>
+        /// Pauses this instance.
+        /// </summary>
+        public void Pause()
+        {
+            pauseCount++;
+            if (pauseCount == 1)
+            {
+                pauseStartTime = Stopwatch.GetTimestamp();
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Converts a <see cref="Stopwatch" /> raw time to a <see cref="TimeSpan" />.
+        /// </summary>
+        /// <param name="delta">The delta.</param>
+        /// <returns>The <see cref="TimeSpan" />.</returns>
+        private static TimeSpan ConvertRawToTimestamp(long delta)
+        {
+            return TimeSpan.FromTicks((delta * 10000000) / Stopwatch.Frequency);
+        }
+
+        #endregion
     }
 }
