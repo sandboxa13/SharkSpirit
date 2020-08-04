@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using DryIoc;
 using Prism.Regions;
 using SharkSpirit.Core;
@@ -29,7 +30,9 @@ namespace SharkSpirit.Modules.Scene.ViewModels
 
             _game = _container.Resolve<Game>();
 
-            _game.Scene.AddEntity(new Entity(new Vector3(0, 0, 0), container, $"Point Light"));
+            Task.Run(async () => { await _game.Scene.AddEntityAsync(new Entity(new Vector3(0, 0, 0), container, $"Point Light"));});
+            Task.Run(async () => { await _game.Scene.AddEntityAsync("Sponza\\sponza.obj",1.0f / 40.0f);});
+            Task.Run(async () => { await _game.Scene.AddEntityAsync("nanosuit.obj", 1f);});
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

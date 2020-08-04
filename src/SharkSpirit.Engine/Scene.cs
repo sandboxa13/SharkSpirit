@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using SharkSpirit.Core;
 using SharkSpirit.Core.Collections;
 using SharkSpirit.Engine.Components;
@@ -101,30 +102,33 @@ namespace SharkSpirit.Engine
         }
 
 
-        public void AddEntity(Entity entity)
+        public Task AddEntityAsync(Entity entity)
         {
             entity.TransformComponent.Position.Y = 10;
             entity.TransformComponent.Position.X = -5;
             Entities.Add(entity);
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity,
                 new PointLight(RenderSystem.Device, Configuration));
+            
+            return Task.CompletedTask;
+        }
 
-            var sponza = new Model(RenderSystem.Device, Configuration,
-            Path.Combine(Configuration.PathToModels, "Sponza\\sponza.obj"), 1.0f / 40.0f);
+        public Task AddEntityAsync(string name, float scale)
+        {
+            var model = new Model(RenderSystem.Device, Configuration,
+                Path.Combine(Configuration.PathToModels, name), scale);
             
-            var nano = new Model(RenderSystem.Device, Configuration,
-                Path.Combine(Configuration.PathToModels, "nanosuit.obj"));
+            Entities.Add(BuildTree(model.RootNode, new Entity(model.RootNode.Name)));
             
-            Entities.Add(BuildTree(sponza.RootNode, new Entity(sponza.RootNode.Name)));
-            Entities.Add(BuildTree(nano.RootNode, new Entity(nano.RootNode.Name)));
+            return Task.CompletedTask;
         }
 
         private Entity BuildTree(Node node, Entity parent)
         {
             foreach (var nodeChild in node.Childs)
             {
-                var newParent = new Entity(nodeChild.Name); 
-                
+                var newParent = new Entity(nodeChild.Name);
+
                 BuildTree(nodeChild, newParent);
 
                 foreach (var nodeMesh in nodeChild.Meshes)
@@ -132,7 +136,7 @@ namespace SharkSpirit.Engine
                     VertexCount += nodeMesh.VertexCount;
                     var meshEntity = new Entity(nodeMesh.Name);
                     parent.Childs.Add(meshEntity);
-                    
+
                     RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, nodeMesh);
                 }
             }
@@ -225,7 +229,8 @@ namespace SharkSpirit.Engine
         RenderSystem RenderSystem { get; set; }
         FastCollection<Entity> Entities { get; }
         void RemoveEntity(Entity entity);
-        void AddEntity(Entity entity);
+        Task AddEntityAsync(Entity entity);
+        Task AddEntityAsync(string name, float scale);
         void SelectCamera(Entity entity);
         void AddCamera();
     }
