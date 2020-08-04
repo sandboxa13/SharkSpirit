@@ -6,7 +6,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 {
     public class Mesh : RenderObject
     {
-        public Mesh(IDevice device, IEnumerable<StageBase> stages, string name, int vertexCount) : base(device, MeshType.None)
+        public Mesh(IDevice device, IEnumerable<StageBase> stages, string name, int vertexCount) : base(device)
         {
             Initialize(stages);
 

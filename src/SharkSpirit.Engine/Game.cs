@@ -1,6 +1,5 @@
 using System;
 using SharkSpirit.Core;
-using SharpDX;
 
 namespace SharkSpirit.Engine
 {

@@ -19,7 +19,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
     {
         private readonly float _scale;
 
-        public Model(IDevice device, IConfiguration configuration, string modelName, float scale = 1f) : base(device, MeshType.None)
+        public Model(IDevice device, IConfiguration configuration, string modelName, float scale = 1f) : base(device)
         {
             _scale = scale;
             Meshes = new List<Mesh>();

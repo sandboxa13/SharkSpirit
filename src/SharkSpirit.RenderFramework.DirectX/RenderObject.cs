@@ -6,19 +6,17 @@ namespace SharkSpirit.RenderFramework.DirectX
 {
     public class RenderObject
     {
-        protected readonly IRenderPipeline _renderPipeline;
-        public RenderObject(IDevice device, MeshType meshType)
+        public RenderObject(IDevice device)
         {
             Device = device;
-            MeshType = meshType;
 
-            _renderPipeline = new RenderPipeline.RenderPipeline(device);
+            RenderPipeline = new RenderPipeline.RenderPipeline(device);
         }
 
         protected IndexBufferStage IndexBufferStage;
         protected IDevice Device;
         protected internal bool IsVisible;
-        protected MeshType MeshType;
+        protected readonly IRenderPipeline RenderPipeline;
 
         public void AddStage(StageBase stage)
         {
@@ -27,7 +25,7 @@ namespace SharkSpirit.RenderFramework.DirectX
                 IndexBufferStage = (IndexBufferStage) stage;
             }
             
-            _renderPipeline.AddStage(stage);
+            RenderPipeline.AddStage(stage);
         }
 
         public Matrix World { get; protected internal set; }
@@ -42,12 +40,13 @@ namespace SharkSpirit.RenderFramework.DirectX
         public virtual void UpdateView(Matrix view) => View = view;
         public virtual void UpdateColor(Vector4 color) => Color = color;
         public virtual void UpdatePosition(Vector3 position) => Position = position;
+        
         public virtual void Draw()
         {
             if (!IsVisible)
                 return;
 
-            _renderPipeline.Bind();
+            RenderPipeline.Bind();
 
             if (IndexBufferStage == null)
                 return;

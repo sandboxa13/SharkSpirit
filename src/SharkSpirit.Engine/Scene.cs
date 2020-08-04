@@ -106,35 +106,51 @@ namespace SharkSpirit.Engine
         {
             entity.TransformComponent.Position.Y = 10;
             entity.TransformComponent.Position.X = -5;
+            entity.TransformComponent.Position.Z = 3;
             Entities.Add(entity);
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity,
                 new PointLight(RenderSystem.Device, Configuration));
             
+            var rotationScript = new LightMoveScript();
+            rotationScript.AttachEntity(entity);
+            rotationScript.Initialize(Container);
+                
+            ScriptSystem.AddScript(rotationScript);
+            
             return Task.CompletedTask;
         }
 
-        public Task AddEntityAsync(string name, float scale)
+        public Task LoadModelAsync(string name, float scale, bool useRotationScript = false)
         {
             var model = new Model(RenderSystem.Device, Configuration,
                 Path.Combine(Configuration.PathToModels, name), scale);
             
-            Entities.Add(BuildTree(model.RootNode, new Entity(model.RootNode.Name)));
+            Entities.Add(BuildTree(model.RootNode, new Entity(model.RootNode.Name), useRotationScript));
             
             return Task.CompletedTask;
         }
 
-        private Entity BuildTree(Node node, Entity parent)
+        private Entity BuildTree(Node node, Entity parent, bool useRotationScript)
         {
             foreach (var nodeChild in node.Childs)
             {
                 var newParent = new Entity(nodeChild.Name);
 
-                BuildTree(nodeChild, newParent);
+                BuildTree(nodeChild, newParent, useRotationScript);
 
                 foreach (var nodeMesh in nodeChild.Meshes)
                 {
                     VertexCount += nodeMesh.VertexCount;
                     var meshEntity = new Entity(nodeMesh.Name);
+
+                    if (useRotationScript)
+                    {
+                        var rotationScript = new RotationScript();
+                        rotationScript.AttachEntity(meshEntity);
+                        rotationScript.Initialize(Container);
+                        ScriptSystem.AddScript(rotationScript);
+                    }
+                    
                     parent.Childs.Add(meshEntity);
 
                     RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, nodeMesh);
@@ -143,6 +159,7 @@ namespace SharkSpirit.Engine
 
             return parent;
         }
+        
 
         public void RemoveEntity(Entity entity)
         {
@@ -230,7 +247,7 @@ namespace SharkSpirit.Engine
         FastCollection<Entity> Entities { get; }
         void RemoveEntity(Entity entity);
         Task AddEntityAsync(Entity entity);
-        Task AddEntityAsync(string name, float scale);
+        Task LoadModelAsync(string name, float scale, bool useRotationScript);
         void SelectCamera(Entity entity);
         void AddCamera();
     }
