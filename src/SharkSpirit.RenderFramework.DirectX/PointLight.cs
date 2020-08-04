@@ -28,7 +28,7 @@ namespace SharkSpirit.RenderFramework.DirectX
             _pixelConstantBufferStage = new PixelConstantBufferStage<LightCBuf>(device);
         }
 
-        public override void ChangeIsVisible(bool isVisible) => PointLightModel.IsVisible = isVisible;
+        public override void ChangeIsVisible(bool isVisible) => ChangeIsVisibleInternal(isVisible);
         public override void UpdateWorld(Matrix world) => PointLightModel.World = world;
         public override void UpdateViewProjection(Matrix viewProjection) => PointLightModel.ViewProjection = viewProjection;
         public override void UpdateView(Matrix view) => PointLightModel.View = view;
@@ -37,6 +37,12 @@ namespace SharkSpirit.RenderFramework.DirectX
 
         public override void Draw()
         {
+            if (!IsVisible)
+            {
+                _pixelConstantBufferStage.BindCustom(_lightCBuf);
+                return;
+            }
+            
             PointLightModel.Draw();
 
             var lightPos = Vector3.Transform(PointLightModel.Position, PointLightModel.View);
@@ -47,6 +53,39 @@ namespace SharkSpirit.RenderFramework.DirectX
         }
 
         public RenderObject PointLightModel { get; set; }
+        
+        private void ChangeIsVisibleInternal(bool isVisible)
+        {
+            PointLightModel.IsVisible = isVisible;
+            IsVisible = isVisible;
+
+            if (!isVisible)
+            {
+                _lightCBuf = new LightCBuf
+                {
+                    LightPos = new Vector3(0, 0, 0),
+                    Ambient = new Vector3(0, 0, 0f),
+                    DiffuseColor = new Vector3(0.0f, 0.0f, 0.0f),
+                    DiffuseIntensity = 0.0f,
+                    AttConst = 0.0f,
+                    AttLin = 0.0f,
+                    AttQuad = 0.0f
+                };
+            }
+            else
+            {
+                _lightCBuf = new LightCBuf
+                {
+                    LightPos = new Vector3(0, 0, 0),
+                    Ambient = new Vector3(0.05f, 0.05f, 0.05f),
+                    DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f),
+                    DiffuseIntensity = 1.0f,
+                    AttConst = 1.0f,
+                    AttLin = 0.045f,
+                    AttQuad = 0.0075f
+                };
+            }
+        }
     }
 }
 

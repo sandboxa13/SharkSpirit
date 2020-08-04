@@ -51,7 +51,7 @@ namespace SharkSpirit.Modules.SceneInspector.Logic
         {
             var entity = new Entity(Vector3.Zero, _engineContainer, $"Cube № {GetSceneEntities().Count() + 1}");
 
-            _engineContainer.GetService<IScene>().AddEntity(entity);
+            _engineContainer.GetService<IScene>().AddEntityAsync(entity);
 
             _entityAddedSubject.OnNext(entity);
         }
