@@ -10,7 +10,7 @@ namespace SharkSpirit.RenderFramework.DirectX
     {
         private LightCBuf _lightCBuf;
         private readonly PixelConstantBufferStage<LightCBuf> _pixelConstantBufferStage;
-        public PointLight(IDevice device, IConfiguration configuration) : base(device, MeshType.None)
+        public PointLight(IDevice device, IConfiguration configuration) : base(device)
         {
             PointLightModel = PrimitivesFactory.CreateSolidSphere(device, configuration);
 

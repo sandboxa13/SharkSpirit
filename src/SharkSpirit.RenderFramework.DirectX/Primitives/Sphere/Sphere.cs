@@ -2,7 +2,7 @@
 {
     public class Sphere : RenderObject
     {
-        public Sphere(IDevice device) : base(device, MeshType.Sphere)
+        public Sphere(IDevice device) : base(device)
         {
         }
     }

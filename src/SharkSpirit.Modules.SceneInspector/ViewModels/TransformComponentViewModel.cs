@@ -23,9 +23,18 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
             this.WhenAnyValue(model => model.PositionY).Subscribe(value => { transformComponent.Position.Y = (float)value; });
             this.WhenAnyValue(model => model.PositionZ).Subscribe(value => { transformComponent.Position.Z = (float)value; });
 
-            this.WhenAnyValue(model => model.RotationX).Subscribe(value => { transformComponent.Rotation.X = (float)value; });
-            this.WhenAnyValue(model => model.RotationY).Subscribe(value => { transformComponent.Rotation.Y = (float)value; });
-            this.WhenAnyValue(model => model.RotationZ).Subscribe(value => { transformComponent.Rotation.Z = (float)value; });
+            this.WhenAnyValue(model => model.RotationX).Subscribe(value =>
+            {
+                transformComponent.Rotation.X = (float) ((float)value * (Math.PI/180));
+            });
+            this.WhenAnyValue(model => model.RotationY).Subscribe(value =>
+            {
+                transformComponent.Rotation.Y = (float) ((float)value * (Math.PI/180));
+            });
+            this.WhenAnyValue(model => model.RotationZ).Subscribe(value =>
+            {
+                transformComponent.Rotation.Z = (float) ((float)value * (Math.PI/180));
+            });
         }
 
         [Reactive] public double PositionX { get; set; }

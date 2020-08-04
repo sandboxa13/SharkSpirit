@@ -23,7 +23,7 @@ namespace SharkSpirit.RenderFramework.DirectX.Primitives
                     throw new ArgumentOutOfRangeException(nameof(primitiveDrawableTypes), primitiveDrawableTypes, null);
             }
 
-            return new RenderObject(device, MeshType.None);
+            return new RenderObject(device);
         }
 
         public static RenderObject CreateCube(IDevice device, IConfiguration configuration)
