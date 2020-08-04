@@ -113,7 +113,7 @@ namespace SharkSpirit.Engine
             return Task.CompletedTask;
         }
 
-        public Task AddEntityAsync(string name, float scale)
+        public Task LoadModelAsync(string name, float scale)
         {
             var model = new Model(RenderSystem.Device, Configuration,
                 Path.Combine(Configuration.PathToModels, name), scale);
@@ -230,7 +230,7 @@ namespace SharkSpirit.Engine
         FastCollection<Entity> Entities { get; }
         void RemoveEntity(Entity entity);
         Task AddEntityAsync(Entity entity);
-        Task AddEntityAsync(string name, float scale);
+        Task LoadModelAsync(string name, float scale);
         void SelectCamera(Entity entity);
         void AddCamera();
     }
