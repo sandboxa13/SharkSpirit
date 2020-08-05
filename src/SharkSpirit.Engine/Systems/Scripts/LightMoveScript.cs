@@ -28,7 +28,7 @@ namespace SharkSpirit.Engine.Systems.Scripts
             }
         }
 
-        public LightMoveScript(IContainer container, string name) : base(container, name)
+        public LightMoveScript(IContainer container, Entity entity) : base(container, entity)
         {
         }
     }

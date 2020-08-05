@@ -89,8 +89,8 @@ namespace SharkSpirit.Engine
 
             var camera =
                 new CameraComponent(new Entity(new Vector3(x, y, z), Container, $"Camera {Cameras.Count + 1}"));
-            var cameraMoveScript = new CameraMoveScript(Container, camera.Entity.Name, camera);
-            cameraMoveScript.AttachEntity(camera.Entity);
+            var cameraMoveScript = new CameraMoveScript(Container, camera.Entity, camera);
+            camera.Entity.AddComponent(cameraMoveScript);
 
 
             ScriptSystem.AddScript(cameraMoveScript);
@@ -110,9 +110,8 @@ namespace SharkSpirit.Engine
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity,
                 new PointLight(RenderSystem.Device, Configuration));
             
-            var rotationScript = new LightMoveScript(Container, entity.Name);
-            rotationScript.AttachEntity(entity);
-            // rotationScript.Initialize(Container);
+            var rotationScript = new LightMoveScript(Container, entity);
+            entity.AddComponent(rotationScript);
                 
             ScriptSystem.AddScript(rotationScript);
             
@@ -144,9 +143,8 @@ namespace SharkSpirit.Engine
 
                     if (useRotationScript)
                     {
-                        var rotationScript = new RotationScript(Container, meshEntity.Name);
-                        rotationScript.AttachEntity(meshEntity);
-                        // rotationScript.Initialize(Container);
+                        var rotationScript = new RotationScript(Container, meshEntity);
+                        meshEntity.AddComponent(rotationScript);
                         ScriptSystem.AddScript(rotationScript);
                     }
                     
@@ -183,9 +181,8 @@ namespace SharkSpirit.Engine
             SelectedCamera = new CameraComponent(new Entity(new Vector3(x, y, z), Container, "Camera 1"));
             SelectedCamera.Select();
 
-            var cameraMoveScript = new CameraMoveScript(Container, SelectedCamera.Entity.Name, SelectedCamera);
-            cameraMoveScript.AttachEntity(SelectedCamera.Entity);
-
+            var cameraMoveScript = new CameraMoveScript(Container, SelectedCamera.Entity, SelectedCamera);
+            SelectedCamera.Entity.AddComponent(cameraMoveScript);
             Cameras.Add(SelectedCamera);
 
             Container.AddService(Cameras);

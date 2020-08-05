@@ -28,7 +28,7 @@ namespace SharkSpirit.Engine.Systems.Scripts
             }
         }
 
-        public RotationScript(IContainer container, string name) : base(container, name)
+        public RotationScript(IContainer container, Entity entity) : base(container, entity)
         {
         }
     }
