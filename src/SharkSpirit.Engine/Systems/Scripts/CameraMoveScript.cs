@@ -1,10 +1,11 @@
 ﻿using System;
 using SharkSpirit.Core;
+using SharkSpirit.Engine.Components;
 using SharpDX.DirectInput;
 
 namespace SharkSpirit.Engine.Systems.Scripts
 {
-    public class CameraMoveScript : ScriptsBase
+    public class CameraMoveScript : ScriptBase
     {
         private float _lastMousePosX;
         private float _lastMousePosY;
@@ -66,5 +67,11 @@ namespace SharkSpirit.Engine.Systems.Scripts
         }
 
         private float ConvertToRadians(float fDegrees) { return (float)(fDegrees * (Math.PI / 180.0f)); }
+
+        public CameraMoveScript(IContainer container, string name, CameraComponent cameraComponent) : base(container, name,
+            cameraComponent)
+        {
+            
+        }
     }
 }

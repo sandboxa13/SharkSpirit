@@ -1,6 +1,8 @@
+using SharkSpirit.Core;
+
 namespace SharkSpirit.Engine.Systems.Scripts
 {
-    public class RotationScript : ScriptsBase
+    public class RotationScript : ScriptBase
     {
         private bool _hasEnd;
 
@@ -24,6 +26,10 @@ namespace SharkSpirit.Engine.Systems.Scripts
                     _hasEnd = false;
                 }
             }
+        }
+
+        public RotationScript(IContainer container, string name) : base(container, name)
+        {
         }
     }
 }

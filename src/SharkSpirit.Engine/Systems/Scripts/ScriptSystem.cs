@@ -4,19 +4,19 @@ namespace SharkSpirit.Engine.Systems.Scripts
 {
     public class ScriptSystem : SystemBase
     {
-        private readonly List<ScriptsBase> _scripts;
+        private readonly List<ScriptBase> _scripts;
 
         public ScriptSystem()
         {
-            _scripts = new List<ScriptsBase>();
+            _scripts = new List<ScriptBase>();
         }
 
-        public void AddScript(ScriptsBase script)
+        public void AddScript(ScriptBase script)
         {
             _scripts.Add(script);
         }
 
-        public void RemoveScript(ScriptsBase script)
+        public void RemoveScript(ScriptBase script)
         {
             _scripts.Remove(script);
         }
