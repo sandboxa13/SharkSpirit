@@ -7,7 +7,6 @@ namespace SharkSpirit.Engine.Systems.Scripts
     public abstract class ScriptBase : EntityComponent
     {
         public CameraComponent Camera { get; protected set; }
-        public Entity Entity { get; protected set; }
         public InputSystem Input { get; protected set; }
 
         public abstract void Execute();
