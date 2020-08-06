@@ -4,7 +4,7 @@ using SharkSpirit.Engine.Systems.Input;
 
 namespace SharkSpirit.Engine.Systems.Scripts
 {
-    public abstract class ScriptsBase
+    public abstract class ScriptBase : EntityComponent
     {
         public CameraComponent Camera { get; protected set; }
         public Entity Entity { get; protected set; }
@@ -12,19 +12,16 @@ namespace SharkSpirit.Engine.Systems.Scripts
 
         public abstract void Execute();
 
-        public void Initialize(IContainer container)
+        public ScriptBase(IContainer container, Entity entity) : base(entity)
         {
             Input = container.GetService<InputSystem>();
+            Entity = entity;
         }
-
-        public void Initialize(IContainer container, CameraComponent cameraComponent)
+        
+        public ScriptBase(IContainer container, Entity entity, CameraComponent cameraComponent) : base(entity)
         {
             Input = container.GetService<InputSystem>();
             Camera = cameraComponent;
-        }
-
-        public void AttachEntity(Entity entity)
-        {
             Entity = entity;
         }
     }

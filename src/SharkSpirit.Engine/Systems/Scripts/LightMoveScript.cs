@@ -1,6 +1,8 @@
+using SharkSpirit.Core;
+
 namespace SharkSpirit.Engine.Systems.Scripts
 {
-    public class LightMoveScript : ScriptsBase
+    public class LightMoveScript : ScriptBase
     {
         private bool _hasEnd;
 
@@ -24,6 +26,10 @@ namespace SharkSpirit.Engine.Systems.Scripts
                     _hasEnd = false;
                 }
             }
+        }
+
+        public LightMoveScript(IContainer container, Entity entity) : base(container, entity)
+        {
         }
     }
 }
