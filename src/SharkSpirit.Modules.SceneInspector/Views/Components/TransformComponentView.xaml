@@ -24,102 +24,116 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+    <Border Style="{StaticResource Component.OuterBorder.Style}">
+        <Grid>
+            <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!--  Position  -->
-        <Grid Grid.Row="0">
+        <Border Grid.Row="0" BorderThickness="0, 0, 0, 1" BorderBrush="#636363" Background="#3b3b3b">
+            <TextBlock Margin="10, 0, 0, 0" Text="{Binding Name}" Foreground="#828282" Style="{StaticResource TextBlock.Styles.Bold}"/>
+        </Border>
+        <Grid Margin="5" Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <TextBlock
-                Margin="0,10"
-                Style="{StaticResource TextBlock.Styles.Bold}"
-                Text="Position : " />
+            <!--  Position  -->
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,10"
+                    Style="{StaticResource TextBlock.Styles.Default}"
+                    Text="Position : " />
+
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TextBlock.Styles.Bold}" Text="X : " />
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="X : " />
 
-                    <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}"
-                                           Value="{Binding PositionX, Mode=TwoWay, StringFormat=N2}" />
+                        <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}"
+                                               Value="{Binding PositionX, Mode=TwoWay, StringFormat=N2}" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Row="2"
+                        Margin="10,0,0,0"
+                        Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Y : " />
+                        <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}"
+                                               Value="{Binding PositionY, Mode=TwoWay, StringFormat=N2}" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Row="3"
+                        Margin="10,0,0,0"
+                        Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Z : " />
+                        <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}"
+                                               Value="{Binding PositionZ, Mode=TwoWay, StringFormat=N2}" />
+                    </StackPanel>
                 </StackPanel>
 
-                <StackPanel
-                    Grid.Row="2"
-                    Margin="10,0,0,0"
-                    Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TextBlock.Styles.Bold}" Text="Y : " />
-                    <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}"
-                                           Value="{Binding PositionY, Mode=TwoWay, StringFormat=N2}" />
-                </StackPanel>
+            </Grid>
 
-                <StackPanel
-                    Grid.Row="3"
-                    Margin="10,0,0,0"
-                    Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TextBlock.Styles.Bold}" Text="Z : " />
-                    <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}"
-                                           Value="{Binding PositionZ, Mode=TwoWay, StringFormat=N2}" />
-                </StackPanel>
-            </StackPanel>
+            <!--  Rotation  -->
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
+                <TextBlock
+                    Margin="0,10"
+                    Style="{StaticResource TextBlock.Styles.Default}"
+                    Text="Rotation : " />
+
+
+                <StackPanel Grid.Row="1" Orientation="Vertical">
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10,5,0,0">
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="X : " />
+                        <Slider Value="{Binding RotationX, Mode=TwoWay}" Interval="1" Minimum="-180" Maximum="180"
+                                Width="200" IsSnapToTickEnabled="True" />
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}"
+                                   Text="{Binding RotationX, StringFormat=N}" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Row="2"
+                        Margin="10,5,0,0"
+                        Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Y : " />
+                        <Slider Value="{Binding RotationY, Mode=TwoWay}" Interval="1" Minimum="-180" Maximum="180"
+                                Width="200" IsSnapToTickEnabled="True" />
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}"
+                                   Text="{Binding RotationY, StringFormat=N}" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Row="3"
+                        Margin="10,5,0,0"
+                        Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Z : " />
+                        <Slider Value="{Binding RotationZ, Mode=TwoWay}" Interval="1" Minimum="-180" Maximum="180"
+                                Width="200" IsSnapToTickEnabled="True" />
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}"
+                                   Text="{Binding RotationZ, StringFormat=N}" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
         </Grid>
-
-        <!--  Rotation  -->
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-
-            <TextBlock
-                Margin="0,10"
-                Style="{StaticResource TextBlock.Styles.Bold}"
-                Text="Rotation : " />
-
-
-            <StackPanel Grid.Row="1" Orientation="Vertical">
-                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10,5,0,0">
-                    <TextBlock Style="{StaticResource TextBlock.Styles.Bold}" Text="X : " />
-                    <Slider Value="{Binding RotationX, Mode=TwoWay}" Interval="1" Minimum="-180" Maximum="180"
-                            Width="200" IsSnapToTickEnabled="True" />
-                    <TextBlock Style="{StaticResource TextBlock.Styles.Bold}"
-                               Text="{Binding RotationX, StringFormat=N}" />
-                </StackPanel>
-
-                <StackPanel
-                    Grid.Row="2"
-                    Margin="10,5,0,0"
-                    Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TextBlock.Styles.Bold}" Text="Y : " />
-                    <Slider Value="{Binding RotationY, Mode=TwoWay}" Interval="1" Minimum="-180" Maximum="180"
-                            Width="200" IsSnapToTickEnabled="True"/>
-                    <TextBlock Style="{StaticResource TextBlock.Styles.Bold}"
-                               Text="{Binding RotationY, StringFormat=N}" />
-                </StackPanel>
-
-                <StackPanel
-                    Grid.Row="3"
-                    Margin="10,5,0,0"
-                    Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TextBlock.Styles.Bold}" Text="Z : " />
-                    <Slider Value="{Binding RotationZ, Mode=TwoWay}" Interval="1" Minimum="-180" Maximum="180"
-                            Width="200" IsSnapToTickEnabled="True" />
-                    <TextBlock Style="{StaticResource TextBlock.Styles.Bold}"
-                               Text="{Binding RotationZ, StringFormat=N}" />
-                </StackPanel>
-            </StackPanel>
         </Grid>
-    </Grid>
+        
+    </Border>
+
 </UserControl>

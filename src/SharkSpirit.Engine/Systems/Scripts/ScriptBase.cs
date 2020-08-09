@@ -15,7 +15,7 @@ namespace SharkSpirit.Engine.Systems.Scripts
             IsEnabled = true;
         }
         
-        public ScriptBase(IContainer container, Entity entity, CameraComponent cameraComponent) : base(container, entity, ComponentType.Script)
+        public ScriptBase(IContainer container, Entity entity, CameraComponent cameraComponent) : base(container, entity, ComponentType.Script, "Camera Script component")
         {
             Input = container.GetService<InputSystem>();
             

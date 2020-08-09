@@ -71,8 +71,7 @@ namespace SharkSpirit.Engine.Systems.Scripts
 
         private float ConvertToRadians(float fDegrees) { return (float)(fDegrees * (Math.PI / 180.0f)); }
 
-        public CameraMoveScript(IContainer container, Entity entity, CameraComponent cameraComponent) : base(container, entity,
-            cameraComponent)
+        public CameraMoveScript(IContainer container, Entity entity, CameraComponent cameraComponent) : base(container, entity, cameraComponent)
         {
             
         }

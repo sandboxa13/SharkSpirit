@@ -6,6 +6,7 @@ using System.Windows;
 using SharkSpirit.Core;
 using SharkSpirit.Engine;
 using SharkSpirit.Engine.Components;
+using SharkSpirit.Modules.SceneInspector.ViewModels;
 using SharpDX;
 
 namespace SharkSpirit.Modules.SceneInspector.Logic
@@ -67,5 +68,7 @@ namespace SharkSpirit.Modules.SceneInspector.Logic
         {
             Container.GetService<IScene>().AddCamera();
         }
+
+        
     }
 }

@@ -152,6 +152,18 @@
     <Resource Include="Resources\Images\PinRestore_Black.png" />
     <Resource Include="Resources\Images\PinRestore_Dark.png" />
     <Resource Include="Resources\Images\VTabGroup.png" />
+    <Resource Include="Resources\Styles\Border.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Resources\Styles\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\Styles\TextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Resources\Styles\AvalonDockTheme.xaml">

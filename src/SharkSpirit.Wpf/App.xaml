@@ -6,9 +6,7 @@
     <dryIoc:PrismApplication.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/SharkSpirit.Modules.Core;component/Resources/Styles/NumericUpDown.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/SharkSpirit.Modules.Core;component/Resources/Styles/Buttons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/SharkSpirit.Modules.Core;component/Resources/Styles/TextBlocks.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/SharkSpirit.Modules.Core;component/Resources/Styles/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </dryIoc:PrismApplication.Resources>

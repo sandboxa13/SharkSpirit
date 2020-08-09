@@ -8,14 +8,33 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
-   <Grid>
-       <Grid.ColumnDefinitions>
-           <ColumnDefinition/>
-           <ColumnDefinition/>
-       </Grid.ColumnDefinitions>
-       
-       <TextBlock Grid.Column="0" Text="{Binding PathToScript}"/>
-       
-       <CheckBox Grid.Column="1" IsChecked="{Binding IsEnabled, Mode=TwoWay}"/>
-   </Grid>
+    <Border Style="{StaticResource Component.OuterBorder.Style}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" BorderThickness="0, 0, 0, 1" BorderBrush="#636363" Background="#3b3b3b">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay}" Margin="10, 0, 0, 0" VerticalAlignment="Center" />
+                    <TextBlock Margin="10, 0, 0, 0" Text="{Binding Name}" Foreground="#828282" Style="{StaticResource TextBlock.Styles.Bold}"/>
+                </StackPanel>
+            </Border>
+            
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10, 10">
+                    <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Script : " />
+                    <TextBox Style="{StaticResource TextBox.Styles.Default}" IsReadOnly="True"
+                             Text="{Binding PathToScript}" />
+                </StackPanel>
+            </Grid>
+          
+        </Grid>
+    </Border>
+
 </UserControl>
