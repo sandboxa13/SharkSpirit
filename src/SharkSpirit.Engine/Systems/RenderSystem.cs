@@ -8,7 +8,7 @@ namespace SharkSpirit.Engine.Systems
         internal RenderSystem(
             IDevice device, 
             IScene scene, 
-            IContainer container) : base(container, "Render system")
+            IContainer container) : base(container, "Render system", ComponentType.None)
         {
             Device = device;
             EntityRenderProcessor = new EntityRenderProcessor(scene);

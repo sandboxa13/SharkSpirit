@@ -79,20 +79,25 @@
     <Compile Include="Logic\SceneGraphManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SceneInspectorModule.cs" />
+    <Compile Include="ViewModels\Components\ComponentBaseViewModel.cs" />
+    <Compile Include="ViewModels\Components\ScriptComponentViewModel.cs" />
+    <Compile Include="ViewModels\Components\TransformComponentViewModel.cs" />
     <Compile Include="ViewModels\SceneGraphEntityViewModel.cs" />
     <Compile Include="ViewModels\SceneGraphViewModel.cs" />
     <Compile Include="ViewModels\SceneInspectorViewModel.cs" />
     <Compile Include="ViewModels\SceneItemInspectorViewModel.cs" />
     <Compile Include="ViewModels\SelectedSceneItemViewModel.cs" />
-    <Compile Include="ViewModels\TransformComponentViewModel.cs" />
+    <Compile Include="Views\Components\ScriptComponentView.xaml.cs">
+      <DependentUpon>ScriptComponentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Components\TransformComponentView.xaml.cs">
+      <DependentUpon>TransformComponentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SceneInspectorView.xaml.cs">
       <DependentUpon>SceneInspectorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SceneItemInspectorView.xaml.cs">
       <DependentUpon>SceneItemInspectorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TransformComponentView.xaml.cs">
-      <DependentUpon>TransformComponentView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -135,15 +140,19 @@
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Components\ScriptComponentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Components\TransformComponentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SceneInspectorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SceneItemInspectorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TransformComponentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

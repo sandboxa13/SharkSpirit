@@ -21,7 +21,7 @@ namespace SharkSpirit.Engine
         private readonly IContainer _container;
         private readonly StringBuilder _stringBuilder;
 
-        public Scene(IContainer container) : base(container, "Default scene")
+        public Scene(IContainer container) : base(container, "Default scene", ComponentType.None)
         {
             _container = container;
             _stringBuilder = new StringBuilder();
@@ -88,7 +88,7 @@ namespace SharkSpirit.Engine
             var z = 15.0f;
 
             var camera =
-                new CameraComponent(new Entity(new Vector3(x, y, z), Container, $"Camera {Cameras.Count + 1}"));
+                new CameraComponent(Container, new Entity(new Vector3(x, y, z), Container, $"Camera {Cameras.Count + 1}"));
             var cameraMoveScript = new CameraMoveScript(Container, camera.Entity, camera);
             camera.Entity.AddComponent(cameraMoveScript);
 
@@ -123,7 +123,7 @@ namespace SharkSpirit.Engine
             var model = new Model(RenderSystem.Device, Configuration,
                 Path.Combine(Configuration.PathToModels, name), scale);
             
-            Entities.Add(BuildTree(model.RootNode, new Entity(model.RootNode.Name), useRotationScript));
+            Entities.Add(BuildTree(model.RootNode, new Entity(Container, model.RootNode.Name), useRotationScript));
             
             return Task.CompletedTask;
         }
@@ -132,14 +132,14 @@ namespace SharkSpirit.Engine
         {
             foreach (var nodeChild in node.Childs)
             {
-                var newParent = new Entity(nodeChild.Name);
+                var newParent = new Entity(Container, nodeChild.Name);
 
                 BuildTree(nodeChild, newParent, useRotationScript);
 
                 foreach (var nodeMesh in nodeChild.Meshes)
                 {
                     VertexCount += nodeMesh.VertexCount;
-                    var meshEntity = new Entity(nodeMesh.Name);
+                    var meshEntity = new Entity(Container, nodeMesh.Name);
 
                     if (useRotationScript)
                     {
@@ -178,7 +178,7 @@ namespace SharkSpirit.Engine
             var y = (float) (0.2f * Math.PI);
             var z = 15.0f;
 
-            SelectedCamera = new CameraComponent(new Entity(new Vector3(x, y, z), Container, "Camera 1"));
+            SelectedCamera = new CameraComponent(Container, new Entity(new Vector3(x, y, z), Container, "Camera 1"));
             SelectedCamera.Select();
 
             var cameraMoveScript = new CameraMoveScript(Container, SelectedCamera.Entity, SelectedCamera);

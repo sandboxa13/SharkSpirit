@@ -18,7 +18,7 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
         public SceneGraphViewModel(SceneGraphManager sceneGraphManager)
         {
             _sceneGraphManager = sceneGraphManager;
-            SelectedItem = new SceneGraphEntityViewModel(Entity.Empty(), sceneGraphManager);
+            SelectedItem = new SceneGraphEntityViewModel(Entity.Empty(sceneGraphManager.Container), sceneGraphManager);
             SceneGraphEntityViewModels = new ObservableCollection<SceneGraphEntityViewModel>();
 
             AddEntityCommand = ReactiveCommand.Create(sceneGraphManager.AddEntity);

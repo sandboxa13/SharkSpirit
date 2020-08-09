@@ -12,6 +12,9 @@ namespace SharkSpirit.Engine.Systems.Scripts
 
         public override void Execute()
         {
+            if(!IsEnabled)
+                return;
+            
             if(!Camera.IsSelected)
                 return;
 

@@ -8,6 +8,9 @@ namespace SharkSpirit.Engine.Systems.Scripts
 
         public override void Execute()
         {
+            if(!IsEnabled)
+                return;
+            
             if (Entity.TransformComponent.Rotation.Y >= 180)
             {
                 _hasEnd = true;
@@ -28,7 +31,7 @@ namespace SharkSpirit.Engine.Systems.Scripts
             }
         }
 
-        public RotationScript(IContainer container, Entity entity) : base(container, entity)
+        public RotationScript(IContainer container, Entity entity) : base(container, entity, "Rotation script")
         {
         }
     }

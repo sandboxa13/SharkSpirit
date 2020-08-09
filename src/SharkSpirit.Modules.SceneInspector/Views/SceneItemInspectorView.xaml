@@ -6,9 +6,22 @@
     xmlns:local="clr-namespace:SharkSpirit.Modules.SceneInspector.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:components="clr-namespace:SharkSpirit.Modules.SceneInspector.Views.Components"
+    xmlns:components1="clr-namespace:SharkSpirit.Modules.SceneInspector.ViewModels.Components"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type components1:TransformComponentViewModel}">
+            <components:TransformComponentView/>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type components1:ScriptComponentViewModel}">
+            <components:ScriptComponentView/>
+        </DataTemplate>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -44,9 +57,9 @@
                     Text="{Binding SelectedSceneItemViewModel.Id}" />
             </StackPanel>
 
-            <local:TransformComponentView DataContext="{Binding SelectedSceneItemViewModel.TransformComponentViewModel}" />
-
-            <xctk:ColorPicker Background="#222222" Margin="0,10,0,0" SelectedColor="{Binding SelectedSceneItemViewModel.SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <ItemsControl ItemsSource="{Binding SelectedSceneItemViewModel.Components}">
+                
+            </ItemsControl>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -12,25 +12,25 @@ namespace SharkSpirit.Modules.SceneInspector.Logic
 {
     public class SceneGraphManager
     {
-        private readonly IContainer _engineContainer;
         private readonly ISubject<Entity> _entityChangedSubject;
         private readonly ISubject<Entity> _entityRemovedSubject;
         private readonly ISubject<Entity> _entityAddedSubject;
+        
         public SceneGraphManager(IContainer engineContainer)
         {
-            _engineContainer = engineContainer;
-            _entityChangedSubject = new BehaviorSubject<Entity>(Entity.Empty());
-            _entityRemovedSubject = new BehaviorSubject<Entity>(Entity.Empty());
-            _entityAddedSubject = new BehaviorSubject<Entity>(Entity.Empty());
+            Container = engineContainer;
+            _entityChangedSubject = new BehaviorSubject<Entity>(Entity.Empty(Container));
+            _entityRemovedSubject = new BehaviorSubject<Entity>(Entity.Empty(Container));
+            _entityAddedSubject = new BehaviorSubject<Entity>(Entity.Empty(Container));
         }
 
         public Entity SelectedEntity { get; private set; }
-
+        public IContainer Container { get; private set; }
         public IObservable<Entity> SelectedEntityChanged => _entityChangedSubject;
         public IObservable<Entity> EntityRemovedObservable => _entityRemovedSubject;
         public IObservable<Entity> EntityAddedObservable => _entityAddedSubject;
-        public IEnumerable<Entity> GetSceneEntities() => _engineContainer.GetService<IScene>().Entities;
-        public IEnumerable<CameraComponent> GetSceneCameras() => _engineContainer.GetService<IScene>().Cameras;
+        public IEnumerable<Entity> GetSceneEntities() => Container.GetService<IScene>().Entities;
+        public IEnumerable<CameraComponent> GetSceneCameras() => Container.GetService<IScene>().Cameras;
 
         public void ChangeSelectedItem(Entity entity)
         {
@@ -44,28 +44,28 @@ namespace SharkSpirit.Modules.SceneInspector.Logic
             _entityRemovedSubject.OnNext(entity);
             SelectedEntity = null;
 
-            _engineContainer.GetService<IScene>().RemoveEntity(entity);
+            Container.GetService<IScene>().RemoveEntity(entity);
         }
 
         public void AddEntity()
         {
-            var entity = new Entity(Vector3.Zero, _engineContainer, $"Cube № {GetSceneEntities().Count() + 1}");
+            var entity = new Entity(Vector3.Zero, Container, $"Cube № {GetSceneEntities().Count() + 1}");
 
-            _engineContainer.GetService<IScene>().AddEntityAsync(entity);
+            Container.GetService<IScene>().AddEntityAsync(entity);
 
             _entityAddedSubject.OnNext(entity);
         }
 
         public void SelectCamera(Entity entity)
         {
-            _engineContainer.GetService<IScene>().SelectCamera(entity);
+            Container.GetService<IScene>().SelectCamera(entity);
 
             _entityChangedSubject.OnNext(entity);
         }
 
         public void AddCamera()
         {
-            _engineContainer.GetService<IScene>().AddCamera();
+            Container.GetService<IScene>().AddCamera();
         }
     }
 }

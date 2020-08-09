@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Linq;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using SharkSpirit.Core;
 using SharkSpirit.Engine;
+using SharkSpirit.Engine.Components;
+using SharkSpirit.Engine.Systems.Scripts;
 using SharkSpirit.Modules.Core.ViewModels;
+using SharkSpirit.Modules.SceneInspector.ViewModels.Components;
 using SharpDX;
 using Color = System.Windows.Media.Color;
 
@@ -16,8 +22,10 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
             Name = entity.Name;
             Id = entity.Id;
 
-            TransformComponentViewModel = new TransformComponentViewModel(entity.TransformComponent);
-
+            Components = new ObservableCollection<ComponentBaseViewModel>();
+            Components.AddRange(
+                entity.Components.Select(EntityComponentViewModelsFactory.Create));
+            
             this.WhenAnyValue(model => model.SelectedColor)
                 .Skip(1)
                 .Subscribe(color =>
@@ -25,11 +33,28 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
                     entity.MaterialComponent.Color = new Vector4(color.ScR, color.ScG, color.ScB, color.ScA);
                 });
         }
+        
+        [Reactive] public ObservableCollection<ComponentBaseViewModel> Components { get; set; }
 
         [Reactive] public Guid Id { get; private set; }
 
-        [Reactive] public TransformComponentViewModel TransformComponentViewModel { get; private set; }
-
+        // todo move to material component
         [Reactive] public Color SelectedColor { get; set; }
+    }
+
+    public class EntityComponentViewModelsFactory
+    {
+        public static ComponentBaseViewModel Create(ComponentBase component)
+        {
+            switch (component.ComponentType)
+            {
+                case ComponentType.Transform : 
+                    return new TransformComponentViewModel(component as TransformComponent);
+                case ComponentType.Script : 
+                    return new ScriptComponentViewModel(component as ScriptBase);
+            }
+
+            return null;
+        }
     }
 }

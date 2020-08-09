@@ -1,10 +1,11 @@
+using SharkSpirit.Core;
 using SharpDX;
 
 namespace SharkSpirit.Engine.Components
 {
     public class TransformComponent : EntityComponent
     {
-        public TransformComponent(Entity entity) : base(entity)
+        public TransformComponent(IContainer container, Entity entity) : base(container, entity, ComponentType.Transform, "Transform component")
         {
         }
         

@@ -1,11 +1,12 @@
 using System;
+using SharkSpirit.Core;
 using SharpDX;
 
 namespace SharkSpirit.Engine.Components
 {
     public class CameraComponent : EntityComponent
     {
-        public CameraComponent(Entity entity) : base(entity)
+        public CameraComponent(IContainer container, Entity entity) : base(container, entity, ComponentType.Camera)
         {
         }
         

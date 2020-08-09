@@ -7,42 +7,51 @@ using SharpDX;
 
 namespace SharkSpirit.Engine
 {
-    public class Entity : ComponentBase
+    public class Entity 
     {
-        public Entity(Vector3 position, IContainer container, string name) : base(container, name)
+
+        public Entity(Vector3 position, IContainer container, string name) 
         {
             Components = new FastCollection<EntityComponent>();
             Id = Guid.NewGuid();
             Childs = new List<Entity>();
-
-            TransformComponent = new TransformComponent(this) { Position = position };
-            MaterialComponent = new MaterialComponent(this);
+            Name = name;
+            Container = container;
+            IsVisible = true;
+            
+            TransformComponent = new TransformComponent(container, this) { Position = position };
+            MaterialComponent = new MaterialComponent(container, this);
             
             AddComponent(TransformComponent);
             AddComponent(MaterialComponent);
         }
 
-        public Entity() : base(new Container(), "")
+        public Entity(IContainer container) 
         {
             Components = new FastCollection<EntityComponent>();
             Id = Guid.NewGuid();
             Childs = new List<Entity>();
-
-            TransformComponent = new TransformComponent(this) { Position = Vector3.Zero };
-            MaterialComponent = new MaterialComponent(this);
+            Container = container;
+            IsVisible = true;
+            
+            TransformComponent = new TransformComponent(container, this) { Position = Vector3.Zero };
+            MaterialComponent = new MaterialComponent(container,this);
             
             AddComponent(TransformComponent);
             AddComponent(MaterialComponent);
         }
         
-        public Entity(string name) : base(new Container(), name)
+        public Entity(IContainer container, string name) 
         {
+            Container = container;
             Components = new FastCollection<EntityComponent>();
             Id = Guid.NewGuid();
             Childs = new List<Entity>();
+            Name = name;
+            IsVisible = true;
             
-            TransformComponent = new TransformComponent(this) { Position = Vector3.Zero };
-            MaterialComponent = new MaterialComponent(this);
+            TransformComponent = new TransformComponent(container, this) { Position = Vector3.Zero };
+            MaterialComponent = new MaterialComponent(container,this);
             
             AddComponent(TransformComponent);
             AddComponent(MaterialComponent);
@@ -53,7 +62,13 @@ namespace SharkSpirit.Engine
         public TransformComponent TransformComponent;
         public MaterialComponent MaterialComponent;
         public List<Entity> Childs { get; set; }
+        public IContainer Container { get; }
         
+        //todo move to component
+        public bool IsVisible { get; set; }
+        
+        public string Name { get; set; }
+
         public void AddComponent(EntityComponent entityComponent)
         {
             Components.Add(entityComponent);
@@ -64,9 +79,14 @@ namespace SharkSpirit.Engine
             Components.Remove(entityComponent);
         }
 
-        public static Entity Empty()
+        public static Entity Empty(IContainer container)
         {
-            return new Entity();
+            return new Entity(container);
+        }
+
+        public void ChangeIsVisible(bool isVisible)
+        {
+            IsVisible = isVisible;
         }
     }
 }
