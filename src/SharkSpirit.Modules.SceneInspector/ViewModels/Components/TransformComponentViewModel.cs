@@ -9,9 +9,9 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels.Components
     {
         public TransformComponentViewModel(TransformComponent transformComponent) : base(transformComponent)
         {
-            PositionX = transformComponent.Position.X;
-            PositionY = transformComponent.Position.Y;
-            PositionZ = transformComponent.Position.Z;
+            PositionX = Math.Round(transformComponent.Position.X, 2);
+            PositionY = Math.Round(transformComponent.Position.Y, 2);
+            PositionZ = Math.Round(transformComponent.Position.Z, 2);
 
             RotationX = transformComponent.Rotation.X;
             RotationY = transformComponent.Rotation.Y;

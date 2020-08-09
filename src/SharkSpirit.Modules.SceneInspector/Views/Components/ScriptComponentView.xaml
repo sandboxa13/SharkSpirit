@@ -18,7 +18,7 @@
             <Border Grid.Row="0" BorderThickness="0, 0, 0, 1" BorderBrush="#636363" Background="#3b3b3b">
                 <StackPanel Orientation="Horizontal">
                     <CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay}" Margin="10, 0, 0, 0" VerticalAlignment="Center" />
-                    <TextBlock Margin="10, 0, 0, 0" Text="{Binding Name}" Foreground="#828282" Style="{StaticResource TextBlock.Styles.Bold}"/>
+                    <TextBlock Margin="10, 0, 0, 0" Text="{Binding Name}" Style="{StaticResource TextBlock.Styles.Bold}"/>
                 </StackPanel>
             </Border>
             
@@ -28,13 +28,11 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10, 10">
-                    <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Script : " />
+                    <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Script name : " />
                     <TextBox Style="{StaticResource TextBox.Styles.Default}" IsReadOnly="True"
                              Text="{Binding PathToScript}" />
                 </StackPanel>
             </Grid>
-          
         </Grid>
     </Border>
-
 </UserControl>

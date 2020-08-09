@@ -15,9 +15,10 @@ namespace SharkSpirit.Engine.Systems.Scripts
             IsEnabled = true;
         }
         
-        public ScriptBase(IContainer container, Entity entity, CameraComponent cameraComponent) : base(container, entity, ComponentType.Script, "Camera Script component")
+        public ScriptBase(IContainer container, Entity entity, CameraComponent cameraComponent, string path) : base(container, entity, ComponentType.Script, "Script component")
         {
             Input = container.GetService<InputSystem>();
+            PathToScript = path;
             
             //todo get current camera from scene
             Camera = cameraComponent;

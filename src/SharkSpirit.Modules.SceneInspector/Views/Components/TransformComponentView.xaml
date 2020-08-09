@@ -32,7 +32,7 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0" BorderThickness="0, 0, 0, 1" BorderBrush="#636363" Background="#3b3b3b">
-            <TextBlock Margin="10, 0, 0, 0" Text="{Binding Name}" Foreground="#828282" Style="{StaticResource TextBlock.Styles.Bold}"/>
+            <TextBlock Margin="10, 0, 0, 0" Text="{Binding Name}" Style="{StaticResource TextBlock.Styles.Bold}"/>
         </Border>
         <Grid Margin="5" Grid.Row="1">
             <Grid.RowDefinitions>
@@ -60,7 +60,7 @@
                         <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="X : " />
 
                         <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}"
-                                               Value="{Binding PositionX, Mode=TwoWay, StringFormat=N2}" />
+                                               Value="{Binding PositionX, Mode=TwoWay, StringFormat='N2'}" />
                     </StackPanel>
 
                     <StackPanel
@@ -69,7 +69,7 @@
                         Orientation="Horizontal">
                         <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Y : " />
                         <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}"
-                                               Value="{Binding PositionY, Mode=TwoWay, StringFormat=N2}" />
+                                               Value="{Binding PositionY, Mode=TwoWay, StringFormat='N2'}" />
                     </StackPanel>
 
                     <StackPanel
@@ -78,7 +78,7 @@
                         Orientation="Horizontal">
                         <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Z : " />
                         <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}"
-                                               Value="{Binding PositionZ, Mode=TwoWay, StringFormat=N2}" />
+                                               Value="{Binding PositionZ, Mode=TwoWay, StringFormat='N2'}" />
                     </StackPanel>
                 </StackPanel>
 
