@@ -32,11 +32,6 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
         public override void Draw()
         {
-            foreach (var node in RootNode.Childs)
-            {
-                node.Transform(World);
-            }
-            
             foreach (var mesh in Meshes)
             {
                 mesh.Draw();

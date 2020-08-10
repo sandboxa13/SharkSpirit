@@ -30,18 +30,6 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             }
         }
         
-        public void Transform(Matrix accumulatedPosition)
-        {
-            foreach (var mesh in Meshes)
-            {
-                mesh.Transform(mesh.World * accumulatedPosition);
-            }
-
-            foreach (var child in Childs)
-            {
-                child.Transform(accumulatedPosition);
-            }
-        }
 
         public void AddChild(Node child)
         {

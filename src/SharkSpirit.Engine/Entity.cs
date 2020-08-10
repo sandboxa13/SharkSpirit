@@ -88,5 +88,16 @@ namespace SharkSpirit.Engine
         {
             IsVisible = isVisible;
         }
+
+        public void ApplyTransform(TransformComponent accumulatedTransformComponent)
+        {
+            TransformComponent.Position = accumulatedTransformComponent.Position;
+            TransformComponent.Rotation = accumulatedTransformComponent.Rotation;
+            
+            foreach (var entity in Childs)
+            {
+                entity.ApplyTransform(TransformComponent);
+            }
+        }
     }
 }

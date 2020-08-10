@@ -29,10 +29,5 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
                 AddStage(stageBase);
             }
         }
-
-        public void Transform(Matrix position)
-        {
-            UpdateWorld(position);
-        }
     }
 }

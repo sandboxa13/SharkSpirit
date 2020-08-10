@@ -132,8 +132,8 @@ namespace SharkSpirit.Engine
                 ScriptSystem.AddScript(rotationScript);
             }
             
-            Entities.Add(BuildTree(model.RootNode, parent));
             RenderSystem.EntityRenderProcessor.AddRenderObject(parent, model);
+            Entities.Add(BuildTree(model.RootNode, parent));
 
             return Task.CompletedTask;
         }

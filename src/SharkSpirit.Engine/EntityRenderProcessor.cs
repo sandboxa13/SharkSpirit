@@ -22,17 +22,24 @@ namespace SharkSpirit.Engine
         {
             foreach (var renderObject in RenderObjects)
             {
-                Update( renderObject.Key, renderObject.Value);
+                Update(renderObject.Key);
+                Update(renderObject.Key, renderObject.Value);
             }
             
             DrawObjects();
         }
+
 
         public void RemoveRenderObject(Entity entity)
         {
             RenderObjects.Remove(entity);
         }
 
+        private void Update(Entity entity)
+        {
+            entity.ApplyTransform(entity.TransformComponent);
+        }
+        
         private void Update(Entity entity, RenderObject renderObject)
         {
             renderObject.ChangeIsVisible(entity.IsVisible);
@@ -47,9 +54,6 @@ namespace SharkSpirit.Engine
         {
             foreach (var renderObject in RenderObjects)
             {
-                if(renderObject.Value.IsDrawCallOverriden)
-                    continue;
-                
                 renderObject.Value.Draw();
             }
         }
