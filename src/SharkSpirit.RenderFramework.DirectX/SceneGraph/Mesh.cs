@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using SharkSpirit.Graphics;
 using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages;
+using SharpDX;
 
 namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 {
@@ -12,7 +13,8 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
             Name = name;
             VertexCount = vertexCount;
-            
+            IsDrawCallOverriden = true;
+
             AddStage(new TransformConstantBufferStage<TransformBuffer>(device, this));
         }
         
@@ -20,18 +22,17 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
         
         public int VertexCount { get; set; }
 
-        // public override void Draw()
-        // {
-        //     //todo transform
-        //     base.Draw();
-        // }
-
         private void Initialize(IEnumerable<StageBase> stages)
         {
             foreach (var stageBase in stages)
             {
                 AddStage(stageBase);
             }
+        }
+
+        public void Transform(Matrix position)
+        {
+            UpdateWorld(position);
         }
     }
 }

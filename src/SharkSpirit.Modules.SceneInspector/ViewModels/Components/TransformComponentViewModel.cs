@@ -37,29 +37,30 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels.Components
             PositionY = Math.Round(_transformComponent.Position.Y, 2);
             PositionZ = Math.Round(_transformComponent.Position.Z, 2);
 
-            RotationX = _transformComponent.Rotation.X;
-            RotationY = _transformComponent.Rotation.Y;
-            RotationZ = _transformComponent.Rotation.Z;
+            RotationX = _transformComponent.Rotation.X / (Math.PI/180);
+            RotationY = _transformComponent.Rotation.Y / (Math.PI/180);
+            RotationZ = _transformComponent.Rotation.Z / (Math.PI/180);
         }
 
         private void InitializeSubscriptions()
         {
-            this.WhenAnyValue(model => model.PositionX).Subscribe(value => { _transformComponent.Position.X = (float) value; });
-            this.WhenAnyValue(model => model.PositionY).Subscribe(value => { _transformComponent.Position.Y = (float)value; });
-            this.WhenAnyValue(model => model.PositionZ).Subscribe(value => { _transformComponent.Position.Z = (float)value; });
+            this.WhenAnyValue(model => model.PositionX)
+                .Subscribe(value => { _transformComponent.Position.X = (float) value; });
+            
+            this.WhenAnyValue(model => model.PositionY)
+                .Subscribe(value => { _transformComponent.Position.Y = (float)value; });
+            
+            this.WhenAnyValue(model => model.PositionZ)
+                .Subscribe(value => { _transformComponent.Position.Z = (float)value; });
 
-            this.WhenAnyValue(model => model.RotationX).Subscribe(value =>
-            {
-                _transformComponent.Rotation.X = (float) ((float)value * (Math.PI/180));
-            });
-            this.WhenAnyValue(model => model.RotationY).Subscribe(value =>
-            {
-                _transformComponent.Rotation.Y = (float) ((float)value * (Math.PI/180));
-            });
-            this.WhenAnyValue(model => model.RotationZ).Subscribe(value =>
-            {
-                _transformComponent.Rotation.Z = (float) ((float)value * (Math.PI/180));
-            });
+            this.WhenAnyValue(model => model.RotationX)
+                .Subscribe(value => { _transformComponent.Rotation.X = (float) ((float)value * (Math.PI/180)); });
+            
+            this.WhenAnyValue(model => model.RotationY)
+                .Subscribe(value => { _transformComponent.Rotation.Y = (float) ((float)value * (Math.PI/180)); });
+            
+            this.WhenAnyValue(model => model.RotationZ)
+                .Subscribe(value => { _transformComponent.Rotation.Z = (float) ((float)value * (Math.PI/180)); });
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SharpDX;
 
 namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 {
@@ -26,6 +27,19 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             foreach (var child in Childs)
             {
                 child.Draw();
+            }
+        }
+        
+        public void Transform(Matrix accumulatedPosition)
+        {
+            foreach (var mesh in Meshes)
+            {
+                mesh.Transform(mesh.World * accumulatedPosition);
+            }
+
+            foreach (var child in Childs)
+            {
+                child.Transform(accumulatedPosition);
             }
         }
 

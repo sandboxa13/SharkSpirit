@@ -122,31 +122,34 @@ namespace SharkSpirit.Engine
         {
             var model = new Model(RenderSystem.Device, Configuration,
                 Path.Combine(Configuration.PathToModels, name), scale);
+
+            var parent = new Entity(Container, model.RootNode.Name);
             
-            Entities.Add(BuildTree(model.RootNode, new Entity(Container, model.RootNode.Name), useRotationScript));
+            if (useRotationScript)
+            {
+                var rotationScript = new RotationScript(Container, parent);
+                parent.AddComponent(rotationScript);
+                ScriptSystem.AddScript(rotationScript);
+            }
             
+            Entities.Add(BuildTree(model.RootNode, parent));
+            RenderSystem.EntityRenderProcessor.AddRenderObject(parent, model);
+
             return Task.CompletedTask;
         }
 
-        private Entity BuildTree(Node node, Entity parent, bool useRotationScript)
+        private Entity BuildTree(Node node, Entity parent)
         {
             foreach (var nodeChild in node.Childs)
             {
                 var newParent = new Entity(Container, nodeChild.Name);
 
-                BuildTree(nodeChild, newParent, useRotationScript);
+                BuildTree(nodeChild, newParent);
 
                 foreach (var nodeMesh in nodeChild.Meshes)
                 {
                     VertexCount += nodeMesh.VertexCount;
                     var meshEntity = new Entity(Container, nodeMesh.Name);
-
-                    if (useRotationScript)
-                    {
-                        var rotationScript = new RotationScript(Container, meshEntity);
-                        meshEntity.AddComponent(rotationScript);
-                        ScriptSystem.AddScript(rotationScript);
-                    }
                     
                     parent.Childs.Add(meshEntity);
 
