@@ -1,3 +1,4 @@
+using System;
 using SharkSpirit.Core;
 
 namespace SharkSpirit.Engine.Systems.Scripts
@@ -10,21 +11,23 @@ namespace SharkSpirit.Engine.Systems.Scripts
         {
             if(!IsEnabled)
                 return;
+
+            var rotationY = Entity.TransformComponent.Rotation.Y / (Math.PI/180);
             
-            if (Entity.TransformComponent.Rotation.Y >= 180)
+            if (rotationY >= 180)
             {
                 _hasEnd = true;
             }
             
-            if (Entity.TransformComponent.Rotation.Y < 180 && !_hasEnd)
+            if (rotationY < 180 && !_hasEnd)
             {
-                Entity.TransformComponent.Rotation.Y += 0.01f ;
+                Entity.TransformComponent.Rotation.Y  += 0.01f ;
             }
-            else if ((Entity.TransformComponent.Rotation.Y < -180 || Entity.TransformComponent.Position.Y > -180) && _hasEnd)
+            else if ((rotationY < -180 || Entity.TransformComponent.Position.Y / (Math.PI/180) > -180) && _hasEnd)
             {
                 Entity.TransformComponent.Rotation.Y -= 0.01f;
                 
-                if (Entity.TransformComponent.Rotation.Y <= -180)
+                if (rotationY <= -180)
                 {
                     _hasEnd = false;
                 }

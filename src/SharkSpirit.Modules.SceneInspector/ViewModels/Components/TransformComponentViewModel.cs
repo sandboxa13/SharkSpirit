@@ -37,9 +37,9 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels.Components
             PositionY = Math.Round(_transformComponent.Position.Y, 2);
             PositionZ = Math.Round(_transformComponent.Position.Z, 2);
 
-            RotationX = _transformComponent.Rotation.X;
-            RotationY = _transformComponent.Rotation.Y;
-            RotationZ = _transformComponent.Rotation.Z;
+            RotationX = _transformComponent.Rotation.X / (Math.PI/180);
+            RotationY = _transformComponent.Rotation.Y / (Math.PI/180);
+            RotationZ = _transformComponent.Rotation.Z / (Math.PI/180);
         }
 
         private void InitializeSubscriptions()
