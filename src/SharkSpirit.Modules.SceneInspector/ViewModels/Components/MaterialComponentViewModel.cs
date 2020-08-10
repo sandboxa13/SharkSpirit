@@ -12,7 +12,7 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels.Components
         public MaterialComponentViewModel(MaterialComponent materialComponent) : base(materialComponent)
         {
             SelectedColor = Color.FromArgb((byte) materialComponent.Color.W, (byte) materialComponent.Color.X, (byte) materialComponent.Color.Y, (byte) materialComponent.Color.Z);
-            SpecularIntensity = materialComponent.SpecularIntensity;
+            SpecularIntensity = materialComponent.SpecularIntensity * 10;
             SpecularPower = materialComponent.SpecularPower;
             
             this.WhenAnyValue(model => model.SelectedColor).Subscribe(color =>
@@ -25,7 +25,7 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels.Components
             });
             this.WhenAnyValue(model => model.SpecularPower).Subscribe(specPower =>
             {
-                materialComponent.SpecularPower = specPower;
+                materialComponent.SpecularPower = specPower ;
             });
         }
         
