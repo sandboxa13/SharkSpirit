@@ -8,6 +8,9 @@ namespace SharkSpirit.Engine.Systems.Scripts
 
         public override void Execute()
         {
+            if(!IsEnabled)
+                return;
+            
             if (Entity.TransformComponent.Position.Y >= 15)
             {
                 _hasEnd = true;
@@ -28,7 +31,7 @@ namespace SharkSpirit.Engine.Systems.Scripts
             }
         }
 
-        public LightMoveScript(IContainer container, Entity entity) : base(container, entity)
+        public LightMoveScript(IContainer container, Entity entity) : base(container, entity, "Light Move script")
         {
         }
     }

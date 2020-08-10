@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace SharkSpirit.Modules.SceneInspector.Views
+﻿namespace SharkSpirit.Modules.SceneInspector.Views.Components
 {
     /// <summary>
     /// Interaction logic for TransformComponentView.xaml
