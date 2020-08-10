@@ -37,10 +37,10 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
                 node.Transform(World);
             }
             
-            // foreach (var mesh in Meshes)
-            // {
-            //     mesh.Draw();
-            // }
+            foreach (var mesh in Meshes)
+            {
+                mesh.Draw();
+            }
 
             RootNode.Draw();
         }

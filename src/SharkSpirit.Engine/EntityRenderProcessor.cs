@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using SharkSpirit.RenderFramework.DirectX;
-using SharkSpirit.RenderFramework.DirectX.SceneGraph;
 
 namespace SharkSpirit.Engine
 {
@@ -48,6 +47,9 @@ namespace SharkSpirit.Engine
         {
             foreach (var renderObject in RenderObjects)
             {
+                if(renderObject.Value.IsDrawCallOverriden)
+                    continue;
+                
                 renderObject.Value.Draw();
             }
         }

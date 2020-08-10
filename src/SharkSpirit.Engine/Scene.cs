@@ -153,7 +153,7 @@ namespace SharkSpirit.Engine
                     
                     parent.Childs.Add(meshEntity);
 
-                    // RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, nodeMesh);
+                    RenderSystem.EntityRenderProcessor.AddRenderObject(meshEntity, nodeMesh);
                 }
             }
 
