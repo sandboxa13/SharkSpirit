@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using SharkSpirit.RenderFramework.DirectX;
-using SharpDX;
 
 namespace SharkSpirit.Engine
 {

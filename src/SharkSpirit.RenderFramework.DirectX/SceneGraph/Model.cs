@@ -86,7 +86,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             for (var i = 0; i < modelMesh.VertexCount; i++)
             {
                 vertices.Add(new Vertex(
-                    new Vector3(modelMesh.Vertices[i].X * _scale, modelMesh.Vertices[i].Y* _scale, modelMesh.Vertices[i].Z* _scale),
+                    new Vector3(modelMesh.Vertices[i].X * _scale, modelMesh.Vertices[i].Y * _scale, modelMesh.Vertices[i].Z * _scale),
                     new Vector3(modelMesh.Normals[i].X, modelMesh.Normals[i].Y, modelMesh.Normals[i].Z)));
             }
 
@@ -122,7 +122,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
             var ocb = new ObjectCBuf
             {
-                MaterialColor = new Vector3(1, 1, 1),
+                MaterialColor = new Vector3(1, 0, 0),
                 SpecularPower = 30.0f,
                 SpecularIntensity = 0.6f
             };

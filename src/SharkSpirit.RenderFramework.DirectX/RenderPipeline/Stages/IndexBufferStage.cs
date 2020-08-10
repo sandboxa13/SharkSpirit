@@ -1,4 +1,3 @@
-using System.Linq;
 using SharkSpirit.RenderFramework.DirectX.RenderPipeline.Factories;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
@@ -14,9 +13,9 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
             IDevice device,
             ushort[] indices) : base(device)
         {
-            var desc = IndexBufferDescriptionFactory.CreateIndexBufferDescription(indices.Count());
+            var desc = IndexBufferDescriptionFactory.CreateIndexBufferDescription(indices.Length);
 
-            _count = indices.Count();
+            _count = indices.Length;
 
             IsIndexBuffer = true;
 
