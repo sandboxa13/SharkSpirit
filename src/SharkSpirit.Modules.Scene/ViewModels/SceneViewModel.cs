@@ -30,7 +30,7 @@ namespace SharkSpirit.Modules.Scene.ViewModels
             _game = _container.Resolve<Game>();
 
             Task.Run(async () => { await _game.Scene.AddEntityAsync(new Entity(new Vector3(0, 0, 0), container, $"Point Light"));});
-            // Task.Run(async () => { await _game.Scene.LoadModelAsync("Sponza\\sponza.obj",1.0f / 40.0f);});
+            Task.Run(async () => { await _game.Scene.LoadModelAsync("Sponza\\sponza.obj",1.0f / 40.0f);});
             Task.Run(async () => { await _game.Scene.LoadModelAsync("nanosuit.obj", 1f, true);});
         }
 
