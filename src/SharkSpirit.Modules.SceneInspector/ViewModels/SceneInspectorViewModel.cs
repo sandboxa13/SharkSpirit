@@ -47,7 +47,6 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
         
         private void Refresh()
         {
-            SceneGraphViewModel.Refresh();
             SceneItemInspectorViewModel.Refresh();
         }
     }
