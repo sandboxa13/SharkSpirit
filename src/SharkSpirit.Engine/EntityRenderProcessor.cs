@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SharkSpirit.RenderFramework.DirectX;
+using SharkSpirit.RenderFramework.DirectX.SceneGraph;
 
 namespace SharkSpirit.Engine
 {
@@ -17,10 +18,10 @@ namespace SharkSpirit.Engine
         {
             RenderObjects.Add(entity, renderObject);
         }
-
+        
         public void Draw()
         {
-            foreach (var  renderObject in RenderObjects)
+            foreach (var renderObject in RenderObjects)
             {
                 Update( renderObject.Key, renderObject.Value);
             }
@@ -45,7 +46,7 @@ namespace SharkSpirit.Engine
         
         private void DrawObjects()
         {
-            foreach (var  renderObject in RenderObjects)
+            foreach (var renderObject in RenderObjects)
             {
                 renderObject.Value.Draw();
             }
