@@ -18,6 +18,10 @@
         <DataTemplate DataType="{x:Type components1:ScriptComponentViewModel}">
             <components:ScriptComponentView/>
         </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type components1:MaterialComponentViewModel}">
+            <components:MaterialComponentView/>
+        </DataTemplate>
     </UserControl.Resources>
     
     <Grid>

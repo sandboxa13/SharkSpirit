@@ -13,7 +13,6 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
             Name = name;
             VertexCount = vertexCount;
-            IsDrawCallOverriden = true;
 
             AddStage(new TransformConstantBufferStage<TransformBuffer>(device, this));
         }

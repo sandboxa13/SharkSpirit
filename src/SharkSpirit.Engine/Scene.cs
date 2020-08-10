@@ -83,9 +83,9 @@ namespace SharkSpirit.Engine
 
         public void AddCamera()
         {
-            var x = (float) (1.5f * Math.PI);
-            var y = (float) (0.2f * Math.PI);
-            var z = 15.0f;
+            var x = 3.2f;
+            var y = 0.68f;
+            var z = 30.3f;
 
             var camera =
                 new CameraComponent(Container, new Entity(new Vector3(x, y, z), Container, $"Camera {Cameras.Count + 1}"));

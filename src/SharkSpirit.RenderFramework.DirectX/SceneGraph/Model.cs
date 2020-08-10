@@ -127,7 +127,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
                 SpecularIntensity = 0.6f
             };
 
-            stages.Add(new PixelConstantBufferStage<ObjectCBuf>(device, ocb, 1));
+            stages.Add(new PixelConstantBufferStage<ObjectCBuf>(device, ocb, this, 1));
 
             stages.Add(new TopologyStage(device, PrimitiveTopology.TriangleList));
             

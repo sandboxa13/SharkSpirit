@@ -60,6 +60,8 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
                     return new TransformComponentViewModel(component as TransformComponent);
                 case ComponentType.Script : 
                     return new ScriptComponentViewModel(component as ScriptBase);
+                case ComponentType.Material : 
+                    return new MaterialComponentViewModel(component as MaterialComponent);
             }
 
             return null;
