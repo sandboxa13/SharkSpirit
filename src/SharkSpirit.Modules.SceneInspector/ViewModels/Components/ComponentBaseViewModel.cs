@@ -14,5 +14,9 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels.Components
         public ComponentBase Component { get; }
         
         // todo logic for apply or rollback changes 
+        public virtual void Refresh()
+        {
+            
+        }
     }
 }

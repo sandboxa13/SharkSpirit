@@ -12,15 +12,19 @@ namespace SharkSpirit.Engine
         {
             _container = container;
             _timer = new GameTimer();
+            
             Scene = new Scene(container);
         }
 
         public Scene Scene { get; private set; }
-
+        public EventHandler GameUpdated { get; set; }
+        
         public void Update()
         {
             _timer.Tick();
             Scene.Draw(_timer);
+            
+            GameUpdated.Invoke(this, EventArgs.Empty);
         }
 
         public void Reinitialize(IntPtr resourcePointer)

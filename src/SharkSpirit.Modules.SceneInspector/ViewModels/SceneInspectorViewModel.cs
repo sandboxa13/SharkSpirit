@@ -1,6 +1,7 @@
 ﻿using DryIoc;
 using Prism.Regions;
 using ReactiveUI.Fody.Helpers;
+using SharkSpirit.Engine;
 using SharkSpirit.Modules.Core.ViewModels;
 using SharkSpirit.Modules.SceneInspector.Logic;
 
@@ -20,12 +21,19 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            var engineContainer = _container.Resolve<SharkSpirit.Core.IContainer>();
+            _container.Resolve<SharkSpirit.Core.IContainer>().AddService(_container.Resolve<Game>());
 
+            var engineContainer = _container.Resolve<SharkSpirit.Core.IContainer>();
+            
             _sceneGraphManager = new SceneGraphManager(engineContainer);
 
             SceneGraphViewModel = new SceneGraphViewModel(_sceneGraphManager);
             SceneItemInspectorViewModel = new SceneItemInspectorViewModel(_sceneGraphManager);
+
+            _sceneGraphManager.Container.GetService<Game>().GameUpdated += (sender, args) =>
+            {
+                Refresh();
+            };
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -35,6 +43,12 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+        }
+        
+        private void Refresh()
+        {
+            SceneGraphViewModel.Refresh();
+            SceneItemInspectorViewModel.Refresh();
         }
     }
 }

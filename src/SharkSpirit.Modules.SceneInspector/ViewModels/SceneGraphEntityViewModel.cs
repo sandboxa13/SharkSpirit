@@ -38,13 +38,19 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
         }
 
         [Reactive] public ReactiveCommand<Unit, Unit> RemoveEntityCommand { get; set; }
-
         [Reactive] public ObservableCollection<SceneGraphEntityViewModel> Childs { get; set; }
-        public Guid Id { get; private set; }
-
         [Reactive] public bool IsVisible { get; set; }
 
         public Entity GetEntity() => _entity;
+        public Guid Id { get; private set; }
+
+        public void Refresh()
+        {
+            foreach (var sceneGraphEntityViewModel in Childs)
+            {
+                sceneGraphEntityViewModel.Refresh();
+            }
+        }
     }
 
 

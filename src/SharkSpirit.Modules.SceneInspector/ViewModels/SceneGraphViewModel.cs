@@ -57,7 +57,14 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
                 {
                     SceneGraphEntityViewModels.Add(new SceneGraphEntityViewModel(entity, sceneGraphManager));
                 });
+
+            sceneGraphManager.Container.GetService<Game>().GameUpdated += (sender, args) =>
+            {
+                Refresh();
+            };
         }
+
+       
 
         [Reactive] public ObservableCollection<SceneGraphEntityViewModel> SceneGraphEntityViewModels { get; set; }
         [Reactive] public SceneGraphEntityViewModel SelectedItem { get; set; }
@@ -90,6 +97,16 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
             }
             
             return parentVm;
+        }
+
+        public void Refresh()
+        {
+            foreach (var sceneGraphEntityViewModel in SceneGraphEntityViewModels)
+            {
+                sceneGraphEntityViewModel.Refresh();
+            }
+            
+            SelectedItem.Refresh();
         }
     }
 }

@@ -40,6 +40,14 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
 
         // todo move to material component
         [Reactive] public Color SelectedColor { get; set; }
+
+        public void Refresh()
+        {
+            foreach (var componentBaseViewModel in Components)
+            {
+                componentBaseViewModel?.Refresh();
+            }
+        }
     }
 
     public class EntityComponentViewModelsFactory

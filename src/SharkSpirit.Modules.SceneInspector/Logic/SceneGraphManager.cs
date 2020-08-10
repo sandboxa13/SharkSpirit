@@ -66,7 +66,5 @@ namespace SharkSpirit.Modules.SceneInspector.Logic
         {
             Container.GetService<IScene>().AddCamera();
         }
-
-        
     }
 }

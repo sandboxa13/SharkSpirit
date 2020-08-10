@@ -19,5 +19,10 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
         }
 
         [Reactive] public SelectedSceneItemViewModel SelectedSceneItemViewModel { get; private set; }
+
+        public void Refresh()
+        {
+            SelectedSceneItemViewModel.Refresh();
+        }
     }
 }
