@@ -16,6 +16,7 @@ namespace SharkSpirit.Engine.Systems.Scripts
                 _hasEnd = true;
             }
             
+            
             if (Entity.TransformComponent.Position.Y < 15 && !_hasEnd)
             {
                 Entity.TransformComponent.Position.Y += 0.1f ;
