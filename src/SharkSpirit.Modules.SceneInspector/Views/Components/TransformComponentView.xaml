@@ -102,7 +102,7 @@
                 <StackPanel Grid.Row="1" Orientation="Vertical">
                     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10,5,0,0">
                         <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="X : " />
-                        <Slider Value="{Binding RotationX, Mode=TwoWay}" Interval="1" Minimum="-180" Maximum="180"
+                        <Slider Value="{Binding RotationX, Mode=TwoWay}" Interval="1" Minimum="0" Maximum="10"
                                 Width="200" IsSnapToTickEnabled="True" />
                         <TextBlock Style="{StaticResource TextBlock.Styles.Default}"
                                    Text="{Binding RotationX, StringFormat=N}" />
@@ -113,7 +113,7 @@
                         Margin="10,5,0,0"
                         Orientation="Horizontal">
                         <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Y : " />
-                        <Slider Value="{Binding RotationY, Mode=TwoWay}" Interval="1" Minimum="-180" Maximum="180"
+                        <Slider Value="{Binding RotationY, Mode=TwoWay}" Interval="1" Minimum="0" Maximum="10"
                                 Width="200" IsSnapToTickEnabled="True" />
                         <TextBlock Style="{StaticResource TextBlock.Styles.Default}"
                                    Text="{Binding RotationY, StringFormat=N}" />
@@ -124,7 +124,7 @@
                         Margin="10,5,0,0"
                         Orientation="Horizontal">
                         <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Z : " />
-                        <Slider Value="{Binding RotationZ, Mode=TwoWay}" Interval="1" Minimum="-180" Maximum="180"
+                        <Slider Value="{Binding RotationZ, Mode=TwoWay}" Interval="1" Minimum="0" Maximum="10"
                                 Width="200" IsSnapToTickEnabled="True" />
                         <TextBlock Style="{StaticResource TextBlock.Styles.Default}"
                                    Text="{Binding RotationZ, StringFormat=N}" />

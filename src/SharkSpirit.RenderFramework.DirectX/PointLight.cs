@@ -16,8 +16,8 @@ namespace SharkSpirit.RenderFramework.DirectX
 
             _lightCBuf = new LightCBuf
             {
-                LightPos = new Vector3(0,0 ,0),
-                Ambient = new Vector3(0.05f, 0.05f, 0.05f),
+                LightPos = new Vector3(0, 0 ,0),
+                Ambient = new Vector3(0.15f, 0.15f, 0.15f),
                 DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f),
                 DiffuseIntensity = 1.0f,
                 AttConst = 1.0f,
@@ -34,7 +34,13 @@ namespace SharkSpirit.RenderFramework.DirectX
         public override void UpdateView(Matrix view) => PointLightModel.View = view;
         public override void UpdateColor(Vector4 color) => PointLightModel.Color = color;
         public override void UpdatePosition(Vector3 position) => PointLightModel.Position = position;
-
+        public float DiffuseIntensity { get; set; }
+        public Vector3 Ambient { get; set; }
+        public float AttConst { get; set; }
+        public Vector3 DiffuseColor { get; set; }
+        public float AttLin { get; set; }
+        public float AttQuad { get; set; }
+        
         public override void Draw()
         {
             if (!IsVisible)
@@ -48,6 +54,12 @@ namespace SharkSpirit.RenderFramework.DirectX
             var lightPos = Vector3.Transform(PointLightModel.Position, PointLightModel.View);
 
             _lightCBuf.LightPos = (Vector3) lightPos;
+            _lightCBuf.Ambient = Ambient;
+            _lightCBuf.AttConst = AttConst;
+            _lightCBuf.AttLin = AttLin;
+            _lightCBuf.AttQuad = AttQuad;
+            _lightCBuf.DiffuseColor = DiffuseColor;
+            _lightCBuf.DiffuseIntensity = DiffuseIntensity;
 
             _pixelConstantBufferStage.BindCustom(_lightCBuf);
         }

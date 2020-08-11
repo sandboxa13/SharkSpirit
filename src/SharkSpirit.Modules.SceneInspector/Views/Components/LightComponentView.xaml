@@ -4,10 +4,27 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:SharkSpirit.Modules.Core.Resources.Controls;assembly=SharkSpirit.Modules.Core"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <Style
+            x:Key="TransformComponent.DoubleUpDown.Base"
+            BasedOn="{StaticResource NumericUpDown.Styles.Index}"
+            TargetType="{x:Type controls:DoubleUpDown}">
+            <Setter Property="Width" Value="70" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Step" Value="0.1" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Background" Value="#222222" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </UserControl.Resources>
+    
     <Border Style="{StaticResource Component.OuterBorder.Style}">
         <Grid>
             <Grid.RowDefinitions>
@@ -26,6 +43,76 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
+                
+                <StackPanel>
+                    <StackPanel
+                        Margin="10,5,0,0"
+                        Orientation="Horizontal">
+                        <TextBlock Width="80" Style="{StaticResource TextBlock.Styles.Default}" Text="DiffuseIntens : " />
+                        <Slider Value="{Binding DiffuseIntensity, Mode=TwoWay}" Interval="1" Minimum="0" Maximum="1000"
+                                Width="200" IsSnapToTickEnabled="True" />
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}"
+                                   Text="{Binding DiffuseIntensity, StringFormat=N}" />
+                    </StackPanel>
+                    <StackPanel
+                        Margin="10,5,0,0"
+                        Orientation="Horizontal">
+                        <TextBlock Width="80" Style="{StaticResource TextBlock.Styles.Default}" Text="AttConst : " />
+                        <Slider Value="{Binding AttConst, Mode=TwoWay}" Interval="1" Minimum="0" Maximum="1000"
+                                Width="200" IsSnapToTickEnabled="True" />
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}"
+                                   Text="{Binding AttConst, StringFormat=N}" />
+                    </StackPanel>
+                    <StackPanel
+                        Margin="10,5,0,0"
+                        Orientation="Horizontal">
+                        <TextBlock Width="80" Style="{StaticResource TextBlock.Styles.Default}" Text="AttLin : " />
+                        <Slider Value="{Binding AttLin, Mode=TwoWay}" Interval="1" Minimum="0" Maximum="1000"
+                                Width="200" IsSnapToTickEnabled="True" />
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}"
+                                   Text="{Binding AttLin, StringFormat=N}" />
+                    </StackPanel>
+                    <StackPanel
+                        Margin="10,5,0,0"
+                        Orientation="Horizontal">
+                        <TextBlock Width="80" Style="{StaticResource TextBlock.Styles.Default}" Text="AttQuad : " />
+                        <Slider Value="{Binding AttQuad, Mode=TwoWay}" Interval="1" Minimum="0" Maximum="1000"
+                                Width="200" IsSnapToTickEnabled="True" />
+                        <TextBlock Style="{StaticResource TextBlock.Styles.Default}"
+                                   Text="{Binding AttQuad, StringFormat=N}" />
+                    </StackPanel>
+                    
+                    <StackPanel Margin="10, 5, 0 ,0" Orientation="Horizontal">
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="X : " />
+
+                            <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}" MinValue="0" MaxValue="1" Step="0.01"
+                                                   Value="{Binding AmbientX, Mode=TwoWay, StringFormat='{}{0:F2}'}" />
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Row="2"
+                            Margin="10,0,0,0"
+                            Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Y : " />
+                            <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}" MinValue="0" MaxValue="1" Step="0.01"
+                                                   Value="{Binding AmbientY, Mode=TwoWay, StringFormat='{}{0:F2}'}" />
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Row="3"
+                            Margin="10,0,0,0"
+                            Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource TextBlock.Styles.Default}" Text="Z : " />
+                            <controls:DoubleUpDown Style="{StaticResource TransformComponent.DoubleUpDown.Base}" MinValue="0" MaxValue="1" Step="0.01"
+                                                   Value="{Binding AmbientZ, Mode=TwoWay, StringFormat='{}{0:F2}'}" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <StackPanel Margin="10, 5, 0 ,0" Orientation="Horizontal">
+                        <xctk:ColorPicker SelectedColor="{Binding DiffuseColor}" Margin="10" />
+                    </StackPanel>
+                </StackPanel>
             </Grid>
         </Grid>
     </Border>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SharkSpirit.Core;
 using SharkSpirit.Core.Collections;
 using SharkSpirit.Engine.Components;
@@ -77,6 +78,11 @@ namespace SharkSpirit.Engine
         public void RemoveComponent(EntityComponent entityComponent)
         {
             Components.Remove(entityComponent);
+        }
+
+        public ComponentBase GetComponent(ComponentType type)
+        {
+            return Components.FirstOrDefault(component => component.ComponentType == type);
         }
 
         public static Entity Empty(IContainer container)

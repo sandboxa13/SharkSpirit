@@ -28,44 +28,48 @@
         </DataTemplate>
     </UserControl.Resources>
     
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <StackPanel VerticalAlignment="Top">
-            <TextBlock
-                Margin="0,10"
-                FontWeight="Bold"
-                Style="{StaticResource TextBlock.Styles.Default}"
-                Text="Selected item information : " />
-
-            <StackPanel Orientation="Horizontal">
+            <StackPanel VerticalAlignment="Top">
                 <TextBlock
                     Margin="0,10"
+                    FontWeight="Bold"
                     Style="{StaticResource TextBlock.Styles.Default}"
-                    Text="Name : " />
-                <TextBlock
-                    Margin="0,10"
-                    Style="{StaticResource TextBlock.Styles.Default}"
-                    Text="{Binding SelectedSceneItemViewModel.Name}" />
-            </StackPanel>
+                    Text="Selected item information : " />
 
-            <StackPanel Orientation="Horizontal">
-                <TextBlock
-                    Margin="0,10"
-                    Style="{StaticResource TextBlock.Styles.Default}"
-                    Text="ID : " />
-                <TextBlock
-                    Margin="0,10"
-                    Style="{StaticResource TextBlock.Styles.Default}"
-                    Text="{Binding SelectedSceneItemViewModel.Id}" />
-            </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="0,10"
+                        Style="{StaticResource TextBlock.Styles.Default}"
+                        Text="Name : " />
+                    <TextBlock
+                        Margin="0,10"
+                        Style="{StaticResource TextBlock.Styles.Default}"
+                        Text="{Binding SelectedSceneItemViewModel.Name}" />
+                </StackPanel>
 
-            <ItemsControl ItemsSource="{Binding SelectedSceneItemViewModel.Components}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="0,10"
+                        Style="{StaticResource TextBlock.Styles.Default}"
+                        Text="ID : " />
+                    <TextBlock
+                        Margin="0,10"
+                        Style="{StaticResource TextBlock.Styles.Default}"
+                        Text="{Binding SelectedSceneItemViewModel.Id}" />
+                </StackPanel>
+
+                <ScrollViewer Height="400" VerticalScrollBarVisibility="Visible">
+                    <ItemsControl  ItemsSource="{Binding SelectedSceneItemViewModel.Components}">
                 
-            </ItemsControl>
-        </StackPanel>
-    </Grid>
+                    </ItemsControl>
+                </ScrollViewer>
+               
+            </StackPanel>
+        </Grid>
+    
 </UserControl>
