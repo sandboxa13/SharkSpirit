@@ -62,6 +62,8 @@ namespace SharkSpirit.Modules.SceneInspector.ViewModels
                     return new ScriptComponentViewModel(component as ScriptBase);
                 case ComponentType.Material : 
                     return new MaterialComponentViewModel(component as MaterialComponent);
+                case ComponentType.Light : 
+                    return new LightComponentViewModel(component as LightComponent);
             }
 
             return null;

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using SharkSpirit.Core;
+using SharkSpirit.Engine.Components;
 using SharkSpirit.RenderFramework.DirectX;
 
 namespace SharkSpirit.Engine
@@ -50,8 +52,24 @@ namespace SharkSpirit.Engine
             renderObject.UpdatePosition(entity.TransformComponent.Position);
             renderObject.UpdateSpecularIntensity(entity.MaterialComponent.SpecularIntensity);
             renderObject.UpdateSpecularPower(entity.MaterialComponent.SpecularPower);
+
+            if (!(entity.GetComponent(ComponentType.Light) is LightComponent lightComp)) return;
+            
+            UpdateLight(renderObject, lightComp);
         }
-        
+
+        private static void UpdateLight(RenderObject renderObject, LightComponent lightComp)
+        {
+            if (!(renderObject is PointLight pl)) return;
+
+            pl.Ambient = lightComp.Ambient;
+            pl.AttConst = lightComp.AttConst;
+            pl.AttLin = lightComp.AttLin;
+            pl.AttQuad = lightComp.AttQuad;
+            pl.DiffuseColor = lightComp.DiffuseColor;
+            pl.DiffuseIntensity = lightComp.DiffuseIntensity;
+        }
+
         private void DrawObjects()
         {
             foreach (var renderObject in RenderObjects)

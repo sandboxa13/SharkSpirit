@@ -6,6 +6,7 @@ namespace SharkSpirit.Core
         Transform, 
         Script, 
         Camera,
-        Material
+        Material,
+        Light
     }
 }

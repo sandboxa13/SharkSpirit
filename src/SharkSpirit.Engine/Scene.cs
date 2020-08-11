@@ -106,6 +106,9 @@ namespace SharkSpirit.Engine
             entity.TransformComponent.Position.Y = 10;
             entity.TransformComponent.Position.X = -5;
             entity.TransformComponent.Position.Z = 3;
+            
+            entity.AddComponent(new LightComponent(Container, entity));
+            
             Entities.Add(entity);
             RenderSystem.EntityRenderProcessor.AddRenderObject(entity,
                 new PointLight(RenderSystem.Device, Configuration));
