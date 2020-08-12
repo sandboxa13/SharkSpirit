@@ -27,7 +27,7 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 
         public override void BindToPipeline()
         {
-            _pcb.MaterialColor = new Vector3(_renderObject.Color.X, _renderObject.Color.Y, _renderObject.Color.Z);
+            // _pcb.MaterialColor = new Vector3(_renderObject.Color.X, _renderObject.Color.Y, _renderObject.Color.Z);
             _pcb.SpecularIntensity = _renderObject.SpecularIntensity;
             _pcb.SpecularPower = _renderObject.SpecularPower;
 

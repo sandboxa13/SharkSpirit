@@ -6,16 +6,19 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
     {
         private readonly ShaderResourceView _shaderResourceView;
 
-        public TextureStage(IDevice device, string path) : base(device)
+        public TextureStage(IDevice device, string path, int slot = 0) : base(device)
         {
+            Slot = slot;
             var texture = TextureLoader.CreateTexture2DFromBitmap(device.GetDevice(), TextureLoader.LoadBitmap(new SharpDX.WIC.ImagingFactory2(), path));
 
             _shaderResourceView = new ShaderResourceView(device.GetDevice(), texture);
         }
+        
+        public int Slot { get; }
 
         public override void BindToPipeline()
         {
-            Device.GetDeviceContext().PixelShader.SetShaderResource(0, _shaderResourceView);
+            Device.GetDeviceContext().PixelShader.SetShaderResource(Slot, _shaderResourceView);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             _scale = scale;
             Meshes = new List<Mesh>();
 
-            Initialize(modelName, device, configuration);
+            Initialize(modelName, device, configuration, modelName);
         }
         
         public readonly List<Mesh> Meshes;
@@ -40,7 +40,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             RootNode.Draw();
         }
 
-        private void Initialize(string modelName, IDevice device, IConfiguration configuration)
+        private void Initialize(string modelName, IDevice device, IConfiguration configuration, string path)
         {
             var importer = new AssimpContext();
             importer.SetConfig(new NormalSmoothingAngleConfig(66.0f));
@@ -49,7 +49,7 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
             foreach (var sceneMesh in scene.Meshes)
             {
-                Meshes.Add(ParseMesh(sceneMesh, device, configuration));
+                Meshes.Add(ParseMesh(scene, sceneMesh, device, configuration, path));
             }
 
             RootNode = ParseNode(scene.RootNode);
@@ -78,16 +78,19 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             return newNode;
         }
 
-        private Mesh ParseMesh(Assimp.Mesh modelMesh, IDevice device, IConfiguration configuration)
+        private Mesh ParseMesh(Scene scene, Assimp.Mesh modelMesh, IDevice device, IConfiguration configuration, string path)
         {
             var vertices = new List<Vertex>();
             var indices = new List<ushort>();
 
             for (var i = 0; i < modelMesh.VertexCount; i++)
             {
+                var texC = modelMesh.TextureCoordinateChannels[0][i];
+
                 vertices.Add(new Vertex(
                     new Vector3(modelMesh.Vertices[i].X * _scale, modelMesh.Vertices[i].Y * _scale, modelMesh.Vertices[i].Z * _scale),
-                    new Vector3(modelMesh.Normals[i].X, modelMesh.Normals[i].Y, modelMesh.Normals[i].Z)));
+                    new Vector3(modelMesh.Normals[i].X, modelMesh.Normals[i].Y, modelMesh.Normals[i].Z),
+                    new Vector2(texC.X, texC.Y)));
             }
 
             for (var i = 0; i < modelMesh.FaceCount; i++)
@@ -100,8 +103,19 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
                 }
             }
 
-
             var stages = new List<StageBase>();
+            
+            if (scene.Materials[modelMesh.MaterialIndex].HasTextureDiffuse)
+            {
+                var material = scene.Materials[modelMesh.MaterialIndex];
+                
+                material.GetMaterialTexture(TextureType.Diffuse, 0, out var textureSlot);
+                var texPath = textureSlot.FilePath;
+                
+                stages.Add(new TextureStage(device, Path.Combine(path + @"\..", texPath)));
+                stages.Add(new SamplerStage(device));
+            }
+
 
             stages.Add(new VertexBufferStage<Vertex>(device, vertices.ToArray()));
             stages.Add(new IndexBufferStage(device, indices.ToArray()));
@@ -117,16 +131,16 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             {
                 new InputElement("Position", 0, Format.R32G32B32_Float, 0, 0),
                 new InputElement("Normal", 0, Format.R32G32B32_Float, 12, 0),
+                new InputElement("Texcoord", 0, Format.R32G32B32_Float, 24, 0),
             });
             stages.Add(new InputLayoutStage(device, inputLayout));
 
             var ocb = new ObjectCBuf
             {
-                MaterialColor = new Vector3(1, 0, 0),
                 SpecularPower = 30.0f,
                 SpecularIntensity = 0.6f
             };
-
+            
             stages.Add(new PixelConstantBufferStage<ObjectCBuf>(device, ocb, this, 1));
 
             stages.Add(new TopologyStage(device, PrimitiveTopology.TriangleList));

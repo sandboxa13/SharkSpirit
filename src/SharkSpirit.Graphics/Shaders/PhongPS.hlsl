@@ -1,17 +1,4 @@
-﻿//static const float3 lightPos = { 0.0, 0.0, 0.0 };
-//static const float3 ambient = { 0.0, 0.0, 0.0 };
-//static const float3 diffuseColor = { 1.0, 1.0, 1.0 };
-//static const float diffuseIntensity = 1;
-//static const float attConst = 1.0;
-//static const float attLin = 0.345;
-//static const float attQuad = 0.3075;
-
-
-//static const float3 materialColor = { 1.0, 1.0, 1.0 };
-//static const float specularIntensity = 0.6;
-//static const float specularPower = 30.0;
-
-
+﻿
 
 cbuffer LightCBuf : register(b0)
 {
@@ -26,13 +13,15 @@ cbuffer LightCBuf : register(b0)
 
 cbuffer ObjectCBuf : register(b1)
 {
-    float3 materialColor;
     float specularIntensity;
     float specularPower;
+    float2 padding;
 };
 
+Texture2D tex;
+SamplerState splr;
 
-float4 PS(float3 worldPos : Position, float3 n : Normal) : SV_Target
+float4 PS(float3 worldPos : Position, float3 n : Normal, float2 tc: Texcoord) : SV_Target
 {
 	// fragment to light vector data
     const float3 vToL = lightPos - worldPos;
@@ -48,5 +37,5 @@ float4 PS(float3 worldPos : Position, float3 n : Normal) : SV_Target
 	// calculate specular intensity based on angle between viewing vector and reflection vector, narrow with power function
     const float3 specular = att * (diffuseColor * diffuseIntensity) * specularIntensity * pow(max(0.0f, dot(normalize(-r), normalize(worldPos))), specularPower);
 	// final color
-    return float4(saturate((diffuse + ambient + specular) * materialColor), 1.0f);
+    return float4(saturate(diffuse + ambient + specular) * tex.Sample(splr, tc), 1.0f) ;
 }
