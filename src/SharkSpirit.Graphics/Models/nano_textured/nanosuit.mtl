@@ -1,73 +1,78 @@
-# Blender MTL File: 'nanosuit.blend'
-# Material Count: 6
-newmtl Arm
+# 
+# 
+
+newmtl nanosuit_arms
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
-illum 2
-map_Kd arm_dif.png
-map_Ks arm_showroom_spec.png
+illum 1
+map_Kd nanosuit_arms_d.png
+map_Bump nanosuit_arms_n.tga
 
-
-newmtl Body
+newmtl nanosuit_hands
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
-illum 2
-map_Kd body_dif.png
-map_Ks body_showroom_spec.png
+illum 1
+map_Kd nanosuit_hands_d.png
+map_Bump nanosuit_hands_n.tga
 
-
-newmtl Glass
+newmtl nanosuit_helmet
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
-illum 2
-map_Kd glass_dif.png
+illum 1
+map_Kd nanosuit_helmet_d.png
+map_Bump nanosuit_helmet_n.tga
 
-
-newmtl Hand
+newmtl nanosuit_helmet_pt
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
-illum 2
-map_Kd hand_dif.png
-map_Ks hand_showroom_spec.png
+illum 1
+map_Kd nanosuit_helmet_pt_d.png
 
-
-newmtl Helmet
+newmtl nanosuit_legs
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
-illum 2
-map_Kd helmet_diff.png
-map_Ks helmet_showroom_spec.png
+illum 1
+map_Kd nanosuit_legs_d.png
+map_Bump nanosuit_legs_n.tga
 
-
-newmtl Leg
+newmtl nanosuit_torso
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
-illum 2
-map_Kd leg_dif.png
-map_Ks leg_showroom_spec.png
+illum 1
+map_Kd nanosuit_torso_d.png
+map_Bump nanosuit_torso_n.tga
 
-
+newmtl nanosuit_visor
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd nanosuit_visor_d.png
+map_Bump nanosuit_visor_n.tga

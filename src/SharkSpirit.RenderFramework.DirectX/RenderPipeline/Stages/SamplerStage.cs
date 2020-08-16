@@ -1,4 +1,5 @@
-﻿using SharpDX.Direct3D11;
+﻿using SharpDX;
+using SharpDX.Direct3D11;
 
 namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
 {
@@ -12,7 +13,13 @@ namespace SharkSpirit.RenderFramework.DirectX.RenderPipeline.Stages
                 AddressU = TextureAddressMode.Wrap,
                 AddressV = TextureAddressMode.Wrap,
                 AddressW = TextureAddressMode.Wrap,
-                Filter = Filter.MinMagMipLinear
+                Filter = Filter.MinMagMipLinear,
+                BorderColor = Color.Black,
+                ComparisonFunction = Comparison.Never,
+                MaximumAnisotropy = 16,
+                MipLodBias = 0,
+                MinimumLod = 0,
+                MaximumLod = 16,
             };
 
             _samplerState = new SamplerState(device.GetDevice(), samplerStateDescription);

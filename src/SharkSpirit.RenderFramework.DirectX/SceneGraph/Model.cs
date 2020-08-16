@@ -112,6 +112,11 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
                 material.GetMaterialTexture(TextureType.Diffuse, 0, out var textureSlot);
                 var texPath = textureSlot.FilePath;
                 
+                if (Path.GetExtension(texPath) == ".tga") {
+                    // DirectX doesn't like to load tgas, so you will need to convert them to pngs yourself with an image editor
+                    texPath = texPath.Replace(".tga", ".png");
+                }
+                
                 stages.Add(new TextureStage(device, Path.Combine(path + @"\..", texPath)));
                 stages.Add(new SamplerStage(device));
             }
@@ -131,7 +136,8 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             {
                 new InputElement("Position", 0, Format.R32G32B32_Float, 0, 0),
                 new InputElement("Normal", 0, Format.R32G32B32_Float, 12, 0),
-                new InputElement("Texcoord", 0, Format.R32G32B32_Float, 24, 0),
+                new InputElement("Texcoord", 0, Format.R32G32_Float, 24, 0),
+
             });
             stages.Add(new InputLayoutStage(device, inputLayout));
 

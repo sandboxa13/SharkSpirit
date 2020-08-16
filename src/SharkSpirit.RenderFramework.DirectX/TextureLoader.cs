@@ -38,7 +38,7 @@
         public static SharpDX.Direct3D11.Texture2D CreateTexture2DFromBitmap(SharpDX.Direct3D11.Device device, SharpDX.WIC.BitmapSource bitmapSource)
         {
             // Allocate DataStream to receive the WIC image pixels
-            int stride = bitmapSource.Size.Width * 4;
+            int stride = bitmapSource.Size.Width * 4 ;
             using (var buffer = new SharpDX.DataStream(bitmapSource.Size.Height * stride, true, true))
             {
                 // Copy the content of the WIC to the buffer
@@ -51,7 +51,7 @@
                     BindFlags = SharpDX.Direct3D11.BindFlags.ShaderResource,
                     Usage = SharpDX.Direct3D11.ResourceUsage.Default,
                     CpuAccessFlags = SharpDX.Direct3D11.CpuAccessFlags.None,
-                    Format = SharpDX.DXGI.Format.B8G8R8A8_UNorm,
+                    Format = SharpDX.DXGI.Format.R8G8B8A8_UNorm,
                     MipLevels = 1,
                     OptionFlags = SharpDX.Direct3D11.ResourceOptionFlags.None,
                     SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0),

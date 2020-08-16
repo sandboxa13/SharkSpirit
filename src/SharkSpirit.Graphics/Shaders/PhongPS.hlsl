@@ -1,6 +1,4 @@
-﻿
-
-cbuffer LightCBuf : register(b0)
+﻿cbuffer LightCBuf : register(b0)
 {
     float3 lightPos;
     float diffuseIntensity;
@@ -15,11 +13,10 @@ cbuffer ObjectCBuf : register(b1)
 {
     float specularIntensity;
     float specularPower;
-    float2 padding;
 };
 
-Texture2D tex;
-SamplerState splr;
+Texture2D tex: register(t0);
+SamplerState splr: register(s0);
 
 float4 PS(float3 worldPos : Position, float3 n : Normal, float2 tc: Texcoord) : SV_Target
 {
@@ -37,5 +34,5 @@ float4 PS(float3 worldPos : Position, float3 n : Normal, float2 tc: Texcoord) : 
 	// calculate specular intensity based on angle between viewing vector and reflection vector, narrow with power function
     const float3 specular = att * (diffuseColor * diffuseIntensity) * specularIntensity * pow(max(0.0f, dot(normalize(-r), normalize(worldPos))), specularPower);
 	// final color
-    return float4(saturate(diffuse + ambient + specular) * tex.Sample(splr, tc), 1.0f) ;
+    return tex.Sample(splr, tc) ;
 }
