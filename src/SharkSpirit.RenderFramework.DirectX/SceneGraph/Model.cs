@@ -106,25 +106,31 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             var stages = new List<StageBase>();
 
             var hasSpecular = false;
+            var specPower = 35.0f;
             
             if (modelMesh.MaterialIndex >= 0)
             {
                 var material = scene.Materials[modelMesh.MaterialIndex];
                 
                 material.GetMaterialTexture(TextureType.Diffuse, 0, out var diffuse);
-                var diffPath = diffuse.FilePath;
-                
-                stages.Add(new TextureStage(device, Path.Combine(path + @"\..", diffPath)));
+               
+                if (!string.IsNullOrEmpty(diffuse.FilePath))
+                {
+                    var diffPath = diffuse.FilePath;
+                    stages.Add(new TextureStage(device, Path.Combine(path + @"\..", diffPath)));
+                }
 
                 material.GetMaterialTexture(TextureType.Specular, 0, out var specular);
                 
                 if (!string.IsNullOrEmpty(specular.FilePath))
                 {
                     var specPath = specular.FilePath;
-                
                     stages.Add(new TextureStage(device, Path.Combine(path + @"\..", specPath), 1));
-            
                     hasSpecular = true;
+                }
+                else
+                {
+                    specPower = material.Shininess;
                 }
                 
                 stages.Add(new SamplerStage(device));
@@ -161,8 +167,8 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
             var ocb = new ObjectCBuf
             {
-                SpecularPower = 50.0f,
-                SpecularIntensity = 1.6f
+                SpecularPower = specPower,
+                SpecularIntensity = 0.8f
             };
             
             stages.Add(new PixelConstantBufferStage<ObjectCBuf>(device, ocb, this, 1));

@@ -8,8 +8,8 @@ namespace SharkSpirit.Engine.Components
         public MaterialComponent(IContainer container, Entity entity) : base(container, entity, ComponentType.Material, "Material component")
         {
             Color = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-            SpecularIntensity = 0.6f;
-            SpecularPower = 30.0f;
+            SpecularIntensity = 1.6f;
+            SpecularPower = 50.0f;
         }
 
         public Vector4 Color { get; set; }
