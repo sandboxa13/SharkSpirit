@@ -11,13 +11,13 @@ namespace SharkSpirit.Engine.Systems.Scripts
             if(!IsEnabled)
                 return;
             
-            if (Entity.TransformComponent.Position.Y >= 15)
+            if (Entity.TransformComponent.Position.Y >= 20)
             {
                 _hasEnd = true;
             }
             
             
-            if (Entity.TransformComponent.Position.Y < 15 && !_hasEnd)
+            if (Entity.TransformComponent.Position.Y < 20 && !_hasEnd)
             {
                 Entity.TransformComponent.Position.Y += 0.1f ;
             }
