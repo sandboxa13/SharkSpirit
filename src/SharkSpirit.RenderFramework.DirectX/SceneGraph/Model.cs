@@ -104,20 +104,35 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             }
 
             var stages = new List<StageBase>();
+
+            var hasSpecular = false;
+            var specPower = 35.0f;
             
-            if (scene.Materials[modelMesh.MaterialIndex].HasTextureDiffuse)
+            if (modelMesh.MaterialIndex >= 0)
             {
                 var material = scene.Materials[modelMesh.MaterialIndex];
                 
-                material.GetMaterialTexture(TextureType.Diffuse, 0, out var textureSlot);
-                var texPath = textureSlot.FilePath;
+                material.GetMaterialTexture(TextureType.Diffuse, 0, out var diffuse);
+               
+                if (!string.IsNullOrEmpty(diffuse.FilePath))
+                {
+                    var diffPath = diffuse.FilePath;
+                    stages.Add(new TextureStage(device, Path.Combine(path + @"\..", diffPath)));
+                }
+
+                material.GetMaterialTexture(TextureType.Specular, 0, out var specular);
                 
-                if (Path.GetExtension(texPath) == ".tga") {
-                    // DirectX doesn't like to load tgas, so you will need to convert them to pngs yourself with an image editor
-                    texPath = texPath.Replace(".tga", ".png");
+                if (!string.IsNullOrEmpty(specular.FilePath))
+                {
+                    var specPath = specular.FilePath;
+                    stages.Add(new TextureStage(device, Path.Combine(path + @"\..", specPath), 1));
+                    hasSpecular = true;
+                }
+                else
+                {
+                    specPower = material.Shininess;
                 }
                 
-                stages.Add(new TextureStage(device, Path.Combine(path + @"\..", texPath)));
                 stages.Add(new SamplerStage(device));
             }
 
@@ -126,7 +141,16 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
             stages.Add(new IndexBufferStage(device, indices.ToArray()));
             
             stages.Add(new VertexShaderStage(device, Path.Combine(configuration.PathToShaders, "PhongVS.hlsl")));
-            stages.Add(new PixelShaderStage(device, Path.Combine(configuration.PathToShaders, "PhongPS.hlsl")));
+
+            if (hasSpecular)
+            {
+                stages.Add(new PixelShaderStage(device, Path.Combine(configuration.PathToShaders, "PhongSpecularPS.hlsl")));
+            }
+            else
+            {
+                stages.Add(new PixelShaderStage(device, Path.Combine(configuration.PathToShaders, "PhongPS.hlsl")));
+            }
+            
             
             var vertexShaderByteCode = ShaderBytecode.CompileFromFile(Path.Combine(configuration.PathToShaders, "PhongVS.hlsl"), "VS", "vs_4_0", ShaderFlags.Debug);
 
@@ -143,8 +167,8 @@ namespace SharkSpirit.RenderFramework.DirectX.SceneGraph
 
             var ocb = new ObjectCBuf
             {
-                SpecularPower = 30.0f,
-                SpecularIntensity = 0.6f
+                SpecularPower = specPower,
+                SpecularIntensity = 0.8f
             };
             
             stages.Add(new PixelConstantBufferStage<ObjectCBuf>(device, ocb, this, 1));

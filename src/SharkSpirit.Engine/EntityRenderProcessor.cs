@@ -50,8 +50,8 @@ namespace SharkSpirit.Engine
             renderObject.UpdateViewProjection(_scene.RenderSystem.Device.GetProjection());
             renderObject.UpdateColor(entity.MaterialComponent.Color);
             renderObject.UpdatePosition(entity.TransformComponent.Position);
-            renderObject.UpdateSpecularIntensity(entity.MaterialComponent.SpecularIntensity);
-            renderObject.UpdateSpecularPower(entity.MaterialComponent.SpecularPower);
+            // renderObject.UpdateSpecularIntensity(entity.MaterialComponent.SpecularIntensity);
+            // renderObject.UpdateSpecularPower(entity.MaterialComponent.SpecularPower);
 
             if (!(entity.GetComponent(ComponentType.Light) is LightComponent lightComp)) return;
             
