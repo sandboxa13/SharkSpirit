@@ -1,7 +1,9 @@
 ﻿using System;
 using SharkSpirit.Core;
 using SharkSpirit.Engine.Components;
+using SharpDX;
 using SharpDX.DirectInput;
+using Configuration = SharkSpirit.Core.Configuration;
 
 namespace SharkSpirit.Engine.Systems.Scripts
 {
@@ -32,32 +34,15 @@ namespace SharkSpirit.Engine.Systems.Scripts
 
             if (Input.InputManager.LMouseDown())
             {
-                var dx = ConvertToRadians(0.005f * Input.InputManager.RawMouseX() - _lastMousePosX);
-                var dy = ConvertToRadians(0.005f * Input.InputManager.RawMouseY() - _lastMousePosY);
+                var dx = ConvertToRadians(Input.InputManager.RawMouseX() * 0.9f);
+                var dy = ConvertToRadians(Input.InputManager.RawMouseY() * 0.9f);
 
-                Camera.Entity.TransformComponent.Position.X += dx;
-                Camera.Entity.TransformComponent.Position.Y += dy;
-
-
-                Camera.Entity.TransformComponent.Position.Y =
-                    Clamp(Camera.Entity.TransformComponent.Position.Y, 0.1f, (float)(Math.PI - 0.1f));
-            }
-            else if (Input.InputManager.RMouseDown())
-            {
-                var dx = ConvertToRadians(0.05f * Input.InputManager.RawMouseX() - _lastMousePosX);
-                var dy = ConvertToRadians(0.05f * Input.InputManager.RawMouseY() - _lastMousePosY);
-
-                Camera.Entity.TransformComponent.Position.Z += dx - dy;
-                Camera.Entity.TransformComponent.Position.Z = Clamp(Camera.Entity.TransformComponent.Position.Z, 5.0f, 150.0f);
+                Camera.Rotate(dx / 100 , dy / 100);
             }
 
             if (Input.InputManager.IsPressed(Key.W))
             {
-                Camera.Entity.TransformComponent.Position.Z -= 0.25f;
-            }
-            if (Input.InputManager.IsPressed(Key.S))
-            {
-                Camera.Entity.TransformComponent.Position.Z += 0.25f;
+                Camera.Translate(new Vector3(0.0f, 0.0f, Camera.Entity.TransformComponent.Position.Z - 0.1f));
             }
 
             _lastMousePosX = Input.InputManager.RawMouseX();
