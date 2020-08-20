@@ -10,6 +10,8 @@
     xmlns:regions="http://prismlibrary.com/"
     xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
     Title="Shark Spirit"
+    MouseRightButtonDown="MainWindow_OnMouseRightButtonDown"
+    MouseRightButtonUp="MainWindow_OnMouseRightButtonUp"
     d:DataContext="{d:DesignInstance main:MainWindowViewModel}"
     regions:ViewModelLocator.AutoWireViewModel="True"
     WindowStartupLocation="CenterScreen"
