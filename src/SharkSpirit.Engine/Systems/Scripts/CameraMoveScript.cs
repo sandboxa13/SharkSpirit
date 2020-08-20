@@ -42,7 +42,11 @@ namespace SharkSpirit.Engine.Systems.Scripts
 
             if (Input.InputManager.IsPressed(Key.W))
             {
-                Camera.Translate(new Vector3(0.0f, 0.0f, Camera.Entity.TransformComponent.Position.Z - 0.1f));
+                Camera.Translate(new Vector3(0.0f, 0.0f,  1.1f));
+            }
+            if (Input.InputManager.IsPressed(Key.S))
+            {
+                Camera.Translate(new Vector3(0.0f, 0.0f, -1.1f));
             }
 
             _lastMousePosX = Input.InputManager.RawMouseX();
