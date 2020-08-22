@@ -9,9 +9,11 @@ namespace SharkSpirit.Engine.Systems.Scripts
 {
     public class CameraMoveScript : ScriptBase
     {
-        private float _lastMousePosX;
-        private float _lastMousePosY;
-
+        public CameraMoveScript(IContainer container, Entity entity, CameraComponent cameraComponent) : base(container, entity, cameraComponent, "Camera Move script")
+        {
+            
+        }
+        
         public override void Execute()
         {
             if(!IsEnabled)
@@ -49,35 +51,32 @@ namespace SharkSpirit.Engine.Systems.Scripts
             
             if (Input.InputManager.IsPressed(Key.W))
             {
-                Camera.Translate(new Vector3(0.0f, 0.0f, 1.0f * multiplier));
+                Translate(new Vector3(0.0f, 0.0f, 1.0f * multiplier));
             }
             if (Input.InputManager.IsPressed(Key.S))
             {
-                Camera.Translate(new Vector3(0.0f, 0.0f, -1.0f * multiplier));
+                Translate(new Vector3(0.0f, 0.0f, -1.0f * multiplier));
             }
             if (Input.InputManager.IsPressed(Key.D))
             {
-                Camera.Translate(new Vector3(1.0f * multiplier, 0.0f, 0.0f ));
+                Translate(new Vector3(1.0f * multiplier, 0.0f, 0.0f ));
             }
             if (Input.InputManager.IsPressed(Key.A))
             {
-                Camera.Translate(new Vector3(-1.0f * multiplier, 0.0f, 0.0f));
+                Translate(new Vector3(-1.0f * multiplier, 0.0f, 0.0f));
             }
-
-            _lastMousePosX = Input.InputManager.RawMouseX();
-            _lastMousePosY = Input.InputManager.RawMouseY();
-        }
-
-        private float Clamp(float x, float low, float high)
-        {
-            return x < low ? low : (x > high ? high : x);
         }
 
         private float ConvertToRadians(float fDegrees) { return (float)(fDegrees * (Math.PI / 180.0f)); }
-
-        public CameraMoveScript(IContainer container, Entity entity, CameraComponent cameraComponent) : base(container, entity, cameraComponent, "Camera Move script")
+        
+        private void Translate(Vector3 translation)
         {
-            
+            var tmp = Vector3.Transform(translation,
+                Matrix.RotationYawPitchRoll(Entity.TransformComponent.Rotation.Y, Entity.TransformComponent.Rotation.Z, 0.0f) * Matrix.Scaling(0.11f, 0.11f, 0.11f));
+
+            Entity.TransformComponent.Position.X += tmp.X;
+            Entity.TransformComponent.Position.Y += tmp.Y;
+            Entity.TransformComponent.Position.Z += tmp.Z;
         }
     }
 }
