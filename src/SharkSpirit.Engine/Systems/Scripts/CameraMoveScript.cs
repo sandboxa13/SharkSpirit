@@ -36,10 +36,11 @@ namespace SharkSpirit.Engine.Systems.Scripts
 
             if (Input.InputManager.RMouseDown())
             {
-                var dx = ConvertToRadians(Input.InputManager.RawMouseX() * 0.9f);
-                var dy = ConvertToRadians(Input.InputManager.RawMouseY() * 0.9f);
+                var dx = ConvertToRadians(Input.InputManager.RawMouseX() * 0.9f) / 100;
+                var dy = ConvertToRadians(Input.InputManager.RawMouseY() * 0.9f) / 100;
 
-                Camera.Rotate(dx / 100 , dy / 100);
+                Entity.TransformComponent.Rotation.Y = Entity.TransformComponent.Rotation.Y + dx * 12.0f;
+                Entity.TransformComponent.Rotation.Z = Clamp(Entity.TransformComponent.Rotation.Z + dy * 12.0f, (float) (-Math.PI / 2.0f), (float) (Math.PI / 2.0f));
             }
 
             var multiplier = 1.0f;
@@ -77,6 +78,11 @@ namespace SharkSpirit.Engine.Systems.Scripts
             Entity.TransformComponent.Position.X += tmp.X;
             Entity.TransformComponent.Position.Y += tmp.Y;
             Entity.TransformComponent.Position.Z += tmp.Z;
+        }
+        
+        private float Clamp(float x, float low, float high)
+        {
+            return x < low ? low : (x > high ? high : x);
         }
     }
 }
