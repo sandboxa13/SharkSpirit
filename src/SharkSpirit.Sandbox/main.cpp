@@ -8,7 +8,6 @@
 #include "../SharkSpirit/Core/Engine.h"
 
 
-
 int APIENTRY wWinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE prevInstance,
@@ -21,17 +20,18 @@ int APIENTRY wWinMain(
 	freopen("CONOUT$", "w", stdout);
 
 	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-	if (FAILED(hr)) {}
+	if (FAILED(hr)) 
+	{
+		Logger::LogWarning("CoInitializeEx FAILED");
+	}
 
 	const wchar_t* title = L"Shark Spirit SANDBOX";
 
-	auto windowConfiguration = std::make_unique<WindowConfiguration>(1280, 720, title, title, hInstance);
+	auto windowConfiguration = WindowConfigurationFactory::CreateWindowConfiguration(1280, 720, title, title, hInstance);
 
 	windowConfiguration = Engine::CreateSSWindow(std::move(windowConfiguration));
 
-	auto &window = windowConfiguration->Window;
-
-	ShowWindow(window->GetHWND(), SW_SHOW);
+	ShowWindow(windowConfiguration->Window->GetHWND(), SW_SHOW);
 
 	auto engineConfig = std::make_unique<EngineConfiguration>(std::move(windowConfiguration));
 
@@ -42,7 +42,6 @@ int APIENTRY wWinMain(
 		windowConfiguration.release();
 		engineConfig.release();
 		engineInstance.release();
-		window.release();
 	}
 	
 	return 0;

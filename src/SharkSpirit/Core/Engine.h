@@ -5,22 +5,7 @@
 #include "Window.h"
 #include <cassert>
 
-class WindowConfiguration 
-{
-public:
-	WindowConfiguration(int height, int width, const wchar_t* title, const wchar_t* class_name, HINSTANCE& hInstance)
-		: Width(width), Height(height), Title(title), ClassName(class_name), Hinstance(hInstance)
-	{
-	};
-	virtual ~WindowConfiguration() = default;
 
-	int Width;
-	int Height;
-	const wchar_t* Title;
-	const wchar_t* ClassName;
-	HINSTANCE Hinstance;
-	std::unique_ptr<SSWindow::Window> Window;
-};
 
 class EngineConfiguration
 {

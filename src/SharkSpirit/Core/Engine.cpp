@@ -7,14 +7,14 @@ std::unique_ptr<Engine> Engine::CreateEngine(std::unique_ptr<EngineConfiguration
 
 	Logger::LogInfo("Engine Instance Created");
 
-	return std::move(engine);
+	return engine;
 }
 
 std::unique_ptr<WindowConfiguration> Engine::CreateSSWindow(std::unique_ptr<WindowConfiguration> windowConfig)
 {
 	Logger::LogInfo("CREATING WINDOW");
 
-	windowConfig->Window = std::make_unique<SSWindow::Window>(windowConfig->Title, windowConfig->ClassName, windowConfig->Width, windowConfig->Height, windowConfig->Hinstance);
+	windowConfig->Window = std::make_unique<Window>(windowConfig->Title, windowConfig->ClassName, windowConfig->Width, windowConfig->Height, windowConfig->Hinstance);
 
 	auto& window = windowConfig->Window;
 
