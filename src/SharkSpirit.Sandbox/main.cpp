@@ -1,0 +1,48 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <windows.h>
+#include <ios>
+#include <cstdio>
+#include <io.h>
+#include <fcntl.h>
+#include "../SharkSpirit/Core/Engine.h"
+
+
+
+int APIENTRY wWinMain(
+	_In_ HINSTANCE hInstance,
+	_In_opt_ HINSTANCE prevInstance,
+	_In_ LPWSTR lpCmdLine,
+	_In_ int nCmdShow)
+{
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+
+
+	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	if (FAILED(hr)) {}
+
+	const wchar_t* title = L"Shark Spirit SANDBOX";
+
+	auto windowConfiguration = std::make_unique<WindowConfiguration>(1280, 720, title, title, hInstance);
+
+	windowConfiguration = Engine::CreateSSWindow(std::move(windowConfiguration));
+
+	auto &window = windowConfiguration->Window;
+
+	ShowWindow(window->GetHWND(), SW_SHOW);
+
+	auto engineConfig = std::make_unique<EngineConfiguration>(std::move(windowConfiguration));
+
+	auto engineInstance = Engine::CreateEngine(std::move(engineConfig));
+
+	if (!engineInstance->Run())
+	{
+		windowConfiguration.release();
+		engineConfig.release();
+		engineInstance.release();
+		window.release();
+	}
+	
+	return 0;
+}
