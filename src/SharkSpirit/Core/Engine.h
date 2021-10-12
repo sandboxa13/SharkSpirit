@@ -2,6 +2,9 @@
 
 #include "Logger/Logger.h"
 #include "Render/RenderEngine.h"
+#include "Input/InputProcessor.h"
+#include "Core/Timer/Timer.h"
+#include "IInitializable.h"
 #include "Window.h"
 
 namespace SharkSpirit 
@@ -18,22 +21,34 @@ namespace SharkSpirit
 		std::unique_ptr<WindowConfiguration> WindowConfiguration;
 	};
 
-	class Engine
+	class Engine : public IInitializable
 	{
 	public:
-		Engine() : _IsRunning(false) {};
+		Engine() : _IsRunning(false) 
+		{
+		};
 		virtual ~Engine() = default;
 
 	public:
 		std::unique_ptr<EngineConfiguration> EngineConfig;
-
+		std::unique_ptr<InputProcessor> Input;
+		std::unique_ptr<Timer> Timer;
 
 		static std::unique_ptr<Engine> CreateEngine(std::unique_ptr<EngineConfiguration> engineConfig);
 		static std::unique_ptr<WindowConfiguration> CreateSSWindow(std::unique_ptr<WindowConfiguration> windowConfig);
 		bool Run();
 		void Stop();
+		virtual void Initialize()
+		{
+			Logger::LogInfo("Initialize Engine");
+
+			Input = std::make_unique<InputProcessor>(EngineConfig->WindowConfiguration->Window->GetHWND());
+			Input->Initialize();
+
+			Timer = std::make_unique<SharkSpirit::Timer>();
+			Timer->Initialize();
+		}
 	private:
 		bool _IsRunning;
-
 	};
 }

@@ -6,6 +6,7 @@ namespace SharkSpirit
 	{
 		auto engine = std::make_unique<Engine>();
 		engine->EngineConfig = std::move(engineConfiguration);
+		engine->Initialize();
 
 		Logger::LogInfo("Engine Instance Created");
 
@@ -66,34 +67,9 @@ namespace SharkSpirit
 
 		while (_IsRunning)
 		{
-			//todo full engine cycle
-
-			MSG msg = { nullptr };
-
-			if (PeekMessageW(&msg, EngineConfig->WindowConfiguration->Window->GetHWND(), 0, 0, PM_REMOVE))
-			{
-				if (msg.message == WM_KEYDOWN)
-				{
-					if (msg.wParam == VK_ESCAPE)
-					{
-						Stop();
-					}
-
-					break;
-				}
-
-				if (msg.message == WM_QUIT)
-				{
-					Stop();
-
-					break;
-				}
-
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-
-			InvalidateRect(EngineConfig->WindowConfiguration->Window->GetHWND(), nullptr, false);
+			Input->ProcessInput();
+			
+			Timer->Tick();
 		}
 
 		return _IsRunning;
