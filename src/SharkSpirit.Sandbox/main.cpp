@@ -16,8 +16,9 @@ int APIENTRY wWinMain(
 	_In_ int nCmdShow)
 {
 	AllocConsole();
+	freopen("CONIN$", "r", stdin);
+	freopen("CONOUT$", "w", stderr);
 	freopen("CONOUT$", "w", stdout);
-
 
 	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 	if (FAILED(hr)) {}
