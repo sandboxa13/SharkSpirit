@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include "../SharkSpirit/Core/Engine.h"
 
+using namespace SharkSpirit;
 
 int APIENTRY wWinMain(
 	_In_ HINSTANCE hInstance,

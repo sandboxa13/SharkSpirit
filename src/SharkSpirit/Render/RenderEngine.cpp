@@ -1,6 +1,9 @@
 #include "RenderEngine.h"
 
-void RenderEngine::Render()
+namespace SharkSpirit 
 {
+	void RenderEngine::Render()
+	{
 
+	}
 }

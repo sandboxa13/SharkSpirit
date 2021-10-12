@@ -1,10 +1,13 @@
 #pragma once
 
-class RenderEngine 
+namespace SharkSpirit 
 {
-public :
-	RenderEngine() {};
-	virtual ~RenderEngine() = default;
+	class RenderEngine
+	{
+	public:
+		RenderEngine() {};
+		virtual ~RenderEngine() = default;
 
-	void Render();
-};
+		void Render();
+	};
+}
