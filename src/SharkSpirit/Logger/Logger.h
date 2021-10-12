@@ -3,6 +3,7 @@
 #include "BSlogger.hpp"
 #include <stdlib.h>
 #include <Windows.h>
+#include <cassert>
 
 namespace SharkSpirit 
 {

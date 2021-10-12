@@ -5,7 +5,7 @@
 #include <Windowsx.h>
 #include <functional>
 #include <sstream>
-#include "../Logger/Logger.h"
+#include "Logger/Logger.h"
 
 namespace SharkSpirit
 {

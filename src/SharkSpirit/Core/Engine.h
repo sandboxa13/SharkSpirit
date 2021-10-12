@@ -1,9 +1,8 @@
 #pragma once
 
-#include "../Logger/Logger.h"
-#include "../Render/RenderEngine.h"
+#include "Logger/Logger.h"
+#include "Render/RenderEngine.h"
 #include "Window.h"
-#include <cassert>
 
 namespace SharkSpirit 
 {

@@ -5,7 +5,7 @@
 #include <cstdio>
 #include <io.h>
 #include <fcntl.h>
-#include "../SharkSpirit/Core/Engine.h"
+#include "Core/Engine.h"
 
 using namespace SharkSpirit;
 
