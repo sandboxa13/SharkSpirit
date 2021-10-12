@@ -30,7 +30,7 @@ int APIENTRY wWinMain(
 
 	auto windowConfiguration = WindowConfigurationFactory::CreateWindowConfiguration(1280, 720, title, title, hInstance);
 
-	windowConfiguration = Engine::CreateSSWindow(std::move(windowConfiguration));
+	windowConfiguration = WindowFactory::CreateSSWindow(std::move(windowConfiguration));
 
 	ShowWindow(windowConfiguration->Window->GetHWND(), SW_SHOW);
 

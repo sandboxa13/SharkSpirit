@@ -35,7 +35,6 @@ namespace SharkSpirit
 		std::unique_ptr<Timer> Timer;
 
 		static std::unique_ptr<Engine> CreateEngine(std::unique_ptr<EngineConfiguration> engineConfig);
-		static std::unique_ptr<WindowConfiguration> CreateSSWindow(std::unique_ptr<WindowConfiguration> windowConfig);
 		bool Run();
 		void Stop();
 		virtual void Initialize()

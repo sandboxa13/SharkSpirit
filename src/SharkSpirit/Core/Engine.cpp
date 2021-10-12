@@ -13,52 +13,6 @@ namespace SharkSpirit
 		return engine;
 	}
 
-	std::unique_ptr<WindowConfiguration> Engine::CreateSSWindow(std::unique_ptr<WindowConfiguration> windowConfig)
-	{
-		Logger::LogInfo("CREATING WINDOW");
-
-		windowConfig->Window = std::make_unique<Window>(windowConfig->Title, windowConfig->ClassName, windowConfig->Width, windowConfig->Height, windowConfig->Hinstance);
-
-		auto& window = windowConfig->Window;
-
-		auto wndProc = [&window](UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
-		{
-			UINT width = {};
-			UINT height = {};
-
-			switch (msg)
-			{
-			case WM_SIZE:
-
-				width = LOWORD(lParam);
-				height = HIWORD(lParam);
-
-				break;
-			case WM_CLOSE:
-				PostQuitMessage(0);
-				break;
-
-			case WM_PAINT:
-				ValidateRect(window->GetHWND(), nullptr);
-				break;
-			case WM_MOUSEMOVE:
-
-				break;
-			}
-
-			return DefWindowProc(window->GetHWND(), msg, wParam, lParam);
-		};
-
-		window->SetWndProc(wndProc);
-
-		if ((windowConfig->Window) == nullptr)
-		{
-			Logger::LogError("CANNOT CREATE WINDOW");
-		}
-
-		return windowConfig;
-	}
-
 	bool Engine::Run()
 	{
 		Logger::LogInfo("ENGINE RUNNING...");
