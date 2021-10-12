@@ -152,6 +152,8 @@
     <ClInclude Include="Core\Timer\Timer.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Input\InputProcessor.h" />
+    <ClInclude Include="Input\KeyCodes.h" />
+    <ClInclude Include="Input\MouseCodes.h" />
     <ClInclude Include="Logger\BSlogger.hpp" />
     <ClInclude Include="Logger\Logger.h" />
     <ClInclude Include="Render\RenderEngine.h" />
