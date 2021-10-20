@@ -7,30 +7,26 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharkSpirit", "src\SharkSpi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharkSpirit.Sandbox", "src\SharkSpirit.Sandbox\SharkSpirit.Sandbox.vcxproj", "{223BB0A4-2E3C-4515-ADCC-B9ACBAA36082}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharkSpirit.Editor", "src\SharkSpirit.Editor\SharkSpirit.Editor.csproj", "{39D91009-04AD-46FA-AB21-9525975D5EE3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C4EC79A1-2058-4299-99A0-068D5CCDC4BA}.Debug|x64.ActiveCfg = Debug|x64
 		{C4EC79A1-2058-4299-99A0-068D5CCDC4BA}.Debug|x64.Build.0 = Debug|x64
-		{C4EC79A1-2058-4299-99A0-068D5CCDC4BA}.Debug|x86.ActiveCfg = Debug|Win32
-		{C4EC79A1-2058-4299-99A0-068D5CCDC4BA}.Debug|x86.Build.0 = Debug|Win32
 		{C4EC79A1-2058-4299-99A0-068D5CCDC4BA}.Release|x64.ActiveCfg = Release|x64
 		{C4EC79A1-2058-4299-99A0-068D5CCDC4BA}.Release|x64.Build.0 = Release|x64
-		{C4EC79A1-2058-4299-99A0-068D5CCDC4BA}.Release|x86.ActiveCfg = Release|Win32
-		{C4EC79A1-2058-4299-99A0-068D5CCDC4BA}.Release|x86.Build.0 = Release|Win32
 		{223BB0A4-2E3C-4515-ADCC-B9ACBAA36082}.Debug|x64.ActiveCfg = Debug|x64
 		{223BB0A4-2E3C-4515-ADCC-B9ACBAA36082}.Debug|x64.Build.0 = Debug|x64
-		{223BB0A4-2E3C-4515-ADCC-B9ACBAA36082}.Debug|x86.ActiveCfg = Debug|Win32
-		{223BB0A4-2E3C-4515-ADCC-B9ACBAA36082}.Debug|x86.Build.0 = Debug|Win32
 		{223BB0A4-2E3C-4515-ADCC-B9ACBAA36082}.Release|x64.ActiveCfg = Release|x64
 		{223BB0A4-2E3C-4515-ADCC-B9ACBAA36082}.Release|x64.Build.0 = Release|x64
-		{223BB0A4-2E3C-4515-ADCC-B9ACBAA36082}.Release|x86.ActiveCfg = Release|Win32
-		{223BB0A4-2E3C-4515-ADCC-B9ACBAA36082}.Release|x86.Build.0 = Release|Win32
+		{39D91009-04AD-46FA-AB21-9525975D5EE3}.Debug|x64.ActiveCfg = Debug|x64
+		{39D91009-04AD-46FA-AB21-9525975D5EE3}.Debug|x64.Build.0 = Debug|x64
+		{39D91009-04AD-46FA-AB21-9525975D5EE3}.Release|x64.ActiveCfg = Release|x64
+		{39D91009-04AD-46FA-AB21-9525975D5EE3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

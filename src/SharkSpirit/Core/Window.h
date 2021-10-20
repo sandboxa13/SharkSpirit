@@ -51,7 +51,7 @@ namespace SharkSpirit
 		std::unique_ptr<Window> Window;
 	};
 
-	class WindowFactory 
+	class WindowFactory
 	{
 	public:
 		static std::unique_ptr<WindowConfiguration> CreateSSWindow(std::unique_ptr<WindowConfiguration> windowConfig)
