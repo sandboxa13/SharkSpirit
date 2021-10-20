@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
     <BaseOutputPath>$(SolutionDir)build\</BaseOutputPath>
 	<Platforms>x64</Platforms>
@@ -19,6 +19,7 @@
 	
   <ItemGroup>
     <PackageReference Include="ReactiveUI" Version="16.2.6" />
+    <PackageReference Include="ReactiveUI.Fody" Version="16.2.6" />
   </ItemGroup>
 
 </Project>

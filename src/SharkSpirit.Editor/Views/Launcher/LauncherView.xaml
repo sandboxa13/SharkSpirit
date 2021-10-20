@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="SharkSpirit.Editor.Views.Launcher.LauncherView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:launcher="clr-namespace:SharkSpirit.Editor.Core.ViewModels.Launcher;assembly=SharkSpirit.Editor.Core"
+             xmlns:launcherView="clr-namespace:SharkSpirit.Editor.Views.Launcher"
+             d:DataContext="{d:DesignInstance Type=launcher:LauncherViewModel}"
+             mc:Ignorable="d" 
+             
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <Grid>
+        <TabControl HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <TabItem Header="Open Project">
+                <launcherView:OpenProjectView DataContext="{Binding OpenProjectViewModel}"/>
+            </TabItem>
+            <TabItem Header="Create Project" DataContext="{Binding CreateProjectViewModel}"/>
+        </TabControl>
+    </Grid>
+</UserControl>
