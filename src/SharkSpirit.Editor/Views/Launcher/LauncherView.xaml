@@ -7,10 +7,9 @@
              xmlns:launcherView="clr-namespace:SharkSpirit.Editor.Views.Launcher"
              d:DataContext="{d:DesignInstance Type=launcher:LauncherViewModel}"
              mc:Ignorable="d" 
-             
              d:DesignHeight="720" d:DesignWidth="1280">
     <Grid>
-        <TabControl HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+        <TabControl Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
             <TabItem Header="Open Project">
                 <launcherView:OpenProjectView DataContext="{Binding OpenProjectViewModel}"/>
             </TabItem>

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using SharkSpirit.Editor.Core.ViewModels;
 
 namespace SharkSpirit.Editor
 {
@@ -9,6 +10,8 @@ namespace SharkSpirit.Editor
     {
         public MainWindow()
         {
+            DataContext = new MainWindowViewModel();
+
             InitializeComponent();
         }
     }

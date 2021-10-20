@@ -21,5 +21,11 @@
     <PackageReference Include="ReactiveUI" Version="16.2.6" />
     <PackageReference Include="ReactiveUI.Fody" Version="16.2.6" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <None Update="Resources\ProjectTemplates\EmptyProject\projectTemplate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

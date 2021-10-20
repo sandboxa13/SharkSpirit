@@ -2,5 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="SharkSpirit.Background" Color="#0C2D48" />
     <SolidColorBrush x:Key="SharkSpirit.Button.Background" Color="#2E8BC0" />
-    <SolidColorBrush x:Key="SharkSpirit.Button.Foreground" Color="#B1D4E0" />
+    <SolidColorBrush x:Key="SharkSpirit.Button.MouseOver.Background" Color="#145DA0" />
+    <SolidColorBrush x:Key="SharkSpirit.Button.Foreground" Color="WhiteSmoke" />
 </ResourceDictionary>
