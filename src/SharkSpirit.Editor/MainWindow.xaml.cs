@@ -1,17 +1,12 @@
-﻿using System.Windows;
-using SharkSpirit.Editor.Core.ViewModels;
-
-namespace SharkSpirit.Editor
+﻿namespace SharkSpirit.Editor
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow 
     {
         public MainWindow()
         {
-            DataContext = new MainWindowViewModel();
-
             InitializeComponent();
         }
     }

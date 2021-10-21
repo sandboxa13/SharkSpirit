@@ -1,13 +1,14 @@
 ﻿using ReactiveUI.Fody.Helpers;
+using SharkSpirit.Editor.Core.Services;
 
 namespace SharkSpirit.Editor.Core.ViewModels.Launcher
 {
     public class LauncherViewModel : ViewModelBase
     {
-        public LauncherViewModel()
+        public LauncherViewModel(INavigationService navigationService)
         {
             OpenProjectViewModel = new OpenProjectViewModel();
-            CreateProjectViewModel = new CreateProjectViewModel();
+            CreateProjectViewModel = new CreateProjectViewModel(navigationService);
         }
 
         [Reactive] public OpenProjectViewModel OpenProjectViewModel { get; set; }
