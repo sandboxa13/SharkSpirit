@@ -163,6 +163,7 @@
     <ClInclude Include="Input\InputProcessor.h" />
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyCodes.h" />
+    <ClInclude Include="Input\Mouse.h" />
     <ClInclude Include="Input\MouseCodes.h" />
     <ClInclude Include="Logger\BSlogger.hpp" />
     <ClInclude Include="Logger\Logger.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="EngineAPI.cpp" />
     <ClCompile Include="Input\InputProcessor.cpp" />
     <ClCompile Include="Input\Keyboard.cpp" />
+    <ClCompile Include="Input\Mouse.cpp" />
     <ClCompile Include="Logger\Logger.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Platform\Window\Window.cpp" />

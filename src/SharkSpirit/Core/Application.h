@@ -11,7 +11,7 @@ class application
 {
 public:
 	application(SharkSpirit::window_info* windowInfo)
-		: m_input(SharkSpirit::input_processor(windowInfo->m_window_handle)),
+		: m_input(SharkSpirit::input_processor(windowInfo)),
 		  m_timer(SharkSpirit::Timer()),
 		  m_isRunning(false)
 	{

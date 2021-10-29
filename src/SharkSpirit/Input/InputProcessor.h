@@ -3,15 +3,17 @@
 #include "Logger/Logger.h"
 #include "Core/IInitializable.h"
 #include "Keyboard.h"
+#include <Input/Mouse.h>
+#include <Platform/Window/Window.h>
 
 namespace SharkSpirit
 {
 	class input_processor : public IInitializable
 	{
 	public:
-		input_processor(HWND windowHandle) : m_keyboard(keyboard())
+		input_processor(window_info* info) : m_keyboard(keyboard()), m_mouse(mouse())
 		{
-			this->windowHandle = windowHandle;
+			m_windowInfo = info;
 		};
 
 		virtual ~input_processor() = default;
@@ -25,7 +27,8 @@ namespace SharkSpirit
 
 
 	private:
-		HWND windowHandle;
+		window_info* m_windowInfo;
 		keyboard m_keyboard;
+		mouse m_mouse;
 	};
 }
