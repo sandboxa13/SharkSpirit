@@ -6,7 +6,7 @@
 #include "Core/Timer/Timer.h"
 #include "IInitializable.h"
 #include "Platform/Window/Window.h"
-#include <Render/DirectX/GraphicsManager.h>
+#include "Render/DirectX/GraphicsManager.h"
 
 namespace SharkSpirit 
 {

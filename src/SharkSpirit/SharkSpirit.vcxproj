@@ -156,7 +156,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h" />
-    <ClInclude Include="Core\Engine.h" />
     <ClInclude Include="Core\IInitializable.h" />
     <ClInclude Include="Core\Timer\Timer.h" />
     <ClInclude Include="EngineAPI.h" />
@@ -173,7 +172,6 @@
     <ClInclude Include="Utils\Math.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\Timer\Timer.cpp" />
     <ClCompile Include="EngineAPI.cpp" />
     <ClCompile Include="Input\InputProcessor.cpp" />
