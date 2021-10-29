@@ -247,10 +247,6 @@ namespace SharkSpirit
         set_projection_matrix();
         set_camera_matrix(DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
 
-        std::unique_ptr<SpriteBatch> m_spriteBatch;
-        DirectX::SimpleMath::Vector2 m_screenPos;
-        DirectX::SimpleMath::Vector2 m_origin;
-
         //IMGUI_CHECKVERSION();
         //ImGui::CreateContext();
         //ImGui::StyleColorsDark();
