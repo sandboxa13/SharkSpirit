@@ -32,9 +32,9 @@ public:
 
 			m_graphics.present();
 
-			m_timer.Tick();
-
 			on_update();
+
+			m_timer.Tick();
 		}
 
 		return m_isRunning;
