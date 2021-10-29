@@ -168,7 +168,9 @@
     <ClInclude Include="Logger\BSlogger.hpp" />
     <ClInclude Include="Logger\Logger.h" />
     <ClInclude Include="Platform\Window\Window.h" />
+    <ClInclude Include="Render\DirectX\GraphicsManager.h" />
     <ClInclude Include="Render\RenderEngine.h" />
+    <ClInclude Include="Utils\Math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Engine.cpp" />
@@ -180,6 +182,7 @@
     <ClCompile Include="Logger\Logger.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Platform\Window\Window.cpp" />
+    <ClCompile Include="Render\DirectX\GraphicsManager.cpp" />
     <ClCompile Include="Render\RenderEngine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
