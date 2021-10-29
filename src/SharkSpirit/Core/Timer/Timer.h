@@ -11,6 +11,7 @@ namespace SharkSpirit
 	{
 	public:
 		Timer();
+		~Timer() = default;
 		float DeltaTime() const noexcept;
 		float TotalTime();
 

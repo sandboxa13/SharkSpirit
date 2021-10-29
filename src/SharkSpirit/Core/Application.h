@@ -8,58 +8,91 @@
 #include "Platform/Window/Window.h"
 #include <Render/DirectX/GraphicsManager.h>
 
-class application 
+namespace SharkSpirit 
 {
-public:
-	application(SharkSpirit::window_info* windowInfo)
-		: m_input(SharkSpirit::input_processor(windowInfo)),
-		  m_timer(SharkSpirit::Timer()),
-		  m_graphics(SharkSpirit::graphics_manager(windowInfo->m_window_handle)),
-		  m_isRunning(false)
+	class application_create_info 
 	{
-		on_create();
-	}
-
-	bool run()
-	{
-		m_isRunning = true;
-
-		while (m_isRunning)
+	public:
+		application_create_info(window_info* windowInfo) 
+			: m_window_info(windowInfo)
 		{
-			m_graphics.clear_rt();
 
-			m_isRunning = m_input.process_input();
-
-			m_graphics.present();
-
-			on_update();
-
-			m_timer.Tick();
 		}
 
-		return m_isRunning;
-	}
+		window_info* m_window_info;
+	};
 
-	void stop()
+	class application
 	{
-		m_isRunning = false;
-	}
+	public:
+		application(application_create_info* applicationCreateInfo)
+			: m_input(input_processor(applicationCreateInfo->m_window_info)),
+			  m_timer(Timer()),
+			  m_graphics(graphics_manager(applicationCreateInfo->m_window_info->m_window_handle)),
+			  m_isRunning(false),
+			  m_applicationCreateInfo(applicationCreateInfo)
+		{
+			on_create();
+		}
 
-protected:
-	SharkSpirit::input_processor m_input;
-	SharkSpirit::graphics_manager m_graphics;
-	SharkSpirit::Timer m_timer;
+		~application()
+		{
+			m_input.~input_processor();
+			m_graphics.~graphics_manager();
+			m_timer.~Timer();
+		}
 
-	virtual void on_create() 
-	{
+		virtual void show_window() 
+		{
+			m_applicationCreateInfo->m_window_info->m_window->show();
+		}
 
-	}
+		virtual void hide_window()
+		{
+			m_applicationCreateInfo->m_window_info->m_window->hide();
+		}
 
-	virtual void on_update()
-	{
+		virtual bool run()
+		{
+			m_isRunning = true;
 
-	}
+			while (m_isRunning)
+			{
+				m_graphics.clear_rt();
 
-private:
-	bool m_isRunning;
-};
+				m_isRunning = m_input.process_input();
+
+				m_graphics.present();
+
+				on_update();
+
+				m_timer.Tick();
+			}
+
+			return m_isRunning;
+		}
+
+		virtual void stop()
+		{
+			m_isRunning = false;
+		}
+
+	protected:
+		application_create_info* m_applicationCreateInfo;
+
+		input_processor m_input;
+		graphics_manager m_graphics;
+		Timer m_timer;
+		bool m_isRunning;
+
+		virtual void on_create()
+		{
+
+		}
+
+		virtual void on_update()
+		{
+
+		}
+	};
+}

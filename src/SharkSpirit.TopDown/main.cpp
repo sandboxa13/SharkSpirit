@@ -1,11 +1,12 @@
 #include "Platform/Window/Window.h"
 #include "Core/Application.h"
+
 using namespace SharkSpirit;
 
-class TopDownApplication : public application
+class top_down_application : public application
 {
 public:
-	TopDownApplication(SharkSpirit::window_info* windowInfo) : application(windowInfo)
+	top_down_application(application_create_info* applicationCreateInfo) : application(applicationCreateInfo)
 	{
 
 	}
@@ -37,12 +38,13 @@ int APIENTRY wWinMain(
 	const wchar_t* title = L"Top Down";
 
 	auto windowCreateInfo = window_creation_info(720, 1280, title, title, hInstance);
-	auto window = window_factory::create_window(&windowCreateInfo);
+	auto windowInfo = window_factory::create_window(&windowCreateInfo);
+
+	auto applicationCreateInfo = application_create_info(windowInfo);
 	
-	auto application = TopDownApplication(window->get_window_info());
+	auto application = top_down_application(&applicationCreateInfo);
 
-	window->show();
-
+	application.show_window();
 	application.run();
 
 	return 0;
