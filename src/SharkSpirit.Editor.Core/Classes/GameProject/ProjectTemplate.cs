@@ -11,13 +11,9 @@ namespace SharkSpirit.Editor.Core.Classes.GameProject
             Name = name;
         }
 
-        [DataMember]
-        public string Name { get; set; }
-        [DataMember]
-        public string ProjectFile { get; set; }
-        [DataMember]
-        public string Directory { get; set; }
-        [DataMember]
-        public List<string> Folders { get; set; }
+        [DataMember] public string Name { get; set; }
+        [DataMember] public string ProjectFile { get; set; }
+        [DataMember] public string Directory { get; set; }
+        [DataMember] public List<string> Folders { get; set; }
     }
 }

@@ -2,27 +2,30 @@
 
 #include "Logger/Logger.h"
 #include "Core/IInitializable.h"
+#include "Keyboard.h"
 
 namespace SharkSpirit
 {
-	class InputProcessor : public IInitializable
+	class input_processor : public IInitializable
 	{
 	public:
-		InputProcessor(HWND windowHandle)
+		input_processor(HWND windowHandle) : m_keyboard(keyboard())
 		{
 			this->windowHandle = windowHandle;
 		};
 
-		virtual ~InputProcessor() = default;
+		virtual ~input_processor() = default;
 
 		virtual void Initialize()
 		{
 			Logger::LogInfo("Initialize Input Processor");
 		}
 
-		void ProcessInput();
+		bool process_input();
+
 
 	private:
 		HWND windowHandle;
+		keyboard m_keyboard;
 	};
 }

@@ -1,7 +1,5 @@
-﻿using System.Reactive.Concurrency;
-using System.Windows;
-using ReactiveUI;
-using SharkSpirit.Editor.Core.ViewModels;
+﻿using System.Windows;
+using SharkSpirit.Editor.Core.EngineAPI;
 using SharkSpirit.Editor.Services;
 using SharkSpirit.Editor.Views.Launcher;
 
@@ -17,6 +15,8 @@ namespace SharkSpirit.Editor
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            SharkSpiritAPI.test();
 
             var mainWindow = new MainWindow();
             mainWindow.Show();

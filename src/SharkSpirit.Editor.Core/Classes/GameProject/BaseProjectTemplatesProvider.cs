@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using SharkSpirit.Editor.Core.Classes.Serialization;
+using SharkSpirit.Editor.Core.Utilities.Serialization;
 
 namespace SharkSpirit.Editor.Core.Classes.GameProject
 {

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace SharkSpirit.Editor.Core.Classes.Serialization
+namespace SharkSpirit.Editor.Core.Utilities.Serialization
 {
     public static class Serializer
     {

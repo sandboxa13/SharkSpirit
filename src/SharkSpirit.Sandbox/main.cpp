@@ -1,12 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <windows.h>
-#include <ios>
-#include <cstdio>
-#include <io.h>
-#include <fcntl.h>
-#include "Core/Engine.h"
-
+//#include <ios>
+//#include <cstdio>
+//#include <io.h>
+//#include <fcntl.h>
+//#include "Core/Engine.h"
+//
 using namespace SharkSpirit;
 
 int APIENTRY wWinMain(
@@ -15,20 +15,20 @@ int APIENTRY wWinMain(
 	_In_ LPWSTR lpCmdLine,
 	_In_ int nCmdShow)
 {
-	AllocConsole();
-	freopen("CONIN$", "r", stdin);
-	freopen("CONOUT$", "w", stderr);
-	freopen("CONOUT$", "w", stdout);
+	//AllocConsole();
+	//freopen("CONIN$", "r", stdin);
+	//freopen("CONOUT$", "w", stderr);
+	//freopen("CONOUT$", "w", stdout);
 
-	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-	if (FAILED(hr)) 
-	{
-		Logger::LogWarning("CoInitializeEx FAILED");
-	}
+	//HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	//if (FAILED(hr)) 
+	//{
+	//	Logger::LogWarning("CoInitializeEx FAILED");
+	//}
 
-	const wchar_t* title = L"Shark Spirit SANDBOX";
+	//const wchar_t* title = L"Shark Spirit SANDBOX";
 
-	auto windowConfiguration = WindowConfigurationFactory::CreateWindowConfiguration(1280, 720, title, title, hInstance);
+	/*auto windowConfiguration = WindowConfigurationFactory::CreateWindowConfiguration(1280, 720, title, title, hInstance);
 
 	windowConfiguration = WindowFactory::CreateSSWindow(std::move(windowConfiguration));
 
@@ -43,7 +43,7 @@ int APIENTRY wWinMain(
 		windowConfiguration.release();
 		engineConfig.release();
 		engineInstance.release();
-	}
+	}*/
 	
 	return 0;
 }
