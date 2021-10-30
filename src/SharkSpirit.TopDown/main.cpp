@@ -36,26 +36,19 @@ protected:
 		m_reg.emplace<sprite_component>(player, &m_graphics, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\survivor-idle_rifle_0.png");
 
 		m_player_input = new player_input_system(&m_reg, &m_input, &m_graphics);
+		m_sprite_render_system = new sprite_render_system(&m_reg, &m_input, &m_graphics);
 	}
 
 	void on_update() override 
 	{
 		m_player_input->run();
-
-		auto spriteView = m_reg.group<sprite_component, transform_component>();
-		for (auto entity : spriteView)
-		{
-			sprite_render_system::render_sprite(
-				&m_graphics, 
-				&m_input,
-				spriteView.get<sprite_component>(entity),
-				spriteView.get<transform_component>(entity));
-		}
+		m_sprite_render_system->run();
 	}
 
 private:
 	entt::entity player;
 	player_input_system* m_player_input;
+	sprite_render_system* m_sprite_render_system;
 };
 
 int APIENTRY wWinMain(
