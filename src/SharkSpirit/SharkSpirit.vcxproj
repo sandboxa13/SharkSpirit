@@ -160,6 +160,7 @@
     <ClInclude Include="Core\DxgiInfoManager.h" />
     <ClInclude Include="Core\ECS\Components\Components.h" />
     <ClInclude Include="Core\ECS\Entity.h" />
+    <ClInclude Include="Core\ECS\Systems\ISystem.h" />
     <ClInclude Include="Core\ECS\Systems\SpriteRenderSystem.h" />
     <ClInclude Include="Core\GraphicsThrowMacros.h" />
     <ClInclude Include="Core\IInitializable.h" />

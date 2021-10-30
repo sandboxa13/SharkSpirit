@@ -108,6 +108,9 @@
     <ClInclude Include="Core\DxErr\dxerr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Core\ECS\Systems\ISystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logger\Logger.cpp">

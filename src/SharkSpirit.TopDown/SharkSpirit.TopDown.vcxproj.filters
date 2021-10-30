@@ -7,6 +7,8 @@
     <ClInclude Include="Components\GameComponents.h" />
     <ClInclude Include="Components\Player.h" />
     <ClInclude Include="Systems\RenderSystem.h" />
+    <ClInclude Include="Components\PlayerInputComponent.h" />
+    <ClInclude Include="Systems\PlayerInputSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="assets\vs_2d.hlsl" />

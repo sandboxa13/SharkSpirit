@@ -71,9 +71,19 @@ namespace SharkSpirit
 		PixelShader pixelshader_2d;
 	};
 
-	/*struct transform_component
+	struct transform_component
 	{
+		transform_component(
+			DirectX::XMFLOAT3 pos, 
+			DirectX::XMFLOAT3 rot, 
+			DirectX::XMFLOAT2 scale) 
+			: m_pos(pos), m_rotation(rot), m_scale(scale)
+		{
+
+		}
+
 		DirectX::XMFLOAT3 m_pos;
 		DirectX::XMFLOAT3 m_rotation;
-	};*/
+		DirectX::XMFLOAT2 m_scale;
+	};
 }

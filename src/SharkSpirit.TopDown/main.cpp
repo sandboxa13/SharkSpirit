@@ -3,6 +3,9 @@
 #include "Core/ECS/Components/Components.h"
 #include "Components/GameComponents.h"
 #include <Core/ECS/Systems/SpriteRenderSystem.h>
+#include "Components/PlayerInputComponent.h"
+#include "Systems/PlayerInputSystem.h"
+
 using namespace SharkSpirit;
 
 class top_down_game : public application
@@ -16,24 +19,36 @@ public:
 protected:
 	void on_create() override
 	{
+		DirectX::XMFLOAT3 pos = { 0, 0, 0 };
+		DirectX::XMFLOAT3 rot = { 0, 0, 0 };
+		DirectX::XMFLOAT2 scale = { 64, 64 };
+
 		player = m_reg.create();
-		//m_reg.emplace<TransformComponent>(player);
-		m_reg.emplace<sprite_component>(player, &m_graphics, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\seamless_grass.jpg");
-		//m_reg.emplace<PlayerAtackRaduisComponent>(player);
+		m_reg.emplace<transform_component>(player, pos, rot, scale);
+		m_reg.emplace<player_input_component>(player, 0.1f);
+		m_reg.emplace<sprite_component>(player, &m_graphics, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\survivor-idle_rifle_0.png");
+
+		m_player_input = new player_input_system(&m_reg, &m_input, &m_graphics);
 	}
 
 	void on_update() override 
 	{
-		auto spriteView = m_reg.view<sprite_component>();
+		m_player_input->run();
+
+		auto spriteView = m_reg.group<sprite_component, transform_component>();
 		for (auto entity : spriteView)
 		{
-			//sprite_component& sprite = ;
-			sprite_render_system::render_sprite(&m_graphics, spriteView.get<sprite_component>(entity));
+			sprite_render_system::render_sprite(
+				&m_graphics, 
+				&m_input,
+				spriteView.get<sprite_component>(entity),
+				spriteView.get<transform_component>(entity));
 		}
 	}
 
 private:
 	entt::entity player;
+	player_input_system* m_player_input;
 };
 
 int APIENTRY wWinMain(

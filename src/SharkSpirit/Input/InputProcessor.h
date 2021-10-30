@@ -25,10 +25,10 @@ namespace SharkSpirit
 
 		bool process_input();
 
-
-	private:
-		window_info* m_windowInfo;
 		keyboard m_keyboard;
 		mouse m_mouse;
+	private:
+		window_info* m_windowInfo;
+		
 	};
 }
