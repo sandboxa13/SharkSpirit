@@ -1,12 +1,13 @@
 #pragma once
 
 #include <DirectXMath.h>
+#include "Render/DirectX/Texture.h"
 
 namespace SharkSpirit
 {
 	struct SpriteComponent
 	{
-		DirectX::XMFLOAT4 m_color;
+		Texture m_texture;
 	};
 
 	struct TransformComponent

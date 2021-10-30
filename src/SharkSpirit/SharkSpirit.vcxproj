@@ -171,6 +171,7 @@
     <ClInclude Include="Logger\Logger.h" />
     <ClInclude Include="Platform\Window\Window.h" />
     <ClInclude Include="Render\DirectX\GraphicsManager.h" />
+    <ClInclude Include="Render\DirectX\Texture.h" />
     <ClInclude Include="Render\RenderEngine.h" />
     <ClInclude Include="Utils\Id.h" />
     <ClInclude Include="Utils\Math.h" />

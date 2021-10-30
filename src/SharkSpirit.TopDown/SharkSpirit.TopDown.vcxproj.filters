@@ -3,4 +3,9 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Components\GameComponents.h" />
+    <ClInclude Include="Components\Player.h" />
+    <ClInclude Include="Systems\RenderSystem.h" />
+  </ItemGroup>
 </Project>
