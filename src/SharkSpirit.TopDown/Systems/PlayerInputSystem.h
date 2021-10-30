@@ -45,9 +45,6 @@ namespace SharkSpirit
 				}
 			}
 		}
-
-	private:
-
 	};
 
 	player_input_system::~player_input_system()

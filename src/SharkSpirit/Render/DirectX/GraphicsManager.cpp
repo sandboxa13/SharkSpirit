@@ -202,6 +202,8 @@ namespace SharkSpirit
 
         pBackBuffer->Release();
 
+      
+
         create_and_bind_view_port(width, height);
 
         create_and_bind_depth_buffer(width, height);
@@ -278,12 +280,12 @@ namespace SharkSpirit
         (m_immediateContext->DrawIndexed(count, 0, 0));
     }
 
-    void graphics_manager::PSSetShaderResources(UINT StartSlot, UINT NumViews, ID3D11ShaderResourceView* const* ppShaderResourceViews)
+    void graphics_manager::ps_set_shader_resources(UINT StartSlot, UINT NumViews, ID3D11ShaderResourceView* const* ppShaderResourceViews)
     {
         m_immediateContext->PSSetShaderResources(StartSlot, NumViews, ppShaderResourceViews);
     }
 
-    void graphics_manager::VSSetConstantBuffers(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppConstantBuffers)
+    void graphics_manager::vs_set_constant_buffers(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppConstantBuffers)
     {
         m_immediateContext->VSSetConstantBuffers(StartSlot, NumBuffers, ppConstantBuffers);
     }

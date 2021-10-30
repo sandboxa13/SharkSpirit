@@ -1,5 +1,4 @@
 #pragma once
-
 #include <d3d11_1.h>
 #include <wrl.h>
 #include <directxcolors.h>
@@ -73,8 +72,8 @@ namespace SharkSpirit
 		float get_aspect_ratio() const;
 		void draw_indexed(int count);
 
-		void PSSetShaderResources(UINT StartSlot, UINT NumViews, ID3D11ShaderResourceView* const* ppShaderResourceViews);
-		void VSSetConstantBuffers(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppConstantBuffers);
+		void ps_set_shader_resources(UINT StartSlot, UINT NumViews, ID3D11ShaderResourceView* const* ppShaderResourceViews);
+		void vs_set_constant_buffers(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppConstantBuffers);
 	private:
 		UINT m_width;
 		UINT m_height;

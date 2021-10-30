@@ -35,19 +35,17 @@ namespace SharkSpirit
 				m_graphics->get_device_context()->PSSetShader(sprite.pixelshader_2d.GetShader(), NULL, 0);
 				m_graphics->get_device_context()->VSSetShader(sprite.vertexshader_2d.GetShader(), NULL, 0);
 
-				m_graphics->VSSetConstantBuffers(0, 1, sprite.cb_vs_vertexshader_2d->GetAddressOf());
+				m_graphics->vs_set_constant_buffers(0, 1, sprite.cb_vs_vertexshader_2d->GetAddressOf());
 				sprite.cb_vs_vertexshader_2d->data.wvpMatrix = wvpMatrix;
 				sprite.cb_vs_vertexshader_2d->ApplyChanges();
 
-				m_graphics->PSSetShaderResources(0, 1, sprite.m_texture->GetTextureResourceViewAddress());
+				m_graphics->ps_set_shader_resources(0, 1, sprite.m_texture->GetTextureResourceViewAddress());
 
 				const UINT offsets = 0;
 				m_graphics->get_device_context()->IASetVertexBuffers(0, 1, sprite.vertices.GetAddressOf(), sprite.vertices.StridePtr(), &offsets);
 				m_graphics->get_device_context()->IASetIndexBuffer(sprite.indices.Get(), DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 0);
 				m_graphics->get_device_context()->DrawIndexed(sprite.indices.IndexCount(), 0, 0);
 			}
-
-			
 		}
 	};
 }
