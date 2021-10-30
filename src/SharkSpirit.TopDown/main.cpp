@@ -1,6 +1,7 @@
 #include "Platform/Window/Window.h"
 #include "Core/Application.h"
 #include "Core/ECS/Components/Components.h"
+#include "Components/GameComponents.h"
 
 using namespace SharkSpirit;
 
@@ -18,15 +19,21 @@ protected:
 		player = m_reg.create();
 		m_reg.emplace<TransformComponent>(player);
 		m_reg.emplace<SpriteComponent>(player);
+		m_reg.emplace<PlayerAtackRaduisComponent>(player);
 	}
 
 	void on_update() override 
 	{
 		auto transformView = m_reg.view<TransformComponent>();
-
 		for (auto entity : transformView)
 		{
 			TransformComponent& transfrom = transformView.get<TransformComponent>(entity);
+		}
+
+		auto spriteView = m_reg.view<SpriteComponent>();
+		for (auto entity : spriteView)
+		{
+			SpriteComponent& sprite = spriteView.get<SpriteComponent>(entity);
 		}
 	}
 

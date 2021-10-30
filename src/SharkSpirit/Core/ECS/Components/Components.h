@@ -6,9 +6,8 @@ namespace SharkSpirit
 {
 	struct SpriteComponent
 	{
-
+		DirectX::XMFLOAT4 m_color;
 	};
-
 
 	struct TransformComponent
 	{
