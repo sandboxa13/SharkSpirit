@@ -2,7 +2,7 @@
 #include "Core/Application.h"
 #include "Core/ECS/Components/Components.h"
 #include "Components/GameComponents.h"
-
+#include <Core/ECS/Systems/SpriteRenderSystem.h>
 using namespace SharkSpirit;
 
 class top_down_game : public application
@@ -17,23 +17,18 @@ protected:
 	void on_create() override
 	{
 		player = m_reg.create();
-		m_reg.emplace<TransformComponent>(player);
-		m_reg.emplace<SpriteComponent>(player);
-		m_reg.emplace<PlayerAtackRaduisComponent>(player);
+		//m_reg.emplace<TransformComponent>(player);
+		m_reg.emplace<sprite_component>(player, &m_graphics, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\seamless_grass.jpg");
+		//m_reg.emplace<PlayerAtackRaduisComponent>(player);
 	}
 
 	void on_update() override 
 	{
-		auto transformView = m_reg.view<TransformComponent>();
-		for (auto entity : transformView)
-		{
-			TransformComponent& transfrom = transformView.get<TransformComponent>(entity);
-		}
-
-		auto spriteView = m_reg.view<SpriteComponent>();
+		auto spriteView = m_reg.view<sprite_component>();
 		for (auto entity : spriteView)
 		{
-			SpriteComponent& sprite = spriteView.get<SpriteComponent>(entity);
+			//sprite_component& sprite = ;
+			sprite_render_system::render_sprites(&m_graphics, spriteView.get<sprite_component>(entity));
 		}
 	}
 
@@ -45,7 +40,7 @@ int APIENTRY wWinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE prevInstance,
 	_In_ LPWSTR lpCmdLine,
-	_In_ int nCmdShow)
+	_In_ int nCmdShow)	
 {
 	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 	if (FAILED(hr)) 

@@ -72,9 +72,9 @@ namespace SharkSpirit
 
 				m_isRunning = m_input.process_input();
 
-				m_graphics.present();
-
 				on_update();
+
+				m_graphics.present();
 
 				m_timer.Tick();
 			}

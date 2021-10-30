@@ -158,6 +158,7 @@
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\ECS\Components\Components.h" />
     <ClInclude Include="Core\ECS\Entity.h" />
+    <ClInclude Include="Core\ECS\Systems\SpriteRenderSystem.h" />
     <ClInclude Include="Core\IInitializable.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\Timer\Timer.h" />
@@ -170,11 +171,17 @@
     <ClInclude Include="Logger\BSlogger.hpp" />
     <ClInclude Include="Logger\Logger.h" />
     <ClInclude Include="Platform\Window\Window.h" />
+    <ClInclude Include="Render\DirectX\ConstantBuffer.h" />
     <ClInclude Include="Render\DirectX\GraphicsManager.h" />
+    <ClInclude Include="Render\DirectX\IndexBuffer.h" />
+    <ClInclude Include="Render\DirectX\Shaders.h" />
     <ClInclude Include="Render\DirectX\Texture.h" />
+    <ClInclude Include="Render\DirectX\VertexBuffer.h" />
     <ClInclude Include="Render\RenderEngine.h" />
     <ClInclude Include="Utils\Id.h" />
     <ClInclude Include="Utils\Math.h" />
+    <ClInclude Include="Utils\StringUtils.h" />
+    <ClInclude Include="Utils\WICTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Timer\Timer.cpp" />
@@ -186,7 +193,10 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Platform\Window\Window.cpp" />
     <ClCompile Include="Render\DirectX\GraphicsManager.cpp" />
+    <ClCompile Include="Render\DirectX\Shaders.cpp" />
+    <ClCompile Include="Render\DirectX\Texture.cpp" />
     <ClCompile Include="Render\RenderEngine.cpp" />
+    <ClCompile Include="Utils\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
