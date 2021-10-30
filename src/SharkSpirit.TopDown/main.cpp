@@ -42,23 +42,38 @@ int APIENTRY wWinMain(
 	_In_ LPWSTR lpCmdLine,
 	_In_ int nCmdShow)	
 {
-	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-	if (FAILED(hr)) 
+	try
 	{
-		Logger::LogWarning("CoInitializeEx FAILED");
+		HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+		if (FAILED(hr))
+		{
+			Logger::LogWarning("CoInitializeEx FAILED");
+		}
+
+		const wchar_t* title = L"Top Down";
+
+		auto windowCreateInfo = window_creation_info(720, 1280, title, title, hInstance);
+		auto windowInfo = window_factory::create_window(&windowCreateInfo);
+
+		auto applicationCreateInfo = application_create_info(windowInfo);
+
+		auto application = top_down_game(&applicationCreateInfo);
+
+		application.show_window();
+		application.run();
+
+		return 0;
 	}
-
-	const wchar_t* title = L"Top Down";
-
-	auto windowCreateInfo = window_creation_info(720, 1280, title, title, hInstance);
-	auto windowInfo = window_factory::create_window(&windowCreateInfo);
-
-	auto applicationCreateInfo = application_create_info(windowInfo);
-	
-	auto application = top_down_game(&applicationCreateInfo);
-
-	application.show_window();
-	application.run();
-
-	return 0;
+	catch (const SSException& ex)
+	{
+		MessageBoxA(nullptr, ex.what(), ex.GetType(), MB_OK | MB_ICONEXCLAMATION);
+	}
+	catch (const std::exception& ex)
+	{
+		MessageBoxA(nullptr, ex.what(), "Standart exception", MB_OK | MB_ICONEXCLAMATION);
+	}
+	catch (...)
+	{
+		MessageBoxA(nullptr, "WTF", "WTF exception", MB_OK | MB_ICONEXCLAMATION);
+	}
 }

@@ -1,5 +1,6 @@
 #include "GraphicsManager.h"
 
+
 #pragma comment (lib, "D3D11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
 
@@ -294,7 +295,7 @@ namespace SharkSpirit
     {
         HRESULT hr;
 #ifdef _DEBUG
-        //infoManager.Set();
+        infoManager.Set();
 #endif
 
 
@@ -307,12 +308,122 @@ namespace SharkSpirit
         {
             if (hr == DXGI_ERROR_DEVICE_REMOVED)
             {
-                throw (m_device->GetDeviceRemovedReason());
+                throw GFX_DEVICE_REMOVED_EXCEPT(m_device->GetDeviceRemovedReason());
             }
             else
             {
-                throw (hr);
+                throw GFX_EXCEPT(hr);
             }
         }
     }
+
+
+#pragma region Execptions
+
+    graphics_manager::HrException::HrException(int line, const char* file, HRESULT hr, std::vector<std::string> infoMsgs) noexcept
+        :
+        Exception(line, file),
+        hr(hr)
+    {
+        // join all info messages with newlines into single string
+        for (const auto& m : infoMsgs)
+        {
+            info += m;
+            info.push_back('\n');
+        }
+        // remove final newline if exists
+        if (!info.empty())
+        {
+            info.pop_back();
+        }
+    }
+
+    const char* graphics_manager::HrException::what() const noexcept
+    {
+        std::ostringstream oss;
+        oss << GetType() << std::endl
+            << "[Error Code] 0x" << std::hex << std::uppercase << GetErrorCode()
+            << std::dec << " (" << static_cast<unsigned long>(GetErrorCode()) << ")" << std::endl
+            << "[Error String] " << GetErrorString() << std::endl
+            << "[Description] " << GetErrorDescription() << std::endl;
+        if (!info.empty())
+        {
+            oss << "\n[Error Info]\n" << GetErrorInfo() << std::endl << std::endl;
+        }
+        oss << GetOriginString();
+        whatBuffer = oss.str();
+        return whatBuffer.c_str();
+    }
+
+    const char* graphics_manager::HrException::GetType() const noexcept
+    {
+        return "Shark Spirit Graphics Exception";
+    }
+
+    HRESULT graphics_manager::HrException::GetErrorCode() const noexcept
+    {
+        return hr;
+    }
+
+    std::string graphics_manager::HrException::GetErrorString() const noexcept
+    {
+        return DXGetErrorString(hr);
+    }
+
+    std::string graphics_manager::HrException::GetErrorDescription() const noexcept
+    {
+        char buf[512];
+        DXGetErrorDescription(hr, buf, sizeof(buf));
+        return buf;
+    }
+
+    std::string graphics_manager::HrException::GetErrorInfo() const noexcept
+    {
+        return info;
+    }
+
+
+    const char* graphics_manager::DeviceRemovedException::GetType() const noexcept
+    {
+        return "Shark Spirit Graphics Exception [Device Removed] (DXGI_ERROR_DEVICE_REMOVED)";
+    }
+    graphics_manager::InfoException::InfoException(int line, const char* file, std::vector<std::string> infoMsgs) noexcept
+        :
+        Exception(line, file)
+    {
+        // join all info messages with newlines into single string
+        for (const auto& m : infoMsgs)
+        {
+            info += m;
+            info.push_back('\n');
+        }
+        // remove final newline if exists
+        if (!info.empty())
+        {
+            info.pop_back();
+        }
+    }
+
+
+    const char* graphics_manager::InfoException::what() const noexcept
+    {
+        std::ostringstream oss;
+        oss << GetType() << std::endl
+            << "\n[Error Info]\n" << GetErrorInfo() << std::endl << std::endl;
+        oss << GetOriginString();
+        whatBuffer = oss.str();
+        return whatBuffer.c_str();
+    }
+
+    const char* graphics_manager::InfoException::GetType() const noexcept
+    {
+        return "Graphics Info Exception";
+    }
+
+    std::string graphics_manager::InfoException::GetErrorInfo() const noexcept
+    {
+        return info;
+    }
+
+#pragma endregion
 }

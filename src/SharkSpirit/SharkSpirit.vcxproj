@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -156,11 +156,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h" />
+    <ClInclude Include="Core\DxErr\dxerr.h" />
+    <ClInclude Include="Core\DxgiInfoManager.h" />
     <ClInclude Include="Core\ECS\Components\Components.h" />
     <ClInclude Include="Core\ECS\Entity.h" />
     <ClInclude Include="Core\ECS\Systems\SpriteRenderSystem.h" />
+    <ClInclude Include="Core\GraphicsThrowMacros.h" />
     <ClInclude Include="Core\IInitializable.h" />
     <ClInclude Include="Core\Scene.h" />
+    <ClInclude Include="Core\SSException.h" />
     <ClInclude Include="Core\Timer\Timer.h" />
     <ClInclude Include="EngineAPI.h" />
     <ClInclude Include="Input\InputProcessor.h" />
@@ -184,6 +188,9 @@
     <ClInclude Include="Utils\WICTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\DxErr\dxerr.cpp" />
+    <ClCompile Include="Core\DxgiInfoManager.cpp" />
+    <ClCompile Include="Core\SSException.cpp" />
     <ClCompile Include="Core\Timer\Timer.cpp" />
     <ClCompile Include="EngineAPI.cpp" />
     <ClCompile Include="Input\InputProcessor.cpp" />
@@ -199,6 +206,9 @@
     <ClCompile Include="Utils\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Core\DxErr\DXGetErrorDescription.inl" />
+    <None Include="Core\DxErr\DXGetErrorString.inl" />
+    <None Include="Core\DxErr\DXTrace.inl" />
     <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
