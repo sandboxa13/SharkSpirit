@@ -40,6 +40,7 @@ namespace SharkSpirit
 				sprite.cb_vs_vertexshader_2d->ApplyChanges();
 
 				m_graphics->ps_set_shader_resources(0, 1, sprite.m_texture->GetTextureResourceViewAddress());
+				m_graphics->get_device_context().Get()->PSSetSamplers(0u, 1u, sprite.m_pSampler.GetAddressOf());
 
 				const UINT offsets = 0;
 				m_graphics->get_device_context()->IASetVertexBuffers(0, 1, sprite.vertices.GetAddressOf(), sprite.vertices.StridePtr(), &offsets);

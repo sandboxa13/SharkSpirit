@@ -20,6 +20,14 @@ namespace SharkSpirit
 		{
 			m_texture = new Texture(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get(), spritePath);
 
+			D3D11_SAMPLER_DESC samplerDesc = {};
+			samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+			samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+			samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+			samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+
+			graphicsManager->get_device()->CreateSamplerState(&samplerDesc, &m_pSampler);
+
 			std::vector<vertex_2d> vertexData =
 			{
 				vertex_2d(-0.5f, -0.5f, 0.0f, 0.0f, 0.0f), //TopLeft
@@ -37,6 +45,9 @@ namespace SharkSpirit
 			HRESULT hr = vertices.Initialize(graphicsManager->get_device().Get(), vertexData.data(), vertexData.size());
 
 			hr = indices.Initialize(graphicsManager->get_device().Get(), indexData.data(), indexData.size());
+
+			vertexData.clear();
+			indexData.clear();
 
 			//2d shaders
 			D3D11_INPUT_ELEMENT_DESC layout2D[] =
@@ -64,6 +75,7 @@ namespace SharkSpirit
 		Texture* m_texture;
 		constant_buffer<constant_buffer_2d>* cb_vs_vertexshader_2d = nullptr;
 		DirectX::XMMATRIX worldMatrix = DirectX::XMMatrixIdentity();
+		ComPtr<ID3D11SamplerState> m_pSampler;
 
 		index_buffer indices;
 		vertex_buffer<vertex_2d> vertices;

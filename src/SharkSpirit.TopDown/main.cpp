@@ -6,6 +6,10 @@
 #include "Components/PlayerInputComponent.h"
 #include "Systems/PlayerInputSystem.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 using namespace SharkSpirit;
 
 class top_down_game : public application
@@ -35,6 +39,19 @@ protected:
 		m_reg.emplace<player_input_component>(player, 0.1f);
 		m_reg.emplace<sprite_component>(player, &m_graphics, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\survivor-idle_rifle_0.png");
 
+		for (size_t x = 0; x < 1024; x += 64)
+		{
+			for (size_t y = 0; y < 512; y += 64)
+			{
+				auto grass = m_reg.create();
+				DirectX::XMFLOAT3 g_pos = { (float)x, (float)y, 0 };
+				DirectX::XMFLOAT3 g_rot = { 0, 0, 0 };
+				DirectX::XMFLOAT2 g_sc = { 64, 64 };
+				m_reg.emplace<transform_component>(grass, g_pos, g_rot, g_sc);
+				m_reg.emplace<sprite_component>(grass, &m_graphics, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\seamless_grass.jpg");
+			}
+		}
+
 		m_player_input = new player_input_system(&m_reg, &m_input, &m_graphics);
 		m_sprite_render_system = new sprite_render_system(&m_reg, &m_input, &m_graphics);
 	}
@@ -59,6 +76,9 @@ int APIENTRY wWinMain(
 {
 	try
 	{
+		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+
 		HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 		if (FAILED(hr))
 		{

@@ -15,7 +15,6 @@
     <FxCompile Include="assets\ps_2d.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\archive\DirectX-11-Engine-VS2017-Tutorial_60\DirectX 11 Engine VS2017\DirectX 11 Engine VS2017\Data\Textures\seamless_grass.jpg" />
     <Image Include="assets\seamless_grass.jpg" />
   </ItemGroup>
 </Project>
