@@ -39,6 +39,8 @@ protected:
 		m_reg.emplace<player_input_component>(player, 0.1f);
 		m_reg.emplace<sprite_component>(player, &m_graphics, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\survivor-idle_rifle_0.png");
 
+		const std::string& path = "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\seamless_grass.jpg";
+
 		for (size_t x = 0; x < 1024; x += 64)
 		{
 			for (size_t y = 0; y < 512; y += 64)
@@ -48,9 +50,11 @@ protected:
 				DirectX::XMFLOAT3 g_rot = { 0, 0, 0 };
 				DirectX::XMFLOAT2 g_sc = { 64, 64 };
 				m_reg.emplace<transform_component>(grass, g_pos, g_rot, g_sc);
-				m_reg.emplace<sprite_component>(grass, &m_graphics, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\seamless_grass.jpg");
+				m_reg.emplace<sprite_component>(grass, &m_graphics, path);
 			}
 		}
+
+		path.~basic_string();
 
 		m_player_input = new player_input_system(&m_reg, &m_input, &m_graphics);
 		m_sprite_render_system = new sprite_render_system(&m_reg, &m_input, &m_graphics);

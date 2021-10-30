@@ -6,6 +6,8 @@ namespace SharkSpirit
 	bool VertexShader::Initialize(ID3D11Device* device, std::wstring shaderpath, D3D11_INPUT_ELEMENT_DESC* layoutDesc, UINT numElements)
 	{
 		HRESULT hr = D3DReadFileToBlob(shaderpath.c_str(), this->shader_buffer.GetAddressOf());
+
+		shaderpath.clear();
 		if (FAILED(hr))
 		{
 			return false;
@@ -44,6 +46,9 @@ namespace SharkSpirit
 	bool PixelShader::Initialize(ID3D11Device* device, std::wstring shaderpath)
 	{
 		HRESULT hr = D3DReadFileToBlob(shaderpath.c_str(), this->shader_buffer.GetAddressOf());
+
+		shaderpath.clear();
+
 		if (FAILED(hr))
 		{
 			return false;

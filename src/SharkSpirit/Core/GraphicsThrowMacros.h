@@ -13,9 +13,9 @@
 #define GFX_DEVICE_REMOVED_EXCEPT(hr) SharkSpirit::graphics_manager::DeviceRemovedException( __LINE__,__FILE__,(hr),infoManager.GetMessages() )
 #define GFX_THROW_INFO_ONLY(call) infoManager.Set(); (call); {auto v = infoManager.GetMessages(); if(!v.empty()) {throw SharkSpirit::graphics_manager::InfoException( __LINE__,__FILE__,v);}}
 #else
-#define GFX_EXCEPT(hr) GraphicsManager::HrException( __LINE__,__FILE__,(hr) )
+#define GFX_EXCEPT(hr)  SharkSpirit::graphics_manager::HrException( __LINE__,__FILE__,(hr) )
 #define GFX_THROW_INFO(hrcall) GFX_THROW_NOINFO(hrcall)
-#define GFX_DEVICE_REMOVED_EXCEPT(hr) GraphicsManager::DeviceRemovedException( __LINE__,__FILE__,(hr) )
+#define GFX_DEVICE_REMOVED_EXCEPT(hr)  SharkSpirit::graphics_manager::DeviceRemovedException( __LINE__,__FILE__,(hr) )
 #define GFX_THROW_INFO_ONLY(call) (call)
 #endif
 

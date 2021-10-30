@@ -16,9 +16,9 @@ namespace SharkSpirit
 	public:
 		sprite_component(
 			graphics_manager* graphicsManager, 
-			std::string spritePath) 
+			const std::string& filePath)
 		{
-			m_texture = new Texture(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get(), spritePath);
+			m_texture = new Texture(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get(), filePath);
 
 			D3D11_SAMPLER_DESC samplerDesc = {};
 			samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
