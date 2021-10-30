@@ -72,6 +72,9 @@ namespace SharkSpirit
 		void resize(UINT width, UINT height);
 		float get_aspect_ratio() const;
 		void draw_indexed(int count);
+
+		void PSSetShaderResources(UINT StartSlot, UINT NumViews, ID3D11ShaderResourceView* const* ppShaderResourceViews);
+		void VSSetConstantBuffers(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppConstantBuffers);
 	private:
 		UINT m_width;
 		UINT m_height;

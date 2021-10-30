@@ -28,7 +28,7 @@ protected:
 		for (auto entity : spriteView)
 		{
 			//sprite_component& sprite = ;
-			sprite_render_system::render_sprites(&m_graphics, spriteView.get<sprite_component>(entity));
+			sprite_render_system::render_sprite(&m_graphics, spriteView.get<sprite_component>(entity));
 		}
 	}
 

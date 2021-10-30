@@ -102,13 +102,13 @@ namespace SharkSpirit
         {
             const auto driver_type = driverTypes[driverTypeIndex];
 
-            (D3D11CreateDevice(nullptr, driver_type, nullptr, createDeviceFlags, featureLevels, numFeatureLevels,
+            GFX_THROW_INFO(D3D11CreateDevice(nullptr, driver_type, nullptr, createDeviceFlags, featureLevels, numFeatureLevels,
                 D3D11_SDK_VERSION, &m_device, &m_featureLevel, &m_immediateContext));
 
             if (hr == E_INVALIDARG)
             {
                 // DirectX 11.0 platforms will not recognize D3D_FEATURE_LEVEL_11_1 so we need to retry without it
-                (D3D11CreateDevice(nullptr, driver_type, nullptr, createDeviceFlags, &featureLevels[1], numFeatureLevels - 1,
+                GFX_THROW_INFO(D3D11CreateDevice(nullptr, driver_type, nullptr, createDeviceFlags, &featureLevels[1], numFeatureLevels - 1,
                     D3D11_SDK_VERSION, &m_device, &m_featureLevel, &m_immediateContext));
             }
 
@@ -120,14 +120,14 @@ namespace SharkSpirit
         IDXGIFactory1* dxgiFactory = nullptr;
         {
             IDXGIDevice* dxgiDevice = nullptr;
-            (m_device.Get()->QueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void**>(&dxgiDevice)));
+            GFX_THROW_INFO(m_device.Get()->QueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void**>(&dxgiDevice)));
             if (SUCCEEDED(hr))
             {
                 IDXGIAdapter* adapter = nullptr;
-                (dxgiDevice->GetAdapter(&adapter));
+                GFX_THROW_INFO(dxgiDevice->GetAdapter(&adapter));
                 if (SUCCEEDED(hr))
                 {
-                    (adapter->GetParent(__uuidof(IDXGIFactory1), reinterpret_cast<void**>(&dxgiFactory)));
+                    GFX_THROW_INFO(adapter->GetParent(__uuidof(IDXGIFactory1), reinterpret_cast<void**>(&dxgiFactory)));
                     adapter->Release();
                 }
                 dxgiDevice->Release();
@@ -136,14 +136,14 @@ namespace SharkSpirit
 
 
         IDXGIFactory2* dxgiFactory2 = nullptr;
-        (dxgiFactory->QueryInterface(__uuidof(IDXGIFactory2), reinterpret_cast<void**>(&dxgiFactory2)));
+        GFX_THROW_INFO(dxgiFactory->QueryInterface(__uuidof(IDXGIFactory2), reinterpret_cast<void**>(&dxgiFactory2)));
         if (dxgiFactory2)
         {
             // DirectX 11.1 or later
-            (m_device.Get()->QueryInterface(__uuidof(ID3D11Device1), (&m_device1)));
+            GFX_THROW_INFO(m_device.Get()->QueryInterface(__uuidof(ID3D11Device1), (&m_device1)));
             if (SUCCEEDED(hr))
             {
-                (m_immediateContext.Get()->QueryInterface(__uuidof(ID3D11DeviceContext1), (&m_immediateContext1)));
+                GFX_THROW_INFO(m_immediateContext.Get()->QueryInterface(__uuidof(ID3D11DeviceContext1), (&m_immediateContext1)));
             }
 
             DXGI_SWAP_CHAIN_DESC1 sd = {};
@@ -155,10 +155,10 @@ namespace SharkSpirit
             sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
             sd.BufferCount = 1;
 
-            (dxgiFactory2->CreateSwapChainForHwnd(m_device.Get(), hwnd, &sd, nullptr, nullptr, &m_pSwapChain1));
+            GFX_THROW_INFO(dxgiFactory2->CreateSwapChainForHwnd(m_device.Get(), hwnd, &sd, nullptr, nullptr, &m_pSwapChain1));
             if (SUCCEEDED(hr))
             {
-                (m_pSwapChain1->QueryInterface(__uuidof(IDXGISwapChain), (&m_pSwapChain)));
+                GFX_THROW_INFO(m_pSwapChain1->QueryInterface(__uuidof(IDXGISwapChain), (&m_pSwapChain)));
             }
 
             dxgiFactory2->Release();
@@ -179,18 +179,18 @@ namespace SharkSpirit
             sd.SampleDesc.Quality = 0;
             sd.Windowed = TRUE;
 
-            (dxgiFactory->CreateSwapChain(m_device.Get(), &sd, &(m_pSwapChain)));
+            GFX_THROW_INFO(dxgiFactory->CreateSwapChain(m_device.Get(), &sd, &(m_pSwapChain)));
         }
 
         dxgiFactory->Release();
 
         // Create a render target view
         ID3D11Texture2D* pBackBuffer = nullptr;
-        (m_pSwapChain.Get()->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&pBackBuffer)));
+        GFX_THROW_INFO(m_pSwapChain.Get()->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&pBackBuffer)));
 
         auto device = m_device.Get();
 
-        (device->CreateRenderTargetView(pBackBuffer, nullptr, m_pRenderTargetView.GetAddressOf()));
+        GFX_THROW_INFO(device->CreateRenderTargetView(pBackBuffer, nullptr, m_pRenderTargetView.GetAddressOf()));
 
         pBackBuffer->Release();
 
@@ -226,14 +226,14 @@ namespace SharkSpirit
         m_pDepthStencilBuffer->Release();
         m_pDepthStencilView->Release();
 
-        (m_pSwapChain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0));
+        GFX_THROW_INFO(m_pSwapChain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0));
         ID3D11Texture2D* pBackBuffer;
 
-        (m_pSwapChain.Get()->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&pBackBuffer)));
+        GFX_THROW_INFO(m_pSwapChain.Get()->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&pBackBuffer)));
         if (FAILED(hr))
             return;
 
-        (m_device.Get()->CreateRenderTargetView(pBackBuffer, nullptr, m_pRenderTargetView.GetAddressOf()));
+        GFX_THROW_INFO(m_device.Get()->CreateRenderTargetView(pBackBuffer, nullptr, m_pRenderTargetView.GetAddressOf()));
         pBackBuffer->Release();
         if (FAILED(hr))
             return;
@@ -268,6 +268,16 @@ namespace SharkSpirit
     void graphics_manager::draw_indexed(const int count)
     {
         (m_immediateContext->DrawIndexed(count, 0, 0));
+    }
+
+    void graphics_manager::PSSetShaderResources(UINT StartSlot, UINT NumViews, ID3D11ShaderResourceView* const* ppShaderResourceViews)
+    {
+        m_immediateContext->PSSetShaderResources(StartSlot, NumViews, ppShaderResourceViews);
+    }
+
+    void graphics_manager::VSSetConstantBuffers(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppConstantBuffers)
+    {
+        m_immediateContext->VSSetConstantBuffers(StartSlot, NumBuffers, ppConstantBuffers);
     }
 
     DirectX::XMMATRIX graphics_manager::get_camera_matrix() const

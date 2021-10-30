@@ -47,12 +47,12 @@ namespace SharkSpirit
 
 			UINT numElements2D = ARRAYSIZE(layout2D);
 
-			if (!vertexshader_2d.Initialize(graphicsManager->get_device().Get(), L"vertexshader_2d.cso", layout2D, numElements2D)) 
+			if (!vertexshader_2d.Initialize(graphicsManager->get_device().Get(), L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\vs_2d.cso", layout2D, numElements2D)) 
 			{
 
 			}
 
-			if (!pixelshader_2d.Initialize(graphicsManager->get_device().Get(), L"pixelshader_2d.cso"))
+			if (!pixelshader_2d.Initialize(graphicsManager->get_device().Get(), L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\ps_2d.cso"))
 			{
 
 			}
