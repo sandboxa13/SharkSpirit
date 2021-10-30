@@ -7,6 +7,7 @@
 #include "IInitializable.h"
 #include "Platform/Window/Window.h"
 #include "Render/DirectX/GraphicsManager.h"
+#include "Scene.h"
 
 namespace SharkSpirit 
 {
@@ -30,9 +31,10 @@ namespace SharkSpirit
 			  m_timer(Timer()),
 			  m_graphics(graphics_manager(applicationCreateInfo->m_window_info->m_window_handle)),
 			  m_isRunning(false),
-			  m_applicationCreateInfo(applicationCreateInfo)
+			  m_applicationCreateInfo(applicationCreateInfo),
+			  m_reg(entt::registry())
 		{
-			on_create();
+			
 		}
 
 		~application()
@@ -55,6 +57,8 @@ namespace SharkSpirit
 		virtual bool run()
 		{
 			m_isRunning = true;
+
+			on_create();
 
 			while (m_isRunning)
 			{
@@ -84,6 +88,8 @@ namespace SharkSpirit
 		graphics_manager m_graphics;
 		Timer m_timer;
 		bool m_isRunning;
+
+		entt::registry m_reg;
 
 		virtual void on_create()
 		{

@@ -156,7 +156,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h" />
+    <ClInclude Include="Core\ECS\Components\Components.h" />
+    <ClInclude Include="Core\ECS\Entity.h" />
     <ClInclude Include="Core\IInitializable.h" />
+    <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\Timer\Timer.h" />
     <ClInclude Include="EngineAPI.h" />
     <ClInclude Include="Input\InputProcessor.h" />
@@ -169,6 +172,7 @@
     <ClInclude Include="Platform\Window\Window.h" />
     <ClInclude Include="Render\DirectX\GraphicsManager.h" />
     <ClInclude Include="Render\RenderEngine.h" />
+    <ClInclude Include="Utils\Id.h" />
     <ClInclude Include="Utils\Math.h" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +186,9 @@
     <ClCompile Include="Platform\Window\Window.cpp" />
     <ClCompile Include="Render\DirectX\GraphicsManager.cpp" />
     <ClCompile Include="Render\RenderEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
