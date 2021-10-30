@@ -114,6 +114,19 @@ namespace SharkSpirit
 
 			if (msg.message == WM_QUIT)
 			{
+				PostQuitMessage(0);
+				return false;
+			}
+			if (msg.message == WM_CLOSE)
+			{
+				//DestroyWindow(m_windowInfo->m_window_handle)
+				PostQuitMessage(0);
+				return false;
+			}
+
+			if (msg.message == WM_DESTROY)
+			{
+				PostQuitMessage(0);
 				return false;
 			}
 

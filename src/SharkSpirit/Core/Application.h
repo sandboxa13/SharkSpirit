@@ -42,6 +42,7 @@ namespace SharkSpirit
 			m_input.~input_processor();
 			m_graphics.~graphics_manager();
 			m_timer.~Timer();
+			m_reg.clear();
 		}
 
 		entt::entity create_entity()

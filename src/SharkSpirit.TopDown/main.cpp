@@ -16,6 +16,13 @@ public:
 
 	}
 
+	~top_down_game()
+	{
+		stop();
+		m_player_input->~player_input_system();
+		m_reg.clear();
+	}
+
 protected:
 	void on_create() override
 	{
@@ -76,6 +83,8 @@ int APIENTRY wWinMain(
 
 		application.show_window();
 		application.run();
+
+		application.~application();
 
 		return 0;
 	}

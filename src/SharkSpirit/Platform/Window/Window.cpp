@@ -39,9 +39,8 @@ namespace SharkSpirit
 		switch (msg)
 		{
 		case WM_CLOSE:
-			DestroyWindow(this->m_window_handle);
-			this->m_window_handle = 0;
-			break;
+			PostQuitMessage(0);
+			return 0;
 
 		case WM_DESTROY:
 			PostQuitMessage(0);
