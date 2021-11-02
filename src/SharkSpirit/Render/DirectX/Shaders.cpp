@@ -3,47 +3,47 @@
 namespace SharkSpirit
 {
 
-	bool VertexShader::Initialize(ID3D11Device* device, std::wstring shaderpath, D3D11_INPUT_ELEMENT_DESC* layoutDesc, UINT numElements)
+	HRESULT vertex_shader::Initialize(ID3D11Device* device, std::wstring shaderpath, D3D11_INPUT_ELEMENT_DESC* layoutDesc, UINT numElements)
 	{
 		HRESULT hr = D3DReadFileToBlob(shaderpath.c_str(), this->shader_buffer.GetAddressOf());
 
 		shaderpath.clear();
 		if (FAILED(hr))
 		{
-			return false;
+			return hr;
 		}
 
 		hr = device->CreateVertexShader(this->shader_buffer->GetBufferPointer(), this->shader_buffer->GetBufferSize(), NULL, this->shader.GetAddressOf());
 		if (FAILED(hr))
 		{
-			return false;
+			return hr;
 		}
 
 		hr = device->CreateInputLayout(layoutDesc, numElements, this->shader_buffer->GetBufferPointer(), this->shader_buffer->GetBufferSize(), this->inputLayout.GetAddressOf());
 		if (FAILED(hr))
 		{
-			return false;
+			return hr;
 		}
 
-		return true;
+		return hr;
 	}
 
-	ID3D11VertexShader* VertexShader::GetShader()
+	ID3D11VertexShader* vertex_shader::GetShader()
 	{
 		return this->shader.Get();
 	}
 
-	ID3D10Blob* VertexShader::GetBuffer()
+	ID3D10Blob* vertex_shader::GetBuffer()
 	{
 		return this->shader_buffer.Get();
 	}
 
-	ID3D11InputLayout* VertexShader::GetInputLayout()
+	ID3D11InputLayout* vertex_shader::GetInputLayout()
 	{
 		return this->inputLayout.Get();
 	}
 
-	bool PixelShader::Initialize(ID3D11Device* device, std::wstring shaderpath)
+	HRESULT pixel_shader::Initialize(ID3D11Device* device, std::wstring shaderpath)
 	{
 		HRESULT hr = D3DReadFileToBlob(shaderpath.c_str(), this->shader_buffer.GetAddressOf());
 
@@ -51,24 +51,24 @@ namespace SharkSpirit
 
 		if (FAILED(hr))
 		{
-			return false;
+			return hr;
 		}
 
 		hr = device->CreatePixelShader(this->shader_buffer.Get()->GetBufferPointer(), this->shader_buffer.Get()->GetBufferSize(), NULL, this->shader.GetAddressOf());
 		if (FAILED(hr))
 		{
-			return false;
+			return hr;
 		}
 
-		return true;
+		return hr;
 	}
 
-	ID3D11PixelShader* PixelShader::GetShader()
+	ID3D11PixelShader* pixel_shader::GetShader()
 	{
 		return this->shader.Get();
 	}
 
-	ID3D10Blob* PixelShader::GetBuffer()
+	ID3D10Blob* pixel_shader::GetBuffer()
 	{
 		return this->shader_buffer.Get();
 	}

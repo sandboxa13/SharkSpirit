@@ -8,25 +8,66 @@
 #include <Render/DirectX/GraphicsManager.h>
 #include <string>
 #include <Render/DirectX/Shaders.h>
+#include <Render/DirectX/Sampler.h>
 
+//L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\vs_2d.cso"
+//L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\ps_2d.cso"
 namespace SharkSpirit
 {
-	class sprite_component
+	class base_component 
+	{
+	public:
+		virtual ~base_component()
+		{
+
+		}
+	};
+	class base_render_component : public base_component
+	{
+	public:
+		virtual ~base_render_component()
+		{
+
+		}
+		Sampler* m_sampler;
+		Texture* m_texture;
+		index_buffer m_indices;
+		vertex_shader m_vertex_shader;
+		pixel_shader m_pixel_shader;
+		DirectX::XMMATRIX m_world_matrix = DirectX::XMMatrixIdentity();
+	};
+
+	class sprite_component_create_info
+	{
+	public :
+		sprite_component_create_info(
+			const std::string& texturePath,
+			const std::wstring& pixelShaderPath,
+			const std::wstring& vertexShaderPath
+			) : 
+			m_texture_path(texturePath),
+			m_pixel_shader_path(pixelShaderPath),
+			m_vertex_shader_path(vertexShaderPath)
+		{
+
+		}
+
+		const std::string& m_texture_path;
+		const std::wstring& m_pixel_shader_path;
+		const std::wstring& m_vertex_shader_path;
+	};
+
+	class sprite_component : public base_render_component
 	{
 	public:
 		sprite_component(
 			graphics_manager* graphicsManager, 
-			const std::string& filePath)
+			sprite_component_create_info* createInfo)
 		{
-			m_texture = new Texture(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get(), filePath);
+			HRESULT hr = { 0 };
 
-			D3D11_SAMPLER_DESC samplerDesc = {};
-			samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-			samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-			samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-			samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-
-			graphicsManager->get_device()->CreateSamplerState(&samplerDesc, &m_pSampler);
+			m_texture = new Texture(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get(), createInfo->m_texture_path);
+			m_sampler = new Sampler(graphicsManager);
 
 			std::vector<vertex_2d> vertexData =
 			{
@@ -42,9 +83,9 @@ namespace SharkSpirit
 				2, 1, 3
 			};
 
-			HRESULT hr = vertices.Initialize(graphicsManager->get_device().Get(), vertexData.data(), vertexData.size());
+			hr = vertices.Initialize(graphicsManager->get_device().Get(), vertexData.data(), vertexData.size());
 
-			hr = indices.Initialize(graphicsManager->get_device().Get(), indexData.data(), indexData.size());
+			hr = m_indices.Initialize(graphicsManager->get_device().Get(), indexData.data(), indexData.size());
 
 			vertexData.clear();
 			indexData.clear();
@@ -58,29 +99,20 @@ namespace SharkSpirit
 
 			UINT numElements2D = ARRAYSIZE(layout2D);
 
-			if (!vertexshader_2d.Initialize(graphicsManager->get_device().Get(), L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\vs_2d.cso", layout2D, numElements2D)) 
-			{
-
-			}
-
-			if (!pixelshader_2d.Initialize(graphicsManager->get_device().Get(), L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\ps_2d.cso"))
-			{
-
-			}
+			hr = m_vertex_shader.Initialize(graphicsManager->get_device().Get(), createInfo->m_vertex_shader_path, layout2D, numElements2D);
+			hr = m_pixel_shader.Initialize(graphicsManager->get_device().Get(), createInfo->m_pixel_shader_path);
+			
 			cb_vs_vertexshader_2d = new constant_buffer<constant_buffer_2d>();
-
-			cb_vs_vertexshader_2d->Initialize(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get());
+			hr = cb_vs_vertexshader_2d->Initialize(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get());
 		}
 
-		Texture* m_texture;
-		constant_buffer<constant_buffer_2d>* cb_vs_vertexshader_2d = nullptr;
-		DirectX::XMMATRIX worldMatrix = DirectX::XMMatrixIdentity();
-		ComPtr<ID3D11SamplerState> m_pSampler;
+		virtual ~sprite_component()
+		{
 
-		index_buffer indices;
+		}
+
 		vertex_buffer<vertex_2d> vertices;
-		VertexShader vertexshader_2d;
-		PixelShader pixelshader_2d;
+		constant_buffer<constant_buffer_2d>* cb_vs_vertexshader_2d = nullptr;
 	};
 
 	struct transform_component

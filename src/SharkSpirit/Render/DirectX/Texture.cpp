@@ -8,16 +8,7 @@ namespace SharkSpirit
 	Texture::Texture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::string& filePath)
 	{
 		HRESULT hr = CreateWICTextureFromFile(device, deviceContext, string_to_wide(filePath).c_str(), texture.GetAddressOf(), textureView.GetAddressOf());
-		if (FAILED(hr))
-		{
-			//this->Initialize1x1ColorTexture(device, Colors::UnloadedTextureColor);
-		}
 	}
-
-	/*Texture::Texture(ID3D11Device* device, const uint8_t* pData, size_t size)
-	{
-		HRESULT hr = CreateWICTextureFromMemory(device, pData, size, this->texture.GetAddressOf(), this->textureView.GetAddressOf());
-	}*/
 
 	ID3D11ShaderResourceView* Texture::GetTextureResourceView()
 	{

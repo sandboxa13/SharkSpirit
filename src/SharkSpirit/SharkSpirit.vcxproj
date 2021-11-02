@@ -179,10 +179,12 @@
     <ClInclude Include="Render\DirectX\ConstantBuffer.h" />
     <ClInclude Include="Render\DirectX\GraphicsManager.h" />
     <ClInclude Include="Render\DirectX\IndexBuffer.h" />
+    <ClInclude Include="Render\DirectX\Sampler.h" />
     <ClInclude Include="Render\DirectX\Shaders.h" />
     <ClInclude Include="Render\DirectX\Texture.h" />
     <ClInclude Include="Render\DirectX\VertexBuffer.h" />
     <ClInclude Include="Render\RenderEngine.h" />
+    <ClInclude Include="Render\RenderPipeline.h" />
     <ClInclude Include="Utils\Id.h" />
     <ClInclude Include="Utils\Math.h" />
     <ClInclude Include="Utils\StringUtils.h" />
@@ -204,6 +206,7 @@
     <ClCompile Include="Render\DirectX\Shaders.cpp" />
     <ClCompile Include="Render\DirectX\Texture.cpp" />
     <ClCompile Include="Render\RenderEngine.cpp" />
+    <ClCompile Include="Render\RenderPipeline.cpp" />
     <ClCompile Include="Utils\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>

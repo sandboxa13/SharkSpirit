@@ -23,7 +23,7 @@ public:
 	~top_down_game()
 	{
 		stop();
-		m_player_input->~player_input_system();
+		m_player_input_system->~player_input_system();
 		m_reg.clear();
 	}
 
@@ -34,41 +34,48 @@ protected:
 		DirectX::XMFLOAT3 rot = { 0, 0, 0 };
 		DirectX::XMFLOAT2 scale = { 64, 64 };
 
+		const std::string& playertexturePath = "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\survivor-idle_rifle_0.png";
+		const std::string& grassTexturePath = "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\seamless_grass.jpg";
+		const std::wstring& pixelShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\ps_2d.cso";
+		const std::wstring& vertexShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\vs_2d.cso";
+
+		auto playerSpriteCreateInfo = sprite_component_create_info(playertexturePath, pixelShader, vertexShader);
+		auto grassSpriteCreateInfo = sprite_component_create_info(grassTexturePath, pixelShader, vertexShader);
+
 		player = m_reg.create();
 		m_reg.emplace<transform_component>(player, pos, rot, scale);
 		m_reg.emplace<player_input_component>(player, 0.1f);
-		m_reg.emplace<sprite_component>(player, &m_graphics, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\survivor-idle_rifle_0.png");
+		m_reg.emplace<sprite_component>(player, &m_graphics, &playerSpriteCreateInfo);
 
-		const std::string& path = "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\seamless_grass.jpg";
+		auto grass = m_reg.create();
+		auto tmp = m_reg.emplace<sprite_component>(grass, &m_graphics, &grassSpriteCreateInfo);
 
-		for (size_t x = 0; x < 1024; x += 64)
+		for (size_t x = 0; x < 1280; x += 256)
 		{
-			for (size_t y = 0; y < 512; y += 64)
+			for (size_t y = 0; y < 720; y += 256)
 			{
-				auto grass = m_reg.create();
+				grass = m_reg.create();
 				DirectX::XMFLOAT3 g_pos = { (float)x, (float)y, 0 };
 				DirectX::XMFLOAT3 g_rot = { 0, 0, 0 };
-				DirectX::XMFLOAT2 g_sc = { 64, 64 };
+				DirectX::XMFLOAT2 g_sc = { 256, 256 };
 				m_reg.emplace<transform_component>(grass, g_pos, g_rot, g_sc);
-				m_reg.emplace<sprite_component>(grass, &m_graphics, path);
+				m_reg.emplace<sprite_component>(grass, tmp);
 			}
 		}
 
-		path.~basic_string();
-
-		m_player_input = new player_input_system(&m_reg, &m_input, &m_graphics);
+		m_player_input_system = new player_input_system(&m_reg, &m_input, &m_graphics);
 		m_sprite_render_system = new sprite_render_system(&m_reg, &m_input, &m_graphics);
 	}
 
 	void on_update() override 
 	{
-		m_player_input->run();
+		m_player_input_system->run();
 		m_sprite_render_system->run();
 	}
 
 private:
 	entt::entity player;
-	player_input_system* m_player_input;
+	player_input_system* m_player_input_system;
 	sprite_render_system* m_sprite_render_system;
 };
 

@@ -6,10 +6,10 @@
 
 namespace SharkSpirit
 {
-	class VertexShader
+	class vertex_shader
 	{
 	public:
-		bool Initialize(ID3D11Device* device, std::wstring shaderpath, D3D11_INPUT_ELEMENT_DESC* layoutDesc, UINT numElements);
+		HRESULT Initialize(ID3D11Device* device, std::wstring shaderpath, D3D11_INPUT_ELEMENT_DESC* layoutDesc, UINT numElements);
 		ID3D11VertexShader* GetShader();
 		ID3D10Blob* GetBuffer();
 		ID3D11InputLayout* GetInputLayout();
@@ -19,10 +19,10 @@ namespace SharkSpirit
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayout;
 	};
 
-	class PixelShader
+	class pixel_shader
 	{
 	public:
-		bool Initialize(ID3D11Device* device, std::wstring shaderpath);
+		HRESULT Initialize(ID3D11Device* device, std::wstring shaderpath);
 		ID3D11PixelShader* GetShader();
 		ID3D10Blob* GetBuffer();
 	private:
