@@ -191,6 +191,7 @@
     <ClInclude Include="Utils\WICTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Assets\AssetsManager.cpp" />
     <ClCompile Include="Core\DxErr\dxerr.cpp" />
     <ClCompile Include="Core\DxgiInfoManager.cpp" />
     <ClCompile Include="Core\SSException.cpp" />

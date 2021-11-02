@@ -7,6 +7,7 @@
 #include "Platform/Window/Window.h"
 #include "Render/DirectX/GraphicsManager.h"
 #include "Scene.h"
+#include <Assets/AssetsManager.h>
 
 namespace SharkSpirit 
 {
@@ -31,7 +32,8 @@ namespace SharkSpirit
 			  m_graphics(graphics_manager(applicationCreateInfo->m_window_info->m_window_handle)),
 			  m_isRunning(false),
 			  m_applicationCreateInfo(applicationCreateInfo),
-			  m_reg(entt::registry())
+			  m_reg(entt::registry()),
+			  m_assets(assets_manager())
 		{
 			
 		}
@@ -92,6 +94,7 @@ namespace SharkSpirit
 
 		input_processor m_input;
 		graphics_manager m_graphics;
+		assets_manager m_assets;
 		Timer m_timer;
 		bool m_isRunning;
 

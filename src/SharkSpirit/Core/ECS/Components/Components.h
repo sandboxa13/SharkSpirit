@@ -38,18 +38,17 @@ namespace SharkSpirit
 	{
 	public :
 		sprite_component_create_info(
-			const std::string& texturePath,
+			const std::string& textureName,
 			const std::wstring& pixelShaderPath,
 			const std::wstring& vertexShaderPath
 			) : 
-			m_texture_path(texturePath),
 			m_pixel_shader_path(pixelShaderPath),
-			m_vertex_shader_path(vertexShaderPath)
+			m_vertex_shader_path(vertexShaderPath),
+			m_texture_name(textureName)
 		{
 
 		}
-
-		const std::string& m_texture_path;
+		const std::string& m_texture_name;
 		const std::wstring& m_pixel_shader_path;
 		const std::wstring& m_vertex_shader_path;
 	};
@@ -57,12 +56,13 @@ namespace SharkSpirit
 	{
 	public:
 		sprite_component(
+			assets_manager* assetsManager,
 			graphics_manager* graphicsManager, 
 			sprite_component_create_info* createInfo)
 		{
 			HRESULT hr = { 0 };
 
-			m_texture = new Texture(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get(), createInfo->m_texture_path);
+			m_texture = assetsManager->get_texture(createInfo->m_texture_name);
 			m_sampler = new sampler(graphicsManager);
 
 			std::vector<vertex_2d> vertexData =

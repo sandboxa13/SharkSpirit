@@ -1,7 +1,7 @@
 #pragma once
 #include <d3d11.h>
 #include <wrl/client.h>
-#include <string>
+#include <Render/DirectX/GraphicsManager.h>
 
 namespace SharkSpirit 
 {
@@ -42,8 +42,17 @@ namespace SharkSpirit
 	class Texture
 	{
 	public:
-		Texture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::string& filePath);
-		Texture(ID3D11Device* device, const uint8_t* pData, size_t size);
+		Texture()
+		{
+
+		}
+		virtual ~Texture() 
+		{
+			texture.ReleaseAndGetAddressOf();
+			textureView.ReleaseAndGetAddressOf();
+		}
+		Texture(graphics_manager* graphicsManager, const std::string& filePath);
+		Texture(graphics_manager* graphicsManager, const uint8_t* pData, size_t size);
 		ID3D11ShaderResourceView* GetTextureResourceView();
 		ID3D11ShaderResourceView** GetTextureResourceViewAddress();
 

@@ -34,21 +34,25 @@ protected:
 		DirectX::XMFLOAT3 rot = { 0, 0, 0 };
 		DirectX::XMFLOAT2 scale = { 64, 64 };
 
-		const std::string& playerTexturePath = "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\survivor-idle_rifle_0.png";
-		const std::string& grassTexturePath = "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\seamless_grass.jpg";
+		const std::string& playerTextureName = "survivor-idle_rifle_0";
+		const std::string& grassTextureName = "seamless_grass";
+
+	    m_assets.load_texture(&m_graphics, playerTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\survivor-idle_rifle_0.png");
+		m_assets.load_texture(&m_graphics, grassTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\seamless_grass.jpg");
+		
 		const std::wstring& pixelShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\ps_2d.cso";
 		const std::wstring& vertexShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\vs_2d.cso";
 
-		auto playerSpriteCreateInfo = sprite_component_create_info(playerTexturePath, pixelShader, vertexShader);
-		auto grassSpriteCreateInfo = sprite_component_create_info(grassTexturePath, pixelShader, vertexShader);
+		auto playerSpriteCreateInfo = sprite_component_create_info(playerTextureName, pixelShader, vertexShader);
+		auto grassSpriteCreateInfo = sprite_component_create_info(grassTextureName, pixelShader, vertexShader);
 
 		player = m_reg.create();
 		m_reg.emplace<transform_component>(player, pos, rot, scale);
 		m_reg.emplace<player_input_component>(player, 0.1f);
-		m_reg.emplace<sprite_component>(player, &m_graphics, &playerSpriteCreateInfo);
+		m_reg.emplace<sprite_component>(player, &m_assets, &m_graphics, &playerSpriteCreateInfo);
 
 		auto grass = m_reg.create();
-		auto tmp = m_reg.emplace<sprite_component>(grass, &m_graphics, &grassSpriteCreateInfo);
+		auto tmp = m_reg.emplace<sprite_component>(grass, &m_assets, &m_graphics, &grassSpriteCreateInfo);
 
 		for (size_t x = 0; x < 1280; x += 256)
 		{
@@ -107,8 +111,6 @@ int APIENTRY wWinMain(
 
 		application.show_window();
 		application.run();
-
-		application.~application();
 
 		return 0;
 	}

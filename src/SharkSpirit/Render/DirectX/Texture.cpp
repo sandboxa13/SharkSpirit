@@ -1,13 +1,18 @@
 #include "Texture.h"
 #include <Utils/WICTextureLoader.h>
-#include <string>
 #include <Utils/StringUtils.h>
 
 namespace SharkSpirit
 {
-	Texture::Texture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::string& filePath)
+	//Texture::~Texture()
+	//{
+	//	/*texture.ReleaseAndGetAddressOf();
+	//	textureView.ReleaseAndGetAddressOf();*/
+	//}
+
+	Texture::Texture(graphics_manager* graphicsManager, const std::string& filePath)
 	{
-		HRESULT hr = CreateWICTextureFromFile(device, deviceContext, string_to_wide(filePath).c_str(), texture.GetAddressOf(), textureView.GetAddressOf());
+		HRESULT hr = CreateWICTextureFromFile(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get(), string_to_wide(filePath).c_str(), texture.GetAddressOf(), textureView.GetAddressOf());
 	}
 
 	ID3D11ShaderResourceView* Texture::GetTextureResourceView()
