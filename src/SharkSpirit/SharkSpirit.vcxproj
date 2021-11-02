@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Assets\AssetsManager.h" />
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\DxErr\dxerr.h" />
     <ClInclude Include="Core\DxgiInfoManager.h" />
@@ -183,7 +184,6 @@
     <ClInclude Include="Render\DirectX\Shaders.h" />
     <ClInclude Include="Render\DirectX\Texture.h" />
     <ClInclude Include="Render\DirectX\VertexBuffer.h" />
-    <ClInclude Include="Render\RenderEngine.h" />
     <ClInclude Include="Render\RenderPipeline.h" />
     <ClInclude Include="Utils\Id.h" />
     <ClInclude Include="Utils\Math.h" />
@@ -205,8 +205,6 @@
     <ClCompile Include="Render\DirectX\GraphicsManager.cpp" />
     <ClCompile Include="Render\DirectX\Shaders.cpp" />
     <ClCompile Include="Render\DirectX\Texture.cpp" />
-    <ClCompile Include="Render\RenderEngine.cpp" />
-    <ClCompile Include="Render\RenderPipeline.cpp" />
     <ClCompile Include="Utils\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -5,10 +5,10 @@
 
 namespace SharkSpirit
 {
-	class Sampler 
+	class sampler 
 	{
 	public :
-		Sampler(graphics_manager* graphicsManager, unsigned int startSlot = 0)
+		sampler(graphics_manager* graphicsManager, unsigned int startSlot = 0)
 			: m_start_slot(startSlot)
 		{
 			D3D11_SAMPLER_DESC samplerDesc = {};

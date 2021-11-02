@@ -6,12 +6,9 @@
 #include <Render/DirectX/IndexBuffer.h>
 #include <Render/DirectX/VertexBuffer.h>
 #include <Render/DirectX/GraphicsManager.h>
-#include <string>
 #include <Render/DirectX/Shaders.h>
 #include <Render/DirectX/Sampler.h>
 
-//L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\vs_2d.cso"
-//L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\ps_2d.cso"
 namespace SharkSpirit
 {
 	class base_component 
@@ -29,7 +26,7 @@ namespace SharkSpirit
 		{
 
 		}
-		Sampler* m_sampler;
+		sampler* m_sampler;
 		Texture* m_texture;
 		index_buffer m_indices;
 		vertex_shader m_vertex_shader;
@@ -56,7 +53,6 @@ namespace SharkSpirit
 		const std::wstring& m_pixel_shader_path;
 		const std::wstring& m_vertex_shader_path;
 	};
-
 	class sprite_component : public base_render_component
 	{
 	public:
@@ -67,7 +63,7 @@ namespace SharkSpirit
 			HRESULT hr = { 0 };
 
 			m_texture = new Texture(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get(), createInfo->m_texture_path);
-			m_sampler = new Sampler(graphicsManager);
+			m_sampler = new sampler(graphicsManager);
 
 			std::vector<vertex_2d> vertexData =
 			{

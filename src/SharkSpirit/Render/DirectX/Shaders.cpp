@@ -7,24 +7,9 @@ namespace SharkSpirit
 	{
 		HRESULT hr = D3DReadFileToBlob(shaderpath.c_str(), this->shader_buffer.GetAddressOf());
 
-		shaderpath.clear();
-		if (FAILED(hr))
-		{
-			return hr;
-		}
-
 		hr = device->CreateVertexShader(this->shader_buffer->GetBufferPointer(), this->shader_buffer->GetBufferSize(), NULL, this->shader.GetAddressOf());
-		if (FAILED(hr))
-		{
-			return hr;
-		}
-
 		hr = device->CreateInputLayout(layoutDesc, numElements, this->shader_buffer->GetBufferPointer(), this->shader_buffer->GetBufferSize(), this->inputLayout.GetAddressOf());
-		if (FAILED(hr))
-		{
-			return hr;
-		}
-
+		
 		return hr;
 	}
 
@@ -47,19 +32,8 @@ namespace SharkSpirit
 	{
 		HRESULT hr = D3DReadFileToBlob(shaderpath.c_str(), this->shader_buffer.GetAddressOf());
 
-		shaderpath.clear();
-
-		if (FAILED(hr))
-		{
-			return hr;
-		}
-
 		hr = device->CreatePixelShader(this->shader_buffer.Get()->GetBufferPointer(), this->shader_buffer.Get()->GetBufferSize(), NULL, this->shader.GetAddressOf());
-		if (FAILED(hr))
-		{
-			return hr;
-		}
-
+		
 		return hr;
 	}
 

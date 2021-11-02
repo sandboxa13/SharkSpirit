@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Logger/Logger.h"
-#include "Render/RenderEngine.h"
 #include "Input/InputProcessor.h"
 #include "Core/Timer/Timer.h"
 #include "IInitializable.h"

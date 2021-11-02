@@ -34,12 +34,12 @@ protected:
 		DirectX::XMFLOAT3 rot = { 0, 0, 0 };
 		DirectX::XMFLOAT2 scale = { 64, 64 };
 
-		const std::string& playertexturePath = "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\survivor-idle_rifle_0.png";
+		const std::string& playerTexturePath = "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\survivor-idle_rifle_0.png";
 		const std::string& grassTexturePath = "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\seamless_grass.jpg";
 		const std::wstring& pixelShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\ps_2d.cso";
 		const std::wstring& vertexShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\vs_2d.cso";
 
-		auto playerSpriteCreateInfo = sprite_component_create_info(playertexturePath, pixelShader, vertexShader);
+		auto playerSpriteCreateInfo = sprite_component_create_info(playerTexturePath, pixelShader, vertexShader);
 		auto grassSpriteCreateInfo = sprite_component_create_info(grassTexturePath, pixelShader, vertexShader);
 
 		player = m_reg.create();
