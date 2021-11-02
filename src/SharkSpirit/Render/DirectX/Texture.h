@@ -51,14 +51,13 @@ namespace SharkSpirit
 			texture.ReleaseAndGetAddressOf();
 			textureView.ReleaseAndGetAddressOf();
 		}
+		HRESULT initialize(graphics_manager* graphicsManager, const std::string& filePath);
 		Texture(graphics_manager* graphicsManager, const std::string& filePath);
 		Texture(graphics_manager* graphicsManager, const uint8_t* pData, size_t size);
 		ID3D11ShaderResourceView* GetTextureResourceView();
 		ID3D11ShaderResourceView** GetTextureResourceViewAddress();
 
 	private:
-		void Initialize1x1ColorTexture(ID3D11Device* device, const Color& colorData);
-		void InitializeColorTexture(ID3D11Device* device, const Color* colorData, UINT width, UINT height);
 		Microsoft::WRL::ComPtr<ID3D11Resource> texture = nullptr;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView = nullptr;
 	};
