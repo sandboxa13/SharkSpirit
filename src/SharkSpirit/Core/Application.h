@@ -51,7 +51,6 @@ namespace SharkSpirit
 			return m_reg.create();
 		}
 
-
 		virtual void show_window() 
 		{
 			m_applicationCreateInfo->m_window_info->m_window->show();

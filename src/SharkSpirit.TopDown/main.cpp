@@ -5,7 +5,10 @@
 #include <Core/ECS/Systems/SpriteRenderSystem.h>
 #include "Components/PlayerInputComponent.h"
 #include "Systems/PlayerInputSystem.h"
-
+#include <ios>
+#include <cstdio>
+#include <io.h>
+#include <fcntl.h>
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
@@ -46,17 +49,17 @@ protected:
 		auto playerSpriteCreateInfo = sprite_component_create_info(playerTextureName, pixelShader, vertexShader);
 		auto grassSpriteCreateInfo = sprite_component_create_info(grassTextureName, pixelShader, vertexShader);
 
-		player = m_reg.create();
+		player = create_entity();
 		m_reg.emplace<transform_component>(player, pos, rot, scale);
 		m_reg.emplace<player_input_component>(player, 0.1f);
 		m_reg.emplace<sprite_component>(player, &m_assets, &m_graphics, &playerSpriteCreateInfo);
 
-		auto grass = m_reg.create();
+		auto grass = create_entity();
 		auto tmp = m_reg.emplace<sprite_component>(grass, &m_assets, &m_graphics, &grassSpriteCreateInfo);
 
-		for (size_t x = 0; x < 1280; x += 256)
+		for (size_t x = 0; x < 1920; x += 256)
 		{
-			for (size_t y = 0; y < 720; y += 256)
+			for (size_t y = 0; y < 1080; y += 256)
 			{
 				grass = m_reg.create();
 				DirectX::XMFLOAT3 g_pos = { (float)x, (float)y, 0 };
@@ -91,6 +94,11 @@ int APIENTRY wWinMain(
 {
 	try
 	{
+		AllocConsole();
+		freopen("CONIN$", "r", stdin);
+		freopen("CONOUT$", "w", stderr);
+		freopen("CONOUT$", "w", stdout);
+
 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 
@@ -102,7 +110,7 @@ int APIENTRY wWinMain(
 
 		const wchar_t* title = L"Top Down";
 
-		auto windowCreateInfo = window_creation_info(720, 1280, title, title, hInstance);
+		auto windowCreateInfo = window_creation_info(1080, 1920, title, title, hInstance);
 		auto windowInfo = window_factory::create_window(&windowCreateInfo);
 
 		auto applicationCreateInfo = application_create_info(windowInfo);

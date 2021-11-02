@@ -2,6 +2,7 @@
 #include <Render/DirectX/Texture.h>
 #include <Render/DirectX/GraphicsManager.h>
 #include <map>
+#include "Logger/Logger.h"
 
 namespace SharkSpirit 
 {
