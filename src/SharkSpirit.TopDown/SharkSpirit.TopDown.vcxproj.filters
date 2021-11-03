@@ -16,5 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\seamless_grass.jpg" />
+    <Image Include="assets\oryx_16bit_fantasy_world_117.png" />
   </ItemGroup>
 </Project>

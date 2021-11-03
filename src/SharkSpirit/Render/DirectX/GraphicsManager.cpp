@@ -312,7 +312,7 @@ namespace SharkSpirit
 
     void graphics_manager::clear_rt() const
     {
-        m_immediateContext.Get()->ClearRenderTargetView(m_pRenderTargetView.Get(), DirectX::Colors::LightBlue);
+        m_immediateContext.Get()->ClearRenderTargetView(m_pRenderTargetView.Get(), DirectX::Colors::Black);
         m_immediateContext.Get()->ClearDepthStencilView(m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
     }
 

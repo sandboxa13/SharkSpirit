@@ -176,6 +176,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\oryx_16bit_fantasy_world_117.png" />
     <Image Include="assets\seamless_grass.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

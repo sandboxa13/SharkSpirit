@@ -19,13 +19,15 @@ namespace SharkSpirit
 		}
 		~player_input_system();
 
+
 		void run() override
 		{
 			auto inputView = m_reg->view<player_input_component, transform_component>();
 			for (auto entity : inputView)
 			{
-				auto &playerInput = inputView.get<player_input_component>(entity);
+				auto& playerInput = inputView.get<player_input_component>(entity);
 				auto& playerTransform = inputView.get<transform_component>(entity);
+
 
 				if (m_input->m_keyboard.KeyIsPressed('S'))
 				{
@@ -44,7 +46,10 @@ namespace SharkSpirit
 					playerTransform.m_pos.x -= playerInput.m_walk_speed;
 				}
 
+				auto angle = std::atan2(m_input->m_mouse.GetPosY() - playerTransform.m_pos.y, m_input->m_mouse.GetPosX() - playerTransform.m_pos.x) * 180.0 / 3.14f;
+
 				m_graphics->m_camera_2d.SetPosition(playerTransform.m_pos);
+				playerTransform.m_rotation.z = angle;
 			}
 		}
 	};

@@ -33,15 +33,15 @@ public:
 protected:
 	void on_create() override
 	{
-		DirectX::XMFLOAT3 pos = { 500, 500, 0 };
+		DirectX::XMFLOAT3 pos = { 1000, 1000, 0 };
 		DirectX::XMFLOAT3 rot = { 0, 0, 0 };
 		DirectX::XMFLOAT2 scale = { 64, 64 };
 
 		const std::string& playerTextureName = "survivor-idle_rifle_0";
-		const std::string& grassTextureName = "seamless_grass";
+		const std::string& grassTextureName = "oryx_16bit_fantasy_world_65";
 
 	    m_assets.load_texture(&m_graphics, playerTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\survivor-idle_rifle_0.png");
-		m_assets.load_texture(&m_graphics, grassTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\seamless_grass.jpg");
+		m_assets.load_texture(&m_graphics, grassTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\oryx_16bit_fantasy_world_65.png");
 		
 		const std::wstring& pixelShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\ps_2d.cso";
 		const std::wstring& vertexShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\vs_2d.cso";
@@ -57,9 +57,9 @@ protected:
 		auto grass = create_entity();
 		auto tmp = m_reg.emplace<sprite_component>(grass, &m_assets, &m_graphics, &grassSpriteCreateInfo);
 
-		for (size_t x = 0; x < 1920; x += 256)
+		for (size_t x = 0; x < 2560; x += 256)
 		{
-			for (size_t y = 0; y < 1080; y += 256)
+			for (size_t y = 0; y < 2560; y += 256)
 			{
 				grass = m_reg.create();
 				DirectX::XMFLOAT3 g_pos = { (float)x, (float)y, 0 };
