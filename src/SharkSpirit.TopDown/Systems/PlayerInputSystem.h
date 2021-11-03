@@ -52,14 +52,36 @@ namespace SharkSpirit
 					playerTransform.m_pos.x -= speed;
 				}
 
-				auto angle = std::atan2(m_input->m_mouse.GetPosY() - playerTransform.m_pos.y, m_input->m_mouse.GetPosX() - playerTransform.m_pos.x) * 180.0 / 3.14f;
+				auto mouseX = m_input->m_mouse.GetPosX();
+				auto mouseY = m_input->m_mouse.GetPosY();
+
+				DirectX::XMMATRIX projection = m_graphics->m_camera_2d.GetOrthoMatrix();
+				DirectX::XMMATRIX view = m_graphics->m_camera_2d.GetWorldMatrix();
+
+				auto tmp = DirectX::XMMatrixDeterminant(view * projection);
+				DirectX::XMMATRIX invProjectionView = DirectX::XMMatrixInverse(&tmp, (view * projection));
+
+				float x = (((2.0f * mouseX) / 1280) - 1);
+				float y = -(((2.0f * mouseY) / 720) - 1);
+
+				DirectX::XMVECTOR mousePosition = DirectX::XMVectorSet(x, y, 1.0f, 0.0f);
+
+				auto mouseInWorldSpace = DirectX::XMVector3Transform(mousePosition, invProjectionView);
+
+				DirectX::XMFLOAT4 v2F;    //the float where we copy the v2 vector members
+				DirectX::XMStoreFloat4(&v2F, mouseInWorldSpace);
+
+				auto angle = std::atan2(v2F.y - playerTransform.m_pos.y, v2F.x - playerTransform.m_pos.x) * 180.0 / 3.14f;
 
 				m_graphics->m_camera_2d.SetPosition(playerTransform.m_pos);
 				playerTransform.m_rotation.z = angle;
 
 				if (ImGui::Begin("Player statistics :"))
 				{
-					ImGui::Text("X - %f, Y - %f", playerTransform.m_pos.x, playerTransform.m_pos.y);
+					ImGui::Text("Position X - %f, Y - %f", playerTransform.m_pos.x, playerTransform.m_pos.y);
+					ImGui::Text("Mouse X - %f, Y - %f", v2F.x, v2F.y);
+					ImGui::Text("Angle %f", playerTransform.m_rotation.z);
+					ImGui::Text("Speed %f", speed);
 				}
 
 				ImGui::End();
