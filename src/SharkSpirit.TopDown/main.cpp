@@ -87,6 +87,7 @@ protected:
 
 		if (ImGui::Begin("Frame statistics :"))
 		{
+			ImGui::Text("FPS : %f", m_fps.get_fps());
 			ImGui::Text("Delta time: %f", dt);
 			ImGui::Text("Total time : %f", totalTime);
 		}

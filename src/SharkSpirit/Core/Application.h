@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include <Assets/AssetsManager.h>
 #include <ImGui/ImGuiManager.h>
+#include <Core/FpsManager.h>
 
 namespace SharkSpirit 
 {
@@ -35,7 +36,8 @@ namespace SharkSpirit
 			  m_applicationCreateInfo(applicationCreateInfo),
 			  m_reg(entt::registry()),
 			  m_assets(assets_manager()),
-			  m_imgui(imgui_manager())
+			  m_imgui(imgui_manager()),
+			  m_fps(fps_manager())
 		{
 			
 		}
@@ -88,6 +90,8 @@ namespace SharkSpirit
 				m_graphics.present();
 
 				m_timer.Tick();
+
+				m_fps.calculate(m_timer.TotalTime());
 			}
 
 			return m_isRunning;
@@ -105,6 +109,7 @@ namespace SharkSpirit
 		graphics_manager m_graphics;
 		assets_manager m_assets;
 		imgui_manager m_imgui;
+		fps_manager m_fps;
 		Timer m_timer;
 		bool m_isRunning;
 
