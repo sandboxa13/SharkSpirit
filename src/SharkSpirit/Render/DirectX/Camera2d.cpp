@@ -33,7 +33,7 @@ namespace SharkSpirit
 
 	void camera_2d::UpdateMatrix()
 	{
-		DirectX::XMMATRIX translationOffsetMatrix = DirectX::XMMatrixTranslation(-pos.x + 500, -pos.y + 500, 0.0f); 
+		DirectX::XMMATRIX translationOffsetMatrix = DirectX::XMMatrixTranslation(-pos.x + 640, -pos.y + 360, 0.0f); 
 		DirectX::XMMATRIX camRotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
 		m_world_matrix = camRotationMatrix * translationOffsetMatrix;
 	}

@@ -32,9 +32,9 @@ namespace SharkSpirit
 
 			const UINT offsets = 0;
 
-			graphics->get_device_context()->IASetVertexBuffers(0, 1, sprite.vertices.GetAddressOf(), sprite.vertices.StridePtr(), &offsets);
-			graphics->get_device_context()->IASetIndexBuffer(sprite.m_indices.Get(), DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 0);
-			graphics->get_device_context()->DrawIndexed(sprite.m_indices.IndexCount(), 0, 0);
+			graphics->get_device_context()->IASetVertexBuffers(0, 1, graphics->m_vertices.GetAddressOf(), graphics->m_vertices.StridePtr(), &offsets);
+			graphics->get_device_context()->IASetIndexBuffer(graphics->m_indices.Get(), DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 0);
+			graphics->get_device_context()->DrawIndexed(graphics->m_indices.IndexCount(), 0, 0);
 		}
 	};
 }

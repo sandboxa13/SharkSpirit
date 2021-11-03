@@ -14,6 +14,9 @@
 #include <Core/DxErr/dxerr.h>
 #include <Core/GraphicsThrowMacros.h>
 #include <Render/DirectX/Camera2d.h>
+#include <Render/DirectX/ConstantBuffer.h>
+#include <Render/DirectX/IndexBuffer.h>
+#include <Render/DirectX/VertexBuffer.h>
 
 using namespace Microsoft::WRL;
 
@@ -77,6 +80,11 @@ namespace SharkSpirit
 		void vs_set_constant_buffers(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppConstantBuffers);
 
 		SharkSpirit::camera_2d m_camera_2d;
+
+		vertex_buffer<vertex_2d> m_vertices;
+		constant_buffer<constant_buffer_2d>* m_cb_vs_vertexshader_2d = nullptr;
+		index_buffer m_indices;
+
 	private:
 		UINT m_width;
 		UINT m_height;
@@ -92,6 +100,8 @@ namespace SharkSpirit
 		D3D_FEATURE_LEVEL m_featureLevel = D3D_FEATURE_LEVEL_11_0;
 		DirectX::XMMATRIX m_projectionMatrix;
 		DirectX::XMMATRIX m_cameraMatrix;
+
+		
 		HRESULT initialize(HWND & hwnd);
 		void create_and_bind_depth_buffer(UINT & width, UINT & height);
 		void create_and_bind_view_port(UINT & width, UINT & height) const;

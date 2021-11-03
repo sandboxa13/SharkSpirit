@@ -212,6 +212,29 @@ namespace SharkSpirit
         set_projection_matrix();
         m_camera_2d.SetProjectionValues(width, height, 0.0f, 1.0f);
 
+        // initialize sprite 
+
+        std::vector<vertex_2d> vertexData =
+        {
+            vertex_2d(-0.5f, -0.5f, 0.0f, 0.0f, 0.0f), //TopLeft
+            vertex_2d(0.5f, -0.5f, 0.0f, 1.0f, 0.0f), //TopRight
+            vertex_2d(-0.5, 0.5, 0.0f, 0.0f, 1.0f), //Bottom Left
+            vertex_2d(0.5, 0.5, 0.0f, 1.0f, 1.0f), //Bottom Right
+        };
+
+        std::vector<DWORD> indexData =
+        {
+            0, 1, 2,
+            2, 1, 3
+        };
+
+        hr = m_vertices.Initialize(m_device.Get(), vertexData.data(), vertexData.size());
+
+        hr = m_indices.Initialize(m_device.Get(), indexData.data(), indexData.size());
+
+        vertexData.clear();
+        indexData.clear();
+
         //set_camera_matrix(DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
 
         return S_OK;

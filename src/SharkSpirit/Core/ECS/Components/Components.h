@@ -65,27 +65,6 @@ namespace SharkSpirit
 			m_texture = assetsManager->get_texture(createInfo->m_texture_name);
 			m_sampler = new sampler(graphicsManager);
 
-			std::vector<vertex_2d> vertexData =
-			{
-				vertex_2d(-0.5f, -0.5f, 0.0f, 0.0f, 0.0f), //TopLeft
-				vertex_2d(0.5f, -0.5f, 0.0f, 1.0f, 0.0f), //TopRight
-				vertex_2d(-0.5, 0.5, 0.0f, 0.0f, 1.0f), //Bottom Left
-				vertex_2d(0.5, 0.5, 0.0f, 1.0f, 1.0f), //Bottom Right
-			};
-
-			std::vector<DWORD> indexData =
-			{
-				0, 1, 2,
-				2, 1, 3
-			};
-
-			hr = vertices.Initialize(graphicsManager->get_device().Get(), vertexData.data(), vertexData.size());
-
-			hr = m_indices.Initialize(graphicsManager->get_device().Get(), indexData.data(), indexData.size());
-
-			vertexData.clear();
-			indexData.clear();
-
 			//2d shaders
 			D3D11_INPUT_ELEMENT_DESC layout2D[] =
 			{
@@ -107,7 +86,6 @@ namespace SharkSpirit
 
 		}
 
-		vertex_buffer<vertex_2d> vertices;
 		constant_buffer<constant_buffer_2d>* cb_vs_vertexshader_2d = nullptr;
 	};
 

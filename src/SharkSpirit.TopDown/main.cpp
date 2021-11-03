@@ -33,7 +33,10 @@ public:
 protected:
 	void on_create() override
 	{
-		DirectX::XMFLOAT3 pos = { 1000, 1000, 0 };
+		auto playerStartX = (float) 2560 / 2;
+		auto playerStartY = (float) 2560 / 2;
+
+		DirectX::XMFLOAT3 pos = { playerStartX, playerStartY, 0 };
 		DirectX::XMFLOAT3 rot = { 0, 0, 0 };
 		DirectX::XMFLOAT2 scale = { 64, 64 };
 
@@ -51,7 +54,7 @@ protected:
 
 		player = create_entity();
 		m_reg.emplace<transform_component>(player, pos, rot, scale);
-		m_reg.emplace<player_input_component>(player, 0.3f);
+		m_reg.emplace<player_input_component>(player, 0.3f, 0.2f);
 		m_reg.emplace<sprite_component>(player, &m_assets, &m_graphics, &playerSpriteCreateInfo);
 
 		auto grass = create_entity();
@@ -101,7 +104,6 @@ int APIENTRY wWinMain(
 
 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-
 		HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 		if (FAILED(hr))
 		{
@@ -110,7 +112,7 @@ int APIENTRY wWinMain(
 
 		const wchar_t* title = L"Top Down";
 
-		auto windowCreateInfo = window_creation_info(1080, 1920, title, title, hInstance);
+		auto windowCreateInfo = window_creation_info(720, 1280, title, title, hInstance);
 		auto windowInfo = window_factory::create_window(&windowCreateInfo);
 
 		auto applicationCreateInfo = application_create_info(windowInfo);

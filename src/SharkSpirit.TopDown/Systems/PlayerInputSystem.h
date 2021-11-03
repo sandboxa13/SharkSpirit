@@ -28,22 +28,28 @@ namespace SharkSpirit
 				auto& playerInput = inputView.get<player_input_component>(entity);
 				auto& playerTransform = inputView.get<transform_component>(entity);
 
+				auto speed = playerInput.m_walk_speed;
+
+				if (m_input->m_keyboard.KeyIsPressed('\x10'))
+				{
+					speed += playerInput.m_acceleration;
+				}
 
 				if (m_input->m_keyboard.KeyIsPressed('S'))
 				{
-					playerTransform.m_pos.y += playerInput.m_walk_speed;
+					playerTransform.m_pos.y += speed;
 				}
 				if (m_input->m_keyboard.KeyIsPressed('W'))
 				{
-					playerTransform.m_pos.y -= playerInput.m_walk_speed;
+					playerTransform.m_pos.y -= speed;
 				}
 				if (m_input->m_keyboard.KeyIsPressed('D'))
 				{
-					playerTransform.m_pos.x += playerInput.m_walk_speed;
+					playerTransform.m_pos.x += speed;
 				}
 				if (m_input->m_keyboard.KeyIsPressed('A'))
 				{
-					playerTransform.m_pos.x -= playerInput.m_walk_speed;
+					playerTransform.m_pos.x -= speed;
 				}
 
 				auto angle = std::atan2(m_input->m_mouse.GetPosY() - playerTransform.m_pos.y, m_input->m_mouse.GetPosX() - playerTransform.m_pos.x) * 180.0 / 3.14f;
