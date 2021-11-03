@@ -74,24 +74,11 @@ namespace SharkSpirit
 
 			while (m_isRunning)
 			{
-				float dt = m_timer.DeltaTime();
-				float totalTime = m_timer.TotalTime();
-
 				m_imgui.BeginFrame();
 				m_imgui.SetStyle();
 
 				m_graphics.clear_rt();
 				on_update();
-
-				if (ImGui::Begin("Frame statistics :"))
-				{
-					ImGui::Text("Delta time: %f", dt);
-					ImGui::Text("Total time : %f", totalTime);
-
-					if (ImGui::Button("Load model")) {
-
-					}
-				}
 
 				m_isRunning = m_input.process_input();
 				

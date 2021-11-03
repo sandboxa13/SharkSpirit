@@ -81,6 +81,15 @@ protected:
 	{
 		m_player_input_system->run();
 		m_sprite_render_system->run();
+
+		float dt = m_timer.DeltaTime();
+		float totalTime = m_timer.TotalTime();
+
+		if (ImGui::Begin("Frame statistics :"))
+		{
+			ImGui::Text("Delta time: %f", dt);
+			ImGui::Text("Total time : %f", totalTime);
+		}
 	}
 
 private:

@@ -56,6 +56,13 @@ namespace SharkSpirit
 
 				m_graphics->m_camera_2d.SetPosition(playerTransform.m_pos);
 				playerTransform.m_rotation.z = angle;
+
+				if (ImGui::Begin("Player statistics :"))
+				{
+					ImGui::Text("X - %f, Y - %f", playerTransform.m_pos.x, playerTransform.m_pos.y);
+				}
+
+				ImGui::End();
 			}
 		}
 	};
