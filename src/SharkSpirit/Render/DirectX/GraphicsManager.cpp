@@ -285,12 +285,6 @@ namespace SharkSpirit
 
         m_camera_2d.SetProjectionValues(width, height, 0.0f, 1000.0f);
         //set_camera_matrix(DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
-
-        //IMGUI_CHECKVERSION();
-        //ImGui::CreateContext();
-        //ImGui::StyleColorsDark();
-
-        //ImGui_ImplDX11_Init(m_device.Get(), m_immediateContext.Get());
     }
 
     void graphics_manager::set_projection_matrix()
@@ -348,8 +342,8 @@ namespace SharkSpirit
 
 
 
-        /*  ImGui::Render();
-          ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());*/
+          ImGui::Render();
+          ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 
         if (FAILED(hr = m_pSwapChain->Present(0u, 0u)))

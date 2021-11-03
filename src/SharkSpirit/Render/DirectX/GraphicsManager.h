@@ -17,6 +17,9 @@
 #include <Render/DirectX/ConstantBuffer.h>
 #include <Render/DirectX/IndexBuffer.h>
 #include <Render/DirectX/VertexBuffer.h>
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_win32.h"
+#include "ImGui/imgui_impl_dx11.h"
 
 using namespace Microsoft::WRL;
 

@@ -8,6 +8,7 @@
 #include "Render/DirectX/GraphicsManager.h"
 #include "Scene.h"
 #include <Assets/AssetsManager.h>
+#include <ImGui/ImGuiManager.h>
 
 namespace SharkSpirit 
 {
@@ -33,7 +34,8 @@ namespace SharkSpirit
 			  m_isRunning(false),
 			  m_applicationCreateInfo(applicationCreateInfo),
 			  m_reg(entt::registry()),
-			  m_assets(assets_manager())
+			  m_assets(assets_manager()),
+			  m_imgui(imgui_manager())
 		{
 			
 		}
@@ -65,15 +67,36 @@ namespace SharkSpirit
 		{
 			m_isRunning = true;
 
+			m_imgui.InitImgui(this->m_applicationCreateInfo->m_window_info->m_window_handle, m_graphics.get_device(), m_graphics.get_device_context());
+			m_timer.Reset();
+
 			on_create();
 
 			while (m_isRunning)
 			{
+				float dt = m_timer.DeltaTime();
+				float totalTime = m_timer.TotalTime();
+
+				m_imgui.BeginFrame();
+				m_imgui.SetStyle();
+
 				m_graphics.clear_rt();
+				on_update();
+
+				if (ImGui::Begin("Frame statistics :"))
+				{
+					ImGui::Text("Delta time: %f", dt);
+					ImGui::Text("Total time : %f", totalTime);
+
+					if (ImGui::Button("Load model")) {
+
+					}
+				}
 
 				m_isRunning = m_input.process_input();
-
-				on_update();
+				
+				ImGui::End();
+				ImGui::EndFrame();
 
 				m_graphics.present();
 
@@ -94,6 +117,7 @@ namespace SharkSpirit
 		input_processor m_input;
 		graphics_manager m_graphics;
 		assets_manager m_assets;
+		imgui_manager m_imgui;
 		Timer m_timer;
 		bool m_isRunning;
 

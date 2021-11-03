@@ -1,4 +1,5 @@
 #include "Window.h"
+#include <ImGui/imgui_impl_win32.h>
 
 namespace SharkSpirit 
 {
@@ -31,10 +32,10 @@ namespace SharkSpirit
 		WPARAM wParam,
 		LPARAM lParam)
 	{
-		/*if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam))
+		if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam))
 		{
 			return true;
-		}*/
+		}
 
 		switch (msg)
 		{

@@ -125,7 +125,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\src\SharkSpirit</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external;$(SolutionDir)\src\SharkSpirit</AdditionalIncludeDirectories>
       <CallingConvention>StdCall</CallingConvention>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -143,7 +143,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\src\SharkSpirit</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external;$(SolutionDir)\src\SharkSpirit</AdditionalIncludeDirectories>
       <CallingConvention>StdCall</CallingConvention>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -169,6 +169,18 @@
     <ClInclude Include="Core\SSException.h" />
     <ClInclude Include="Core\Timer\Timer.h" />
     <ClInclude Include="EngineAPI.h" />
+    <ClInclude Include="ImGui\dirent\dirent.h" />
+    <ClInclude Include="ImGui\imconfig.h" />
+    <ClInclude Include="ImGui\imgui.h" />
+    <ClInclude Include="ImGui\ImGuiFileDialog.h" />
+    <ClInclude Include="ImGui\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="ImGui\ImGuiManager.h" />
+    <ClInclude Include="ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="ImGui\imgui_internal.h" />
+    <ClInclude Include="ImGui\imstb_rectpack.h" />
+    <ClInclude Include="ImGui\imstb_textedit.h" />
+    <ClInclude Include="ImGui\imstb_truetype.h" />
     <ClInclude Include="Input\InputProcessor.h" />
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyCodes.h" />
@@ -198,6 +210,15 @@
     <ClCompile Include="Core\SSException.cpp" />
     <ClCompile Include="Core\Timer\Timer.cpp" />
     <ClCompile Include="EngineAPI.cpp" />
+    <ClCompile Include="ImGui\imgui.cpp" />
+    <ClCompile Include="ImGui\ImGuiFileDialog.cpp" />
+    <ClCompile Include="ImGui\ImGuiManager.cpp" />
+    <ClCompile Include="ImGui\imgui_demo.cpp" />
+    <ClCompile Include="ImGui\imgui_draw.cpp" />
+    <ClCompile Include="ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="ImGui\imgui_tables.cpp" />
+    <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Input\InputProcessor.cpp" />
     <ClCompile Include="Input\Keyboard.cpp" />
     <ClCompile Include="Input\Mouse.cpp" />
