@@ -13,6 +13,7 @@
 #include <Core/DxgiInfoManager.h>
 #include <Core/DxErr/dxerr.h>
 #include <Core/GraphicsThrowMacros.h>
+#include <Render/DirectX/Camera2d.h>
 
 using namespace Microsoft::WRL;
 
@@ -74,6 +75,8 @@ namespace SharkSpirit
 
 		void ps_set_shader_resources(UINT StartSlot, UINT NumViews, ID3D11ShaderResourceView* const* ppShaderResourceViews);
 		void vs_set_constant_buffers(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppConstantBuffers);
+
+		SharkSpirit::camera_2d m_camera_2d;
 	private:
 		UINT m_width;
 		UINT m_height;

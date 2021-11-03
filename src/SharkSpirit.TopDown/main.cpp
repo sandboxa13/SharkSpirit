@@ -33,7 +33,7 @@ public:
 protected:
 	void on_create() override
 	{
-		DirectX::XMFLOAT3 pos = { 0, 0, 0 };
+		DirectX::XMFLOAT3 pos = { 500, 500, 0 };
 		DirectX::XMFLOAT3 rot = { 0, 0, 0 };
 		DirectX::XMFLOAT2 scale = { 64, 64 };
 
@@ -51,7 +51,7 @@ protected:
 
 		player = create_entity();
 		m_reg.emplace<transform_component>(player, pos, rot, scale);
-		m_reg.emplace<player_input_component>(player, 0.1f);
+		m_reg.emplace<player_input_component>(player, 0.3f);
 		m_reg.emplace<sprite_component>(player, &m_assets, &m_graphics, &playerSpriteCreateInfo);
 
 		auto grass = create_entity();

@@ -117,6 +117,9 @@
     <ClInclude Include="Assets\AssetsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Render\DirectX\Camera2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logger\Logger.cpp">
@@ -165,6 +168,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Assets\AssetsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\DirectX\Camera2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

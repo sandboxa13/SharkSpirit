@@ -43,6 +43,8 @@ namespace SharkSpirit
 				{
 					playerTransform.m_pos.x -= playerInput.m_walk_speed;
 				}
+
+				m_graphics->m_camera_2d.SetPosition(playerTransform.m_pos);
 			}
 		}
 	};

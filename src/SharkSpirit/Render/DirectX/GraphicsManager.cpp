@@ -210,6 +210,8 @@ namespace SharkSpirit
         create_and_bind_depth_buffer(width, height);
 
         set_projection_matrix();
+        m_camera_2d.SetProjectionValues(width, height, 0.0f, 1.0f);
+
         //set_camera_matrix(DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
 
         return S_OK;
@@ -257,6 +259,8 @@ namespace SharkSpirit
         this->m_height = height;
 
         set_projection_matrix();
+
+        m_camera_2d.SetProjectionValues(width, height, 0.0f, 1000.0f);
         //set_camera_matrix(DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
 
         //IMGUI_CHECKVERSION();
