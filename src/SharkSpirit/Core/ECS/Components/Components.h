@@ -55,6 +55,13 @@ namespace SharkSpirit
 			return m_is_now_playing;
 		}
 
+		void play()
+		{
+			m_is_enabled = true;
+			m_current_update_counter = 0;
+			m_current_frame = 0;
+		}
+
 		void update()
 		{
 			if (!m_is_enabled)
@@ -71,6 +78,7 @@ namespace SharkSpirit
 				{
 					m_current_frame = 0;
 					m_is_now_playing = false;
+					m_is_enabled = false;
 				}
 
 				return;
@@ -128,6 +136,7 @@ namespace SharkSpirit
 		void set_current_key(const std::string& key)
 		{
 			m_current_key = key;
+			m_anim_clips[m_current_key]->play();
 		}
 
 		const std::string get_current_frame()

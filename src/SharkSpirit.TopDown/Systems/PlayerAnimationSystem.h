@@ -39,6 +39,12 @@ namespace SharkSpirit
 					continue;
 				}
 
+				if (m_input->m_keyboard.KeyIsPressed('F'))
+				{
+					spriteAnim.set_current_key("meleAtack");
+					continue;
+				}
+
 				if (m_input->m_keyboard.KeyIsPressed('W') ||
 					m_input->m_keyboard.KeyIsPressed('S') ||
 					m_input->m_keyboard.KeyIsPressed('A') ||
