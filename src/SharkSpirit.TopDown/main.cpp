@@ -40,13 +40,22 @@ protected:
 
 		DirectX::XMFLOAT3 pos = { playerStartX, playerStartY, 0 };
 		DirectX::XMFLOAT3 rot = { 0, 0, 0 };
-		DirectX::XMFLOAT2 scale = { 128, 128 };
+		DirectX::XMFLOAT2 scale = { 128,  128 };
 
 		const std::string& playerTextureName = "survivor-idle_rifle_0";
 		const std::string& grassTextureName = "oryx_16bit_fantasy_world_65";
+		std::vector<std::string> meleeAttackNames = {};
 		std::vector<std::string> idleNames = {};
 		std::vector<std::string> moveNames = {};
 		std::vector<std::string> reloadNames = {};
+
+		for (size_t i = 0; i < 15; i++)
+		{
+			const std::string name = std::format("survivor-meleeattack_rifle_{0}", i);
+			meleeAttackNames.push_back(name);
+
+			m_assets.load_texture(&m_graphics, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\meleeattack\\survivor-meleeattack_rifle_{0}.png", i));
+		}
 
 		for (size_t i = 0; i < 20; i++)
 		{
@@ -86,6 +95,7 @@ protected:
 		m_reg.emplace<player_input_component>(player, 0.3f, 0.2f);
 		m_reg.emplace<sprite_component>(player, &m_assets, &m_graphics, &playerSpriteCreateInfo);
 		auto& animation = m_reg.emplace<sprite_animation_component>(player);
+		animation.add_animation("meleAtack", &meleeAttackNames, animation_type::once);
 		animation.add_animation("reload", &reloadNames, animation_type::once);
 		animation.add_animation("idle", &idleNames, animation_type::loop);
 		animation.add_animation("move", &moveNames, animation_type::loop);
