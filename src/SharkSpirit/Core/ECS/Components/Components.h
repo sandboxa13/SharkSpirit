@@ -35,14 +35,24 @@ namespace SharkSpirit
 		DirectX::XMMATRIX m_world_matrix = DirectX::XMMatrixIdentity();
 	};
 
-	class sprite_animation_component 
+	enum animation_type
+	{
+		once,
+		loop
+	};
+
+	class animation_clip
 	{
 	public:
-		sprite_animation_component(unsigned int maxAnimFrames)
-			: m_max_animation_frames(maxAnimFrames), m_is_enabled(true), m_current_frame(0), m_current_update_counter(0)
+		animation_clip(int maxAnims, animation_type type) 
+			: m_max_animation_frames(maxAnims), m_is_enabled(true), m_is_now_playing(false), m_animation_type(type)
 		{
 			m_textures = { };
+		}
 
+		bool is_now_playing()
+		{
+			return m_is_now_playing;
 		}
 
 		void update()
@@ -50,14 +60,17 @@ namespace SharkSpirit
 			if (!m_is_enabled)
 				return;
 
-			if(m_current_update_counter >= 35 )
+			m_is_now_playing = true;
+
+			if (m_current_update_counter >= 35)
 			{
 				m_current_frame++;
 				m_current_update_counter = 0;
 
-				if (m_current_frame >= m_max_animation_frames) 
+				if (m_current_frame >= m_max_animation_frames)
 				{
 					m_current_frame = 0;
+					m_is_now_playing = false;
 				}
 
 				return;
@@ -66,7 +79,7 @@ namespace SharkSpirit
 			m_current_update_counter++;
 		}
 
-		void fill_textures_names_map(std::vector<std::string>* names) 
+		void fill_textures_names_map(std::vector<std::string>* names)
 		{
 			auto count = 0;
 
@@ -82,13 +95,64 @@ namespace SharkSpirit
 			return m_textures[m_current_frame];
 		}
 
+		animation_type m_animation_type;
+
 	private:
-		typedef std::map<unsigned int, const std::string> textures_names_map;
-		unsigned int m_current_frame;
-		unsigned int m_current_update_counter;
-		unsigned int m_max_animation_frames;
+		int m_current_frame;
+		int m_current_update_counter;
+		int m_max_animation_frames;
 		bool m_is_enabled;
+		bool m_is_now_playing;
+
+		typedef std::map<int, const std::string> textures_names_map;
 		textures_names_map m_textures;
+	};
+
+	class sprite_animation_component 
+	{
+	public:
+		sprite_animation_component() 
+		{
+			m_anim_clips = {};
+		}
+
+		void add_animation(const std::string& key, std::vector<std::string>* names, animation_type type)
+		{
+			animation_clip* clip = new animation_clip(names->size(), type);
+
+			clip->fill_textures_names_map(names);
+
+			m_anim_clips.emplace(key, clip);
+		}
+
+		void set_current_key(const std::string& key)
+		{
+			m_current_key = key;
+		}
+
+		const std::string get_current_frame()
+		{
+			return m_anim_clips[m_current_key]->get_current_frame();
+		}
+
+		bool has_playing_anim()
+		{
+			return m_anim_clips[m_current_key]->is_now_playing() && m_anim_clips[m_current_key]->m_animation_type == animation_type::once;
+		}
+
+		void update()
+		{
+			for(auto clip : m_anim_clips)
+			{
+				clip.second->update();
+			}
+		}
+
+	private:
+		typedef std::map<const std::string, animation_clip*> animations_clips;
+
+		animations_clips m_anim_clips;
+		std::string m_current_key;
 	};
 
 	class sprite_component_create_info

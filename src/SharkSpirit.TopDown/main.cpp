@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 #include <Core/ECS/Systems/SpriteAnimationSystem.h>
+#include "Systems/PlayerAnimationSystem.h"
 
 using namespace SharkSpirit;
 
@@ -39,18 +40,45 @@ protected:
 
 		DirectX::XMFLOAT3 pos = { playerStartX, playerStartY, 0 };
 		DirectX::XMFLOAT3 rot = { 0, 0, 0 };
-		DirectX::XMFLOAT2 scale = { 64, 64 };
+		DirectX::XMFLOAT2 scale = { 128, 128 };
 
-		const std::string& playerTextureName = "survivor-meleeattack_rifle_0";
+		const std::string& playerTextureName = "survivor-idle_rifle_0";
 		const std::string& grassTextureName = "oryx_16bit_fantasy_world_65";
-		std::vector<std::string> names = {};
+		std::vector<std::string> meleeAttackNames = {};
+		std::vector<std::string> idleNames = {};
+		std::vector<std::string> moveNames = {};
+		std::vector<std::string> reloadNames = {};
 
 		for (size_t i = 0; i < 15; i++)
 		{
 			const std::string name = std::format("survivor-meleeattack_rifle_{0}", i);
-			names.push_back(name);
+			meleeAttackNames.push_back(name);
 
 			m_assets.load_texture(&m_graphics, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\meleeattack\\survivor-meleeattack_rifle_{0}.png", i));
+		}
+
+		for (size_t i = 0; i < 20; i++)
+		{
+			const std::string name = std::format("survivor-idle_rifle_{0}", i);
+			idleNames.push_back(name);
+
+			m_assets.load_texture(&m_graphics, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\idle\\survivor-idle_rifle_{0}.png", i));
+		}
+
+		for (size_t i = 0; i < 20; i++)
+		{
+			const std::string name = std::format("survivor-move_rifle_{0}", i);
+			moveNames.push_back(name);
+
+			m_assets.load_texture(&m_graphics, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\move\\survivor-move_rifle_{0}.png", i));
+		}
+
+		for (size_t i = 0; i < 20; i++)
+		{
+			const std::string name = std::format("survivor-reload_rifle_{0}", i);
+			reloadNames.push_back(name);
+
+			m_assets.load_texture(&m_graphics, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\reload\\survivor-reload_rifle_{0}.png", i));
 		}
 
 	    m_assets.load_texture(&m_graphics, playerTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\meleeattack\\survivor-meleeattack_rifle_0.png");
@@ -66,8 +94,13 @@ protected:
 		m_reg.emplace<transform_component>(player, pos, rot, scale);
 		m_reg.emplace<player_input_component>(player, 0.3f, 0.2f);
 		m_reg.emplace<sprite_component>(player, &m_assets, &m_graphics, &playerSpriteCreateInfo);
-		auto& anim = m_reg.emplace<sprite_animation_component>(player, 15);
-		anim.fill_textures_names_map(&names);
+		auto& animation = m_reg.emplace<sprite_animation_component>(player);
+		animation.add_animation("meleAtack", &meleeAttackNames, animation_type::once);
+		animation.add_animation("reload", &reloadNames, animation_type::once);
+		animation.add_animation("idle", &idleNames, animation_type::loop);
+		animation.add_animation("move", &moveNames, animation_type::loop);
+
+		animation.set_current_key("idle");
 
 		auto grass = create_entity();
 		auto tmp = m_reg.emplace<sprite_component>(grass, &m_assets, &m_graphics, &grassSpriteCreateInfo);
@@ -88,11 +121,13 @@ protected:
 		m_player_input_system = new player_input_system(&m_reg, &m_input, &m_graphics, &m_assets);
 		m_sprite_render_system = new sprite_render_system(&m_reg, &m_input, &m_graphics, &m_assets);
 		m_sprite_animation_system = new sprite_animation_system(&m_reg, &m_input, &m_graphics, &m_assets);
+		m_player_animation_system = new player_animation_system(&m_reg, &m_input, &m_graphics, &m_assets);
 	}
 
 	void on_update() override 
 	{
 		m_player_input_system->run();
+		m_player_animation_system->run();
 		m_sprite_animation_system->run();
 		m_sprite_render_system->run();
 
@@ -112,6 +147,7 @@ private:
 	player_input_system* m_player_input_system;
 	sprite_render_system* m_sprite_render_system;
 	sprite_animation_system* m_sprite_animation_system;
+	player_animation_system* m_player_animation_system;
 };
 
 int APIENTRY wWinMain(
