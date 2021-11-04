@@ -8,6 +8,7 @@
 #include <Render/DirectX/GraphicsManager.h>
 #include <Render/DirectX/Shaders.h>
 #include <Render/DirectX/Sampler.h>
+#include <Assets/AssetsManager.h>
 
 namespace SharkSpirit
 {
@@ -32,6 +33,62 @@ namespace SharkSpirit
 		vertex_shader m_vertex_shader;
 		pixel_shader m_pixel_shader;
 		DirectX::XMMATRIX m_world_matrix = DirectX::XMMatrixIdentity();
+	};
+
+	class sprite_animation_component 
+	{
+	public:
+		sprite_animation_component(unsigned int maxAnimFrames)
+			: m_max_animation_frames(maxAnimFrames), m_is_enabled(true), m_current_frame(0), m_current_update_counter(0)
+		{
+			m_textures = { };
+
+		}
+
+		void update()
+		{
+			if (!m_is_enabled)
+				return;
+
+			if(m_current_update_counter >= 35 )
+			{
+				m_current_frame++;
+				m_current_update_counter = 0;
+
+				if (m_current_frame >= m_max_animation_frames) 
+				{
+					m_current_frame = 0;
+				}
+
+				return;
+			}
+
+			m_current_update_counter++;
+		}
+
+		void fill_textures_names_map(std::vector<std::string>* names) 
+		{
+			auto count = 0;
+
+			for (auto name : *names)
+			{
+				m_textures.emplace(count, name);
+				count++;
+			}
+		}
+
+		const std::string get_current_frame()
+		{
+			return m_textures[m_current_frame];
+		}
+
+	private:
+		typedef std::map<unsigned int, const std::string> textures_names_map;
+		unsigned int m_current_frame;
+		unsigned int m_current_update_counter;
+		unsigned int m_max_animation_frames;
+		bool m_is_enabled;
+		textures_names_map m_textures;
 	};
 
 	class sprite_component_create_info

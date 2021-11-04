@@ -13,7 +13,8 @@ namespace SharkSpirit
 		player_input_system(
 			entt::registry* reg, 
 			input_processor* input, 
-			graphics_manager* graphics) : ISystem(reg, input, graphics)
+			graphics_manager* graphics,
+			assets_manager* assets) : ISystem(reg, input, graphics, assets)
 		{
 
 		}

@@ -14,7 +14,8 @@ namespace SharkSpirit
 		sprite_render_system(
 			entt::registry* reg,
 			input_processor* input,
-			graphics_manager* graphics) : ISystem(reg, input, graphics)
+			graphics_manager* graphics,
+			assets_manager* assets) : ISystem(reg, input, graphics, assets)
 		{
 			m_sprite_render_pipiline = sprite_render_pipeline();
 		}
