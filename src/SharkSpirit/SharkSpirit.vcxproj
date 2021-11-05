@@ -163,6 +163,7 @@
     <ClInclude Include="Core\ECS\Entity.h" />
     <ClInclude Include="Core\ECS\Systems\ISystem.h" />
     <ClInclude Include="Core\ECS\Systems\SpriteAnimationSystem.h" />
+    <ClInclude Include="Core\ECS\Systems\SpriteLightRenderSystem.h" />
     <ClInclude Include="Core\ECS\Systems\SpriteRenderSystem.h" />
     <ClInclude Include="Core\FpsManager.h" />
     <ClInclude Include="Core\GraphicsThrowMacros.h" />

@@ -4,14 +4,14 @@ struct PS_INPUT
 	float2 inTexCoord : TEXCOORD;
 };
 
-Texture2D objTexture : TEXTURE: register(t0);
+Texture2D lightMap: TEXTURE: register(t0);
 SamplerState objSamplerState : SAMPLER: register(s0);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-	float4 sampleColor = objTexture.Sample(objSamplerState, input.inTexCoord);
+	float4 lightColor = lightMap.Sample(objSamplerState, input.inTexCoord);
 
-	clip(sampleColor.a - 0.1f);
+	clip(lightColor.a - 0.1f);
 
-	return sampleColor * 0.2f;
+	return lightColor;
 }

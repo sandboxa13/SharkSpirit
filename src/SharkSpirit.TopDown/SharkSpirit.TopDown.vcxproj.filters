@@ -14,6 +14,9 @@
   <ItemGroup>
     <FxCompile Include="assets\vs_2d.hlsl" />
     <FxCompile Include="assets\ps_2d.hlsl" />
+    <FxCompile Include="assets\ps_light_2d.hlsl" />
+    <FxCompile Include="assets\2d_light_pass.hlsl" />
+    <FxCompile Include="assets\full_screen_vs.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\seamless_grass.jpg" />

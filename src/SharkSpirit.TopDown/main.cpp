@@ -14,6 +14,7 @@
 #include <crtdbg.h>
 #include <Core/ECS/Systems/SpriteAnimationSystem.h>
 #include "Systems/PlayerAnimationSystem.h"
+#include <Core/ECS/Systems/SpriteLightRenderSystem.h>
 
 using namespace SharkSpirit;
 
@@ -44,6 +45,7 @@ protected:
 
 		const std::string& playerTextureName = "survivor-idle_rifle_0";
 		const std::string& grassTextureName = "oryx_16bit_fantasy_world_65";
+		const std::string& lightTextureName = "lightMask";
 		std::vector<std::string> meleeAttackNames = {};
 		std::vector<std::string> idleNames = {};
 		std::vector<std::string> moveNames = {};
@@ -83,17 +85,23 @@ protected:
 
 	    m_assets.load_texture(&m_graphics, playerTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\meleeattack\\survivor-meleeattack_rifle_0.png");
 		m_assets.load_texture(&m_graphics, grassTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\oryx_16bit_fantasy_world_65.png");
-		
-		const std::wstring& pixelShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\ps_2d.cso";
-		const std::wstring& vertexShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\vs_2d.cso";
+		m_assets.load_texture(&m_graphics, lightTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\assets\\textures\\light\\lightMask.png");
 
-		auto playerSpriteCreateInfo = sprite_component_create_info(playerTextureName, pixelShader, vertexShader);
+		const std::wstring& playerPixelShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\assets\\shaders\\ps_2d.cso";
+		const std::wstring& pixelShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\assets\\shaders\\ps_2d.cso";
+		const std::wstring& pixellightShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\assets\\shaders\\ps_light_2d.cso";
+		const std::wstring& vertexShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\assets\\shaders\\vs_2d.cso";
+
+		auto playerSpriteCreateInfo = sprite_component_create_info(playerTextureName, playerPixelShader, vertexShader);
+		auto lightSpriteCreateInfo = sprite_light_component_create_info(lightTextureName, pixellightShader, vertexShader);
 		auto grassSpriteCreateInfo = sprite_component_create_info(grassTextureName, pixelShader, vertexShader);
 
 		player = create_entity();
 		m_reg.emplace<transform_component>(player, pos, rot, scale);
 		m_reg.emplace<player_input_component>(player, 0.3f, 0.2f);
 		m_reg.emplace<sprite_component>(player, &m_assets, &m_graphics, &playerSpriteCreateInfo);
+		m_reg.emplace<sprite_light_component>(player, &m_assets, &m_graphics, &lightSpriteCreateInfo);
+
 		auto& animation = m_reg.emplace<sprite_animation_component>(player);
 		animation.add_animation("meleAtack", &meleeAttackNames, animation_type::once);
 		animation.add_animation("reload", &reloadNames, animation_type::once);
@@ -122,14 +130,22 @@ protected:
 		m_sprite_render_system = new sprite_render_system(&m_reg, &m_input, &m_graphics, &m_assets);
 		m_sprite_animation_system = new sprite_animation_system(&m_reg, &m_input, &m_graphics, &m_assets);
 		m_player_animation_system = new player_animation_system(&m_reg, &m_input, &m_graphics, &m_assets);
+		m_sprite_light_render_system = new sprite_light_render_system(&m_reg, &m_input, &m_graphics, &m_assets);
+		m_light_pass = new light_pass();
 	}
 
 	void on_update() override 
 	{
+
 		m_player_input_system->run();
+		m_sprite_light_render_system->run();
+
 		m_player_animation_system->run();
 		m_sprite_animation_system->run();
+		
 		m_sprite_render_system->run();
+
+		m_light_pass->execute(&m_graphics);
 
 		float dt = m_timer.DeltaTime();
 		float totalTime = m_timer.TotalTime();
@@ -148,6 +164,8 @@ private:
 	sprite_render_system* m_sprite_render_system;
 	sprite_animation_system* m_sprite_animation_system;
 	player_animation_system* m_player_animation_system;
+	sprite_light_render_system* m_sprite_light_render_system;
+	light_pass* m_light_pass;
 };
 
 int APIENTRY wWinMain(

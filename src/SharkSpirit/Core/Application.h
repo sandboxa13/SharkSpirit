@@ -79,7 +79,6 @@ namespace SharkSpirit
 				m_imgui.BeginFrame();
 				m_imgui.SetStyle();
 
-				m_graphics.clear_rt();
 				on_update();
 
 				m_isRunning = m_input.process_input();

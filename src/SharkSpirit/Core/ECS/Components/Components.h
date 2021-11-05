@@ -40,7 +40,6 @@ namespace SharkSpirit
 		once,
 		loop
 	};
-
 	class animation_clip
 	{
 	public:
@@ -64,7 +63,7 @@ namespace SharkSpirit
 
 		void update()
 		{
-			if (!m_is_enabled)
+			if (!m_is_enabled && m_animation_type == animation_type::once)
 				return;
 
 			m_is_now_playing = true;
@@ -115,7 +114,6 @@ namespace SharkSpirit
 		typedef std::map<int, const std::string> textures_names_map;
 		textures_names_map m_textures;
 	};
-
 	class sprite_animation_component 
 	{
 	public:
@@ -135,6 +133,9 @@ namespace SharkSpirit
 
 		void set_current_key(const std::string& key)
 		{
+			if (m_current_key == key)
+				return;
+
 			m_current_key = key;
 			m_anim_clips[m_current_key]->prepare_play();
 		}
@@ -214,6 +215,58 @@ namespace SharkSpirit
 		virtual ~sprite_component()
 		{
 
+		}
+
+		constant_buffer<constant_buffer_2d>* cb_vs_vertexshader_2d = nullptr;
+	};
+
+
+	class sprite_light_component_create_info
+	{
+	public:
+		sprite_light_component_create_info(
+			const std::string& textureName,
+			const std::wstring& pixelShaderPath,
+			const std::wstring& vertexShaderPath
+		) :
+			m_pixel_shader_path(pixelShaderPath),
+			m_vertex_shader_path(vertexShaderPath),
+			m_texture_name(textureName)
+		{
+
+		}
+		const std::string& m_texture_name;
+		const std::wstring& m_pixel_shader_path;
+		const std::wstring& m_vertex_shader_path;
+	};
+
+	class sprite_light_component : public base_render_component
+	{
+	public:
+		sprite_light_component(
+			assets_manager* assetsManager,
+			graphics_manager* graphicsManager,
+			sprite_light_component_create_info* createInfo)
+		{
+			HRESULT hr = { 0 };
+
+			m_texture = assetsManager->get_texture(createInfo->m_texture_name);
+			m_sampler = new sampler(graphicsManager);
+
+			//2d shaders
+			D3D11_INPUT_ELEMENT_DESC layout2D[] =
+			{
+				{"POSITION", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0  },
+				{"TEXCOORD", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0  },
+			};
+
+			UINT numElements2D = ARRAYSIZE(layout2D);
+
+			hr = m_vertex_shader.Initialize(graphicsManager->get_device().Get(), createInfo->m_vertex_shader_path, layout2D, numElements2D);
+			hr = m_pixel_shader.Initialize(graphicsManager->get_device().Get(), createInfo->m_pixel_shader_path);
+
+			cb_vs_vertexshader_2d = new constant_buffer<constant_buffer_2d>();
+			hr = cb_vs_vertexshader_2d->Initialize(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get());
 		}
 
 		constant_buffer<constant_buffer_2d>* cb_vs_vertexshader_2d = nullptr;
