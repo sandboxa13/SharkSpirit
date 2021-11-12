@@ -107,7 +107,6 @@ namespace SharkSpirit
 
 			ID3D11ShaderResourceView* null[] = { nullptr };
 			graphics->get_device_context()->PSSetShaderResources(0, 1, null);
-			//graphics->clear_context();
 		}
 	};
 }

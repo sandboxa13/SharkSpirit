@@ -26,8 +26,10 @@ namespace SharkSpirit
 
 			auto spriteView = m_reg->view<sprite_light_component, transform_component>();
 
-			m_graphics->get_device_context()->OMSetRenderTargets(1, m_graphics->m_pLightMapRTV.GetAddressOf(), m_graphics->m_pDepthStencilView.Get());
+			float blend_factor[4] = { 0.f, 0.f, 0.f, 0.f };
+			m_graphics->get_device_context()->OMSetRenderTargets(1, m_graphics->m_pLightMapRTV.GetAddressOf(), nullptr);
 			m_graphics->clear_light_rt();
+			m_graphics->get_device_context()->OMSetBlendState(m_graphics->m_blend_state.Get(), nullptr, 0xffffffff);
 
 			for (auto entity : spriteView)
 			{
@@ -45,6 +47,8 @@ namespace SharkSpirit
 
 				m_sprite_render_pipiline.execute(m_graphics, sprite);
 			}
+
+			m_graphics->get_device_context()->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 		}
 
 		sprite_light_render_pipeline m_sprite_render_pipiline;

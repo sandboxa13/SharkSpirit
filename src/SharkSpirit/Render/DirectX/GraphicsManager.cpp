@@ -96,6 +96,18 @@ namespace SharkSpirit
 		srvDesc.Texture2DArray.MostDetailedMip = 0;
 
 		GFX_THROW_INFO(m_device.Get()->CreateShaderResourceView(texture, &srvDesc, &m_pLightMapSRV));
+
+		D3D11_BLEND_DESC desc = {0};
+		desc.RenderTarget[0].BlendEnable = TRUE;
+		desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+		desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+		desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_COLOR ;
+		desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC1_COLOR;
+		desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_MIN;
+		desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+		desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+
+		GFX_THROW_INFO(m_device->CreateBlendState(&desc, &m_blend_state));
 	}
 
 	void graphics_manager::create_and_bind_depth_buffer(UINT& width, UINT& height)
@@ -460,7 +472,7 @@ namespace SharkSpirit
 	void graphics_manager::clear_rt() const
 	{
 		m_immediateContext.Get()->ClearRenderTargetView(m_pRenderTargetView.Get(), DirectX::Colors::Black);
-		m_immediateContext.Get()->ClearDepthStencilView(m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
+		m_immediateContext.Get()->ClearDepthStencilView(m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH , 1.0f, 0u);
 	}
 
 	void graphics_manager::clear_light_rt() const

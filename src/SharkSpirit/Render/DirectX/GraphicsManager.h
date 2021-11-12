@@ -112,6 +112,7 @@ namespace SharkSpirit
 		ComPtr<ID3D11ShaderResourceView> m_pLightMapSRV;
 		ComPtr<ID3D11RenderTargetView> m_pColorMapRTV;
 		ComPtr<ID3D11ShaderResourceView> m_pColorMapSRV;
+		ComPtr<ID3D11BlendState> m_blend_state;
 
 		ComPtr<ID3D11Texture2D> m_pDepthStencilBuffer;
 		D3D_FEATURE_LEVEL m_featureLevel = D3D_FEATURE_LEVEL_11_0;

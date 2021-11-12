@@ -22,9 +22,7 @@ float4 main(PixelInputType input) : SV_TARGET
     lightColor = lightTextures.Sample(SampleType, input.tex);
     
     // Blend the two pixels together.
-    finalColor = color * (lightColor * 5);
-
-    finalColor.r *= 2;
+    finalColor = color * (lightColor * 8);
 
     return finalColor;
 }

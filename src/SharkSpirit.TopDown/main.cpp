@@ -85,7 +85,7 @@ protected:
 
 	    m_assets.load_texture(&m_graphics, playerTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\meleeattack\\survivor-meleeattack_rifle_0.png");
 		m_assets.load_texture(&m_graphics, grassTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\oryx_16bit_fantasy_world_65.png");
-		m_assets.load_texture(&m_graphics, lightTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\assets\\textures\\light\\lightMask.png");
+		m_assets.load_texture(&m_graphics, lightTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\assets\\textures\\light\\NaD6F.png");
 
 		const std::wstring& playerPixelShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\assets\\shaders\\ps_2d.cso";
 		const std::wstring& pixelShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\assets\\shaders\\ps_2d.cso";
@@ -96,11 +96,21 @@ protected:
 		auto lightSpriteCreateInfo = sprite_light_component_create_info(lightTextureName, pixellightShader, vertexShader);
 		auto grassSpriteCreateInfo = sprite_component_create_info(grassTextureName, pixelShader, vertexShader);
 
+		
+		
+
 		player = create_entity();
 		m_reg.emplace<transform_component>(player, pos, rot, scale);
 		m_reg.emplace<player_input_component>(player, 0.3f, 0.2f);
 		m_reg.emplace<sprite_component>(player, &m_assets, &m_graphics, &playerSpriteCreateInfo);
 		m_reg.emplace<sprite_light_component>(player, &m_assets, &m_graphics, &lightSpriteCreateInfo);
+
+		for (size_t i = 0; i < 1; i++)
+		{
+			auto en = create_entity();
+			m_reg.emplace<sprite_light_component>(en, &m_assets, &m_graphics, &lightSpriteCreateInfo);
+			m_reg.emplace<transform_component>(en, pos, rot, scale);
+		}
 
 		auto& animation = m_reg.emplace<sprite_animation_component>(player);
 		animation.add_animation("meleAtack", &meleeAttackNames, animation_type::once);
@@ -181,7 +191,7 @@ int APIENTRY wWinMain(
 		freopen("CONOUT$", "w", stderr);
 		freopen("CONOUT$", "w", stdout);
 
-		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+		//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 		HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 		if (FAILED(hr))
