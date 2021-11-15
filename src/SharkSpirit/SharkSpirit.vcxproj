@@ -230,6 +230,7 @@
     <ClCompile Include="Logger\Logger.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Platform\Window\Window.cpp" />
+    <ClCompile Include="Render\Device.cpp" />
     <ClCompile Include="Render\DirectX\Camera2d.cpp" />
     <ClCompile Include="Render\DirectX\GraphicsManager.cpp" />
     <ClCompile Include="Render\DirectX\Shaders.cpp" />

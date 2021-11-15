@@ -8,7 +8,7 @@ namespace SharkSpirit
 	class sampler 
 	{
 	public :
-		sampler(graphics_manager* graphicsManager, unsigned int startSlot = 0)
+		sampler(shark_spirit::render::device* device, unsigned int startSlot = 0)
 			: m_start_slot(startSlot)
 		{
 			D3D11_SAMPLER_DESC samplerDesc = {};
@@ -17,7 +17,7 @@ namespace SharkSpirit
 			samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 			samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 
-			graphicsManager->get_device()->CreateSamplerState(&samplerDesc, &m_sampler_state);
+			device->get_device()->CreateSamplerState(&samplerDesc, &m_sampler_state);
 		}
 
 		ComPtr<ID3D11SamplerState> m_sampler_state;

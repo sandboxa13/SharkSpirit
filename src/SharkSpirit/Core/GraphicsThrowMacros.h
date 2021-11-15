@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Render/DirectX/GraphicsManager.h"
+#include "Render/Device.h"
 
 // HRESULT hr should exist in the local scope for these macros to work
 

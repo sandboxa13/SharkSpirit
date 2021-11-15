@@ -36,7 +36,7 @@ namespace shark_spirit::render
 	render_target* device::create_render_target(render_target_desc* desc)
 	{
 		HRESULT hr;
-		render_target renderTarget = { 0 };
+		auto renderTarget = new render_target();
 
 		D3D11_TEXTURE2D_DESC textureDesc = {};
 
@@ -57,39 +57,39 @@ namespace shark_spirit::render
 		rtvDesc.Format = textureDesc.Format;
 		rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
 		rtvDesc.Texture2DArray.MipSlice = 0;
-		GFX_THROW_INFO(m_device.Get()->CreateRenderTargetView(texture, &rtvDesc, &renderTarget.m_render_target_view));
+		GFX_THROW_INFO(m_device.Get()->CreateRenderTargetView(texture, &rtvDesc, &renderTarget->m_render_target_view));
 
 		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
 		srvDesc.Format = textureDesc.Format;
 		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 		srvDesc.Texture2DArray.MipLevels = -1;
 		srvDesc.Texture2DArray.MostDetailedMip = 0;
-		GFX_THROW_INFO(m_device.Get()->CreateShaderResourceView(texture, &srvDesc, &renderTarget.m_shader_resource_view));
+		GFX_THROW_INFO(m_device.Get()->CreateShaderResourceView(texture, &srvDesc, &renderTarget->m_shader_resource_view));
 
 		texture->Release();
 
 		m_render_targets.push_back(renderTarget);
 
-		return &renderTarget;
+		return renderTarget;
 	}
 
 	render_target* device::create_swap_chain_render_target()
 	{
 		HRESULT hr;
-		render_target renderTarget = { 0 };
+		auto renderTarget = new render_target();
 
 		ID3D11Texture2D* pBackBuffer = nullptr;
 		GFX_THROW_INFO(m_swap_chain.Get()->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&pBackBuffer)));
 
 		auto device = m_device.Get();
 
-		GFX_THROW_INFO(device->CreateRenderTargetView(pBackBuffer, nullptr, &renderTarget.m_render_target_view));
+		GFX_THROW_INFO(device->CreateRenderTargetView(pBackBuffer, nullptr, &renderTarget->m_render_target_view));
 
 		pBackBuffer->Release();
 
 		m_render_targets.push_back(renderTarget);
 
-		return &renderTarget;
+		return renderTarget;
 	}
 
 	ComPtr<ID3D11BlendState> device::create_blend_sate()
@@ -110,6 +110,16 @@ namespace shark_spirit::render
 		GFX_THROW_INFO(m_device->CreateBlendState(&desc, &blendState));
 
 		return blendState;
+	}
+
+	Microsoft::WRL::ComPtr<ID3D11Device> device::get_device()
+	{
+		return m_device;
+	}
+
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> device::get_device_context()
+	{
+		return m_immediate_context;
 	}
 
 	#pragma endregion
@@ -151,7 +161,7 @@ namespace shark_spirit::render
 
 	void device::om_set_render_targets(int number, render_target* renderTarget)
 	{
-		m_immediate_context->OMSetRenderTargets(1, renderTarget->m_render_target_view.GetAddressOf(), nullptr);
+		m_immediate_context->OMSetRenderTargets(number, renderTarget->m_render_target_view.GetAddressOf(), nullptr);
 	}
 
 	void device::om_set_blend_state(ID3D11BlendState* state, const FLOAT blendFactor[4], UINT mask)
@@ -259,29 +269,29 @@ namespace shark_spirit::render
 		GFX_THROW_INFO(dxgiFactory->QueryInterface(__uuidof(IDXGIFactory2), reinterpret_cast<void**>(&dxgiFactory2)));
 		if (dxgiFactory2)
 		{
-			//// DirectX 11.1 or later
-			//GFX_THROW_INFO(m_device.Get()->QueryInterface(__uuidof(ID3D11Device1), (&m_device)));
-			//if (SUCCEEDED(hr))
-			//{
-			//	GFX_THROW_INFO(m_immediate_context.Get()->QueryInterface(__uuidof(ID3D11DeviceContext1), (&m_immediateContext1)));
-			//}
+			// DirectX 11.1 or later
+			GFX_THROW_INFO(m_device.Get()->QueryInterface(__uuidof(ID3D11Device1), (&m_device1)));
+			if (SUCCEEDED(hr))
+			{
+				GFX_THROW_INFO(m_immediate_context.Get()->QueryInterface(__uuidof(ID3D11DeviceContext1), (&m_immediate_context1)));
+			}
 
-			//DXGI_SWAP_CHAIN_DESC1 sd = {};
-			//sd.Width = width;
-			//sd.Height = height;
-			//sd.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-			//sd.SampleDesc.Count = 1;
-			//sd.SampleDesc.Quality = 0;
-			//sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-			//sd.BufferCount = 1;
+			DXGI_SWAP_CHAIN_DESC1 sd = {};
+			sd.Width = width;
+			sd.Height = height;
+			sd.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+			sd.SampleDesc.Count = 1;
+			sd.SampleDesc.Quality = 0;
+			sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT ;
+			sd.BufferCount = 1;
 
-			//GFX_THROW_INFO(dxgiFactory2->CreateSwapChainForHwnd(m_device.Get(), hwnd, &sd, nullptr, nullptr, &m_swap_chain));
-			//if (SUCCEEDED(hr))
-			//{
-			//	GFX_THROW_INFO(m_pSwapChain1->QueryInterface(__uuidof(IDXGISwapChain), (&m_pSwapChain)));
-			//}
+			GFX_THROW_INFO(dxgiFactory2->CreateSwapChainForHwnd(m_device.Get(), hwnd, &sd, nullptr, nullptr, &m_swap_chain1));
+			if (SUCCEEDED(hr))
+			{
+				GFX_THROW_INFO(m_swap_chain1->QueryInterface(__uuidof(IDXGISwapChain), (&m_swap_chain)));
+			}
 
-			//dxgiFactory2->Release();
+			dxgiFactory2->Release();
 		}
 		else
 		{
@@ -333,4 +343,113 @@ namespace shark_spirit::render
 			}
 		}
 	}
+
+	#pragma region Execptions
+
+	device::HrException::HrException(int line, const char* file, HRESULT hr, std::vector<std::string> infoMsgs) noexcept
+		:
+		Exception(line, file),
+		hr(hr)
+	{
+		// join all info messages with newlines into single string
+		for (const auto& m : infoMsgs)
+		{
+			info += m;
+			info.push_back('\n');
+		}
+		// remove final newline if exists
+		if (!info.empty())
+		{
+			info.pop_back();
+		}
+	}
+
+	const char* device::HrException::what() const noexcept
+	{
+		std::ostringstream oss;
+		oss << GetType() << std::endl
+			<< "[Error Code] 0x" << std::hex << std::uppercase << GetErrorCode()
+			<< std::dec << " (" << static_cast<unsigned long>(GetErrorCode()) << ")" << std::endl
+			<< "[Error String] " << GetErrorString() << std::endl
+			<< "[Description] " << GetErrorDescription() << std::endl;
+		if (!info.empty())
+		{
+			oss << "\n[Error Info]\n" << GetErrorInfo() << std::endl << std::endl;
+		}
+		oss << GetOriginString();
+		whatBuffer = oss.str();
+		return whatBuffer.c_str();
+	}
+
+	const char* device::HrException::GetType() const noexcept
+	{
+		return "Shark Spirit Graphics Exception";
+	}
+
+	HRESULT device::HrException::GetErrorCode() const noexcept
+	{
+		return hr;
+	}
+
+	std::string device::HrException::GetErrorString() const noexcept
+	{
+		return DXGetErrorString(hr);
+	}
+
+	std::string device::HrException::GetErrorDescription() const noexcept
+	{
+		char buf[512];
+		DXGetErrorDescription(hr, buf, sizeof(buf));
+		return buf;
+	}
+
+	std::string device::HrException::GetErrorInfo() const noexcept
+	{
+		return info;
+	}
+
+
+	const char* device::DeviceRemovedException::GetType() const noexcept
+	{
+		return "Shark Spirit Graphics Exception [Device Removed] (DXGI_ERROR_DEVICE_REMOVED)";
+	}
+	device::InfoException::InfoException(int line, const char* file, std::vector<std::string> infoMsgs) noexcept
+		:
+		Exception(line, file)
+	{
+		// join all info messages with newlines into single string
+		for (const auto& m : infoMsgs)
+		{
+			info += m;
+			info.push_back('\n');
+		}
+		// remove final newline if exists
+		if (!info.empty())
+		{
+			info.pop_back();
+		}
+	}
+
+
+	const char* device::InfoException::what() const noexcept
+	{
+		std::ostringstream oss;
+		oss << GetType() << std::endl
+			<< "\n[Error Info]\n" << GetErrorInfo() << std::endl << std::endl;
+		oss << GetOriginString();
+		whatBuffer = oss.str();
+		return whatBuffer.c_str();
+	}
+
+	const char* device::InfoException::GetType() const noexcept
+	{
+		return "Graphics Info Exception";
+	}
+
+	std::string device::InfoException::GetErrorInfo() const noexcept
+	{
+		return info;
+	}
+
+#pragma endregion
 }

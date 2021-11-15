@@ -1,15 +1,22 @@
 #pragma once
+
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_win32.h"
+#include "ImGui/imgui_impl_dx11.h"
+
+#include <sstream>
+#include <vector>
 #include <directxcolors.h>
 #include <directxmath.h>
 #include <d3d11_1.h>
 #include <wrl.h>
 #include <d3dcompiler.h>
-#include <vector>
-#include "ImGui/imgui.h"
-#include "ImGui/imgui_impl_win32.h"
-#include "ImGui/imgui_impl_dx11.h"
 
+#include "Utils/Math.h"
+#include <Core/SSException.h>
 #include <Core/DxgiInfoManager.h>
+#include <Core/DxErr/dxerr.h>
+#include <Core/GraphicsThrowMacros.h>
 
 namespace shark_spirit::render
 {
@@ -81,6 +88,8 @@ namespace shark_spirit::render
 		render_target* create_render_target(render_target_desc* desc);
 		render_target* create_swap_chain_render_target();
 		Microsoft::WRL::ComPtr<ID3D11BlendState> create_blend_sate();
+		Microsoft::WRL::ComPtr<ID3D11Device> get_device();
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> get_device_context();
 
 		// pixel shader
 		void ps_set(ID3D11PixelShader* pixelShader);
@@ -102,17 +111,21 @@ namespace shark_spirit::render
 
 
 		void present();
+		HRESULT initialize(HWND& hwnd);
+
 	private:
 		Microsoft::WRL::ComPtr<ID3D11Device> m_device;
+		Microsoft::WRL::ComPtr<ID3D11Device1> m_device1;
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_immediate_context;
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext1> m_immediate_context1;
+
 		Microsoft::WRL::ComPtr<IDXGISwapChain> m_swap_chain;
+		Microsoft::WRL::ComPtr<IDXGISwapChain1> m_swap_chain1;
+
 		UINT m_width;
 		UINT m_height;
-		std::vector<render_target> m_render_targets;
+		std::vector<render_target*> m_render_targets;
 		D3D_FEATURE_LEVEL m_featureLevel = D3D_FEATURE_LEVEL_11_0;
-
-
-		HRESULT initialize(HWND& hwnd);
 
 #ifdef _DEBUG
 		DxgiInfoManager m_info_manager;

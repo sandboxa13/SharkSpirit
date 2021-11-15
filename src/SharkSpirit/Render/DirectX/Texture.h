@@ -2,6 +2,7 @@
 #include <d3d11.h>
 #include <wrl/client.h>
 #include <Render/DirectX/GraphicsManager.h>
+#include <Render/Device.h>
 
 namespace SharkSpirit 
 {
@@ -51,9 +52,9 @@ namespace SharkSpirit
 			texture.ReleaseAndGetAddressOf();
 			textureView.ReleaseAndGetAddressOf();
 		}
-		HRESULT initialize(graphics_manager* graphicsManager, const std::string& filePath);
-		Texture(graphics_manager* graphicsManager, const std::string& filePath);
-		Texture(graphics_manager* graphicsManager, const uint8_t* pData, size_t size);
+		HRESULT initialize(shark_spirit::render::device* device, const std::string& filePath);
+		Texture(shark_spirit::render::device* device, const std::string& filePath);
+		Texture(shark_spirit::render::device* device, const uint8_t* pData, size_t size);
 		ID3D11ShaderResourceView* GetTextureResourceView();
 		ID3D11ShaderResourceView** GetTextureResourceViewAddress();
 

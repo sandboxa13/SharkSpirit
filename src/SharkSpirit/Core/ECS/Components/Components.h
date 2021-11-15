@@ -29,12 +29,65 @@ namespace SharkSpirit
 		}
 		sampler* m_sampler;
 		Texture* m_texture;
-		index_buffer m_indices;
 		vertex_shader m_vertex_shader;
 		pixel_shader m_pixel_shader;
-		vertex_buffer<vertex> m_vertices;
+		vertex_buffer<vertex>* m_vertices;
+		index_buffer* m_indices;
 		DirectX::XMMATRIX m_world_matrix = DirectX::XMMatrixIdentity();
 		constant_buffer<world_view_proj>* m_world_view_proj = nullptr;
+	};
+
+	class camera_component : public base_component
+	{
+	public:
+		camera_component()
+		{
+			pos = DirectX::XMFLOAT3(5.0f, 0.0f, 0.0f);
+			rot = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+
+			UpdateMatrix();
+		}
+		virtual ~camera_component()
+		{
+
+		}
+		void SetProjectionValues(float width, float height, float nearZ, float farZ)
+		{
+			m_width = width;
+			m_height = height;
+			m_ortho_matrix = DirectX::XMMatrixOrthographicOffCenterLH(0.0f, width, height, 0.0f, nearZ, farZ);
+		}
+
+		const DirectX::XMMATRIX& GetOrthoMatrix() const
+		{
+			return m_ortho_matrix;
+		}
+		const DirectX::XMMATRIX& GetWorldMatrix() const
+		{
+			return m_world_matrix;
+		}
+		void SetPosition(const DirectX::XMFLOAT3& pos)
+		{
+			this->pos = pos;
+			UpdateMatrix();
+		}
+
+		float m_width, m_height;
+	private:
+		void UpdateMatrix()
+		{
+			DirectX::XMMATRIX translationOffsetMatrix = DirectX::XMMatrixTranslation(-pos.x + 640, -pos.y + 360, 0.0f);
+			DirectX::XMMATRIX camRotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
+			m_world_matrix = camRotationMatrix * translationOffsetMatrix;
+		}
+
+		DirectX::XMMATRIX m_world_matrix;
+		DirectX::XMMATRIX m_ortho_matrix;
+
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMFLOAT3 rot;
+
+		float m_zoom;
 	};
 
 	enum animation_type
@@ -190,36 +243,23 @@ namespace SharkSpirit
 	public:
 		sprite_component(
 			assets_manager* assetsManager,
-			graphics_manager* graphicsManager, 
+			shark_spirit::render::device* device,
 			sprite_component_create_info* createInfo)
 		{
 			HRESULT hr = { 0 };
 
 			m_texture = assetsManager->get_texture(createInfo->m_texture_name);
-			m_sampler = new sampler(graphicsManager);
-
-			//2d shaders
-			D3D11_INPUT_ELEMENT_DESC layout2D[] =
-			{
-				{"POSITION", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0  },
-				{"TEXCOORD", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0  },
-			};
-
-			UINT numElements2D = ARRAYSIZE(layout2D);
-
-			hr = m_vertex_shader.Initialize(graphicsManager->get_device().Get(), createInfo->m_vertex_shader_path, layout2D, numElements2D);
-			hr = m_pixel_shader.Initialize(graphicsManager->get_device().Get(), createInfo->m_pixel_shader_path);
-			
-			cb_vs_vertexshader_2d = new constant_buffer<constant_buffer_2d>();
-			hr = cb_vs_vertexshader_2d->Initialize(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get());
+			m_sampler = new sampler(device);
+			m_world_view_proj = new constant_buffer<world_view_proj>();
+			m_vertices = assetsManager->get_verticies("sprite_vertex");
+			m_indices = assetsManager->get_indicies("sprite_index");
+			hr = m_world_view_proj->Initialize(device->get_device().Get(), device->get_device_context().Get());
 		}
 
 		virtual ~sprite_component()
 		{
 
 		}
-
-		constant_buffer<constant_buffer_2d>* cb_vs_vertexshader_2d = nullptr;
 	};
 
 
@@ -246,32 +286,20 @@ namespace SharkSpirit
 	{
 	public:
 		sprite_light_component(
-			assets_manager* assetsManager,
-			graphics_manager* graphicsManager,
+			assets_manager* assetsManager, 
+			shark_spirit::render::device* device,
 			sprite_light_component_create_info* createInfo)
 		{
 			HRESULT hr = { 0 };
 
 			m_texture = assetsManager->get_texture(createInfo->m_texture_name);
-			m_sampler = new sampler(graphicsManager);
+			m_sampler = new sampler(device);
+			m_vertices = assetsManager->get_verticies("sprite_vertex");
+			m_indices = assetsManager->get_indicies("sprite_index");
+			m_world_view_proj = new constant_buffer<world_view_proj>();
 
-			//2d shaders
-			D3D11_INPUT_ELEMENT_DESC layout2D[] =
-			{
-				{"POSITION", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0  },
-				{"TEXCOORD", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0  },
-			};
-
-			UINT numElements2D = ARRAYSIZE(layout2D);
-
-			hr = m_vertex_shader.Initialize(graphicsManager->get_device().Get(), createInfo->m_vertex_shader_path, layout2D, numElements2D);
-			hr = m_pixel_shader.Initialize(graphicsManager->get_device().Get(), createInfo->m_pixel_shader_path);
-
-			cb_vs_vertexshader_2d = new constant_buffer<constant_buffer_2d>();
-			hr = cb_vs_vertexshader_2d->Initialize(graphicsManager->get_device().Get(), graphicsManager->get_device_context().Get());
+			hr = m_world_view_proj->Initialize(device->get_device().Get(), device->get_device_context().Get());
 		}
-
-		constant_buffer<constant_buffer_2d>* cb_vs_vertexshader_2d = nullptr;
 	};
 
 	struct transform_component

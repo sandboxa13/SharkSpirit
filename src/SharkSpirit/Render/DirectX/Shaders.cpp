@@ -13,6 +13,18 @@ namespace SharkSpirit
 		return hr;
 	}
 
+	HRESULT vertex_shader::InitializeFromBlob(ID3D11Device* device, ID3D10Blob* blob, D3D11_INPUT_ELEMENT_DESC* layoutDesc, UINT numElements)
+	{
+		HRESULT hr = { 0 };
+
+		shader_buffer = blob;
+
+		hr = device->CreateVertexShader(this->shader_buffer->GetBufferPointer(), this->shader_buffer->GetBufferSize(), NULL, this->shader.GetAddressOf());
+		hr = device->CreateInputLayout(layoutDesc, numElements, this->shader_buffer->GetBufferPointer(), this->shader_buffer->GetBufferSize(), this->inputLayout.GetAddressOf());
+
+		return hr;
+	}
+
 	ID3D11VertexShader* vertex_shader::GetShader()
 	{
 		return this->shader.Get();
@@ -34,6 +46,17 @@ namespace SharkSpirit
 
 		hr = device->CreatePixelShader(this->shader_buffer.Get()->GetBufferPointer(), this->shader_buffer.Get()->GetBufferSize(), NULL, this->shader.GetAddressOf());
 		
+		return hr;
+	}
+
+	HRESULT pixel_shader::InitializeFromBlob(ID3D11Device* device, ID3D10Blob* blob)
+	{
+		HRESULT hr = { 0 };
+
+		shader_buffer = blob;
+
+		hr = device->CreatePixelShader(this->shader_buffer.Get()->GetBufferPointer(), this->shader_buffer.Get()->GetBufferSize(), NULL, this->shader.GetAddressOf());
+
 		return hr;
 	}
 
