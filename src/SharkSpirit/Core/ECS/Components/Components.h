@@ -34,6 +34,7 @@ namespace SharkSpirit
 		pixel_shader m_pixel_shader;
 		vertex_buffer<vertex> m_vertices;
 		DirectX::XMMATRIX m_world_matrix = DirectX::XMMatrixIdentity();
+		constant_buffer<world_view_proj>* m_world_view_proj = nullptr;
 	};
 
 	enum animation_type

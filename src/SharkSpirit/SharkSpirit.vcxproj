@@ -192,6 +192,7 @@
     <ClInclude Include="Logger\BSlogger.hpp" />
     <ClInclude Include="Logger\Logger.h" />
     <ClInclude Include="Platform\Window\Window.h" />
+    <ClInclude Include="Render\Device.h" />
     <ClInclude Include="Render\DirectX\Camera2d.h" />
     <ClInclude Include="Render\DirectX\ConstantBuffer.h" />
     <ClInclude Include="Render\DirectX\GraphicsManager.h" />

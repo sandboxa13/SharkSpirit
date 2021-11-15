@@ -24,6 +24,10 @@ namespace SharkSpirit
 		void load_texture(graphics_manager* graphicsManager, const std::string name, const std::string& path);
 		Texture* get_texture(const std::string& name);
 
+		void load_shader(graphics_manager* graphicsManager, const std::string name, const std::string& path);
+		pixel_shader* get_pixel_shader(const std::string& name);
+		vertex_shader* get_vertex_shader(const std::string& name);
+
 	private:
 		typedef std::map<const std::string, Texture*> textures_map;
 
