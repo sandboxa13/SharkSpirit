@@ -87,8 +87,8 @@ namespace SharkSpirit
 
 		camera_2d m_camera_2d;
 
-		vertex_buffer<vertex_2d> m_vertices_light_pass;
-		vertex_buffer<vertex_2d> m_vertices;
+		vertex_buffer<vertex> m_vertices_light_pass;
+		vertex_buffer<vertex> m_vertices;
 		constant_buffer<constant_buffer_2d>* m_cb_vs_vertexshader_2d;
 		index_buffer m_indices;
 		index_buffer m_indicies_light_pass;

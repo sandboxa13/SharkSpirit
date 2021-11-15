@@ -32,6 +32,7 @@ namespace SharkSpirit
 		index_buffer m_indices;
 		vertex_shader m_vertex_shader;
 		pixel_shader m_pixel_shader;
+		vertex_buffer<vertex> m_vertices;
 		DirectX::XMMATRIX m_world_matrix = DirectX::XMMatrixIdentity();
 	};
 

@@ -3,16 +3,15 @@
 
 namespace SharkSpirit
 {
-	struct vertex_2d 
+	struct vertex
 	{
-		vertex_2d() {}
-		vertex_2d(float x, float y, float z, float u, float v)
+		vertex() {}
+		vertex(float x, float y, float z, float u, float v)
 			: pos(x, y, z), texCoord(u, v) {}
 
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMFLOAT2 texCoord;
 	};
-
 
 	template<class T>
 	class vertex_buffer

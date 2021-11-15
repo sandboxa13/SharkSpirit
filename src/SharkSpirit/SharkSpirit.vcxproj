@@ -200,6 +200,7 @@
     <ClInclude Include="Render\DirectX\Shaders.h" />
     <ClInclude Include="Render\DirectX\Texture.h" />
     <ClInclude Include="Render\DirectX\VertexBuffer.h" />
+    <ClInclude Include="Render\RenderGraph.h" />
     <ClInclude Include="Render\RenderPipeline.h" />
     <ClInclude Include="Utils\Id.h" />
     <ClInclude Include="Utils\Math.h" />
