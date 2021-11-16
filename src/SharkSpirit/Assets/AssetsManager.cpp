@@ -34,6 +34,36 @@ namespace SharkSpirit
 
 		m_verticies_map.emplace("sprite_vertex", verticies);
 		m_indicies_map.emplace("sprite_index", indicies);
+
+
+		auto indiciesFS = new index_buffer();
+		auto verticiesFS = new vertex_buffer<vertex>();
+
+		std::vector<vertex> verticesDataFS =
+		{
+			vertex(-1.0f, -1.0f, 0.0f, 0.0f, 1.0f), //TopLeft
+			vertex(-1.0f, 1.0f, 0.0f, 0.0f, 0.0f), //TopRight
+			vertex(1.0f, 1.0f, 0.0f, 1.0f, 0.0f), //Bottom Left
+			vertex(1.0f, -1.0f, 0.0f, 1.0f, 1.0f), //Bottom Right
+		};
+
+		std::vector<DWORD> indiciesDataFS =
+		{
+			0, 1, 2,
+			0, 2, 3
+		};
+
+		verticiesFS->Initialize(device->get_device().Get(), verticesDataFS.data(), verticesDataFS.size());
+		indiciesFS->Initialize(device->get_device().Get(), indiciesDataFS.data(), indiciesDataFS.size());
+
+		m_verticies_map.emplace("full_screen_vertex", verticiesFS);
+		m_indicies_map.emplace("full_screen_index", indiciesFS);
+
+		verticesDataFS.clear();
+		indiciesDataFS.clear();
+
+		indexData.clear();
+		vertexData.clear();
 	}
 
 	void assets_manager::load_texture(shark_spirit::render::device* device, const std::string name, const std::string& path)

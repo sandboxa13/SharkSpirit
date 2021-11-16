@@ -21,6 +21,7 @@ namespace shark_spirit::render
 		std::vector<SharkSpirit::base_render_component*> m_render_components = {0};
 		std::vector<SharkSpirit::base_render_component*> m_light_components = {0};
 		SharkSpirit::base_render_component* m_curent_renderable;
+		SharkSpirit::base_render_component* m_full_screen_quad_renderable;
 		application_state m_application_state;
 		camera_state m_camera_state;
 	};
@@ -86,10 +87,14 @@ namespace shark_spirit::render
 
 			m_device->ps_set_shader_resources(0, 1, state->m_color_buffer->m_shader_resource_view.GetAddressOf());
 			m_device->ps_set_shader_resources(1, 1, state->m_light_buffer->m_shader_resource_view.GetAddressOf());
-			m_device->ps_set_samplers(state->m_curent_renderable->m_sampler->m_start_slot, 1u, state->m_curent_renderable->m_sampler->m_sampler_state.GetAddressOf());
+			m_device->ps_set_samplers(state->m_full_screen_quad_renderable->m_sampler->m_start_slot, 1u, state->m_full_screen_quad_renderable->m_sampler->m_sampler_state.GetAddressOf());
 
 			bind_shaders();
-			bind_input_assembler(state);
+			const UINT offsets = 0;
+
+			m_device->ia_set_input_layout(m_vertex_shader->GetInputLayout());
+			m_device->ia_set_vertex_buffer(0, 1, state->m_full_screen_quad_renderable->m_vertices->GetAddressOf(), state->m_full_screen_quad_renderable->m_vertices->StridePtr(), &offsets);
+			m_device->ia_set_index_buffer(state->m_full_screen_quad_renderable->m_indices->Get(), DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 0);
 		}
 
 		void draw(render_graph_state* state) override
@@ -100,7 +105,7 @@ namespace shark_spirit::render
 		void un_bind(render_graph_state* state) override
 		{
 			ID3D11ShaderResourceView* null[] = { nullptr, nullptr };
-			m_device->ps_set_shader_resources(0, 1, null);
+			m_device->ps_set_shader_resources(0, 2, null);
 		}
 	};
 
@@ -181,9 +186,11 @@ namespace shark_spirit::render
 
 		void update(render_graph_state* state) override
 		{
+			state->m_curent_renderable->m_world_view_proj->ApplyChanges();
+			
+			m_device->vs_set_constant_buffers(0, 1, state->m_curent_renderable->m_world_view_proj->GetAddressOf());
 			m_device->ps_set_shader_resources(0, 1, state->m_curent_renderable->m_texture->GetTextureResourceViewAddress());
 			m_device->ps_set_samplers(state->m_curent_renderable->m_sampler->m_start_slot, 1u, state->m_curent_renderable->m_sampler->m_sampler_state.GetAddressOf());
-			m_device->vs_set_constant_buffers(0, 1, state->m_curent_renderable->m_world_view_proj->GetAddressOf());
 		}
 
 		void draw(render_graph_state* state) override
@@ -244,7 +251,6 @@ namespace shark_spirit::render
 			// color pass
 			{
 				m_color_pass->bind(m_current_state);
-				
 				{
 					for (auto sprite : m_current_state->m_render_components)
 					{
@@ -255,7 +261,6 @@ namespace shark_spirit::render
 					}
 				}
 
-				// unbind render target
 				m_color_pass->un_bind(m_current_state);
 			}
 
@@ -263,7 +268,7 @@ namespace shark_spirit::render
 
 			// light pass
 			{
-				m_light_pass->bind(m_current_state);
+				/*m_light_pass->bind(m_current_state);
 
 				{
 					for (auto light : m_current_state->m_light_components)
@@ -275,7 +280,7 @@ namespace shark_spirit::render
 					}
 				}
 
-				m_light_pass->un_bind(m_current_state);
+				m_light_pass->un_bind(m_current_state);*/
 			}
 
 			// screen pass
@@ -286,6 +291,9 @@ namespace shark_spirit::render
 
 				m_screen_pass->un_bind(m_current_state);
 			}
+
+			m_current_state->m_render_components.clear();
+			m_current_state->m_light_components.clear();
 		}
 
 		void initialize()
@@ -322,8 +330,14 @@ namespace shark_spirit::render
 			m_light_pass = new light_pass(m_assets_manager->get_vertex_shader("vs_simple"), m_assets_manager->get_pixel_shader("ps_sprite_light"), m_device);
 			m_screen_pass = new screen_pass(m_assets_manager->get_vertex_shader("vs_full_screen"), m_assets_manager->get_pixel_shader("ps_sprite_screen_out"), m_device);
 
+			m_current_state->m_full_screen_quad_renderable = new SharkSpirit::base_render_component();
+			m_current_state->m_full_screen_quad_renderable->m_sampler = new SharkSpirit::sampler(m_device);
+			m_current_state->m_full_screen_quad_renderable->m_world_view_proj = new SharkSpirit::constant_buffer<SharkSpirit::world_view_proj>();
+			m_current_state->m_full_screen_quad_renderable->m_vertices = m_assets_manager->get_verticies("full_screen_vertex");
+			m_current_state->m_full_screen_quad_renderable->m_indices = m_assets_manager->get_indicies("full_screen_index");
+			m_current_state->m_full_screen_quad_renderable->m_world_view_proj->Initialize(m_device->get_device().Get(), m_device->get_device_context().Get());
 			//m_color_pass->initialize();
-			//m_light_pass->initialize();
+			m_light_pass->initialize();
 			//m_screen_pass->initialize();
 		}
 

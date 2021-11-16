@@ -13,5 +13,5 @@ float4 main(PS_INPUT input) : SV_TARGET
 
 	clip(sampleColor.a - 0.1f);
 
-	return sampleColor * 0.2f;
+	return sampleColor;
 }

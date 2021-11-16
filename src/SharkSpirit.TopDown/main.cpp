@@ -149,7 +149,9 @@ protected:
 		m_player_input_system->run();
 		m_player_animation_system->run();
 		m_sprite_animation_system->run();
-		
+		m_sprite_light_render_system->run();
+		m_sprite_render_system->run();
+
 		float dt = m_timer.DeltaTime();
 		float totalTime = m_timer.TotalTime();
 

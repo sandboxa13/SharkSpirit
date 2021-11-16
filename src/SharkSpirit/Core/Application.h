@@ -83,8 +83,9 @@ namespace SharkSpirit
 			m_timer.Reset();
 
 			m_camera_entity = m_reg.create();
-			m_reg.emplace<camera_component>(m_camera_entity);
-			
+			auto &camera = m_reg.emplace<camera_component>(m_camera_entity);
+			camera.SetProjectionValues(m_applicationCreateInfo->m_window_info->m_width, m_applicationCreateInfo->m_window_info->m_height, 0.0f, 1000.0f);
+
 			m_render_graph = new shark_spirit::render::render_graph(&m_assets, &m_device);
 			m_render_graph->initialize();
 
@@ -100,7 +101,6 @@ namespace SharkSpirit
 				m_isRunning = m_input.process_input();
 
 				m_render_graph->prepare_state(&m_reg);
-
 				m_render_graph->render();
 				
 				ImGui::End();
