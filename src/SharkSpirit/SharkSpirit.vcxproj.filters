@@ -81,7 +81,7 @@
     <ClInclude Include="Utils\WICTextureLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\ECS\Systems\SpriteRenderSystem.h">
+    <ClInclude Include="Core\ECS\Systems\SpriteUpdateSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Render\DirectX\Shaders.h">
@@ -153,7 +153,7 @@
     <ClInclude Include="Core\ECS\Systems\SpriteAnimationSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\ECS\Systems\SpriteLightRenderSystem.h">
+    <ClInclude Include="Core\ECS\Systems\SpriteLightUpdateSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Render\RenderGraph.h">

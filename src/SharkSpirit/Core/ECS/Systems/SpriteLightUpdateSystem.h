@@ -5,16 +5,16 @@
 
 namespace SharkSpirit
 {
-	class sprite_light_render_system : public ISystem
+	class sprite_light_update_system : public ISystem
 	{
 	public:
-		sprite_light_render_system(
+		sprite_light_update_system(
 			entt::registry* reg,
 			input_processor* input,
 			assets_manager* assets) : ISystem(reg, input, assets)
 		{
 		}
-		~sprite_light_render_system();
+		~sprite_light_update_system();
 
 		void run() override
 		{

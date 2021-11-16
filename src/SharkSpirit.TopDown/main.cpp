@@ -2,7 +2,7 @@
 #include "Core/Application.h"
 #include "Core/ECS/Components/Components.h"
 #include "Components/GameComponents.h"
-#include <Core/ECS/Systems/SpriteRenderSystem.h>
+#include <Core/ECS/Systems/SpriteUpdateSystem.h>
 #include "Components/PlayerInputComponent.h"
 #include "Systems/PlayerInputSystem.h"
 #include <ios>
@@ -14,7 +14,7 @@
 #include <crtdbg.h>
 #include <Core/ECS/Systems/SpriteAnimationSystem.h>
 #include "Systems/PlayerAnimationSystem.h"
-#include <Core/ECS/Systems/SpriteLightRenderSystem.h>
+#include <Core/ECS/Systems/SpriteLightUpdateSystem.h>
 #include <Core/SSException.h>
 
 using namespace SharkSpirit;
@@ -132,10 +132,10 @@ protected:
 		}
 
 		m_player_input_system = new player_input_system(&m_reg, &m_input, &m_assets);
-		m_sprite_render_system = new sprite_render_system(&m_reg, &m_input, &m_assets);
+		m_sprite_render_system = new sprite_update_system(&m_reg, &m_input, &m_assets);
 		m_sprite_animation_system = new sprite_animation_system(&m_reg, &m_input, &m_assets);
 		m_player_animation_system = new player_animation_system(&m_reg, &m_input, &m_assets);
-		m_sprite_light_render_system = new sprite_light_render_system(&m_reg, &m_input, &m_assets);
+		m_sprite_light_render_system = new sprite_light_update_system(&m_reg, &m_input, &m_assets);
 	}
 
 	void on_update() override 
@@ -160,10 +160,10 @@ protected:
 private:
 	entt::entity player;
 	player_input_system* m_player_input_system;
-	sprite_render_system* m_sprite_render_system;
+	sprite_update_system* m_sprite_render_system;
 	sprite_animation_system* m_sprite_animation_system;
 	player_animation_system* m_player_animation_system;
-	sprite_light_render_system* m_sprite_light_render_system;
+	sprite_light_update_system* m_sprite_light_render_system;
 };
 
 int APIENTRY wWinMain(
