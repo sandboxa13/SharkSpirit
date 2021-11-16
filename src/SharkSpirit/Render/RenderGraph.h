@@ -268,7 +268,7 @@ namespace shark_spirit::render
 
 			// light pass
 			{
-				/*m_light_pass->bind(m_current_state);
+				m_light_pass->bind(m_current_state);
 
 				{
 					for (auto light : m_current_state->m_light_components)
@@ -280,7 +280,7 @@ namespace shark_spirit::render
 					}
 				}
 
-				m_light_pass->un_bind(m_current_state);*/
+				m_light_pass->un_bind(m_current_state);
 			}
 
 			// screen pass
