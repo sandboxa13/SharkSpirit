@@ -15,6 +15,7 @@
 #include <Core/ECS/Systems/SpriteAnimationSystem.h>
 #include "Systems/PlayerAnimationSystem.h"
 #include <Core/ECS/Systems/SpriteLightRenderSystem.h>
+#include <Core/SSException.h>
 
 using namespace SharkSpirit;
 
@@ -56,7 +57,7 @@ protected:
 			const std::string name = std::format("survivor-meleeattack_rifle_{0}", i);
 			meleeAttackNames.push_back(name);
 
-			m_assets.load_texture(&m_graphics, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\meleeattack\\survivor-meleeattack_rifle_{0}.png", i));
+			m_assets.load_texture(&m_device, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\meleeattack\\survivor-meleeattack_rifle_{0}.png", i));
 		}
 
 		for (size_t i = 0; i < 20; i++)
@@ -64,7 +65,7 @@ protected:
 			const std::string name = std::format("survivor-idle_rifle_{0}", i);
 			idleNames.push_back(name);
 
-			m_assets.load_texture(&m_graphics, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\idle\\survivor-idle_rifle_{0}.png", i));
+			m_assets.load_texture(&m_device, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\idle\\survivor-idle_rifle_{0}.png", i));
 		}
 
 		for (size_t i = 0; i < 20; i++)
@@ -72,7 +73,7 @@ protected:
 			const std::string name = std::format("survivor-move_rifle_{0}", i);
 			moveNames.push_back(name);
 
-			m_assets.load_texture(&m_graphics, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\move\\survivor-move_rifle_{0}.png", i));
+			m_assets.load_texture(&m_device, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\move\\survivor-move_rifle_{0}.png", i));
 		}
 
 		for (size_t i = 0; i < 20; i++)
@@ -80,12 +81,12 @@ protected:
 			const std::string name = std::format("survivor-reload_rifle_{0}", i);
 			reloadNames.push_back(name);
 
-			m_assets.load_texture(&m_graphics, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\reload\\survivor-reload_rifle_{0}.png", i));
+			m_assets.load_texture(&m_device, name, std::format("C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\reload\\survivor-reload_rifle_{0}.png", i));
 		}
 
-	    m_assets.load_texture(&m_graphics, playerTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\meleeattack\\survivor-meleeattack_rifle_0.png");
-		m_assets.load_texture(&m_graphics, grassTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\oryx_16bit_fantasy_world_65.png");
-		m_assets.load_texture(&m_graphics, lightTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\assets\\textures\\light\\NaD6F.png");
+	    m_assets.load_texture(&m_device, playerTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\meleeattack\\survivor-meleeattack_rifle_0.png");
+		m_assets.load_texture(&m_device, grassTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\src\\SharkSpirit.TopDown\\assets\\oryx_16bit_fantasy_world_65.png");
+		m_assets.load_texture(&m_device, lightTextureName, "C:\\Repositories\\GitHub\\SharkSpirit\\assets\\textures\\light\\NaD6F.png");
 
 		const std::wstring& playerPixelShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\assets\\shaders\\ps_2d.cso";
 		const std::wstring& pixelShader = L"C:\\Repositories\\GitHub\\SharkSpirit\\assets\\shaders\\ps_2d.cso";
@@ -96,19 +97,16 @@ protected:
 		auto lightSpriteCreateInfo = sprite_light_component_create_info(lightTextureName, pixellightShader, vertexShader);
 		auto grassSpriteCreateInfo = sprite_component_create_info(grassTextureName, pixelShader, vertexShader);
 
-		
-		
-
 		player = create_entity();
 		m_reg.emplace<transform_component>(player, pos, rot, scale);
 		m_reg.emplace<player_input_component>(player, 0.3f, 0.2f);
-		m_reg.emplace<sprite_component>(player, &m_assets, &m_graphics, &playerSpriteCreateInfo);
-		m_reg.emplace<sprite_light_component>(player, &m_assets, &m_graphics, &lightSpriteCreateInfo);
+		m_reg.emplace<sprite_component>(player, &m_assets, &m_device, &playerSpriteCreateInfo);
+		m_reg.emplace<sprite_light_component>(player, &m_assets, &m_device, &lightSpriteCreateInfo);
 
-		for (size_t i = 0; i < 1; i++)
+		for (size_t i = 0; i < 2; i++)
 		{
 			auto en = create_entity();
-			m_reg.emplace<sprite_light_component>(en, &m_assets, &m_graphics, &lightSpriteCreateInfo);
+			m_reg.emplace<sprite_light_component>(en, &m_assets, &m_device, &lightSpriteCreateInfo);
 			m_reg.emplace<transform_component>(en, pos, rot, scale);
 		}
 
@@ -120,42 +118,33 @@ protected:
 
 		animation.set_current_key("idle");
 
-		auto grass = create_entity();
-		auto tmp = m_reg.emplace<sprite_component>(grass, &m_assets, &m_graphics, &grassSpriteCreateInfo);
-
 		for (size_t x = 0; x < 2560; x += 256)
 		{
 			for (size_t y = 0; y < 2560; y += 256)
 			{
-				grass = m_reg.create();
+				auto grass = create_entity();
 				DirectX::XMFLOAT3 g_pos = { (float)x, (float)y, 0 };
 				DirectX::XMFLOAT3 g_rot = { 0, 0, 0 };
 				DirectX::XMFLOAT2 g_sc = { 256, 256 };
 				m_reg.emplace<transform_component>(grass, g_pos, g_rot, g_sc);
-				m_reg.emplace<sprite_component>(grass, tmp);
+				m_reg.emplace<sprite_component>(grass, &m_assets, &m_device, &grassSpriteCreateInfo);
 			}
 		}
 
-		m_player_input_system = new player_input_system(&m_reg, &m_input, &m_graphics, &m_assets);
-		m_sprite_render_system = new sprite_render_system(&m_reg, &m_input, &m_graphics, &m_assets);
-		m_sprite_animation_system = new sprite_animation_system(&m_reg, &m_input, &m_graphics, &m_assets);
-		m_player_animation_system = new player_animation_system(&m_reg, &m_input, &m_graphics, &m_assets);
-		m_sprite_light_render_system = new sprite_light_render_system(&m_reg, &m_input, &m_graphics, &m_assets);
-		m_light_pass = new light_pass();
+		m_player_input_system = new player_input_system(&m_reg, &m_input, &m_assets);
+		m_sprite_render_system = new sprite_render_system(&m_reg, &m_input, &m_assets);
+		m_sprite_animation_system = new sprite_animation_system(&m_reg, &m_input, &m_assets);
+		m_player_animation_system = new player_animation_system(&m_reg, &m_input, &m_assets);
+		m_sprite_light_render_system = new sprite_light_render_system(&m_reg, &m_input, &m_assets);
 	}
 
 	void on_update() override 
 	{
-
 		m_player_input_system->run();
-		m_sprite_light_render_system->run();
-
 		m_player_animation_system->run();
 		m_sprite_animation_system->run();
-		
+		m_sprite_light_render_system->run();
 		m_sprite_render_system->run();
-
-		m_light_pass->execute(&m_graphics);
 
 		float dt = m_timer.DeltaTime();
 		float totalTime = m_timer.TotalTime();
@@ -175,7 +164,6 @@ private:
 	sprite_animation_system* m_sprite_animation_system;
 	player_animation_system* m_player_animation_system;
 	sprite_light_render_system* m_sprite_light_render_system;
-	light_pass* m_light_pass;
 };
 
 int APIENTRY wWinMain(

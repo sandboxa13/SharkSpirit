@@ -9,6 +9,11 @@ namespace SharkSpirit
 		DirectX::XMMATRIX wvpMatrix;
 	};
 
+	struct world_view_proj
+	{
+		DirectX::XMMATRIX wvpMatrix;
+	};
+
 	template<class T>
 	class constant_buffer
 	{

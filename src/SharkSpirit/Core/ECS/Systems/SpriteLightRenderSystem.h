@@ -13,10 +13,8 @@ namespace SharkSpirit
 		sprite_light_render_system(
 			entt::registry* reg,
 			input_processor* input,
-			graphics_manager* graphics,
-			assets_manager* assets) : ISystem(reg, input, graphics, assets)
+			assets_manager* assets) : ISystem(reg, input, assets)
 		{
-			m_sprite_render_pipiline = sprite_light_render_pipeline();
 		}
 		~sprite_light_render_system();
 
@@ -26,10 +24,12 @@ namespace SharkSpirit
 
 			auto spriteView = m_reg->view<sprite_light_component, transform_component>();
 
-			float blend_factor[4] = { 0.f, 0.f, 0.f, 0.f };
-			m_graphics->get_device_context()->OMSetRenderTargets(1, m_graphics->m_pLightMapRTV.GetAddressOf(), nullptr);
-			m_graphics->clear_light_rt();
-			m_graphics->get_device_context()->OMSetBlendState(m_graphics->m_blend_state.Get(), nullptr, 0xffffffff);
+			auto camView = m_reg->view<camera_component>();
+			camera_component* camera = nullptr;
+			for (auto cam : camView)
+			{
+				camera = &camView.get<camera_component>(cam);
+			}
 
 			for (auto entity : spriteView)
 			{
@@ -40,17 +40,11 @@ namespace SharkSpirit
 					DirectX::XMMatrixScaling(transform.m_scale.x * 7, transform.m_scale.y * 7, 1.0f) *
 					DirectX::XMMatrixRotationRollPitchYaw(DirectX::XMConvertToRadians(transform.m_rotation.x), DirectX::XMConvertToRadians(transform.m_rotation.y), DirectX::XMConvertToRadians(transform.m_rotation.z)) *
 					DirectX::XMMatrixTranslation(transform.m_pos.x + transform.m_scale.x / 2.0f, transform.m_pos.y + transform.m_scale.y / 2.0f, transform.m_pos.z);
-				auto ort = m_graphics->m_camera_2d.GetWorldMatrix() * m_graphics->m_camera_2d.GetOrthoMatrix();
+				auto ort = camera->GetWorldMatrix() * camera->GetOrthoMatrix();
 				DirectX::XMMATRIX wvpMatrix = sprite.m_world_matrix * ort;
-				sprite.cb_vs_vertexshader_2d->data.wvpMatrix = wvpMatrix;
-				sprite.cb_vs_vertexshader_2d->ApplyChanges();
-
-				m_sprite_render_pipiline.execute(m_graphics, sprite);
+				sprite.m_world_view_proj->data.wvpMatrix = wvpMatrix;
+				sprite.m_world_view_proj->ApplyChanges();
 			}
-
-			m_graphics->get_device_context()->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 		}
-
-		sprite_light_render_pipeline m_sprite_render_pipiline;
 	};
 }

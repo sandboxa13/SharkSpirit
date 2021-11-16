@@ -9,8 +9,7 @@ namespace SharkSpirit
 		ISystem(
 			entt::registry* reg,
 			input_processor* input,
-			graphics_manager* graphics,
-			assets_manager* assets) : m_reg(reg), m_input(input), m_graphics(graphics), m_assets(assets)
+			assets_manager* assets) : m_reg(reg), m_input(input), m_assets(assets)
 		{
 			
 		}
@@ -21,7 +20,6 @@ namespace SharkSpirit
 	protected:
 		entt::registry* m_reg;
 		input_processor* m_input;
-		graphics_manager* m_graphics;
 		assets_manager* m_assets;
 	};
 

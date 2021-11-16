@@ -12,8 +12,7 @@ namespace SharkSpirit
 		sprite_animation_system(
 			entt::registry* reg,
 			input_processor* input,
-			graphics_manager* graphics,
-			assets_manager* assets) : ISystem(reg, input, graphics, assets)
+			assets_manager* assets) : ISystem(reg, input, assets)
 		{
 			
 		}

@@ -10,6 +10,8 @@
 #include <Assets/AssetsManager.h>
 #include <ImGui/ImGuiManager.h>
 #include <Core/FpsManager.h>
+#include <Render/Device.h>
+#include <Render/RenderGraph.h>
 
 namespace SharkSpirit 
 {
@@ -31,13 +33,14 @@ namespace SharkSpirit
 		application(application_create_info* applicationCreateInfo)
 			: m_input(input_processor(applicationCreateInfo->m_window_info)),
 			  m_timer(Timer()),
-			  m_graphics(graphics_manager(applicationCreateInfo->m_window_info->m_window_handle)),
 			  m_isRunning(false),
 			  m_applicationCreateInfo(applicationCreateInfo),
 			  m_reg(entt::registry()),
 			  m_assets(assets_manager()),
 			  m_imgui(imgui_manager()),
-			  m_fps(fps_manager())
+			  m_fps(fps_manager()),
+			  m_device(shark_spirit::render::device()),
+			  m_render_graph(nullptr)
 		{
 			
 		}
@@ -45,14 +48,17 @@ namespace SharkSpirit
 		~application()
 		{
 			m_input.~input_processor();
-			m_graphics.~graphics_manager();
 			m_timer.~Timer();
 			m_reg.clear();
 		}
 
 		entt::entity create_entity()
 		{
-			return m_reg.create();
+			auto entity = m_reg.create();
+
+			m_entities.push_back(entity);
+
+			return entity;
 		}
 
 		virtual void show_window() 
@@ -69,8 +75,19 @@ namespace SharkSpirit
 		{
 			m_isRunning = true;
 
-			m_imgui.InitImgui(this->m_applicationCreateInfo->m_window_info->m_window_handle, m_graphics.get_device(), m_graphics.get_device_context());
+			m_device.initialize(m_applicationCreateInfo->m_window_info->m_window_handle);
+
+			m_assets.initialize_default_shaders(&m_device);
+
+			m_imgui.InitImgui(this->m_applicationCreateInfo->m_window_info->m_window_handle, m_device.get_device(), m_device.get_device_context());
 			m_timer.Reset();
+
+			m_camera_entity = m_reg.create();
+			auto &camera = m_reg.emplace<camera_component>(m_camera_entity);
+			camera.SetProjectionValues(m_applicationCreateInfo->m_window_info->m_width, m_applicationCreateInfo->m_window_info->m_height, 0.0f, 1000.0f);
+
+			m_render_graph = new shark_spirit::render::render_graph(&m_assets, &m_device);
+			m_render_graph->initialize();
 
 			on_create();
 
@@ -82,11 +99,14 @@ namespace SharkSpirit
 				on_update();
 
 				m_isRunning = m_input.process_input();
+
+				m_render_graph->prepare_state(&m_reg);
+				m_render_graph->render();
 				
 				ImGui::End();
 				ImGui::EndFrame();
 
-				m_graphics.present();
+				m_device.present();
 
 				m_timer.Tick();
 
@@ -104,8 +124,10 @@ namespace SharkSpirit
 	protected:
 		application_create_info* m_applicationCreateInfo;
 
+		shark_spirit::render::render_graph* m_render_graph;
+		shark_spirit::render::device m_device;
+
 		input_processor m_input;
-		graphics_manager m_graphics;
 		assets_manager m_assets;
 		imgui_manager m_imgui;
 		fps_manager m_fps;
@@ -113,6 +135,8 @@ namespace SharkSpirit
 		bool m_isRunning;
 
 		entt::registry m_reg;
+		entt::entity m_camera_entity;
+		std::vector<entt::entity> m_entities;
 
 		virtual void on_create()
 		{

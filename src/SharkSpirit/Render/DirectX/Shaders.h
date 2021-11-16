@@ -10,6 +10,7 @@ namespace SharkSpirit
 	{
 	public:
 		HRESULT Initialize(ID3D11Device* device, std::wstring shaderpath, D3D11_INPUT_ELEMENT_DESC* layoutDesc, UINT numElements);
+		HRESULT InitializeFromBlob(ID3D11Device* device, ID3D10Blob* blob, D3D11_INPUT_ELEMENT_DESC* layoutDesc, UINT numElements);
 		ID3D11VertexShader* GetShader();
 		ID3D10Blob* GetBuffer();
 		ID3D11InputLayout* GetInputLayout();
@@ -23,6 +24,7 @@ namespace SharkSpirit
 	{
 	public:
 		HRESULT Initialize(ID3D11Device* device, std::wstring shaderpath);
+		HRESULT InitializeFromBlob(ID3D11Device* device, ID3D10Blob* blob);
 		ID3D11PixelShader* GetShader();
 		ID3D10Blob* GetBuffer();
 	private:
