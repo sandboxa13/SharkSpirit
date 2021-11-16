@@ -118,19 +118,16 @@ protected:
 
 		animation.set_current_key("idle");
 
-		auto grass = create_entity();
-		auto tmp = m_reg.emplace<sprite_component>(grass, &m_assets, &m_device, &grassSpriteCreateInfo);
-
 		for (size_t x = 0; x < 2560; x += 256)
 		{
 			for (size_t y = 0; y < 2560; y += 256)
 			{
-				grass = m_reg.create();
+				auto grass = create_entity();
 				DirectX::XMFLOAT3 g_pos = { (float)x, (float)y, 0 };
 				DirectX::XMFLOAT3 g_rot = { 0, 0, 0 };
 				DirectX::XMFLOAT2 g_sc = { 256, 256 };
 				m_reg.emplace<transform_component>(grass, g_pos, g_rot, g_sc);
-				m_reg.emplace<sprite_component>(grass, tmp);
+				m_reg.emplace<sprite_component>(grass, &m_assets, &m_device, &grassSpriteCreateInfo);
 			}
 		}
 
