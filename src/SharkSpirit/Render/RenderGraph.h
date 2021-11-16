@@ -186,8 +186,6 @@ namespace shark_spirit::render
 
 		void update(render_graph_state* state) override
 		{
-			state->m_curent_renderable->m_world_view_proj->ApplyChanges();
-			
 			m_device->vs_set_constant_buffers(0, 1, state->m_curent_renderable->m_world_view_proj->GetAddressOf());
 			m_device->ps_set_shader_resources(0, 1, state->m_curent_renderable->m_texture->GetTextureResourceViewAddress());
 			m_device->ps_set_samplers(state->m_curent_renderable->m_sampler->m_start_slot, 1u, state->m_curent_renderable->m_sampler->m_sampler_state.GetAddressOf());
@@ -255,7 +253,7 @@ namespace shark_spirit::render
 					for (auto sprite : m_current_state->m_render_components)
 					{
 						m_current_state->m_curent_renderable = sprite;
-
+						
 						m_color_pass->update(m_current_state);
 						m_color_pass->draw(m_current_state);
 					}
@@ -286,9 +284,7 @@ namespace shark_spirit::render
 			// screen pass
 			{
 				m_screen_pass->bind(m_current_state);
-
 				m_screen_pass->draw(m_current_state);
-
 				m_screen_pass->un_bind(m_current_state);
 			}
 

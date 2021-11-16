@@ -44,6 +44,7 @@ namespace SharkSpirit
 				auto ort = camera->GetWorldMatrix() * camera->GetOrthoMatrix();
 				DirectX::XMMATRIX wvpMatrix = sprite.m_world_matrix * ort;
 				sprite.m_world_view_proj->data.wvpMatrix = wvpMatrix;
+				sprite.m_world_view_proj->ApplyChanges();
 			}
 		}
 	};

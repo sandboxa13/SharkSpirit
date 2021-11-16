@@ -97,16 +97,13 @@ protected:
 		auto lightSpriteCreateInfo = sprite_light_component_create_info(lightTextureName, pixellightShader, vertexShader);
 		auto grassSpriteCreateInfo = sprite_component_create_info(grassTextureName, pixelShader, vertexShader);
 
-		
-		
-
 		player = create_entity();
 		m_reg.emplace<transform_component>(player, pos, rot, scale);
 		m_reg.emplace<player_input_component>(player, 0.3f, 0.2f);
 		m_reg.emplace<sprite_component>(player, &m_assets, &m_device, &playerSpriteCreateInfo);
 		m_reg.emplace<sprite_light_component>(player, &m_assets, &m_device, &lightSpriteCreateInfo);
 
-		for (size_t i = 0; i < 1; i++)
+		for (size_t i = 0; i < 2; i++)
 		{
 			auto en = create_entity();
 			m_reg.emplace<sprite_light_component>(en, &m_assets, &m_device, &lightSpriteCreateInfo);
