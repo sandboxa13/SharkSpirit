@@ -1,10 +1,8 @@
 #pragma once
-#include <Render/DirectX/GraphicsManager.h>
 #include <DirectXMath.h>
 #include "Core/ECS/Systems/ISystem.h"
 #include <Core/ECS/Components/Components.h>
 #include <Input/InputProcessor.h>
-#include <Render/RenderPipeline.h>
 
 namespace SharkSpirit
 {

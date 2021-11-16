@@ -5,7 +5,6 @@
 #include <Render/DirectX/ConstantBuffer.h>
 #include <Render/DirectX/IndexBuffer.h>
 #include <Render/DirectX/VertexBuffer.h>
-#include <Render/DirectX/GraphicsManager.h>
 #include <Render/DirectX/Shaders.h>
 #include <Render/DirectX/Sampler.h>
 #include <Assets/AssetsManager.h>

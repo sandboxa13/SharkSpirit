@@ -1,7 +1,6 @@
 #pragma once
 #include <d3d11.h>
 #include <wrl/client.h>
-#include <Render/DirectX/GraphicsManager.h>
 #include <Render/Device.h>
 
 namespace SharkSpirit 

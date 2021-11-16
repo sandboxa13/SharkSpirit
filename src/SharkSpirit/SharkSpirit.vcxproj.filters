@@ -51,9 +51,6 @@
     <ClInclude Include="Input\Mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render\DirectX\GraphicsManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -108,16 +105,10 @@
     <ClInclude Include="Core\ECS\Systems\ISystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render\RenderPipeline.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Render\DirectX\Sampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Assets\AssetsManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\DirectX\Camera2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ImGui\dirent\dirent.h">
@@ -197,9 +188,6 @@
     <ClCompile Include="Input\Mouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Render\DirectX\GraphicsManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Render\DirectX\Shaders.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -219,9 +207,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Assets\AssetsManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\DirectX\Camera2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ImGui\imgui.cpp">

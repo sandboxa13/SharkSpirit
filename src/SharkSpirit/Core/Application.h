@@ -5,7 +5,6 @@
 #include "Core/Timer/Timer.h"
 #include "IInitializable.h"
 #include "Platform/Window/Window.h"
-#include "Render/DirectX/GraphicsManager.h"
 #include "Scene.h"
 #include <Assets/AssetsManager.h>
 #include <ImGui/ImGuiManager.h>

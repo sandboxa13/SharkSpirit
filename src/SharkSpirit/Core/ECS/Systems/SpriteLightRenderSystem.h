@@ -1,9 +1,7 @@
 #pragma once
 #include "Core/ECS/Systems/ISystem.h"
 #include <Input/InputProcessor.h>
-#include <Render/DirectX/GraphicsManager.h>
 #include <Core/ECS/Components/Components.h>
-#include <Render/RenderPipeline.h>
 
 namespace SharkSpirit
 {

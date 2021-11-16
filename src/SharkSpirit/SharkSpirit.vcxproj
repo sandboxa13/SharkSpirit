@@ -193,16 +193,13 @@
     <ClInclude Include="Logger\Logger.h" />
     <ClInclude Include="Platform\Window\Window.h" />
     <ClInclude Include="Render\Device.h" />
-    <ClInclude Include="Render\DirectX\Camera2d.h" />
     <ClInclude Include="Render\DirectX\ConstantBuffer.h" />
-    <ClInclude Include="Render\DirectX\GraphicsManager.h" />
     <ClInclude Include="Render\DirectX\IndexBuffer.h" />
     <ClInclude Include="Render\DirectX\Sampler.h" />
     <ClInclude Include="Render\DirectX\Shaders.h" />
     <ClInclude Include="Render\DirectX\Texture.h" />
     <ClInclude Include="Render\DirectX\VertexBuffer.h" />
     <ClInclude Include="Render\RenderGraph.h" />
-    <ClInclude Include="Render\RenderPipeline.h" />
     <ClInclude Include="Utils\Id.h" />
     <ClInclude Include="Utils\Math.h" />
     <ClInclude Include="Utils\StringUtils.h" />
@@ -231,8 +228,6 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Platform\Window\Window.cpp" />
     <ClCompile Include="Render\Device.cpp" />
-    <ClCompile Include="Render\DirectX\Camera2d.cpp" />
-    <ClCompile Include="Render\DirectX\GraphicsManager.cpp" />
     <ClCompile Include="Render\DirectX\Shaders.cpp" />
     <ClCompile Include="Render\DirectX\Texture.cpp" />
     <ClCompile Include="Utils\WICTextureLoader.cpp" />
