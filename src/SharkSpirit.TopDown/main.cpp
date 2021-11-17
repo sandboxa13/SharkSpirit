@@ -184,7 +184,7 @@ int APIENTRY wWinMain(
 		HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 		if (FAILED(hr))
 		{
-			sharkspirit::logger::Logger::LogWarning("CoInitializeEx FAILED");
+			sharkspirit::log::Logger::LogWarning("CoInitializeEx FAILED");
 		}
 
 		const wchar_t* title = L"Top Down";

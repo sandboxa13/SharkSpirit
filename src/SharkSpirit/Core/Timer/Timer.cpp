@@ -29,7 +29,7 @@ namespace sharkspirit::core
 		mPrevTime = currentTime;
 		mBaseTime = currentTime;
 
-		sharkspirit::logger::Logger::LogInfo("Reset timer");
+		sharkspirit::log::Logger::LogInfo("Reset timer");
 	}
 
 	void Timer::Tick()

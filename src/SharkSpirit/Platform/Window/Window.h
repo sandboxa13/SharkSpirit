@@ -74,10 +74,10 @@ namespace sharkspirit::platform::window
 	public:
 		static window_info* create_window(window_creation_info* info)
 		{
-			sharkspirit::logger::Logger::LogInfo("Creating Window");
+			sharkspirit::log::Logger::LogInfo("Creating Window");
 			std::stringstream stream = {};
 			stream << "Window configuration: WIDTH- " << info->m_width<< " HEIGHT- " << info->m_height;
-			sharkspirit::logger::Logger::LogInfo(stream.str());
+			sharkspirit::log::Logger::LogInfo(stream.str());
 
 			auto m_window_info = new window_info(
 				info->m_height,

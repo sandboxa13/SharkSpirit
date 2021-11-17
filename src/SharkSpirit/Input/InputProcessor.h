@@ -20,7 +20,7 @@ namespace sharkspirit::input
 
 		virtual void Initialize()
 		{
-			sharkspirit::logger::Logger::LogInfo("Initialize Input Processor");
+			sharkspirit::log::Logger::LogInfo("Initialize Input Processor");
 		}
 
 		bool process_input();

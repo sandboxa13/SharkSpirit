@@ -20,7 +20,7 @@ namespace sharkspirit::core
 
 		virtual void Initialize()
 		{
-			sharkspirit::logger::Logger::LogInfo("Initialize Timer");
+			sharkspirit::log::Logger::LogInfo("Initialize Timer");
 
 			Reset();
 		}

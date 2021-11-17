@@ -70,14 +70,14 @@ namespace sharkspirit::assets
 
 	void assets_manager::load_texture(sharkspirit::render::device* device, const std::string name, const std::string& path)
 	{
-		sharkspirit::logger::Logger::LogInfo(std::format("Try to load texture with name [{0}]", name));
+		sharkspirit::log::Logger::LogInfo(std::format("Try to load texture with name [{0}]", name));
 
 		auto pTexture = new sharkspirit::render::Texture();
 		HRESULT hr = pTexture->initialize(device, path);
 
 		if (FAILED(hr))
 		{
-			sharkspirit::logger::Logger::LogError(std::format("Error while loading texture with name [{0}], HRESULT - {1}", name, std::system_category().message(hr)));
+			sharkspirit::log::Logger::LogError(std::format("Error while loading texture with name [{0}], HRESULT - {1}", name, std::system_category().message(hr)));
 			pTexture->~Texture();
 		}
 		else
