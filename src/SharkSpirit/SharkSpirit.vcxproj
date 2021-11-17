@@ -160,7 +160,6 @@
     <ClInclude Include="Core\DxErr\dxerr.h" />
     <ClInclude Include="Core\DxgiInfoManager.h" />
     <ClInclude Include="Core\ECS\Components\Components.h" />
-    <ClInclude Include="Core\ECS\Entity.h" />
     <ClInclude Include="Core\ECS\Systems\ISystem.h" />
     <ClInclude Include="Core\ECS\Systems\SpriteAnimationSystem.h" />
     <ClInclude Include="Core\ECS\Systems\SpriteLightUpdateSystem.h" />
@@ -168,7 +167,6 @@
     <ClInclude Include="Core\FpsManager.h" />
     <ClInclude Include="Core\GraphicsThrowMacros.h" />
     <ClInclude Include="Core\IInitializable.h" />
-    <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\SSException.h" />
     <ClInclude Include="Core\Timer\Timer.h" />
     <ClInclude Include="EngineAPI.h" />

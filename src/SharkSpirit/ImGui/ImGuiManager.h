@@ -4,7 +4,7 @@
 #include <ImGui/imgui_impl_dx11.h>
 #include <wrl/client.h>
 
-namespace SharkSpirit
+namespace sharkspirit::imgui
 {
 	class imgui_manager
 	{

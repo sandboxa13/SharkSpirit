@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace SharkSpirit 
+namespace sharkspirit::input
 {
 	using MouseCode = uint16_t;
 

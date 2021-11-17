@@ -6,13 +6,13 @@
 
 namespace SharkSpirit
 {
-	class player_animation_system : public ISystem
+	class player_animation_system : public sharkspirit::core::ISystem
 	{
 	public:
 		player_animation_system(
 			entt::registry* reg,
-			input_processor* input,
-			assets_manager* assets) : ISystem(reg, input, assets)
+			sharkspirit::input::input_processor* input,
+			sharkspirit::assets::assets_manager* assets) : ISystem(reg, input, assets)
 		{
 
 		}
@@ -20,11 +20,11 @@ namespace SharkSpirit
 
 		void run() override
 		{
-			auto spriteView = m_reg->view<player_input_component, sprite_animation_component>();
+			auto spriteView = m_reg->view<player_input_component, sharkspirit::core::sprite_animation_component>();
 
 			for (auto entity : spriteView)
 			{
-				auto& spriteAnim = spriteView.get<sprite_animation_component>(entity);
+				auto& spriteAnim = spriteView.get<sharkspirit::core::sprite_animation_component>(entity);
 
 				if (spriteAnim.has_playing_anim())
 				{

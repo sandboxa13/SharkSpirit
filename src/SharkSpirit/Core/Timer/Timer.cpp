@@ -1,6 +1,6 @@
 #include "Timer.h"
 
-namespace SharkSpirit
+namespace sharkspirit::core
 {
 	Timer::Timer()
 		: mBaseTime(0), mCurrentTime(0), mPrevTime(0), mDeltaTime(0.0)
@@ -29,7 +29,7 @@ namespace SharkSpirit
 		mPrevTime = currentTime;
 		mBaseTime = currentTime;
 
-		Logger::LogInfo("Reset timer");
+		sharkspirit::logger::Logger::LogInfo("Reset timer");
 	}
 
 	void Timer::Tick()

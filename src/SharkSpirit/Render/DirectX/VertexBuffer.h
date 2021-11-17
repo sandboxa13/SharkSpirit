@@ -1,7 +1,7 @@
 #pragma once
 #include <DirectXMath.h>
 
-namespace SharkSpirit
+namespace sharkspirit::render
 {
 	struct vertex
 	{

@@ -7,13 +7,13 @@
 
 namespace SharkSpirit 
 {
-	class player_input_system : public ISystem
+	class player_input_system : public sharkspirit::core::ISystem
 	{
 	public:
 		player_input_system(
 			entt::registry* reg, 
-			input_processor* input, 
-			assets_manager* assets) : ISystem(reg, input, assets)
+			sharkspirit::input::input_processor* input,
+			sharkspirit::assets::assets_manager* assets) : ISystem(reg, input, assets)
 		{
 
 		}
@@ -22,18 +22,18 @@ namespace SharkSpirit
 
 		void run() override
 		{
-			auto inputView = m_reg->view<player_input_component, transform_component>();
-			auto camView = m_reg->view<camera_component>();
-			camera_component* camera = nullptr;
+			auto inputView = m_reg->view<player_input_component, sharkspirit::core::transform_component>();
+			auto camView = m_reg->view<sharkspirit::core::camera_component>();
+			sharkspirit::core::camera_component* camera = nullptr;
 			for (auto cam : camView)
 			{
-				camera = &camView.get<camera_component>(cam);
+				camera = &camView.get<sharkspirit::core::camera_component>(cam);
 			}
 
 			for (auto entity : inputView)
 			{
 				auto& playerInput = inputView.get<player_input_component>(entity);
-				auto& playerTransform = inputView.get<transform_component>(entity);
+				auto& playerTransform = inputView.get<sharkspirit::core::transform_component>(entity);
 
 				auto speed = playerInput.m_walk_speed;
 

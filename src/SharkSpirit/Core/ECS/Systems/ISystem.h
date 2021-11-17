@@ -1,15 +1,15 @@
 #pragma once
 #include "../../external/entt/entt.hpp"
 
-namespace SharkSpirit
+namespace sharkspirit::core
 {
 	class ISystem
 	{
 	public:
 		ISystem(
 			entt::registry* reg,
-			input_processor* input,
-			assets_manager* assets) : m_reg(reg), m_input(input), m_assets(assets)
+			sharkspirit::input::input_processor* input,
+			sharkspirit::assets::assets_manager* assets) : m_reg(reg), m_input(input), m_assets(assets)
 		{
 			
 		}
@@ -19,8 +19,8 @@ namespace SharkSpirit
 
 	protected:
 		entt::registry* m_reg;
-		input_processor* m_input;
-		assets_manager* m_assets;
+		sharkspirit::input::input_processor* m_input;
+		sharkspirit::assets::assets_manager* m_assets;
 	};
 
 	ISystem::~ISystem()

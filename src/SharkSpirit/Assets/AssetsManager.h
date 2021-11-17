@@ -6,7 +6,7 @@
 #include <Render/DirectX/VertexBuffer.h>
 #include <Render/DirectX/IndexBuffer.h>
 
-namespace SharkSpirit 
+namespace sharkspirit::assets
 {
 	enum shader_type
 	{
@@ -43,23 +43,23 @@ namespace SharkSpirit
 			}
 		}
 
-		void initialize_default_shaders(shark_spirit::render::device* device);
+		void initialize_default_shaders(sharkspirit::render::device* device);
 
-		void load_texture(shark_spirit::render::device* device, const std::string name, const std::string& path);
-		Texture* get_texture(const std::string& name);
+		void load_texture(sharkspirit::render::device* device, const std::string name, const std::string& path);
+		sharkspirit::render::Texture* get_texture(const std::string& name);
 
-		void load_shader(shark_spirit::render::device* device, const std::string name, const std::wstring& path, shader_type type);
-		pixel_shader* get_pixel_shader(const std::string& name);
-		vertex_shader* get_vertex_shader(const std::string& name);
+		void load_shader(sharkspirit::render::device* device, const std::string name, const std::wstring& path, shader_type type);
+		sharkspirit::render::pixel_shader* get_pixel_shader(const std::string& name);
+		sharkspirit::render::vertex_shader* get_vertex_shader(const std::string& name);
 
-		vertex_buffer<vertex>* get_verticies(const std::string& name);
-		index_buffer* get_indicies(const std::string& name);
+		sharkspirit::render::vertex_buffer<sharkspirit::render::vertex>* get_verticies(const std::string& name);
+		sharkspirit::render::index_buffer* get_indicies(const std::string& name);
 	private:
-		typedef std::map<const std::string, Texture*> textures_map;
-		typedef std::map<const std::string, vertex_shader*> vertex_shaders_map;
-		typedef std::map<const std::string, pixel_shader*> pixel_shaders_map;
-		typedef std::map<const std::string, vertex_buffer<vertex>*> verticies_map;
-		typedef std::map<const std::string, index_buffer*> indicies_map;
+		typedef std::map<const std::string, sharkspirit::render::Texture*> textures_map;
+		typedef std::map<const std::string, sharkspirit::render::vertex_shader*> vertex_shaders_map;
+		typedef std::map<const std::string, sharkspirit::render::pixel_shader*> pixel_shaders_map;
+		typedef std::map<const std::string, sharkspirit::render::vertex_buffer<sharkspirit::render::vertex>*> verticies_map;
+		typedef std::map<const std::string, sharkspirit::render::index_buffer*> indicies_map;
 
 		textures_map m_textures_map;
 		vertex_shaders_map m_vertex_shaders_map;

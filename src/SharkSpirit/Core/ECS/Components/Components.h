@@ -9,7 +9,7 @@
 #include <Render/DirectX/Sampler.h>
 #include <Assets/AssetsManager.h>
 
-namespace SharkSpirit
+namespace sharkspirit::core
 {
 	class base_component 
 	{
@@ -26,14 +26,14 @@ namespace SharkSpirit
 		{
 
 		}
-		sampler* m_sampler;
-		Texture* m_texture;
-		vertex_shader m_vertex_shader;
-		pixel_shader m_pixel_shader;
-		vertex_buffer<vertex>* m_vertices;
-		index_buffer* m_indices;
+		sharkspirit::render::sampler* m_sampler;
+		sharkspirit::render::Texture* m_texture;
+		sharkspirit::render::vertex_shader m_vertex_shader;
+		sharkspirit::render::pixel_shader m_pixel_shader;
+		sharkspirit::render::vertex_buffer<sharkspirit::render::vertex>* m_vertices;
+		sharkspirit::render::index_buffer* m_indices;
 		DirectX::XMMATRIX m_world_matrix = DirectX::XMMatrixIdentity();
-		constant_buffer<world_view_proj>* m_world_view_proj = nullptr;
+		sharkspirit::render::constant_buffer<sharkspirit::render::world_view_proj>* m_world_view_proj = nullptr;
 	};
 
 	class camera_component : public base_component
@@ -241,15 +241,15 @@ namespace SharkSpirit
 	{
 	public:
 		sprite_component(
-			assets_manager* assetsManager,
-			shark_spirit::render::device* device,
+			sharkspirit::assets::assets_manager* assetsManager,
+			sharkspirit::render::device* device,
 			sprite_component_create_info* createInfo)
 		{
 			HRESULT hr = { 0 };
 
 			m_texture = assetsManager->get_texture(createInfo->m_texture_name);
-			m_sampler = new sampler(device);
-			m_world_view_proj = new constant_buffer<world_view_proj>();
+			m_sampler = new sharkspirit::render::sampler(device);
+			m_world_view_proj = new sharkspirit::render::constant_buffer<sharkspirit::render::world_view_proj>();
 			m_vertices = assetsManager->get_verticies("sprite_vertex");
 			m_indices = assetsManager->get_indicies("sprite_index");
 			hr = m_world_view_proj->Initialize(device->get_device().Get(), device->get_device_context().Get());
@@ -285,17 +285,17 @@ namespace SharkSpirit
 	{
 	public:
 		sprite_light_component(
-			assets_manager* assetsManager, 
-			shark_spirit::render::device* device,
+			sharkspirit::assets::assets_manager* assetsManager,
+			sharkspirit::render::device* device,
 			sprite_light_component_create_info* createInfo)
 		{
 			HRESULT hr = { 0 };
 
 			m_texture = assetsManager->get_texture(createInfo->m_texture_name);
-			m_sampler = new sampler(device);
+			m_sampler = new sharkspirit::render::sampler(device);
 			m_vertices = assetsManager->get_verticies("sprite_vertex");
 			m_indices = assetsManager->get_indicies("sprite_index");
-			m_world_view_proj = new constant_buffer<world_view_proj>();
+			m_world_view_proj = new sharkspirit::render::constant_buffer<sharkspirit::render::world_view_proj>();
 
 			hr = m_world_view_proj->Initialize(device->get_device().Get(), device->get_device_context().Get());
 		}

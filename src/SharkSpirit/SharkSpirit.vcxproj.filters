@@ -54,13 +54,7 @@
     <ClInclude Include="Utils\Math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\ECS\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Id.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\ECS\Components\Components.h">

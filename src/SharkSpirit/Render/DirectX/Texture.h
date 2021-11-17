@@ -3,7 +3,7 @@
 #include <wrl/client.h>
 #include <Render/Device.h>
 
-namespace SharkSpirit 
+namespace sharkspirit::render
 {
 	class Color
 	{
@@ -51,9 +51,9 @@ namespace SharkSpirit
 			texture.ReleaseAndGetAddressOf();
 			textureView.ReleaseAndGetAddressOf();
 		}
-		HRESULT initialize(shark_spirit::render::device* device, const std::string& filePath);
-		Texture(shark_spirit::render::device* device, const std::string& filePath);
-		Texture(shark_spirit::render::device* device, const uint8_t* pData, size_t size);
+		HRESULT initialize(sharkspirit::render::device* device, const std::string& filePath);
+		Texture(sharkspirit::render::device* device, const std::string& filePath);
+		Texture(sharkspirit::render::device* device, const uint8_t* pData, size_t size);
 		ID3D11ShaderResourceView* GetTextureResourceView();
 		ID3D11ShaderResourceView** GetTextureResourceViewAddress();
 

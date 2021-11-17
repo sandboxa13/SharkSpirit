@@ -2,7 +2,7 @@
 #include <DirectXColors.h>
 #include <d3d11.h>
 
-namespace SharkSpirit
+namespace sharkspirit::render
 {
 	struct constant_buffer_2d
 	{

@@ -2,12 +2,12 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 
-namespace SharkSpirit
+namespace sharkspirit::render
 {
 	class sampler 
 	{
 	public :
-		sampler(shark_spirit::render::device* device, unsigned int startSlot = 0)
+		sampler(sharkspirit::render::device* device, unsigned int startSlot = 0)
 			: m_start_slot(startSlot)
 		{
 			D3D11_SAMPLER_DESC samplerDesc = {};

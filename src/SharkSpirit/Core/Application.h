@@ -5,40 +5,40 @@
 #include "Core/Timer/Timer.h"
 #include "IInitializable.h"
 #include "Platform/Window/Window.h"
-#include "Scene.h"
 #include <Assets/AssetsManager.h>
 #include <ImGui/ImGuiManager.h>
 #include <Core/FpsManager.h>
 #include <Render/Device.h>
 #include <Render/RenderGraph.h>
+#include "../../external/entt/entt.hpp"
 
-namespace SharkSpirit 
+namespace sharkspirit::core
 {
 	class application_create_info 
 	{
 	public:
-		application_create_info(window_info* windowInfo) 
+		application_create_info(sharkspirit::platform::window::window_info* windowInfo) 
 			: m_window_info(windowInfo)
 		{
 
 		}
 
-		window_info* m_window_info;
+		sharkspirit::platform::window::window_info* m_window_info;
 	};
 
 	class application
 	{
 	public:
 		application(application_create_info* applicationCreateInfo)
-			: m_input(input_processor(applicationCreateInfo->m_window_info)),
+			: m_input(sharkspirit::input::input_processor(applicationCreateInfo->m_window_info)),
 			  m_timer(Timer()),
 			  m_isRunning(false),
 			  m_applicationCreateInfo(applicationCreateInfo),
 			  m_reg(entt::registry()),
-			  m_assets(assets_manager()),
-			  m_imgui(imgui_manager()),
+			  m_assets(sharkspirit::assets::assets_manager()),
+			  m_imgui(sharkspirit::imgui::imgui_manager()),
 			  m_fps(fps_manager()),
-			  m_device(shark_spirit::render::device()),
+			  m_device(sharkspirit::render::device()),
 			  m_render_graph(nullptr)
 		{
 			
@@ -85,7 +85,7 @@ namespace SharkSpirit
 			auto &camera = m_reg.emplace<camera_component>(m_camera_entity);
 			camera.SetProjectionValues(m_applicationCreateInfo->m_window_info->m_width, m_applicationCreateInfo->m_window_info->m_height, 0.0f, 1000.0f);
 
-			m_render_graph = new shark_spirit::render::render_graph(&m_assets, &m_device);
+			m_render_graph = new sharkspirit::render::render_graph(&m_assets, &m_device);
 			m_render_graph->initialize();
 
 			on_create();
@@ -123,12 +123,12 @@ namespace SharkSpirit
 	protected:
 		application_create_info* m_applicationCreateInfo;
 
-		shark_spirit::render::render_graph* m_render_graph;
-		shark_spirit::render::device m_device;
+		sharkspirit::render::render_graph* m_render_graph;
+		sharkspirit::render::device m_device;
 
-		input_processor m_input;
-		assets_manager m_assets;
-		imgui_manager m_imgui;
+		sharkspirit::input::input_processor m_input;
+		sharkspirit::assets::assets_manager m_assets;
+		sharkspirit::imgui::imgui_manager m_imgui;
 		fps_manager m_fps;
 		Timer m_timer;
 		bool m_isRunning;

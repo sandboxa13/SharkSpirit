@@ -4,15 +4,15 @@
 #include <Core/ECS/Components/Components.h>
 #include <Input/InputProcessor.h>
 
-namespace SharkSpirit
+namespace sharkspirit::core
 {
 	class sprite_update_system : public ISystem
 	{
 	public:
 		sprite_update_system(
 			entt::registry* reg,
-			input_processor* input,
-			assets_manager* assets) : ISystem(reg, input, assets)
+			sharkspirit::input::input_processor* input,
+			sharkspirit::assets::assets_manager* assets) : ISystem(reg, input, assets)
 		{
 		}
 		~sprite_update_system();

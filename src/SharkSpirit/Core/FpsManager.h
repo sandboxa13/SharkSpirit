@@ -1,6 +1,6 @@
 #pragma once
 
-namespace SharkSpirit
+namespace sharkspirit::core
 {
 	class fps_manager {
 	private:

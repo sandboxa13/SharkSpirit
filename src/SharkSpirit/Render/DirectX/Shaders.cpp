@@ -1,6 +1,6 @@
 #include "Shaders.h"
 
-namespace SharkSpirit
+namespace sharkspirit::render
 {
 
 	HRESULT vertex_shader::Initialize(ID3D11Device* device, std::wstring shaderpath, D3D11_INPUT_ELEMENT_DESC* layoutDesc, UINT numElements)

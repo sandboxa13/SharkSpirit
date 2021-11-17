@@ -2,9 +2,9 @@
 #include <Utils/WICTextureLoader.h>
 #include <Utils/StringUtils.h>
 
-namespace SharkSpirit
+namespace sharkspirit::render
 {
-	HRESULT Texture::initialize(shark_spirit::render::device* device, const std::string& filePath)
+	HRESULT Texture::initialize(sharkspirit::render::device* device, const std::string& filePath)
 	{
 		return CreateWICTextureFromFile(device->get_device().Get(), device->get_device_context().Get(), string_to_wide(filePath).c_str(), texture.GetAddressOf(), textureView.GetAddressOf());
 	}

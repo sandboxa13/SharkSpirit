@@ -1,6 +1,6 @@
 #pragma once
 
-namespace SharkSpirit 
+namespace sharkspirit::core
 {
 	class IInitializable
 	{

@@ -1,7 +1,7 @@
 #include "Window.h"
 #include <ImGui/imgui_impl_win32.h>
 
-namespace SharkSpirit 
+namespace sharkspirit::platform::window
 {
 	LRESULT CALLBACK DefWndProc(
 		HWND hwnd,

@@ -18,7 +18,7 @@
 #include <Core/DxErr/dxerr.h>
 #include <Core/GraphicsThrowMacros.h>
 
-namespace shark_spirit::render
+namespace sharkspirit::render
 {
 	struct render_target_desc
 	{
