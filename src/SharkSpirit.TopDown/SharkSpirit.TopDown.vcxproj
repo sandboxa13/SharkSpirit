@@ -160,7 +160,6 @@
     <ClInclude Include="Components\PlayerInputComponent.h" />
     <ClInclude Include="Systems\PlayerAnimationSystem.h" />
     <ClInclude Include="Systems\PlayerInputSystem.h" />
-    <ClInclude Include="Systems\RenderSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="assets\2d_light_pass.hlsl">

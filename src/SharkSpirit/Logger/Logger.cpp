@@ -1,6 +1,6 @@
 #include "Logger.h"
 
-namespace SharkSpirit 
+namespace sharkspirit::log
 {
     void SetConsoleColor(ConsoleColor color)
     {

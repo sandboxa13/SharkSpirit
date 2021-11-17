@@ -1,8 +1,9 @@
 #pragma once
 #include <Core/ECS/Components/Components.h>
 #include <Render/Device.h>
+#include "../../external/entt/entt.hpp"
 
-namespace shark_spirit::render
+namespace sharkspirit::render
 {
 	class application_state
 	{
@@ -18,10 +19,10 @@ namespace shark_spirit::render
 		render_target* m_color_buffer;
 		render_target* m_light_buffer;
 		render_target* m_screen_buffer;
-		std::vector<SharkSpirit::base_render_component*> m_render_components = {0};
-		std::vector<SharkSpirit::base_render_component*> m_light_components = {0};
-		SharkSpirit::base_render_component* m_curent_renderable;
-		SharkSpirit::base_render_component* m_full_screen_quad_renderable;
+		std::vector<sharkspirit::core::base_render_component*> m_render_components = {0};
+		std::vector<sharkspirit::core::base_render_component*> m_light_components = {0};
+		sharkspirit::core::base_render_component* m_curent_renderable;
+		sharkspirit::core::base_render_component* m_full_screen_quad_renderable;
 		application_state m_application_state;
 		camera_state m_camera_state;
 	};
@@ -30,8 +31,8 @@ namespace shark_spirit::render
 	{
 	public:
 		render_pass(
-			SharkSpirit::vertex_shader* vertexShader,
-			SharkSpirit::pixel_shader* pixelShader,
+			vertex_shader* vertexShader,
+			pixel_shader* pixelShader,
 			device* device)
 			:
 			m_vertex_shader(vertexShader),
@@ -45,8 +46,8 @@ namespace shark_spirit::render
 		virtual void un_bind(render_graph_state* state){}
 		virtual void initialize(){}
 
-		SharkSpirit::vertex_shader* m_vertex_shader;
-		SharkSpirit::pixel_shader* m_pixel_shader;
+		vertex_shader* m_vertex_shader;
+		pixel_shader* m_pixel_shader;
 		device* m_device;
 
 	protected:
@@ -70,8 +71,8 @@ namespace shark_spirit::render
 	{
 	public:
 		screen_pass(
-			SharkSpirit::vertex_shader* vertexShader,
-			SharkSpirit::pixel_shader* pixelShader,
+			vertex_shader* vertexShader,
+			pixel_shader* pixelShader,
 			device* device)
 			:
 			render_pass(vertexShader, pixelShader, device)
@@ -113,8 +114,8 @@ namespace shark_spirit::render
 	{
 	public:
 		light_pass(
-			SharkSpirit::vertex_shader* vertexShader,
-			SharkSpirit::pixel_shader* pixelShader,
+			vertex_shader* vertexShader,
+			pixel_shader* pixelShader,
 			device* device)
 			:
 			render_pass(vertexShader, pixelShader, device)
@@ -165,8 +166,8 @@ namespace shark_spirit::render
 	{
 	public:
 		color_pass(
-			SharkSpirit::vertex_shader* vertexShader,
-			SharkSpirit::pixel_shader* pixelShader,
+			vertex_shader* vertexShader,
+			pixel_shader* pixelShader,
 			device* device)
 			:
 			render_pass(vertexShader, pixelShader, device)
@@ -207,7 +208,7 @@ namespace shark_spirit::render
 	{
 	public:
 		render_graph(
-			SharkSpirit::assets_manager* assetsManager,
+			sharkspirit::assets::assets_manager* assetsManager,
 			device* device)
 			: 
 			m_assets_manager(assetsManager),
@@ -220,12 +221,12 @@ namespace shark_spirit::render
 
 		void prepare_state(entt::registry* reg)
 		{
-			auto sprites = reg->view<SharkSpirit::sprite_component>();
-			auto lights = reg->view<SharkSpirit::sprite_light_component>();
+			auto sprites = reg->view<sharkspirit::core::sprite_component>();
+			auto lights = reg->view<sharkspirit::core::sprite_light_component>();
 
 			for (auto spriteEnt : sprites)
 			{
-				SharkSpirit::sprite_component* sprite = &sprites.get<SharkSpirit::sprite_component>(spriteEnt);
+				sharkspirit::core::sprite_component* sprite = &sprites.get<sharkspirit::core::sprite_component>(spriteEnt);
 
 				m_current_state->m_render_components.push_back(sprite);
 			}
@@ -234,7 +235,7 @@ namespace shark_spirit::render
 
 			for (auto lightEnt : lights)
 			{
-				SharkSpirit::sprite_light_component* light = &lights.get<SharkSpirit::sprite_light_component>(lightEnt);
+				sharkspirit::core::sprite_light_component* light = &lights.get<sharkspirit::core::sprite_light_component>(lightEnt);
 
 				m_current_state->m_light_components.push_back(light);
 			}
@@ -326,9 +327,9 @@ namespace shark_spirit::render
 			m_light_pass = new light_pass(m_assets_manager->get_vertex_shader("vs_simple"), m_assets_manager->get_pixel_shader("ps_sprite_light"), m_device);
 			m_screen_pass = new screen_pass(m_assets_manager->get_vertex_shader("vs_full_screen"), m_assets_manager->get_pixel_shader("ps_sprite_screen_out"), m_device);
 
-			m_current_state->m_full_screen_quad_renderable = new SharkSpirit::base_render_component();
-			m_current_state->m_full_screen_quad_renderable->m_sampler = new SharkSpirit::sampler(m_device);
-			m_current_state->m_full_screen_quad_renderable->m_world_view_proj = new SharkSpirit::constant_buffer<SharkSpirit::world_view_proj>();
+			m_current_state->m_full_screen_quad_renderable = new sharkspirit::core::base_render_component();
+			m_current_state->m_full_screen_quad_renderable->m_sampler = new sampler(m_device);
+			m_current_state->m_full_screen_quad_renderable->m_world_view_proj = new constant_buffer<world_view_proj>();
 			m_current_state->m_full_screen_quad_renderable->m_vertices = m_assets_manager->get_verticies("full_screen_vertex");
 			m_current_state->m_full_screen_quad_renderable->m_indices = m_assets_manager->get_indicies("full_screen_index");
 			m_current_state->m_full_screen_quad_renderable->m_world_view_proj->Initialize(m_device->get_device().Get(), m_device->get_device_context().Get());
@@ -345,6 +346,6 @@ namespace shark_spirit::render
 
 		render_graph_state* m_current_state;
 		device* m_device;
-		SharkSpirit::assets_manager* m_assets_manager;
+		sharkspirit::assets::assets_manager* m_assets_manager;
 	};
 }

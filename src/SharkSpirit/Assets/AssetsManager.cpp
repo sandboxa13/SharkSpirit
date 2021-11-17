@@ -1,10 +1,12 @@
 #include "AssetsManager.h"
 #include <system_error>
 
-namespace SharkSpirit
+namespace sharkspirit::assets
 {
-	void assets_manager::initialize_default_shaders(shark_spirit::render::device* device)
+	void assets_manager::initialize_default_shaders(sharkspirit::render::device* device)
 	{
+		using namespace sharkspirit::render;
+
 		load_shader(device, "ps_sprite_color", L"C:\\Repositories\\GitHub\\SharkSpirit\\assets\\shaders\\pixel\\ps_sprite_color.hlsl", shader_type::PIXEL);
 		load_shader(device, "ps_sprite_light", L"C:\\Repositories\\GitHub\\SharkSpirit\\assets\\shaders\\pixel\\ps_sprite_light.hlsl", shader_type::PIXEL);
 		load_shader(device, "ps_sprite_screen_out", L"C:\\Repositories\\GitHub\\SharkSpirit\\assets\\shaders\\pixel\\ps_sprite_screen_out.hlsl", shader_type::PIXEL);
@@ -66,16 +68,16 @@ namespace SharkSpirit
 		vertexData.clear();
 	}
 
-	void assets_manager::load_texture(shark_spirit::render::device* device, const std::string name, const std::string& path)
+	void assets_manager::load_texture(sharkspirit::render::device* device, const std::string name, const std::string& path)
 	{
-		Logger::LogInfo(std::format("Try to load texture with name [{0}]", name));
+		sharkspirit::log::Logger::LogInfo(std::format("Try to load texture with name [{0}]", name));
 
-		auto pTexture = new Texture();
+		auto pTexture = new sharkspirit::render::Texture();
 		HRESULT hr = pTexture->initialize(device, path);
 
 		if (FAILED(hr))
 		{
-			Logger::LogError(std::format("Error while loading texture with name [{0}], HRESULT - {1}", name, std::system_category().message(hr)));
+			sharkspirit::log::Logger::LogError(std::format("Error while loading texture with name [{0}], HRESULT - {1}", name, std::system_category().message(hr)));
 			pTexture->~Texture();
 		}
 		else
@@ -83,12 +85,13 @@ namespace SharkSpirit
 			m_textures_map.emplace(name, pTexture);
 		}
 	}
-	Texture* assets_manager::get_texture(const std::string& name)
+	
+	sharkspirit::render::Texture* assets_manager::get_texture(const std::string& name)
 	{
 		return m_textures_map[name];
 	}
 
-	void assets_manager::load_shader(shark_spirit::render::device* device, const std::string name, const std::wstring& path, shader_type type)
+	void assets_manager::load_shader(sharkspirit::render::device* device, const std::string name, const std::wstring& path, shader_type type)
 	{
 		HRESULT hr = { 0 };
 
@@ -96,18 +99,22 @@ namespace SharkSpirit
 
 		switch (type)
 		{
-		case SharkSpirit::PIXEL:
+		case PIXEL:
 		{
 			hr = D3DCompileFromFile(path.c_str(), 0, D3D_COMPILE_STANDARD_FILE_INCLUDE, "main", "ps_5_0", 0, 0, &blob, 0);
 
-			auto pixelShader = new pixel_shader();
+			sharkspirit::log::Logger::LogInfo(std::format("Compile shader with name [{0}], result - {1}", name, std::system_category().message(hr)));
+
+			auto pixelShader = new sharkspirit::render::pixel_shader();
 			hr = pixelShader->InitializeFromBlob(device->get_device().Get(), blob);
 			m_pixel_shaders_map.emplace(name, pixelShader);
 			break;
 		}
-		case SharkSpirit::VERTEX:
+		case VERTEX:
 		{
 			hr = D3DCompileFromFile(path.c_str(), 0, D3D_COMPILE_STANDARD_FILE_INCLUDE, "main", "vs_5_0", 0, 0, &blob, 0);
+
+			sharkspirit::log::Logger::LogInfo(std::format("Compile shader with name [{0}], result - {1}", name, std::system_category().message(hr)));
 
 			D3D11_INPUT_ELEMENT_DESC layout2D[] =
 			{
@@ -117,29 +124,29 @@ namespace SharkSpirit
 
 			UINT numElements2D = ARRAYSIZE(layout2D);
 
-			auto vertexShader = new vertex_shader();
+			auto vertexShader = new sharkspirit::render::vertex_shader();
 			hr = vertexShader->InitializeFromBlob(device->get_device().Get(), blob, layout2D, numElements2D);
 			m_vertex_shaders_map.emplace(name, vertexShader);
 		}
 		}
 	}
 
-	pixel_shader* assets_manager::get_pixel_shader(const std::string& name)
+	sharkspirit::render::pixel_shader* assets_manager::get_pixel_shader(const std::string& name)
 	{
 		return m_pixel_shaders_map[name];
 	}
 
-	vertex_shader* assets_manager::get_vertex_shader(const std::string& name)
+	sharkspirit::render::vertex_shader* assets_manager::get_vertex_shader(const std::string& name)
 	{
 		return m_vertex_shaders_map[name];
 	}
 
-	vertex_buffer<vertex>* assets_manager::get_verticies(const std::string& name)
+	sharkspirit::render::vertex_buffer<sharkspirit::render::vertex>* assets_manager::get_verticies(const std::string& name)
 	{
 		return m_verticies_map[name];
 	}
 
-	index_buffer* assets_manager::get_indicies(const std::string& name)
+	sharkspirit::render::index_buffer* assets_manager::get_indicies(const std::string& name)
 	{
 		return m_indicies_map[name];
 	}

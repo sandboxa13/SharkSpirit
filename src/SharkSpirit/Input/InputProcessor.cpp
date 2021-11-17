@@ -1,6 +1,6 @@
 #include "Input/InputProcessor.h"
 
-namespace SharkSpirit 
+namespace sharkspirit::input
 {
 	bool input_processor::process_input()
 	{

@@ -4,7 +4,7 @@
 #include <d3dcompiler.h>
 #include <string>
 
-namespace SharkSpirit
+namespace sharkspirit::render
 {
 	class vertex_shader
 	{

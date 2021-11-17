@@ -6,12 +6,12 @@
 #include <Input/Mouse.h>
 #include <Platform/Window/Window.h>
 
-namespace SharkSpirit
+namespace sharkspirit::input
 {
-	class input_processor : public IInitializable
+	class input_processor : public sharkspirit::core::IInitializable
 	{
 	public:
-		input_processor(window_info* info) : m_keyboard(keyboard()), m_mouse(mouse())
+		input_processor(sharkspirit::platform::window::window_info* info) : m_keyboard(keyboard()), m_mouse(mouse())
 		{
 			m_windowInfo = info;
 		};
@@ -20,7 +20,7 @@ namespace SharkSpirit
 
 		virtual void Initialize()
 		{
-			Logger::LogInfo("Initialize Input Processor");
+			sharkspirit::log::Logger::LogInfo("Initialize Input Processor");
 		}
 
 		bool process_input();
@@ -28,7 +28,6 @@ namespace SharkSpirit
 		keyboard m_keyboard;
 		mouse m_mouse;
 	private:
-		window_info* m_windowInfo;
-		
+		sharkspirit::platform::window::window_info* m_windowInfo;
 	};
 }

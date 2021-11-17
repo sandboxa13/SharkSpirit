@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include <cassert>
 
-namespace SharkSpirit 
+namespace sharkspirit::log
 {
     enum class ConsoleColor : uint8_t
     {

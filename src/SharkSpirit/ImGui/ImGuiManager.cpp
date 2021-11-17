@@ -1,6 +1,6 @@
 #include "ImGuiManager.h"
 
-namespace SharkSpirit
+namespace sharkspirit::imgui
 {
 	void imgui_manager::SetStyle()
 	{

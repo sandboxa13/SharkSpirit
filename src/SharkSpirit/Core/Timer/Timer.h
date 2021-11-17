@@ -5,7 +5,7 @@
 #include "Logger/Logger.h"
 #include "Core/IInitializable.h"
 
-namespace SharkSpirit 
+namespace sharkspirit::core
 {
 	class Timer : public IInitializable
 	{
@@ -20,7 +20,7 @@ namespace SharkSpirit
 
 		virtual void Initialize()
 		{
-			Logger::LogInfo("Initialize Timer");
+			sharkspirit::log::Logger::LogInfo("Initialize Timer");
 
 			Reset();
 		}
