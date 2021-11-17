@@ -103,7 +103,7 @@ namespace sharkspirit::assets
 		{
 			hr = D3DCompileFromFile(path.c_str(), 0, D3D_COMPILE_STANDARD_FILE_INCLUDE, "main", "ps_5_0", 0, 0, &blob, 0);
 
-			sharkspirit::log::Logger::LogInfo(std::format("Compile shader with name [{0}], result - {1}", name, hr));
+			sharkspirit::log::Logger::LogInfo(std::format("Compile shader with name [{0}], result - {1}", name, std::system_category().message(hr)));
 
 			auto pixelShader = new sharkspirit::render::pixel_shader();
 			hr = pixelShader->InitializeFromBlob(device->get_device().Get(), blob);
@@ -114,7 +114,7 @@ namespace sharkspirit::assets
 		{
 			hr = D3DCompileFromFile(path.c_str(), 0, D3D_COMPILE_STANDARD_FILE_INCLUDE, "main", "vs_5_0", 0, 0, &blob, 0);
 
-			sharkspirit::log::Logger::LogInfo(std::format("Compile shader with name [{0}], result - {1}", name, hr));
+			sharkspirit::log::Logger::LogInfo(std::format("Compile shader with name [{0}], result - {1}", name, std::system_category().message(hr)));
 
 			D3D11_INPUT_ELEMENT_DESC layout2D[] =
 			{
