@@ -4,7 +4,7 @@
 #include <Core/ECS/Components/Components.h>
 #include "../Components/PlayerInputComponent.h"
 
-namespace SharkSpirit
+namespace sharkspirit::topdown
 {
 	class player_animation_system : public sharkspirit::core::ISystem
 	{

@@ -17,7 +17,7 @@
 #include <Core/ECS/Systems/SpriteLightUpdateSystem.h>
 #include <Core/SSException.h>
 
-using namespace SharkSpirit;
+using namespace sharkspirit::topdown;
 
 class top_down_game : public sharkspirit::core::application
 {

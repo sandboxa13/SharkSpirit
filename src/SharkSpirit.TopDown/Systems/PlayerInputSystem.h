@@ -5,7 +5,7 @@
 #include "../Components/PlayerInputComponent.h"
 #include <Input/InputProcessor.h>
 
-namespace SharkSpirit 
+namespace sharkspirit::topdown
 {
 	class player_input_system : public sharkspirit::core::ISystem
 	{
