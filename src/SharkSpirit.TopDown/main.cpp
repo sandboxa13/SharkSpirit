@@ -2,7 +2,6 @@
 #include "Core/Application.h"
 #include "Core/ECS/Components/Components.h"
 #include "Components/GameComponents.h"
-#include <Core/ECS/Systems/SpriteUpdateSystem.h>
 #include "Components/PlayerInputComponent.h"
 #include "Systems/PlayerInputSystem.h"
 #include <ios>
@@ -12,9 +11,7 @@
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
-#include <Core/ECS/Systems/SpriteAnimationSystem.h>
 #include "Systems/PlayerAnimationSystem.h"
-#include <Core/ECS/Systems/SpriteLightUpdateSystem.h>
 #include <Core/SSException.h>
 
 using namespace sharkspirit::topdown;
@@ -35,7 +32,7 @@ public:
 	}
 
 protected:
-	void on_create() override
+	void on_initialize() override
 	{
 		auto playerStartX = (float) 2560 / 2;
 		auto playerStartY = (float) 2560 / 2;
@@ -132,19 +129,13 @@ protected:
 		}
 
 		m_player_input_system = new player_input_system(&m_reg, &m_input, &m_assets);
-		m_sprite_render_system = new sharkspirit::core::sprite_update_system(&m_reg, &m_input, &m_assets);
-		m_sprite_animation_system = new sharkspirit::core::sprite_animation_system(&m_reg, &m_input, &m_assets);
 		m_player_animation_system = new player_animation_system(&m_reg, &m_input, &m_assets);
-		m_sprite_light_render_system = new sharkspirit::core::sprite_light_update_system(&m_reg, &m_input, &m_assets);
 	}
 
 	void on_update() override 
 	{
 		m_player_input_system->run();
 		m_player_animation_system->run();
-		m_sprite_animation_system->run();
-		m_sprite_light_render_system->run();
-		m_sprite_render_system->run();
 
 		float dt = m_timer.DeltaTime();
 		float totalTime = m_timer.TotalTime();
@@ -160,10 +151,7 @@ protected:
 private:
 	entt::entity player;
 	player_input_system* m_player_input_system;
-	sharkspirit::core::sprite_update_system* m_sprite_render_system;
-	sharkspirit::core::sprite_animation_system* m_sprite_animation_system;
 	player_animation_system* m_player_animation_system;
-	sharkspirit::core::sprite_light_update_system* m_sprite_light_render_system;
 };
 
 int APIENTRY wWinMain(
@@ -195,9 +183,9 @@ int APIENTRY wWinMain(
 		auto applicationCreateInfo = sharkspirit::core::application_create_info(windowInfo);
 
 		auto application = top_down_game(&applicationCreateInfo);
-
-		application.show_window();
-		application.run();
+		
+		application.initialize();
+		application.start();
 
 		return 0;
 	}
