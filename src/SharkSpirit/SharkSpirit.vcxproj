@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -205,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assets\AssetsManager.cpp" />
+    <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\DxErr\dxerr.cpp" />
     <ClCompile Include="Core\DxgiInfoManager.cpp" />
     <ClCompile Include="Core\SSException.cpp" />
