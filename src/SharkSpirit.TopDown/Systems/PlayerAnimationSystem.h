@@ -18,7 +18,7 @@ namespace sharkspirit::topdown
 		}
 		~player_animation_system();
 
-		void run() override
+		void update() override
 		{
 			auto spriteView = m_reg->view<player_input_component, sharkspirit::core::sprite_animation_component>();
 

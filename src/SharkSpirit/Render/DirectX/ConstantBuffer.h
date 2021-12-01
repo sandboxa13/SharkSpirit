@@ -59,7 +59,7 @@ namespace sharkspirit::render
 			return hr;
 		}
 
-		bool ApplyChanges()
+		bool CopyToGPU()
 		{
 			D3D11_MAPPED_SUBRESOURCE mappedResource;
 			HRESULT hr = this->m_deviceContext->Map(buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);

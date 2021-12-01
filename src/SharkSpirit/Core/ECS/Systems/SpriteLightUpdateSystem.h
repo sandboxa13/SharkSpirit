@@ -16,32 +16,25 @@ namespace sharkspirit::core
 		}
 		~sprite_light_update_system();
 
-		void run() override
+		void update() override
 		{
 			using namespace DirectX;
 
 			auto spriteView = m_reg->view<sprite_light_component, transform_component>();
-
-			auto camView = m_reg->view<camera_component>();
-			camera_component* camera = nullptr;
-			for (auto cam : camView)
-			{
-				camera = &camView.get<camera_component>(cam);
-			}
+			auto camPtr = m_reg->try_ctx<sharkspirit::core::camera_component>();
+			
+			if (camPtr == NULL)
+				return;
 
 			for (auto entity : spriteView)
 			{
 				auto& sprite = spriteView.get<sprite_light_component>(entity);
 				auto& transform = spriteView.get<transform_component>(entity);
 
-				sprite.m_world_matrix =
-					DirectX::XMMatrixScaling(transform.m_scale.x * 7, transform.m_scale.y * 7, 1.0f) *
-					DirectX::XMMatrixRotationRollPitchYaw(DirectX::XMConvertToRadians(transform.m_rotation.x), DirectX::XMConvertToRadians(transform.m_rotation.y), DirectX::XMConvertToRadians(transform.m_rotation.z)) *
-					DirectX::XMMatrixTranslation(transform.m_pos.x + transform.m_scale.x / 2.0f, transform.m_pos.y + transform.m_scale.y / 2.0f, transform.m_pos.z);
-				auto ort = camera->GetWorldMatrix() * camera->GetOrthoMatrix();
-				DirectX::XMMATRIX wvpMatrix = sprite.m_world_matrix * ort;
-				sprite.m_world_view_proj->data.wvpMatrix = wvpMatrix;
-				sprite.m_world_view_proj->ApplyChanges();
+				sprite.update_world_matrix(&transform);
+				sprite.update_world_view_proj_matrix(camPtr);
+
+				sprite.m_world_view_proj->CopyToGPU();
 			}
 		}
 	};

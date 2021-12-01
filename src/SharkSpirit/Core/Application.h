@@ -52,9 +52,9 @@ namespace sharkspirit::core
 			m_timer.~Timer();
 			m_reg.clear();
 
-			m_sprite_render_system->~sprite_update_system();
-			m_sprite_animation_system->~sprite_animation_system();
-			m_sprite_light_render_system->~sprite_light_update_system();
+			//m_sprite_render_system->~sprite_update_system();
+			//m_sprite_animation_system->~sprite_animation_system();
+			//m_sprite_light_render_system->~sprite_light_update_system();
 		}
 
 		entt::entity create_entity();

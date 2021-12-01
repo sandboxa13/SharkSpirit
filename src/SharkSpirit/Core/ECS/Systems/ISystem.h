@@ -13,18 +13,12 @@ namespace sharkspirit::core
 		{
 			
 		}
-		~ISystem();
 
-		virtual void run(){}
+		virtual void update(){}
 
 	protected:
 		entt::registry* m_reg;
 		sharkspirit::input::input_processor* m_input;
 		sharkspirit::assets::assets_manager* m_assets;
 	};
-
-	ISystem::~ISystem()
-	{
-		m_reg->clear();
-	}
 }

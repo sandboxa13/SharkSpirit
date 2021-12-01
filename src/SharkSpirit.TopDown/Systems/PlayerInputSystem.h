@@ -20,15 +20,12 @@ namespace sharkspirit::topdown
 		~player_input_system();
 
 
-		void run() override
+		void update() override
 		{
 			auto inputView = m_reg->view<player_input_component, sharkspirit::core::transform_component>();
-			auto camView = m_reg->view<sharkspirit::core::camera_component>();
-			sharkspirit::core::camera_component* camera = nullptr;
-			for (auto cam : camView)
-			{
-				camera = &camView.get<sharkspirit::core::camera_component>(cam);
-			}
+			auto camPtr = m_reg->try_ctx<sharkspirit::core::camera_component>();
+			auto& camera = camPtr;
+
 
 			for (auto entity : inputView)
 			{

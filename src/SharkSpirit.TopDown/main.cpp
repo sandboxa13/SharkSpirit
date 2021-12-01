@@ -134,8 +134,8 @@ protected:
 
 	void on_update() override 
 	{
-		m_player_input_system->run();
-		m_player_animation_system->run();
+		m_player_input_system->update();
+		m_player_animation_system->update();
 
 		float dt = m_timer.DeltaTime();
 		float totalTime = m_timer.TotalTime();

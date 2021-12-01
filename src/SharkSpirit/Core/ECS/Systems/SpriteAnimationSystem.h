@@ -17,7 +17,7 @@ namespace sharkspirit::core
 		}
 		~sprite_animation_system();
 
-		void run() override
+		void update() override
 		{
 			auto spriteView = m_reg->view<sprite_component, sprite_animation_component>();
 
