@@ -131,11 +131,12 @@ namespace sharkspirit::render
 			m_device->om_set_blend_state(m_blend_state.Get(), nullptr, 0xffffffff);
 
 			m_device->clear(state->m_light_buffer, DirectX::Colors::Black);
+
+			bind_shaders();
 		}
 
 		void update(render_graph_state* state) override
 		{
-			bind_shaders();
 			bind_input_assembler(state);
 
 			m_device->ps_set_shader_resources(0, 1, state->m_curent_renderable->m_texture->GetTextureResourceViewAddress());
@@ -184,12 +185,13 @@ namespace sharkspirit::render
 		{
 			m_device->om_set_render_targets(1, state->m_color_buffer);
 			m_device->clear(state->m_color_buffer, DirectX::Colors::Black);
+
+			bind_shaders();
 		}
 
 		void update(render_graph_state* state) override
 		{
 			bind_input_assembler(state);
-			bind_shaders();
 
 			m_device->vs_set_constant_buffers(0, 1, state->m_curent_renderable->m_world_view_proj->GetAddressOf());
 			m_device->ps_set_shader_resources(0, 1, state->m_curent_renderable->m_texture->GetTextureResourceViewAddress());
@@ -242,9 +244,9 @@ namespace sharkspirit::render
 			auto lights = reg->view<sharkspirit::core::sprite_light_component>();
 			{
 				m_light_pass->bind_render_target(m_current_state);
-				for (const auto spriteEntity : lights)
+				for (const auto lightEntity : lights)
 				{
-					m_current_state->m_curent_renderable = &lights.get<sharkspirit::core::sprite_light_component>(spriteEntity);
+					m_current_state->m_curent_renderable = &lights.get<sharkspirit::core::sprite_light_component>(lightEntity);
 					m_light_pass->process(m_current_state);
 				}
 				m_light_pass->unbind_render_target(m_current_state);
@@ -298,6 +300,7 @@ namespace sharkspirit::render
 			m_current_state->m_full_screen_quad_renderable->m_vertices = m_assets_manager->get_verticies("full_screen_vertex");
 			m_current_state->m_full_screen_quad_renderable->m_indices = m_assets_manager->get_indicies("full_screen_index");
 			m_current_state->m_full_screen_quad_renderable->m_world_view_proj->Initialize(m_device->get_device().Get(), m_device->get_device_context().Get());
+			
 			//m_color_pass->initialize();
 			m_light_pass->initialize();
 			//m_screen_pass->initialize();
