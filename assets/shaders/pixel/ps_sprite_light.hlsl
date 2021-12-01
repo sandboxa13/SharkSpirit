@@ -11,5 +11,5 @@ float4 main(PS_INPUT input) : SV_TARGET
 {
 	float4 lightColor = lightMap.Sample(objSamplerState, input.inTexCoord);
 
-	return lightColor;
+	return lightColor * 0.4f;
 }

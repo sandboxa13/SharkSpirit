@@ -26,9 +26,9 @@ namespace sharkspirit::core
 		m_render_graph = new sharkspirit::render::render_graph(&m_assets, &m_device);
 		m_render_graph->initialize();
 
-		m_sprite_render_system = new sharkspirit::core::sprite_update_system(&m_reg, &m_input, &m_assets);
+		m_sprite_update_system = new sharkspirit::core::sprite_update_system(&m_reg, &m_input, &m_assets);
 		m_sprite_animation_system = new sharkspirit::core::sprite_animation_system(&m_reg, &m_input, &m_assets);
-		m_sprite_light_render_system = new sharkspirit::core::sprite_light_update_system(&m_reg, &m_input, &m_assets);
+		m_sprite_light_update_system = new sharkspirit::core::sprite_light_update_system(&m_reg, &m_input, &m_assets);
 
 		on_initialize();
 	}
@@ -45,14 +45,13 @@ namespace sharkspirit::core
 
 			on_update();
 
-			m_sprite_render_system->update();
+			m_sprite_update_system->update();
 			m_sprite_animation_system->update();
-			m_sprite_light_render_system->update();
+			m_sprite_light_update_system->update();
 
 			m_isRunning = m_input.process_input();
 
-			m_render_graph->prepare_state(&m_reg);
-			m_render_graph->render();
+			m_render_graph->render(&m_reg);
 
 			ImGui::End();
 			ImGui::EndFrame();
@@ -70,6 +69,5 @@ namespace sharkspirit::core
 	void application::stop()
 	{
 		m_isRunning = false;
-
 	}
 }

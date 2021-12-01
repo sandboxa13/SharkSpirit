@@ -73,9 +73,9 @@ namespace sharkspirit::core
 		sharkspirit::assets::assets_manager m_assets;
 		sharkspirit::imgui::imgui_manager m_imgui;
 
-		sprite_update_system* m_sprite_render_system;
+		sprite_update_system* m_sprite_update_system;
 		sprite_animation_system* m_sprite_animation_system;
-		sprite_light_update_system* m_sprite_light_render_system;
+		sprite_light_update_system* m_sprite_light_update_system;
 
 		fps_manager m_fps;
 		Timer m_timer;

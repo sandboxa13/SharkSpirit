@@ -21,6 +21,7 @@ namespace sharkspirit::core
 			using namespace DirectX;
 
 			auto spriteView = m_reg->view<sprite_light_component, transform_component>();
+
 			auto camPtr = m_reg->try_ctx<sharkspirit::core::camera_component>();
 			
 			if (camPtr == NULL)

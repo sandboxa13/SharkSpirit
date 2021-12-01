@@ -19,35 +19,21 @@ namespace sharkspirit::core
 
 		}
 	};
-	class base_render_component : public base_component
+
+	struct transform_component
 	{
-	public:
-		virtual ~base_render_component()
+		transform_component(
+			DirectX::XMFLOAT3 pos,
+			DirectX::XMFLOAT3 rot,
+			DirectX::XMFLOAT2 scale)
+			: m_pos(pos), m_rotation(rot), m_scale(scale)
 		{
 
 		}
-		sharkspirit::render::sampler* m_sampler;
-		sharkspirit::render::Texture* m_texture;
-		sharkspirit::render::vertex_shader m_vertex_shader;
-		sharkspirit::render::pixel_shader m_pixel_shader;
-		sharkspirit::render::vertex_buffer<sharkspirit::render::vertex>* m_vertices;
-		sharkspirit::render::index_buffer* m_indices;
-		DirectX::XMMATRIX m_world_matrix = DirectX::XMMatrixIdentity();
-		sharkspirit::render::constant_buffer<sharkspirit::render::world_view_proj>* m_world_view_proj = nullptr;
 
-		void update_world_matrix(transform_component* transform)
-		{
-			m_world_matrix =
-				DirectX::XMMatrixScaling(transform->m_scale.x, transform->m_scale.y, 1.0f) *
-				DirectX::XMMatrixRotationRollPitchYaw(DirectX::XMConvertToRadians(transform->m_rotation.x), DirectX::XMConvertToRadians(transform->m_rotation.y), DirectX::XMConvertToRadians(transform->m_rotation.z)) *
-				DirectX::XMMatrixTranslation(transform->m_pos.x + transform->m_scale.x / 2.0f, transform->m_pos.y + transform->m_scale.y / 2.0f, transform->m_pos.z);
-		}
-
-		void update_world_view_proj_matrix(camera_component* camera)
-		{
-			auto ort = camera->GetWorldMatrix() * camera->GetOrthoMatrix();
-			m_world_view_proj->data.wvpMatrix = m_world_matrix * ort;
-		}
+		DirectX::XMFLOAT3 m_pos;
+		DirectX::XMFLOAT3 m_rotation;
+		DirectX::XMFLOAT2 m_scale;
 	};
 
 	class camera_component : public base_component
@@ -102,6 +88,36 @@ namespace sharkspirit::core
 
 		float m_zoom;
 	};
+	class base_render_component : public base_component
+	{
+	public:
+		virtual ~base_render_component()
+		{
+
+		}
+		sharkspirit::render::sampler* m_sampler;
+		sharkspirit::render::Texture* m_texture;
+		sharkspirit::render::vertex_shader m_vertex_shader;
+		sharkspirit::render::pixel_shader m_pixel_shader;
+		sharkspirit::render::vertex_buffer<sharkspirit::render::vertex>* m_vertices;
+		sharkspirit::render::index_buffer* m_indices;
+		DirectX::XMMATRIX m_world_matrix = DirectX::XMMatrixIdentity();
+		sharkspirit::render::constant_buffer<sharkspirit::render::world_view_proj>* m_world_view_proj = nullptr;
+
+		void update_world_matrix(transform_component* transform)
+		{
+			m_world_matrix =
+				DirectX::XMMatrixScaling(transform->m_scale.x, transform->m_scale.y, 1.0f) *
+				DirectX::XMMatrixRotationRollPitchYaw(DirectX::XMConvertToRadians(transform->m_rotation.x), DirectX::XMConvertToRadians(transform->m_rotation.y), DirectX::XMConvertToRadians(transform->m_rotation.z)) *
+				DirectX::XMMatrixTranslation(transform->m_pos.x + transform->m_scale.x / 2.0f, transform->m_pos.y + transform->m_scale.y / 2.0f, transform->m_pos.z);
+		}
+
+		void update_world_view_proj_matrix(camera_component* camera)
+		{
+			m_world_view_proj->data.wvpMatrix = m_world_matrix * (camera->GetWorldMatrix() * camera->GetOrthoMatrix());
+		}
+	};
+	
 
 	enum animation_type
 	{
@@ -313,21 +329,5 @@ namespace sharkspirit::core
 
 			hr = m_world_view_proj->Initialize(device->get_device().Get(), device->get_device_context().Get());
 		}
-	};
-
-	struct transform_component
-	{
-		transform_component(
-			DirectX::XMFLOAT3 pos, 
-			DirectX::XMFLOAT3 rot, 
-			DirectX::XMFLOAT2 scale) 
-			: m_pos(pos), m_rotation(rot), m_scale(scale)
-		{
-
-		}
-
-		DirectX::XMFLOAT3 m_pos;
-		DirectX::XMFLOAT3 m_rotation;
-		DirectX::XMFLOAT2 m_scale;
 	};
 }

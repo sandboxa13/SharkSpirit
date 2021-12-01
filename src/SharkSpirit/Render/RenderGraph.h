@@ -19,8 +19,6 @@ namespace sharkspirit::render
 		render_target* m_color_buffer;
 		render_target* m_light_buffer;
 		render_target* m_screen_buffer;
-		std::vector<sharkspirit::core::base_render_component*> m_render_components = {0};
-		std::vector<sharkspirit::core::base_render_component*> m_light_components = {0};
 		sharkspirit::core::base_render_component* m_curent_renderable;
 		sharkspirit::core::base_render_component* m_full_screen_quad_renderable;
 		application_state m_application_state;
@@ -40,11 +38,17 @@ namespace sharkspirit::render
 			m_device(device)
 		{}
 
-		virtual void bind(render_graph_state* state) {}
-		virtual void update(render_graph_state* state){}
-		virtual void draw(render_graph_state* state){}
-		virtual void un_bind(render_graph_state* state){}
-		virtual void initialize(){}
+		virtual void bind_render_target(render_graph_state* state) {}
+		virtual void update(render_graph_state* state) {}
+		virtual void draw(render_graph_state* state) {}
+		virtual void unbind_render_target(render_graph_state* state) {}
+		virtual void initialize() {}
+
+		void process(render_graph_state* state)
+		{
+			update(state);
+			draw(state);
+		}
 
 		vertex_shader* m_vertex_shader;
 		pixel_shader* m_pixel_shader;
@@ -81,7 +85,7 @@ namespace sharkspirit::render
 			m_pixel_shader = pixelShader;
 		}
 
-		void bind(render_graph_state* state) override
+		void bind_render_target(render_graph_state* state) override
 		{
 			m_device->om_set_render_targets(1, state->m_screen_buffer);
 			m_device->clear(state->m_screen_buffer, DirectX::Colors::Black);
@@ -103,7 +107,7 @@ namespace sharkspirit::render
 			m_device->draw_indexed(6);
 		}
 
-		void un_bind(render_graph_state* state) override
+		void unbind_render_target(render_graph_state* state) override
 		{
 			ID3D11ShaderResourceView* null[] = { nullptr, nullptr };
 			m_device->ps_set_shader_resources(0, 2, null);
@@ -121,22 +125,22 @@ namespace sharkspirit::render
 			render_pass(vertexShader, pixelShader, device)
 		{}
 
-		void bind(render_graph_state* state) override
+		void bind_render_target(render_graph_state* state) override
 		{
 			m_device->om_set_render_targets(1, state->m_light_buffer);
 			m_device->om_set_blend_state(m_blend_state.Get(), nullptr, 0xffffffff);
 
 			m_device->clear(state->m_light_buffer, DirectX::Colors::Black);
+		}
 
+		void update(render_graph_state* state) override
+		{
 			bind_shaders();
 			bind_input_assembler(state);
 
 			m_device->ps_set_shader_resources(0, 1, state->m_curent_renderable->m_texture->GetTextureResourceViewAddress());
 			m_device->ps_set_samplers(state->m_curent_renderable->m_sampler->m_start_slot, 1u, state->m_curent_renderable->m_sampler->m_sampler_state.GetAddressOf());
-		}
 
-		void update(render_graph_state* state) override
-		{
 			m_device->vs_set_constant_buffers(0, 1, state->m_curent_renderable->m_world_view_proj->GetAddressOf());
 		}
 
@@ -145,7 +149,7 @@ namespace sharkspirit::render
 			m_device->draw_indexed(state->m_curent_renderable->m_indices->IndexCount());
 		}
 
-		void un_bind(render_graph_state* state) override
+		void unbind_render_target(render_graph_state* state) override
 		{
 			ID3D11ShaderResourceView* null[] = { nullptr };
 			m_device->ps_set_shader_resources(0, 1, null);
@@ -176,17 +180,17 @@ namespace sharkspirit::render
 			m_pixel_shader = pixelShader;
 		}
 
-		void bind(render_graph_state* state) override
+		void bind_render_target(render_graph_state* state) override
 		{
 			m_device->om_set_render_targets(1, state->m_color_buffer);
 			m_device->clear(state->m_color_buffer, DirectX::Colors::Black);
-
-			bind_input_assembler(state);
-			bind_shaders();
 		}
 
 		void update(render_graph_state* state) override
 		{
+			bind_input_assembler(state);
+			bind_shaders();
+
 			m_device->vs_set_constant_buffers(0, 1, state->m_curent_renderable->m_world_view_proj->GetAddressOf());
 			m_device->ps_set_shader_resources(0, 1, state->m_curent_renderable->m_texture->GetTextureResourceViewAddress());
 			m_device->ps_set_samplers(state->m_curent_renderable->m_sampler->m_start_slot, 1u, state->m_curent_renderable->m_sampler->m_sampler_state.GetAddressOf());
@@ -197,7 +201,7 @@ namespace sharkspirit::render
 			m_device->draw_indexed(state->m_curent_renderable->m_indices->IndexCount());
 		}
 
-		void un_bind(render_graph_state* state) override
+		void unbind_render_target(render_graph_state* state) override
 		{
 			ID3D11ShaderResourceView* null[] = { nullptr };
 			m_device->ps_set_shader_resources(0, 1, null);
@@ -210,7 +214,7 @@ namespace sharkspirit::render
 		render_graph(
 			sharkspirit::assets::assets_manager* assetsManager,
 			device* device)
-			: 
+			:
 			m_assets_manager(assetsManager),
 			m_color_pass(nullptr),
 			m_light_pass(nullptr),
@@ -219,78 +223,40 @@ namespace sharkspirit::render
 		{
 		}
 
-		void prepare_state(entt::registry* reg)
+		void render(entt::registry* reg)
 		{
-			auto sprites = reg->view<sharkspirit::core::sprite_component>();
-			auto lights = reg->view<sharkspirit::core::sprite_light_component>();
-
-			for (auto spriteEnt : sprites)
-			{
-				sharkspirit::core::sprite_component* sprite = &sprites.get<sharkspirit::core::sprite_component>(spriteEnt);
-
-				m_current_state->m_render_components.push_back(sprite);
-			}
-
-			m_current_state->m_render_components.erase(m_current_state->m_render_components.begin());
-
-			for (auto lightEnt : lights)
-			{
-				sharkspirit::core::sprite_light_component* light = &lights.get<sharkspirit::core::sprite_light_component>(lightEnt);
-
-				m_current_state->m_light_components.push_back(light);
-			}
-
-			m_current_state->m_light_components.erase(m_current_state->m_light_components.begin());
-		}
-
-		void render()
-		{
-			m_current_state->m_curent_renderable = m_current_state->m_render_components[0];
-
 			// color pass
+			auto sprites = reg->view<sharkspirit::core::sprite_component>();
 			{
-				m_color_pass->bind(m_current_state);
+				m_color_pass->bind_render_target(m_current_state);
+				for (const auto spriteEntity : sprites)
 				{
-					for (auto sprite : m_current_state->m_render_components)
-					{
-						m_current_state->m_curent_renderable = sprite;
-						
-						m_color_pass->update(m_current_state);
-						m_color_pass->draw(m_current_state);
-					}
+					m_current_state->m_curent_renderable = &sprites.get<sharkspirit::core::sprite_component>(spriteEntity);
+					m_color_pass->process(m_current_state);
 				}
-
-				m_color_pass->un_bind(m_current_state);
+				m_color_pass->unbind_render_target(m_current_state);
 			}
-
-			m_current_state->m_curent_renderable = m_current_state->m_light_components[0];
-
+			
+			
 			// light pass
+			auto lights = reg->view<sharkspirit::core::sprite_light_component>();
 			{
-				m_light_pass->bind(m_current_state);
-
+				m_light_pass->bind_render_target(m_current_state);
+				for (const auto spriteEntity : lights)
 				{
-					for (auto light : m_current_state->m_light_components)
-					{
-						m_current_state->m_curent_renderable = light;
-
-						m_light_pass->update(m_current_state);
-						m_light_pass->draw(m_current_state);
-					}
+					m_current_state->m_curent_renderable = &lights.get<sharkspirit::core::sprite_light_component>(spriteEntity);
+					m_light_pass->process(m_current_state);
 				}
-
-				m_light_pass->un_bind(m_current_state);
+				m_light_pass->unbind_render_target(m_current_state);
 			}
 
+			
 			// screen pass
 			{
-				m_screen_pass->bind(m_current_state);
+				m_screen_pass->bind_render_target(m_current_state);
 				m_screen_pass->draw(m_current_state);
-				m_screen_pass->un_bind(m_current_state);
+				m_screen_pass->unbind_render_target(m_current_state);
 			}
-
-			m_current_state->m_render_components.clear();
-			m_current_state->m_light_components.clear();
 		}
 
 		void initialize()
@@ -307,7 +273,6 @@ namespace sharkspirit::render
 			colorDesc.m_width = 1280;
 			colorDesc.m_height = 720;
 
-			m_current_state->m_color_buffer = m_device->create_render_target(&colorDesc);
 
 			render_target_desc lightDesc = render_target_desc();
 			lightDesc.m_format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -319,8 +284,8 @@ namespace sharkspirit::render
 			lightDesc.m_width = 1280;
 			lightDesc.m_height = 720;
 
+			m_current_state->m_color_buffer = m_device->create_render_target(&colorDesc);
 			m_current_state->m_light_buffer = m_device->create_render_target(&lightDesc);
-
 			m_current_state->m_screen_buffer = m_device->create_swap_chain_render_target();
 
 			m_color_pass = new color_pass(m_assets_manager->get_vertex_shader("vs_simple"), m_assets_manager->get_pixel_shader("ps_sprite_color"), m_device);
@@ -344,7 +309,7 @@ namespace sharkspirit::render
 		light_pass* m_light_pass;
 		screen_pass* m_screen_pass;
 
-		render_graph_state* m_current_state;
+		render_graph_state* m_current_state = nullptr;
 		device* m_device;
 		sharkspirit::assets::assets_manager* m_assets_manager;
 	};

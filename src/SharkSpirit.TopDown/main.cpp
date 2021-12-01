@@ -39,7 +39,7 @@ protected:
 
 		DirectX::XMFLOAT3 pos = { playerStartX, playerStartY, 0 };
 		DirectX::XMFLOAT3 rot = { 0, 0, 0 };
-		DirectX::XMFLOAT2 scale = { 128,  128 };
+		DirectX::XMFLOAT2 sprite_size = { 128,  128 };
 
 		const std::string& playerTextureName = "survivor-idle_rifle_0";
 		const std::string& grassTextureName = "oryx_16bit_fantasy_world_65";
@@ -95,13 +95,14 @@ protected:
 		auto grassSpriteCreateInfo = sharkspirit::core::sprite_component_create_info(grassTextureName, pixelShader, vertexShader);
 
 		player = create_entity();
-		m_reg.emplace<sharkspirit::core::transform_component>(player, pos, rot, scale);
+		m_reg.emplace<sharkspirit::core::transform_component>(player, pos, rot, sprite_size);
 		m_reg.emplace<player_input_component>(player, 0.3f, 0.2f);
 		m_reg.emplace<sharkspirit::core::sprite_component>(player, &m_assets, &m_device, &playerSpriteCreateInfo);
-		m_reg.emplace<sharkspirit::core::sprite_light_component>(player, &m_assets, &m_device, &lightSpriteCreateInfo);
+		//m_reg.emplace<sharkspirit::core::sprite_light_component>(player, &m_assets, &m_device, &lightSpriteCreateInfo);
 
 		for (size_t i = 0; i < 2; i++)
 		{
+			DirectX::XMFLOAT2 scale = { sprite_size.x * 10,  sprite_size.y * 10};
 			auto en = create_entity();
 			m_reg.emplace<sharkspirit::core::sprite_light_component>(en, &m_assets, &m_device, &lightSpriteCreateInfo);
 			m_reg.emplace<sharkspirit::core::transform_component>(en, pos, rot, scale);
